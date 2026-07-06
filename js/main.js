@@ -10,9 +10,14 @@
     // or hanging third-party request left the whole site stuck behind the
     // spinner. This script tag sits at the end of <body>, so the DOM above
     // it is already parsed by the time this runs; no need to wait further.
+    // Also referenced below by the hero-stat counter animation - it used to
+    // start observing immediately on page load, so the whole count-up (well
+    // under a second) finished while still hidden behind this overlay, and
+    // visitors only ever saw the final resting numbers.
+    const LOADING_OVERLAY_DELAY = 800;
     setTimeout(() => {
       document.getElementById('loading').classList.add('hidden');
-    }, 800);
+    }, LOADING_OVERLAY_DELAY);
 
     // ===== HEADER SCROLL EFFECT + PARALLAX (combined, rAF-throttled) =====
     // Both effects need window.scrollY on every scroll frame. Running them in one
@@ -586,8 +591,12 @@
         }
       });
     }, { threshold: 0.5 });
-    
-    document.querySelectorAll('.hero-stat').forEach(stat => statObserver.observe(stat));
+
+    // Delayed so hero stats already in view on load don't fire (and finish)
+    // their count-up while still hidden behind the loading overlay above.
+    setTimeout(() => {
+      document.querySelectorAll('.hero-stat').forEach(stat => statObserver.observe(stat));
+    }, LOADING_OVERLAY_DELAY);
 
     // ===== TEXT SCRAMBLE EFFECT =====
     class TextScramble {
