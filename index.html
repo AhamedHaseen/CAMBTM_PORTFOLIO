@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cambridge Marketing: Marketing That Grows You. Technology That Runs You.</title>
+  <title>Cambridge Marketing</title>
+  <meta name="description" content="Cambridge Marketing (CAMBM) grows brands with creative strategy, social media, paid ads, websites, POS and ERP systems - marketing and technology under one roof.">
+  <link rel="icon" type="image/png" href="images/cambm-logo-.png">
+  <link rel="apple-touch-icon" href="images/cambm-logo-.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://app.cal.com">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -24,7 +28,7 @@
   <header class="header" id="header">
     <div class="header-inner">
       <a href="#" class="logo">
-        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" style="height: 40px; width: auto; display: block;">
+        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block;">
       </a>
       <nav class="nav">
 
@@ -38,7 +42,7 @@
           <select class="locale-select locale-country-select" aria-label="Country"></select>
           <select class="locale-select locale-language-select" aria-label="Language"></select>
         </div>
-        <button type="button" class="btn btn-primary btn-sm js-open-action-popup" data-form-type="booking" data-i18n="nav.bookCall">Book a strategy call</button>
+        <button type="button" class="btn btn-primary btn-sm js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en"}' data-i18n="nav.bookCall">Book a strategy call</button>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
         <span></span>
@@ -59,7 +63,7 @@
           <select class="locale-select locale-country-select" aria-label="Country"></select>
           <select class="locale-select locale-language-select" aria-label="Language"></select>
         </div>
-        <button type="button" class="btn btn-primary js-open-action-popup" data-form-type="booking" data-i18n="nav.bookCall">Book a strategy call</button>
+        <button type="button" class="btn btn-primary js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en"}' data-i18n="nav.bookCall">Book a strategy call</button>
       </div>
     </nav>
   </header>
@@ -79,8 +83,8 @@
           We build the campaigns that bring customers in, and the websites, apps, POS and ERP systems that keep your business running once they do. One team handling both, so growth never outpaces your operations.
         </p> -->
         <div class="hero-actions">
-          <button type="button" class="btn btn-primary js-open-action-popup" data-form-type="booking" data-i18n="nav.bookCall">Book a strategy call</button>
-          <a href="#what-we-do" class="btn btn-secondary" data-i18n="hero.services">Our Services</a>
+          <button type="button" class="btn btn-primary js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en"}' data-i18n="nav.bookCall">Book a strategy call</button>
+          <!-- <a href="#what-we-do" class="btn btn-secondary" data-i18n="hero.services">Our Services</a> -->
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -101,37 +105,37 @@
         <div class="bento-column">
           <div class="bento-track">
             <div class="bento-card">
-              <img src="images/brand-creatives/myra.png" alt="Myra" class="bento-img">
+              <img src="images/brand-creatives/myra.jpg" alt="Myra" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">M</span> Myra</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/hijaz_pasta.PNG" alt="hijazpasta" class="bento-img">
+              <img src="images/brand-creatives/hijaz_pasta.jpg" alt="hijazpasta" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/lucky_darbar_tandoori.PNG" alt="lucky darbar tandoori" class="bento-img">
+              <img src="images/brand-creatives/lucky_darbar_tandoori.jpg" alt="lucky darbar tandoori" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/onex-roze.png" alt="Onex Roze" class="bento-img">
+              <img src="images/brand-creatives/onex-roze.jpg" alt="Onex Roze" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/nch.png" alt="NCH" class="bento-img">
+              <img src="images/brand-creatives/nch.jpg" alt="NCH" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/convenience-store.png" alt="The Convenience Store" class="bento-img">
+              <img src="images/brand-creatives/convenience-store.jpg" alt="The Convenience Store" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> The Convenience Store</div> -->
               </div>
@@ -140,39 +144,34 @@
         </div>
         <div class="bento-column">
           <div class="bento-track">
+            
             <div class="bento-card">
-              <img src="images/brand-creatives/hijaz.png" alt="Hijaz" class="bento-img">
-              <div class="bento-overlay">
-                <!-- <div class="bento-brand"><span class="bento-brand-logo">H</span> Hijaz</div> -->
-              </div>
-            </div>
-            <div class="bento-card">
-              <img src="images/brand-creatives/hijaz_salad.PNG" alt="hijaz-salad" class="bento-img">
+              <img src="images/brand-creatives/hijaz_salad.jpg" alt="hijaz-salad" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/lucky_darbar_tikka.PNG" alt="luckydarbar2" class="bento-img">
+              <img src="images/brand-creatives/lucky_darbar_tikka.jpg" alt="luckydarbar2" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/al-fakhir.png" alt="Al Fakhir" class="bento-img">
+              <img src="images/brand-creatives/al-fakhir.jpg" alt="Al Fakhir" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">A</span> Al Fakhir</div> -->
               </div>
             </div>
             
             <div class="bento-card">
-              <img src="images/brand-creatives/mahanama.png" alt="Mahanama" class="bento-img">
+              <img src="images/brand-creatives/mahanama.jpg" alt="Mahanama" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">M</span> Mahanama</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/lucky-darbar.png" alt="Lucky Darbar" class="bento-img">
+              <img src="images/brand-creatives/lucky-darbar.jpg" alt="Lucky Darbar" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">L</span> Lucky Darbar</div> -->
               </div>
@@ -182,25 +181,32 @@
         <div class="bento-column">
           <div class="bento-track">
             <div class="bento-card">
-              <img src="images/brand-creatives/dan-massey.png" alt="Dan Massey" class="bento-img">
+              <img src="images/brand-creatives/hijaz.jpg" alt="Hijaz" class="bento-img" loading="lazy" decoding="async">
+              <div class="bento-overlay">
+                <!-- <div class="bento-brand"><span class="bento-brand-logo">H</span> Hijaz</div> -->
+              </div>
+            </div>
+            <div class="bento-card">
+              <img src="images/brand-creatives/dan-massey.jpg" alt="Dan Massey" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">D</span> Dan Massey</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/rumico.png" alt="Rumico" class="bento-img">
+              <img src="images/brand-creatives/rumico.jpg" alt="Rumico" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">R</span> Rumico</div> -->
               </div>
             </div>
+            
             <div class="bento-card">
-              <img src="images/brand-creatives/crane-shoes.png" alt="Crane Shoes" class="bento-img">
+              <img src="images/brand-creatives/crane-shoes.jpg" alt="Crane Shoes" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">C</span> Crane Shoes</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/fly-bagdad.png" alt="Fly Bagdad" class="bento-img">
+              <img src="images/brand-creatives/fly-bagdad.jpg" alt="Fly Bagdad" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">F</span> Fly Bagdad</div> -->
               </div>
@@ -233,6 +239,15 @@
         <div class="brand-card"><img src="images/brands/onex-roze-logo.png" alt="Onex Roze" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/al-fakhir.png" alt="Al Fakhir" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/rumico.png" alt="Rumico" loading="lazy"></div>
+
+        <div class="brand-card"><img src="images/brands/airlink-cargo.png" alt="Airlink Cargo" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/bananaleaf.png" alt="bananaleaf" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/bluestar.png" alt="bluestar" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/brightcargo.png" alt="brightcargo" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/creative-graphics.png" alt="Creative Graphics" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/elitealhijaz.png" alt="elitealhijaz" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/eubakeries-equipments.png" alt="Eubakeries Equipments" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/gep.png" alt="gep" loading="lazy"></div>
       </div>
     </div>
     <div class="brands-marquee scroll-reveal">
@@ -249,6 +264,15 @@
         <div class="brand-card"><img src="images/brands/convenience-store.png" alt="The Convenience Store" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/lucky-darbar.png" alt="Lucky Darbar" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/fly-bagdad.png" alt="Fly Bagdad" loading="lazy"></div>
+
+        <div class="brand-card"><img src="images/brands/hamada-enterprises.png" alt="Hamada Enterprises" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/krexpress.png" alt="krexpress" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/nabdemirates.png" alt="nabdemirates" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/oxbridge-academy.png" alt="Oxbridge Academy" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/qrqumarentals.png" alt="qrqumarentals" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/tricoarabia.png" alt="tricoarabia" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/victoriaingredients.png" alt="victoriaingredients" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/zahrani-group.png" alt="Zahrani Group" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -454,7 +478,11 @@ Everything is built to work together, so your brand looks professional, attracts
           Hiring or traditional outsourcing?<br><em>Neither.</em>
         </h2>
       </div>
-      <div class="comparison-table scroll-reveal">
+      <!-- Scroll wrapper: on mobile, ONLY this element scrolls horizontally.
+           It must be separate from .comparison-inner so the section heading
+           above it stays put instead of sliding along with the table. -->
+      <div class="comparison-table-scroll scroll-reveal">
+      <div class="comparison-table">
         <div class="comparison-cell head" data-i18n="comparison.requirement">Requirement</div>
         <div class="comparison-cell head" data-i18n="comparison.hiringInHouse">Hiring In-House</div>
         <div class="comparison-cell head" data-i18n="comparison.traditionalOutsourcing">Traditional Outsourcing</div>
@@ -499,6 +527,7 @@ Everything is built to work together, so your brand looks professional, attracts
         <div class="comparison-cell" data-i18n="comparison.accountabilityInHouse">Internal pressure</div>
         <div class="comparison-cell" data-i18n="comparison.accountabilityOutsourcing">Vendor dependency</div>
         <div class="comparison-cell highlight" data-i18n="comparison.accountabilityCambm">One strategic partner</div>
+      </div>
       </div>
     </div>
   </section>
@@ -627,7 +656,7 @@ Everything is built to work together, so your brand looks professional, attracts
         One team for your marketing, your brand, and the technology that runs your business. Get in touch and let's talk about where you want to go.
       </p>
       <div class="scroll-reveal">
-        <button type="button" class="btn btn-primary js-open-action-popup" data-form-type="booking" data-i18n="nav.bookCall">Book a strategy call</button>
+        <button type="button" class="btn btn-primary js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en"}' data-i18n="nav.bookCall">Book a strategy call</button>
       </div>
     </div>
   </section>
@@ -638,7 +667,7 @@ Everything is built to work together, so your brand looks professional, attracts
       <div class="footer-top" style="display: none;">
         <div>
           <div class="footer-brand">
-            <img src="images/cambridge-logo.png" alt="Cambridge Marketing" style="height: 40px; width: auto; display: block; filter: brightness(10);">
+            <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
           </div>
           <p class="footer-desc">Marketing that grows you. Technology that runs you. One team for campaigns, brand, and the systems behind your business.</p>
         </div>
@@ -674,7 +703,7 @@ Everything is built to work together, so your brand looks professional, attracts
         </div>
       </div>
       <div class="footer-bottom">
-        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" style="height: 40px; width: auto; display: block; filter: brightness(10);">
+        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
         <p class="footer-copyright">&copy; <span id="currentYear">2026</span> Cambridge Marketing. <span data-i18n="footer.rights">All rights reserved.</span></p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/cambm.lk/" id="footerSocialInstagram" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener">
@@ -793,5 +822,46 @@ Everything is built to work together, so your brand looks professional, attracts
 
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- Cal.com booking widget: turns every button with data-cal-link into a
+       popup calendar (official "element click" embed snippet). Booking
+       syncs straight to the connected Google Calendar - see cal.com/cambridge.marketing. -->
+  <script type="text/javascript">
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", "strategy-call", { origin: "https://cal.com" });
+
+    Cal.ns["strategy-call"]("ui", {
+      theme: "light",
+      styles: { branding: { brandColor: "#e3752f" } },
+      hideEventTypeDetails: false,
+      layout: "month_view"
+    });
+  </script>
 </body>
 </html>

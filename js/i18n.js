@@ -47,6 +47,10 @@
   const LANGUAGE_NAMES = { en: 'English', ar: 'العربية', si: 'සිංහල', ta: 'தமிழ்', es: 'Español' };
   const RTL_LANGUAGES = { ar: true };
 
+  // Cal.com's own booker UI isn't translated into Sinhala or Tamil, so those
+  // fall back to English there rather than showing an unsupported code.
+  const CAL_LANGUAGE_MAP = { en: 'en', es: 'es', ar: 'ar', si: 'en', ta: 'en' };
+
   const DEFAULT_COUNTRY = 'LK';
   const DEFAULT_LANGUAGE = 'en';
   const STORAGE_KEY = 'cambm_locale';
@@ -140,7 +144,6 @@
     'contact.phoneLabel': 'Phone (optional)', 'contact.messageLabel': 'Message',
     'contact.send': 'Send message', 'contact.sending': 'Sending...', 'contact.success': 'Thanks! We’ll be in touch soon.',
     'contact.error': 'Something went wrong. Please try again or email us directly.',
-    'popup.bookingTitle': 'Book a strategy call', 'popup.bookingDesc': 'Tell us a bit about your business and we’ll set up a time to talk.',
     'popup.planDesc': 'Tell us a bit about your business and we’ll follow up with next steps.', 'popup.planLabel': 'Plan'
   };
 
@@ -224,7 +227,6 @@
     'contact.phoneLabel': 'Teléfono (opcional)', 'contact.messageLabel': 'Mensaje',
     'contact.send': 'Enviar mensaje', 'contact.sending': 'Enviando...', 'contact.success': '¡Gracias! Nos pondremos en contacto pronto.',
     'contact.error': 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente.',
-    'popup.bookingTitle': 'Reservar una llamada estratégica', 'popup.bookingDesc': 'Cuéntanos sobre tu negocio y coordinaremos un horario para hablar.',
     'popup.planDesc': 'Cuéntanos sobre tu negocio y te contactaremos con los próximos pasos.', 'popup.planLabel': 'Plan'
   };
 
@@ -308,7 +310,6 @@
     'contact.phoneLabel': 'الهاتف (اختياري)', 'contact.messageLabel': 'الرسالة',
     'contact.send': 'إرسال الرسالة', 'contact.sending': 'جارٍ الإرسال...', 'contact.success': 'شكرًا لك! سنتواصل معك قريبًا.',
     'contact.error': 'حدث خطأ ما. حاول مرة أخرى أو راسلنا مباشرة.',
-    'popup.bookingTitle': 'احجز مكالمة استراتيجية', 'popup.bookingDesc': 'أخبرنا قليلاً عن عملك وسنحدد موعدًا للتحدث.',
     'popup.planDesc': 'أخبرنا قليلاً عن عملك وسنتابع معك الخطوات التالية.', 'popup.planLabel': 'الباقة'
   };
 
@@ -392,7 +393,6 @@
     'contact.phoneLabel': 'දුරකථනය (විකල්ප)', 'contact.messageLabel': 'පණිවිඩය',
     'contact.send': 'පණිවිඩය යවන්න', 'contact.sending': 'යවමින්...', 'contact.success': 'ස්තූතියි! අපි ඉක්මනින් සම්බන්ධ වෙමු.',
     'contact.error': 'යමක් වැරදුණි. නැවත උත්සාහ කරන්න හෝ අප වෙත සෘජුවම විද්‍යුත් තැපෑල එවන්න.',
-    'popup.bookingTitle': 'උපායමාර්ග ඇමතුමක් වෙන් කරන්න', 'popup.bookingDesc': 'ඔබේ ව්‍යාපාරය ගැන අපට ටිකක් කියන්න, කතා කිරීමට වේලාවක් සකසන්නෙමු.',
     'popup.planDesc': 'ඔබේ ව්‍යාපාරය ගැන අපට ටිකක් කියන්න, ඊළඟ පියවර සමඟ අපි සම්බන්ධ වෙමු.', 'popup.planLabel': 'සැලැස්ම'
   };
 
@@ -476,7 +476,6 @@
     'contact.phoneLabel': 'தொலைபேசி (விருப்பத்தேர்வு)', 'contact.messageLabel': 'செய்தி',
     'contact.send': 'செய்தியை அனுப்பு', 'contact.sending': 'அனுப்பப்படுகிறது...', 'contact.success': 'நன்றி! நாங்கள் விரைவில் தொடர்பு கொள்வோம்.',
     'contact.error': 'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும் அல்லது நேரடியாக எங்களுக்கு மின்னஞ்சல் அனுப்பவும்.',
-    'popup.bookingTitle': 'மூலோபாய அழைப்பை பதிவு செய்யவும்', 'popup.bookingDesc': 'உங்கள் வணிகத்தைப் பற்றி எங்களிடம் கூறுங்கள், பேச ஒரு நேரத்தை ஏற்பாடு செய்வோம்.',
     'popup.planDesc': 'உங்கள் வணிகத்தைப் பற்றி எங்களிடம் கூறுங்கள், அடுத்த படிகளுடன் தொடர்பு கொள்வோம்.', 'popup.planLabel': 'திட்டம்'
   };
 
@@ -544,6 +543,18 @@
     if (facebook) facebook.href = links.facebook;
   }
 
+  // Cal.com's embed forwards data-cal-config keys straight through as query
+  // params on the actual booking iframe, so re-writing this attribute on
+  // every "Book a strategy call" trigger is how its calendar picks up the
+  // language the visitor has selected on the site.
+  function applyCalConfig(language) {
+    const calLang = CAL_LANGUAGE_MAP[language] || 'en';
+    const config = JSON.stringify({ layout: 'month_view', language: calLang, locale: calLang });
+    document.querySelectorAll('.js-open-cal').forEach(function (btn) {
+      btn.setAttribute('data-cal-config', config);
+    });
+  }
+
   // ---- Populate the <select> elements ----
   function populateCountrySelect(selectEl, selectedCountry) {
     let html = '';
@@ -580,6 +591,7 @@
       applyTranslations(language);
       applyCurrency(country);
       applySocialLinks(country);
+      applyCalConfig(language);
       if (persist) saveLocale(country, language);
     }
 
@@ -643,6 +655,10 @@
 
     function openContactPopup() {
       if (contactPopupBackdrop) { contactPopupBackdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      // Clear any success/error message left over from a previous submission -
+      // otherwise "Thanks! We'll be in touch soon." stays on screen forever,
+      // since it's only ever cleared at the START of the next submit.
+      if (contactStatus) { contactStatus.textContent = ''; contactStatus.className = 'contact-form-status'; }
     }
     function closeContactPopup() {
       if (contactPopupBackdrop) { contactPopupBackdrop.classList.remove('open'); document.body.style.overflow = ''; }
@@ -687,12 +703,12 @@
       });
     }
 
-    // ---- Booking / plan-selection popup ----
-    // One shared modal, reused for the "Book a strategy call" buttons and each
-    // pricing card's "Select plan" button - only the Formspree endpoint, title
-    // and (for plans) the price/term shown differ, per FORM_TYPES below.
+    // ---- Plan-selection popup ----
+    // One shared modal, reused for each pricing card's "Select plan" button -
+    // only the Formspree endpoint and the price/term shown differ, per
+    // FORM_TYPES below. ("Book a strategy call" used to open this too, but
+    // now opens the Cal.com booking widget instead - see js-open-cal below.)
     const FORM_TYPES = {
-      booking: { endpoint: 'https://formspree.io/f/xojorzen', titleKey: 'popup.bookingTitle', descKey: 'popup.bookingDesc', subject: 'Strategy Call Booking' },
       signature: { endpoint: 'https://formspree.io/f/xkolyaok', planIndex: 0, planNameKey: 'pricing.gold', termKey: 'pricing.term.minimum3Month', subject: 'Signature Plan Selection' },
       prestige: { endpoint: 'https://formspree.io/f/xnjkwyje', planIndex: 1, planNameKey: 'pricing.platinum', termKey: 'pricing.term.annual', subject: 'Prestige Plan Selection' },
       elite: { endpoint: 'https://formspree.io/f/xaqgvzen', planIndex: 2, planNameKey: 'pricing.diamond', termKey: 'pricing.term.annual', subject: 'Elite Plan Selection' }
@@ -713,24 +729,20 @@
       const cfg = FORM_TYPES[formType];
       if (!cfg || !actionPopupBackdrop) return;
       activeFormType = formType;
-      if (cfg.planIndex != null) {
-        const planName = t(cfg.planNameKey, currentLanguage);
-        const price = formatPrice(currentCountry, cfg.planIndex) + t('pricing.perMo', currentLanguage);
-        const term = t(cfg.termKey, currentLanguage);
-        const planText = t('popup.planLabel', currentLanguage) + ': ' + planName + ' — ' + price + ' — ' + term;
-        actionPopupTitle.textContent = t('pricing.selectPlan', currentLanguage) + ': ' + planName;
-        actionPopupDesc.textContent = t('popup.planDesc', currentLanguage);
-        actionPopupPlan.textContent = planText;
-        actionPopupPlan.style.display = '';
-        actionPopupPlanField.value = planText;
-        actionPopupSubjectField.value = cfg.subject + ' (' + planName + ') - Cambridge Marketing';
-      } else {
-        actionPopupTitle.textContent = t(cfg.titleKey, currentLanguage);
-        actionPopupDesc.textContent = t(cfg.descKey, currentLanguage);
-        actionPopupPlan.style.display = 'none';
-        actionPopupPlanField.value = '';
-        actionPopupSubjectField.value = cfg.subject + ' - Cambridge Marketing';
-      }
+      const planName = t(cfg.planNameKey, currentLanguage);
+      const price = formatPrice(currentCountry, cfg.planIndex) + t('pricing.perMo', currentLanguage);
+      const term = t(cfg.termKey, currentLanguage);
+      const planText = t('popup.planLabel', currentLanguage) + ': ' + planName + ' — ' + price + ' — ' + term;
+      actionPopupTitle.textContent = t('pricing.selectPlan', currentLanguage) + ': ' + planName;
+      actionPopupDesc.textContent = t('popup.planDesc', currentLanguage);
+      actionPopupPlan.textContent = planText;
+      actionPopupPlan.style.display = '';
+      actionPopupPlanField.value = planText;
+      actionPopupSubjectField.value = cfg.subject + ' (' + planName + ') - Cambridge Marketing';
+      // Clear any success/error message left over from a previous submission -
+      // this modal is reused across 4 different forms, so without this the
+      // last one's "Thanks!" message would show up on every later open.
+      if (actionPopupStatus) { actionPopupStatus.textContent = ''; actionPopupStatus.className = 'contact-form-status'; }
       actionPopupBackdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }

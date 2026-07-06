@@ -202,12 +202,19 @@
       opacity: 1;
     }
     @media (min-width: 1024px) { .mobile-nav-backdrop { display: none !important; } }
-    .btn-sm { padding: 6px 14px; font-size: 0.75rem; }
+    .btn-sm { padding: 5px 12px; font-size: 0.7rem; }
     
     /* ===== HERO SECTION ===== */
     .hero {
-      min-height: 100vh; /* fallback for older browsers without dvh support */
-      min-height: 100dvh;
+      min-height: 100vh; /* fallback for older browsers without svh support */
+      /* `svh` (small viewport height), NOT `dvh` (dynamic). dvh recalculates
+         live as the mobile browser's address bar shows/hides - and that bar
+         auto-collapses a moment after page load, which makes a 100dvh hero
+         suddenly grow taller and shove every section below it further down
+         the page. That's the "pulls down after it loads" bug. svh is locked
+         to the browser chrome's fully-expanded (smallest) size, so the hero
+         is already sized for the worst case up front and never resizes. */
+      min-height: 100svh;
       display: flex;
       align-items: center;
       position: relative;
@@ -238,7 +245,7 @@
     }
     .hero-eyebrow {
       font-family: 'Inter Tight', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.6rem;
       font-weight: 500;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -616,6 +623,9 @@
     .differentiator-title em {
       font-style: italic;
       color: var(--accent);
+      /* The accent phrase ("We don't.") must never wrap mid-phrase - it's
+         short in every site language, so nowrap is safe at all widths. */
+      white-space: nowrap;
     }
     .differentiator-right {
       position: relative;
@@ -900,10 +910,38 @@
       justify-content: center;
       text-align: center;
     }
+    /* CAMBM column: white text on an orange-tinted wash (not orange text -
+       reads better and lets the orange act as the highlight, not the ink). */
     .comparison-cell.highlight {
-      background: rgba(227,117,47,0.1);
-      color: #ff8c42;
+      background: linear-gradient(90deg, rgba(227,117,47,0.18), rgba(227,117,47,0.07));
+      color: var(--text);
       font-weight: 500;
+    }
+    /* Checkmark badge before every CAMBM value - a quick visual "yes" hook
+       that draws the eye down the column. */
+    .comparison-cell.highlight:not(.head)::before {
+      content: '\2713';
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-inline-end: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0a0a0a;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .comparison-cell.head.highlight {
+      background: linear-gradient(135deg, #e3752f 0%, #bd5d1e 100%);
+      color: #fff;
+    }
+    .comparison-cell.head.highlight::before {
+      content: '\2605';
+      margin-inline-end: 8px;
+      font-size: 0.8rem;
     }
 
     /* ===== PRICING ===== */
@@ -1355,7 +1393,7 @@
       /* On mobile the italic serif "Beyond" reads visually smaller than the
          regular-weight line under it even at the same font-size, so give it
          a deliberate bump here (desktop already looks balanced as-is). */
-      .hero-title em { font-size: 1.25em; }
+      .hero-title em { font-size: 2em; }
       .hero-desc { margin: 0 auto 32px; }
       .hero-actions { justify-content: center; }
       .hero-stats { justify-content: center; gap: 32px; margin-top: 32px; }
@@ -1377,21 +1415,50 @@
       .bento-overlay { padding: 10px; }
       .bento-brand { font-size: 0.7rem; }
 
-      /* Comparison table: on a narrow screen, keep all 4 columns (hiding
-         In-House/Agency left nothing to actually compare against) and let
-         the table scroll horizontally instead. The overflow has to live on
-         the PARENT (.comparison-inner) - .comparison-table itself is given
-         a min-width wider than the viewport, and it's that mismatch against
-         its parent's width that needs to scroll, not anything inside the
-         table overflowing the table. */
-      .comparison-inner {
+      /* Comparison table (mobile): TRANSPOSED relative to desktop - the grid
+         flows column-by-column, so each original ROW becomes a COLUMN. The
+         DOM order is row-major (Requirement, In-House, Outsourcing, CAMBM,
+         then Strategy...), so with grid-auto-flow:column and 4 explicit rows
+         the first 4 cells stack vertically as the pinned left column (the
+         three providers + corner label), and each requirement becomes one
+         horizontal step of the scroll. Only .comparison-table-scroll scrolls;
+         the section heading above it never moves. */
+      .comparison-table-scroll {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
       .comparison-table {
-        grid-template-columns: minmax(140px, 1fr) repeat(3, minmax(180px, 1fr));
-        min-width: 860px;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(4, auto);
+        grid-template-columns: 128px repeat(8, 170px);
+        width: max-content;
         font-size: 0.8rem;
+        /* Must NOT be `hidden` (as it is on desktop, for rounded corners) -
+           `overflow: hidden` here would make sticky cells stick relative to
+           THIS element instead of the actually-scrolling wrapper, since it'd
+           become the nearest ancestor with non-visible overflow. That
+           silently breaks position:sticky. */
+        overflow: visible;
+        border-radius: 0;
+      }
+      /* Provider column (Requirement / Hiring In-House / Traditional
+         Outsourcing / Cambridge Marketing): pinned to the left edge while
+         the requirement columns scroll past behind it. Opaque backgrounds so
+         passing cells don't show through, plus a shadow hinting there's
+         more content to scroll. */
+      .comparison-cell.head {
+        position: sticky;
+        inset-inline-start: 0;
+        z-index: 2;
+        background: #16130f;
+        justify-content: flex-start;
+        text-align: start;
+        box-shadow: 3px 0 8px rgba(0,0,0,0.35);
+      }
+      /* Sticky CAMBM header needs a fully opaque gradient (the base one is
+         already opaque, restated here to keep it above scrolling cells). */
+      .comparison-cell.head.highlight {
+        background: linear-gradient(135deg, #e3752f 0%, #a3511a 100%);
       }
 
       .footer-top { grid-template-columns: 1fr; gap: 32px; }

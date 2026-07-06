@@ -5,11 +5,14 @@
     }
 
     // ===== LOADING OVERLAY =====
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loading').classList.add('hidden');
-      }, 800);
-    });
+    // Was gated on window's `load` event, which waits for EVERY resource on
+    // the page - including the third-party Cal.com embed script - so a slow
+    // or hanging third-party request left the whole site stuck behind the
+    // spinner. This script tag sits at the end of <body>, so the DOM above
+    // it is already parsed by the time this runs; no need to wait further.
+    setTimeout(() => {
+      document.getElementById('loading').classList.add('hidden');
+    }, 800);
 
     // ===== HEADER SCROLL EFFECT + PARALLAX (combined, rAF-throttled) =====
     // Both effects need window.scrollY on every scroll frame. Running them in one
