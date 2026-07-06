@@ -553,15 +553,20 @@
 
     // ===== COUNTER ANIMATION =====
     function animateCounter(element, target, duration = 2000) {
+      // Suffix ('+', '%', etc.) read from the element's own starting text
+      // instead of being hardcoded - previously this always appended '+',
+      // so a stat written as "98%" in the HTML would count up correctly but
+      // land on "98+" once the animation finished.
+      const suffix = element.textContent.replace(/[0-9]/g, '');
       let start = 0;
       const increment = target / (duration / 16);
       function update() {
         start += increment;
         if (start < target) {
-          element.textContent = Math.floor(start) + '+';
+          element.textContent = Math.floor(start) + suffix;
           requestAnimationFrame(update);
         } else {
-          element.textContent = target + '+';
+          element.textContent = target + suffix;
         }
       }
       update();
@@ -572,10 +577,10 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const statValue = entry.target.querySelector('.hero-stat-value');
-          if (statValue && statValue.textContent.includes('500')) {
-            animateCounter(statValue, 500, 1500);
-          } else if (statValue && statValue.textContent.includes('98')) {
-            animateCounter(statValue, 98, 1500);
+          if (statValue && statValue.textContent.includes('430')) {
+            animateCounter(statValue, 430, 1500);
+          } else if (statValue && statValue.textContent.includes('97')) {
+            animateCounter(statValue, 97, 1500);
           }
           statObserver.unobserve(entry.target);
         }
