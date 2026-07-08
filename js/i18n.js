@@ -556,10 +556,17 @@
   }
 
   // ---- Populate the <select> elements ----
-  function populateCountrySelect(selectEl, selectedCountry) {
+  // `compact` (nav-bar picker only, not the first-visit popup) shows
+  // "LK/LKR" style code pairs instead of "🇱🇰 Sri Lanka" - the popup keeps
+  // full flag+name since that's the one place a first-time visitor actually
+  // needs to recognize their country/region, not just a quick glance.
+  function populateCountrySelect(selectEl, selectedCountry, compact) {
     let html = '';
     for (const code in COUNTRIES) {
-      html += '<option value="' + code + '">' + COUNTRIES[code].flag + ' ' + COUNTRIES[code].name + '</option>';
+      const label = compact
+        ? code + '/' + COUNTRIES[code].currency.code
+        : COUNTRIES[code].flag + ' ' + COUNTRIES[code].name;
+      html += '<option value="' + code + '">' + label + '</option>';
     }
     selectEl.innerHTML = html;
     selectEl.value = selectedCountry;
@@ -580,7 +587,7 @@
     const languageSelects = document.querySelectorAll('.locale-language-select');
 
     function syncSelects(country, language) {
-      countrySelects.forEach(function (sel) { populateCountrySelect(sel, country); });
+      countrySelects.forEach(function (sel) { populateCountrySelect(sel, country, true); });
       languageSelects.forEach(function (sel) { populateLanguageSelect(sel, country, language); });
     }
 
@@ -646,6 +653,105 @@
         document.body.style.overflow = 'hidden';
       }
     }
+
+    // ---- Custom dropdown UI over the nav-bar <select>s ----
+    // The native OS option list looks dated; replace each nav-picker select
+    // with a styled custom dropdown that matches the site. The native
+    // <select> stays in the DOM as the source of truth - visually hidden, but
+    // still read/written and change-fired by all the locale logic above, so
+    // this is a purely presentational layer that changes nothing about how
+    // the picker actually works. A MutationObserver rebuilds the custom
+    // list+label whenever that logic repopulates the select (e.g. the set of
+    // languages changes when the country changes), so the two never drift.
+    // Runs AFTER the initial setLocale above so the options already exist on
+    // first render (no flash of an empty dropdown).
+    function closeAllLocaleSelects() {
+      document.querySelectorAll('.c-select.open').forEach(function (w) {
+        if (w._close) w._close();
+      });
+    }
+    document.addEventListener('click', closeAllLocaleSelects);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAllLocaleSelects();
+    });
+
+    function enhanceLocaleSelect(select) {
+      const wrap = document.createElement('div');
+      wrap.className = 'c-select';
+
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'c-select-trigger';
+      trigger.setAttribute('aria-haspopup', 'listbox');
+      trigger.setAttribute('aria-expanded', 'false');
+      const labelEl = document.createElement('span');
+      labelEl.className = 'c-select-label';
+      trigger.appendChild(labelEl);
+      trigger.insertAdjacentHTML('beforeend',
+        '<svg class="c-select-arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">' +
+        '<path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+        'stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+      const menu = document.createElement('ul');
+      menu.className = 'c-select-menu';
+      menu.setAttribute('role', 'listbox');
+
+      // Native select stays as the value store, but out of the tab order and
+      // hidden - the custom button is the real, focusable control now.
+      select.setAttribute('tabindex', '-1');
+      select.setAttribute('aria-hidden', 'true');
+      select.parentNode.insertBefore(wrap, select);
+      wrap.appendChild(select);
+      wrap.appendChild(trigger);
+      wrap.appendChild(menu);
+
+      function close() {
+        wrap.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+      function open() {
+        closeAllLocaleSelects();
+        wrap.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+      wrap._close = close;
+
+      function render() {
+        const current = select.options[select.selectedIndex];
+        labelEl.textContent = current ? current.textContent : '';
+        menu.textContent = '';
+        Array.prototype.forEach.call(select.options, function (opt) {
+          const li = document.createElement('li');
+          li.className = 'c-select-option' + (opt.selected ? ' is-selected' : '');
+          li.setAttribute('role', 'option');
+          li.setAttribute('aria-selected', opt.selected ? 'true' : 'false');
+          li.textContent = opt.textContent;
+          li.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (select.value !== opt.value) {
+              select.value = opt.value;
+              // Fire the native change so the existing locale logic runs.
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            close();
+          });
+          menu.appendChild(li);
+        });
+      }
+
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation(); // don't let the document handler immediately re-close
+        if (wrap.classList.contains('open')) close(); else open();
+      });
+
+      // Rebuild the custom UI whenever the locale logic resets this select's
+      // options (childList mutation from the innerHTML repopulate).
+      new MutationObserver(render).observe(select, { childList: true });
+      render();
+    }
+
+    countrySelects.forEach(enhanceLocaleSelect);
+    languageSelects.forEach(enhanceLocaleSelect);
 
     // ---- Enterprise contact-form popup ----
     const contactPopupBackdrop = document.getElementById('contactPopupBackdrop');

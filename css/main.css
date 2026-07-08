@@ -169,9 +169,9 @@
     }
     @media (min-width: 1024px) { .mobile-nav { display: none; } }
     .mobile-nav.open {
-      max-height: 80vh;
+      max-height: none;
       opacity: 1;
-      overflow-y: auto;
+      overflow: visible;
     }
     .mobile-nav-link {
       padding: 14px 4px;
@@ -202,8 +202,23 @@
       opacity: 1;
     }
     @media (min-width: 1024px) { .mobile-nav-backdrop { display: none !important; } }
-    .btn-sm { padding: 5px 12px; font-size: 0.7rem; }
-    
+    .btn-sm { padding: 4px 12px; font-size: 0.7rem; }
+    /* Desktop nav-bar "Book a strategy call" only - a transparent outline
+       button (see-through fill, white border, muted grey text) instead of
+       the solid white pill used everywhere else (hero, CTA section, mobile
+       nav), which stays untouched. Higher specificity than .btn-primary (2
+       classes vs 1) is what makes this win without touching that rule. */
+    .header-actions .btn-primary {
+      background: transparent;
+      border: 1px solid #f5f4ef;
+      color: var(--text-muted);
+    }
+    .header-actions .btn-primary:hover {
+      background: #f5f4ef;
+      border-color: #f5f4ef;
+      color: #0a0a0a;
+    }
+
     /* ===== HERO SECTION ===== */
     .hero {
       min-height: 100vh; /* fallback for older browsers without svh support */
@@ -1664,11 +1679,153 @@
       cursor: pointer;
     }
     .locale-select:hover { background: #ffffff; }
-    .locale-nav-picker-mobile { margin-bottom: 4px; }
-    .locale-nav-picker-mobile .locale-select {
-      flex: 1;
-      background: #f5f4ef;
+    /* Nav-bar picker (header + mobile nav): the native <select> is replaced
+       at runtime by a custom dropdown (.c-select, built in i18n.js), so the
+       opened list matches the site instead of the dated OS-native option
+       list. The real <select> stays in the DOM as the value store but is
+       visually hidden here. The first-visit popup keeps its own solid
+       <select> style (base .locale-select above) - it's a modal control. */
+    .locale-nav-picker .locale-select {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      opacity: 0;
+      pointer-events: none;
     }
+
+    /* ---- Custom dropdown (replaces the native nav-bar selects) ---- */
+    .c-select { position: relative; }
+    .c-select-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 4px 2px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+    .c-select-trigger:hover,
+    .c-select.open .c-select-trigger { color: var(--text); }
+    .c-select-arrow {
+      flex-shrink: 0;
+      opacity: 0.75;
+      transition: transform 0.25s ease;
+    }
+    .c-select.open .c-select-arrow { transform: rotate(180deg); }
+
+    /* Desktop: floating panel below the trigger. */
+    .c-select-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 100%;
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+      background: rgba(18,17,15,0.92);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(245,244,239,0.12);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+    .c-select.open .c-select-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .c-select-option {
+      display: block;
+      padding: 8px 16px 8px 12px;
+      border-radius: 8px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .c-select-option:hover { background: rgba(245,244,239,0.08); color: var(--text); }
+    .c-select-option.is-selected { color: var(--accent); }
+
+    .locale-nav-picker-mobile { margin-bottom: 4px; }
+    .locale-nav-picker-mobile .c-select { flex: 1; }
+    .locale-nav-picker-mobile .c-select-trigger { width: 100%; justify-content: space-between; }
+    /* Mobile: the nav panel scrolls (overflow-y:auto), which would clip an
+       absolutely-positioned menu. So inside the mobile panel the menu lives
+       in normal flow (static) and just shows/hides - the panel's own scroll
+       handles any overflow, so it can never be cut off. */
+    /* Mobile: keep dropdown floating, do not let it push nav items */
+@media (max-width: 1024px) {
+  .locale-nav-picker-mobile {
+    position: relative;
+    z-index: 300;
+  }
+
+  .locale-nav-picker-mobile .c-select {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .locale-nav-picker-mobile .c-select-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 100%;
+    max-width: calc(100vw - 48px);
+    max-height: 260px;
+    overflow-y: auto;
+
+    margin: 0;
+    padding: 6px;
+    display: block;
+
+    background: rgba(18,17,15,0.96);
+    border: 1px solid rgba(245,244,239,0.12);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 500;
+  }
+
+  .locale-nav-picker-mobile .c-select.open {
+    z-index: 600;
+  }
+
+  .locale-nav-picker-mobile .c-select.open .c-select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Prevent the second dropdown from overflowing off the right edge */
+  .locale-nav-picker-mobile .c-select:nth-child(2) .c-select-menu {
+    left: auto;
+    right: 0;
+  }
+}
 
     /* ===== LOCALE (COUNTRY/LANGUAGE) SELECTION POPUP ===== */
     .locale-popup-backdrop {
@@ -1857,3 +2014,63 @@
     }
     .contact-form-status.success { color: #1a8f4c; }
     .contact-form-status.error { color: #d0392b; }
+
+    @media (max-width: 1024px) {
+  .mobile-nav {
+    overflow: hidden;
+  }
+
+  .mobile-nav.open {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .locale-nav-picker-mobile {
+    position: relative;
+    z-index: 300;
+  }
+
+  .locale-nav-picker-mobile .c-select {
+    position: relative;
+  }
+
+  .locale-nav-picker-mobile .c-select-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: auto;
+
+    min-width: 100%;
+    max-height: 260px;
+    overflow-y: auto;
+
+    background: rgba(18,17,15,0.96);
+    border: 1px solid rgba(245,244,239,0.12);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 500;
+  }
+
+  .locale-nav-picker-mobile .c-select.open {
+    z-index: 600;
+  }
+
+  .locale-nav-picker-mobile .c-select.open .c-select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .locale-nav-picker-mobile .c-select:nth-child(2) .c-select-menu {
+    left: auto;
+    right: 0;
+  }
+}

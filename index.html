@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="elysia">
+<html lang="en" data-theme="elysia" class="bento-preloading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +10,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://app.cal.com">
+  <!-- Bento media is handled by the loader script near the end of the body.
+       Do not use <link rel="preload" as="video"> here, because Chrome flags
+       as="video" as an unsupported preload value. -->
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/animations.css">
+  <style id="bento-preload-gate">
+    /* Keep the website hidden until all hero bento media can render. */
+    html.bento-preloading,
+    html.bento-preloading body {
+      min-height: 100%;
+      overflow: hidden;
+    }
+
+    html.bento-preloading body > :not(.loading-overlay) {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    html.bento-preloading .loading-overlay {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: all !important;
+      z-index: 999999 !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Loading Overlay -->
@@ -122,7 +146,7 @@
                  forever; muted+playsinline is what lets it autoplay on mobile.
                  Scrolls with the column exactly like the image cards. -->
             <div class="bento-card bento-card--video">
-              <video class="bento-video" src="images/brand-creatives/topballer-vid-creative.mp4" autoplay loop muted playsinline preload="auto" disablepictureinpicture></video>
+              <video class="bento-video" src="images/brand-creatives/topballer-vid-creative.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
@@ -133,18 +157,26 @@
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
             </div>
-            <div class="bento-card">
+            <!-- <div class="bento-card">
               <img src="images/brand-creatives/classictrip-creative.jpg" alt="classictrip" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
-                <!-- <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div> -->
+                <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div>
               </div>
-            </div>
+            </div> -->
             
           </div>
         </div>
         <div class="bento-column">
           <div class="bento-track">
             
+            
+            <div class="bento-card bento-card--video">
+              <video class="bento-video" src="images/brand-creatives/zafiro-ad.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <div class="bento-overlay">
+                <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
+              </div>
+            </div>
+
             <div class="bento-card">
               <img src="images/brand-creatives/uneeflow-creative.jpg" alt="uneeflow" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
@@ -157,6 +189,7 @@
                 <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div>
               </div>
             </div> -->
+            
             <div class="bento-card">
               <img src="images/brand-creatives/al-fakhir.jpg" alt="Al Fakhir" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
@@ -164,24 +197,36 @@
               </div>
             </div>
             
+
             <div class="bento-card">
               <img src="images/brand-creatives/mahanama.jpg" alt="Mahanama" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">M</span> Mahanama</div> -->
               </div>
             </div>
+
+            <div class="bento-card bento-card--video">
+              <video class="bento-video" src="images/brand-creatives/tuktuk-ad.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <div class="bento-overlay">
+                <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
+              </div>
+            </div>
+
             <div class="bento-card">
               <img src="images/brand-creatives/lucky-darbar.jpg" alt="Lucky Darbar" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">L</span> Lucky Darbar</div> -->
               </div>
             </div>
+            
             <div class="bento-card">
               <img src="images/brand-creatives/convenience-store.jpg" alt="The Convenience Store" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> The Convenience Store</div> -->
               </div>
             </div>
+            
+            
           </div>
         </div>
         <div class="bento-column">
@@ -198,17 +243,25 @@
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">D</span> Dan Massey</div> -->
               </div>
             </div>
-            <div class="bento-card">
+            
+
+            <!-- <div class="bento-card">
               <img src="images/brand-creatives/rumico.jpg" alt="Rumico" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
-                <!-- <div class="bento-brand"><span class="bento-brand-logo">R</span> Rumico</div> -->
+                <div class="bento-brand"><span class="bento-brand-logo">R</span> Rumico</div>
               </div>
-            </div>
+            </div> -->
             
             <div class="bento-card">
               <img src="images/brand-creatives/crane-shoes.jpg" alt="Crane Shoes" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">C</span> Crane Shoes</div> -->
+              </div>
+            </div>
+            <div class="bento-card bento-card--video">
+              <video class="bento-video" src="images/brand-creatives/myra-newspaper.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <div class="bento-overlay">
+                <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
             </div>
             <div class="bento-card">
@@ -825,6 +878,112 @@ Everything is built to work together, so your brand looks professional, attracts
       </form>
     </div>
   </div>
+
+
+  <script id="bento-media-loader">
+    (function () {
+      const root = document.documentElement;
+      const MAX_WAIT_MS = 20000;
+
+      function revealWebsite() {
+        if (root.classList.contains("bento-ready")) return;
+
+        root.classList.remove("bento-preloading");
+        root.classList.add("bento-ready");
+
+        const loadingOverlay = document.getElementById("loading");
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = "0";
+          loadingOverlay.style.visibility = "hidden";
+          loadingOverlay.style.pointerEvents = "none";
+          window.setTimeout(function () {
+            loadingOverlay.style.display = "none";
+          }, 450);
+        }
+      }
+
+      function waitForImage(img) {
+        return new Promise(function (resolve) {
+          img.loading = "eager";
+          img.fetchPriority = "high";
+
+          function resolveAfterDecode() {
+            if (img.decode) {
+              img.decode().then(resolve).catch(resolve);
+            } else {
+              resolve();
+            }
+          }
+
+          if (img.complete && img.naturalWidth > 0) {
+            resolveAfterDecode();
+            return;
+          }
+
+          img.addEventListener("load", resolveAfterDecode, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+
+          if (!img.src && img.dataset.src) {
+            img.src = img.dataset.src;
+          }
+        });
+      }
+
+      function waitForVideo(video) {
+        return new Promise(function (resolve) {
+          video.preload = "auto";
+          video.muted = true;
+          video.playsInline = true;
+
+          if (video.readyState >= 2) {
+            resolve();
+            return;
+          }
+
+          video.addEventListener("loadeddata", resolve, { once: true });
+          video.addEventListener("canplay", resolve, { once: true });
+          video.addEventListener("error", resolve, { once: true });
+
+          try {
+            video.load();
+          } catch (error) {
+            resolve();
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const bentoMedia = Array.from(document.querySelectorAll(".hero-bento img, .hero-bento video"));
+
+        if (!bentoMedia.length) {
+          revealWebsite();
+          return;
+        }
+
+        const mediaReady = Promise.all(
+          bentoMedia.map(function (item) {
+            return item.tagName.toLowerCase() === "video"
+              ? waitForVideo(item)
+              : waitForImage(item);
+          })
+        );
+
+        const timeout = new Promise(function (resolve) {
+          window.setTimeout(resolve, MAX_WAIT_MS);
+        });
+
+        Promise.race([mediaReady, timeout]).then(revealWebsite);
+      });
+
+      window.addEventListener("load", function () {
+        window.setTimeout(function () {
+          if (root.classList.contains("bento-preloading")) {
+            revealWebsite();
+          }
+        }, MAX_WAIT_MS);
+      });
+    })();
+  </script>
 
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>

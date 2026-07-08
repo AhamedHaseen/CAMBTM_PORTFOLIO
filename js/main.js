@@ -5,19 +5,46 @@
     }
 
     // ===== LOADING OVERLAY =====
-    // Was gated on window's `load` event, which waits for EVERY resource on
-    // the page - including the third-party Cal.com embed script - so a slow
-    // or hanging third-party request left the whole site stuck behind the
-    // spinner. This script tag sits at the end of <body>, so the DOM above
-    // it is already parsed by the time this runs; no need to wait further.
-    // Also referenced below by the hero-stat counter animation - it used to
-    // start observing immediately on page load, so the whole count-up (well
-    // under a second) finished while still hidden behind this overlay, and
-    // visitors only ever saw the final resting numbers.
-    const LOADING_OVERLAY_DELAY = 800;
-    setTimeout(() => {
-      document.getElementById('loading').classList.add('hidden');
-    }, LOADING_OVERLAY_DELAY);
+    // Stays up until every hero creative (all bento gallery images + the
+    // video) has actually finished loading, so the reveal never happens
+    // mid-load - no popcorning images or a video that visibly restarts.
+    // Was previously gated on window's `load` event, which waits for EVERY
+    // resource on the page - including the third-party Cal.com embed script -
+    // so a slow or hanging third-party request left the whole site stuck
+    // behind the spinner. Grabbing the image list here (rather than after the
+    // hero-bento loop-slider clones each column) means this sees exactly the
+    // 14 real creatives once each, not the ~3x cloned copies used for the
+    // infinite-scroll illusion.
+    //
+    // `overlayHiddenPromise` is also used below by the hero-stat counter
+    // animation - it used to start observing immediately on page load, so
+    // the whole count-up (well under a second) finished while still hidden
+    // behind this overlay, and visitors only ever saw the final resting
+    // numbers. A capped safety-net wait means one slow/broken asset can't
+    // spinner-lock the page forever.
+    const overlayHiddenPromise = (() => {
+      const overlay = document.getElementById('loading');
+      const imageUrls = [...new Set(
+        Array.from(document.querySelectorAll('.hero-bento .bento-img')).map(img => img.getAttribute('src'))
+      )];
+      const imagePromises = imageUrls.map(src => new Promise(resolve => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve; // a broken asset shouldn't hang the reveal forever
+        img.src = src;
+      }));
+      const video = document.querySelector('.bento-video');
+      const videoPromise = video ? new Promise(resolve => {
+        if (video.readyState >= 2) { resolve(); return; } // HAVE_CURRENT_DATA - first frame already decoded
+        video.addEventListener('loadeddata', resolve, { once: true });
+        video.addEventListener('error', resolve, { once: true });
+      }) : Promise.resolve();
+      const MAX_WAIT = 6000;
+      return Promise.race([
+        Promise.all([...imagePromises, videoPromise]),
+        new Promise(resolve => setTimeout(resolve, MAX_WAIT))
+      ]).then(() => { overlay.classList.add('hidden'); });
+    })();
 
     // ===== HEADER SCROLL EFFECT + PARALLAX (combined, rAF-throttled) =====
     // Both effects need window.scrollY on every scroll frame. Running them in one
@@ -251,7 +278,20 @@
       let dragging = false; // true while a manual drag/touch interaction is in progress
       let paused = false;   // true while the mouse is hovering the slider
 
-      function build() {
+      function build(force) {
+        // Once a build has actually measured something usable, later calls
+        // are no-ops unless explicitly forced (a real width change). This
+        // used to run unconditionally every time build() was called - fine
+        // for <img> cards (served instantly from cache, no visible effect),
+        // but a <video> card gets torn down and recreated by the innerHTML
+        // reset below just the same as an image would. Recreating a live,
+        // already-playing, already-autoplaying video element a few hundred
+        // ms after it started (which happened on every page load, since this
+        // fired at least twice unconditionally) forces it to restart
+        // decode/autoplay from scratch - on real phones that's a visible
+        // flash/jump right as the layout resettles, not just a harmless
+        // no-op like it is for images.
+        if (setSize && !force) return;
         // One set on its own, measured.
         track.innerHTML = originalHTML;
         setSize = axis === 'y' ? track.scrollHeight : track.scrollWidth;
@@ -284,7 +324,7 @@
       window.addEventListener('resize', () => {
         if (window.innerWidth === lastInnerWidth) return;
         lastInnerWidth = window.innerWidth;
-        build();
+        build(true); // force: card widths genuinely changed, must re-measure
       });
 
       // As the user scrolls, keep them near the centre by jumping in whole
@@ -594,9 +634,9 @@
 
     // Delayed so hero stats already in view on load don't fire (and finish)
     // their count-up while still hidden behind the loading overlay above.
-    setTimeout(() => {
+    overlayHiddenPromise.then(() => {
       document.querySelectorAll('.hero-stat').forEach(stat => statObserver.observe(stat));
-    }, LOADING_OVERLAY_DELAY);
+    });
 
     // ===== TEXT SCRAMBLE EFFECT =====
     class TextScramble {
