@@ -1331,7 +1331,12 @@
       transform: translateY(-2px);
     }
     
-    /* ===== LOADING OVERLAY ===== */
+    /* ===== LOADING OVERLAY / PRELOADER BAR =====
+       Minimalist "Loading NN%" bar that fills as the hero media loads, then
+       zooms toward the viewer, blurs and fades to reveal the site. A single
+       custom property --preloader-p (0..1, written once per frame on :root)
+       drives the bar fill, the ambient bloom and the counter, so they can
+       never drift out of step. */
     .loading-overlay {
       position: fixed;
       inset: 0;
@@ -1340,22 +1345,82 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 1s ease;
     }
-    .loading-overlay.hidden {
+    /* Ambient orange bloom, brightens as the bar fills. */
+    .loading-overlay::before {
+      content: "";
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 120vmin; aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(227,117,47,0.16), transparent 60%);
+      opacity: var(--preloader-p, 0);
+      pointer-events: none;
+    }
+    /* Zoom-through exit: the bar rushes forward, blurs and dissolves. */
+    .loading-overlay.out { opacity: 0; pointer-events: none; }
+    .preloader-stage {
+      width: min(380px, 72vw);
+      position: relative;
+      transform-origin: 50% 50%;
+      transition: transform 1.15s cubic-bezier(.66,0,.24,1),
+                  filter    1.15s cubic-bezier(.66,0,.24,1),
+                  opacity    .85s ease .12s;
+    }
+    .loading-overlay.out .preloader-stage {
+      transform: scale(1.45);
+      filter: blur(16px);
       opacity: 0;
-      visibility: hidden;
     }
-    .loading-spinner-custom {
-      width: 48px;
-      height: 48px;
-      border: 2px solid rgba(245,244,239,0.1);
-      border-top-color: #f5f4ef;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+    .preloader-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5a5a5a;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .preloader-meta b {
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .preloader-rule {
+      margin-top: 14px;
+      height: 1px;
+      background: rgba(245,244,239,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .preloader-rule::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: scaleX(var(--preloader-p, 0));
+      transform-origin: left;
+    }
+    /* Legacy hard-hide fallback (kept in case anything still toggles it). */
+    .loading-overlay.hidden { opacity: 0; visibility: hidden; }
+
+    /* ---- Reveal: content fades in; the hero settles into place ----
+       The settle-scale is applied to .hero ONLY (it has no position:fixed
+       descendants), so it can never rebase the fixed header/cursor/popups. */
+    body > :not(.loading-overlay) { transition: opacity 0.9s ease; }
+    .hero { transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
+    html.bento-preloading .hero { transform: scale(1.04); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loading-overlay,
+      .preloader-stage,
+      body > :not(.loading-overlay),
+      .hero { transition-duration: 0.01ms !important; }
+      .loading-overlay.out .preloader-stage { transform: none; filter: none; }
+      html.bento-preloading .hero { transform: none; }
     }
     
     /* ===== CURSOR ===== */

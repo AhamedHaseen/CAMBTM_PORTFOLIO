@@ -1,0 +1,46 @@
+# ============================================================
+# Cambridge Marketing - caching rules (Apache hosts)
+# Goal: your updates ALWAYS show. Code files are revalidated on
+# every load (a stale copy is never reused), while media is only
+# lightly cached. No "immutable" / long max-age anywhere - that
+# was what made old versions stick.
+# ============================================================
+
+<IfModule mod_mime.c>
+  AddType video/mp4  .mp4 .m4v
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_headers.c>
+  # HTML / CSS / JS: always revalidate. Browser sends a conditional
+  # request; server replies 304 (tiny, no re-download) if unchanged,
+  # or 200 with the new file the moment you upload a change.
+  <FilesMatch "\.(html|htm|css|js)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Images / fonts / video: cached for 1 hour only, so a repeat visit
+  # in the same session is fast but updates still appear quickly.
+  <FilesMatch "\.(jpg|jpeg|png|gif|svg|webp|ico|mp4|m4v|woff2)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html              "access plus 0 seconds"
+  ExpiresByType text/css               "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 0 seconds"
+  ExpiresByType text/javascript        "access plus 0 seconds"
+  ExpiresByType image/jpeg             "access plus 1 hour"
+  ExpiresByType image/png              "access plus 1 hour"
+  ExpiresByType image/webp             "access plus 1 hour"
+  ExpiresByType image/svg+xml          "access plus 1 hour"
+  ExpiresByType video/mp4              "access plus 1 hour"
+</IfModule>
+
+# ---- Compress text assets ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/javascript application/javascript application/json image/svg+xml
+</IfModule>

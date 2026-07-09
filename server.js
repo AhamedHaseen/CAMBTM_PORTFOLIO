@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const ROOT = __dirname;
 
 const mimeTypes = {
@@ -37,7 +37,13 @@ const server = http.createServer((req, res) => {
       }
       return;
     }
-    res.writeHead(200, { 'Content-Type': contentType });
+    // Caching: HTML/CSS/JS are always revalidated so edits show up
+    // immediately (no stale "previous version"); media is cached briefly.
+    const revalidate = ext === '.html' || ext === '.css' || ext === '.js';
+    const cacheControl = revalidate
+      ? 'no-cache, must-revalidate'
+      : 'public, max-age=3600';
+    res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheControl });
     res.end(data);
   });
 });

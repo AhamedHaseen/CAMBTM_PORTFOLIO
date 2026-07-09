@@ -4,47 +4,19 @@
       yearEl.textContent = new Date().getFullYear();
     }
 
-    // ===== LOADING OVERLAY =====
-    // Stays up until every hero creative (all bento gallery images + the
-    // video) has actually finished loading, so the reveal never happens
-    // mid-load - no popcorning images or a video that visibly restarts.
-    // Was previously gated on window's `load` event, which waits for EVERY
-    // resource on the page - including the third-party Cal.com embed script -
-    // so a slow or hanging third-party request left the whole site stuck
-    // behind the spinner. Grabbing the image list here (rather than after the
-    // hero-bento loop-slider clones each column) means this sees exactly the
-    // 14 real creatives once each, not the ~3x cloned copies used for the
-    // infinite-scroll illusion.
-    //
-    // `overlayHiddenPromise` is also used below by the hero-stat counter
-    // animation - it used to start observing immediately on page load, so
-    // the whole count-up (well under a second) finished while still hidden
-    // behind this overlay, and visitors only ever saw the final resting
-    // numbers. A capped safety-net wait means one slow/broken asset can't
-    // spinner-lock the page forever.
-    const overlayHiddenPromise = (() => {
-      const overlay = document.getElementById('loading');
-      const imageUrls = [...new Set(
-        Array.from(document.querySelectorAll('.hero-bento .bento-img')).map(img => img.getAttribute('src'))
-      )];
-      const imagePromises = imageUrls.map(src => new Promise(resolve => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = resolve; // a broken asset shouldn't hang the reveal forever
-        img.src = src;
-      }));
-      const video = document.querySelector('.bento-video');
-      const videoPromise = video ? new Promise(resolve => {
-        if (video.readyState >= 2) { resolve(); return; } // HAVE_CURRENT_DATA - first frame already decoded
-        video.addEventListener('loadeddata', resolve, { once: true });
-        video.addEventListener('error', resolve, { once: true });
-      }) : Promise.resolve();
-      const MAX_WAIT = 6000;
-      return Promise.race([
-        Promise.all([...imagePromises, videoPromise]),
-        new Promise(resolve => setTimeout(resolve, MAX_WAIT))
-      ]).then(() => { overlay.classList.add('hidden'); });
-    })();
+    // ===== SITE-REVEAL SIGNAL =====
+    // The preloader overlay is owned entirely by the inline #bento-media-loader
+    // script in index.html now. This promise just tells the rest of main.js
+    // WHEN the site actually became visible, so time-sensitive intros (the
+    // hero-stat count-up below) don't run while still hidden behind the loader
+    // - otherwise the whole count finishes off-screen and visitors only ever
+    // see the final resting numbers. Resolves on the loader's `cambm:revealed`
+    // event, or immediately for repeat visitors who skipped straight in.
+    const overlayHiddenPromise = new Promise((resolve) => {
+      if (document.documentElement.classList.contains('bento-ready')) { resolve(); return; }
+      document.addEventListener('cambm:revealed', resolve, { once: true });
+      setTimeout(resolve, 12000); // safety net - never leave counters un-started
+    });
 
     // ===== HEADER SCROLL EFFECT + PARALLAX (combined, rAF-throttled) =====
     // Both effects need window.scrollY on every scroll frame. Running them in one
@@ -263,6 +235,49 @@
     // off (no reset to start) once they're done. Auto-scroll just nudges the
     // same scrollTop/scrollLeft that manual scrolling uses, so it never
     // blocks wheel/drag/touch input.
+    // Play bento videos ONLY while they're on-screen. The loop-slider clones
+    // each column ~3x, so there can be a dozen <video> elements in the DOM;
+    // the videos also carry preload="none" and no autoplay attribute, so a
+    // copy stays fully idle (nothing fetched, nothing decoding) until it
+    // actually scrolls into view. Without this, all copies would try to play
+    // at once - blowing past the browser's concurrent-decode limit (extra
+    // ones just freeze on a black frame) and, on a slow host, pulling every
+    // copy over the network simultaneously. This is the fix for the sliders
+    // "bugging out" once hosted.
+    const bentoVideoObserver = ('IntersectionObserver' in window)
+      ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            const v = entry.target;
+            if (entry.isIntersecting) {
+              const p = v.play();
+              if (p && typeof p.catch === 'function') p.catch(function () {});
+            } else {
+              v.pause();
+            }
+          });
+        }, { threshold: 0.2 })
+      : null;
+    function observeBentoVideos(container) {
+      container.querySelectorAll('video.bento-video').forEach(function (v) {
+        // Assign each (cloned) video its source from the embedded base64 map
+        // in js/videos-base64.js. Done here in JS - not as an HTML src - so
+        // the ~8MB of data URIs is never duplicated into the markup for every
+        // cloned copy the loop-slider makes; each clone just points its src
+        // property at the one shared string.
+        if (!v.src && v.dataset.videoKey && window.BENTO_VIDEOS) {
+          var uri = window.BENTO_VIDEOS[v.dataset.videoKey];
+          if (uri) v.src = uri;
+        }
+        if (bentoVideoObserver) {
+          bentoVideoObserver.observe(v);
+        } else {
+          // No IntersectionObserver (very old browser): just play them all.
+          var p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+      });
+    }
+
     function makeLoopSlider(container, axis, direction = 1, speed = DEFAULT_AUTO_SCROLL_SPEED) {
       const track = container.firstElementChild;
       if (!track) return;
@@ -309,6 +324,9 @@
         recentering = true;
         container[posProp] = setSize * Math.floor(copies / 2);
         recentering = false;
+        // Cloning just created fresh <video> copies - hand them to the
+        // visibility observer so only the on-screen ones ever play/load.
+        observeBentoVideos(container);
       }
 
       if (document.readyState === 'complete') build();
