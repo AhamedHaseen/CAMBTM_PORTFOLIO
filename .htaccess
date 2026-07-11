@@ -6,6 +6,20 @@
 # was what made old versions stick.
 # ============================================================
 
+DirectoryIndex welcome.html
+
+RewriteEngine On
+
+# 1. Externally redirect /page.html to /page
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*([^.]+)\.html\ HTTP [NC]
+RewriteRule ^(([^/]+/)*([^.]+))\.html$ /$1 [R=301,L]
+
+# 2. Internally map /page back to /page.html behind the scenes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+
 <IfModule mod_mime.c>
   AddType video/mp4  .mp4 .m4v
   AddType image/webp .webp

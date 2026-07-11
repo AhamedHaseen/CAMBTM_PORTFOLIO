@@ -6,7 +6,7 @@
 
     // ===== SITE-REVEAL SIGNAL =====
     // The preloader overlay is owned entirely by the inline #bento-media-loader
-    // script in index.html now. This promise just tells the rest of main.js
+    // script in welcome.html now. This promise just tells the rest of main.js
     // WHEN the site actually became visible, so time-sensitive intros (the
     // hero-stat count-up below) don't run while still hidden behind the loader
     // - otherwise the whole count finishes off-screen and visitors only ever
@@ -53,25 +53,31 @@
       }
     }, { passive: true });
 
-    // Manual eased scroll-to-top rather than scrollTo({behavior:'smooth'}):
-    // browsers silently downgrade the native smooth behavior to an instant
-    // jump when the visitor's OS has "reduce motion" turned on, which isn't
-    // something the scrollTo options can override. Driving it ourselves via
-    // rAF guarantees it always visibly animates.
-    backToTop.addEventListener('click', () => {
+    // Manual eased scrolling rather than native scrollTo/scrollIntoView with
+    // behavior:'smooth': browsers silently downgrade native smooth scrolling to
+    // an instant jump when the visitor's OS has "reduce motion" turned on, which
+    // the scroll options can't override. That downgrade is exactly why nav clicks
+    // animated on phones but jumped instantly on desktops that have reduce-motion
+    // enabled. Driving it ourselves via rAF guarantees these explicit navigation
+    // actions (back-to-top, nav anchors, logo) always visibly animate everywhere.
+    function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+    function smoothScrollTo(targetY, duration = 600) {
       const startY = window.pageYOffset;
-      const duration = 600;
+      const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const destY = Math.max(0, Math.min(targetY, maxY));
+      const distance = destY - startY;
+      if (Math.abs(distance) < 1) return;
       let startTime = null;
-      function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
       function step(timestamp) {
         if (startTime === null) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        window.scrollTo(0, startY * (1 - easeInOutQuad(progress)));
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        window.scrollTo(0, startY + distance * easeInOutQuad(progress));
         if (progress < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
-    });
+    }
+
+    backToTop.addEventListener('click', () => smoothScrollTo(0));
 
     // ===== MOBILE NAV TOGGLE =====
     const navToggle = document.getElementById('navToggle');
@@ -525,6 +531,10 @@
     // (Parallax is now handled in the combined, rAF-throttled scroll listener above.)
 
     // ===== SMOOTH SCROLL FOR NAV LINKS =====
+    // Uses the same rAF-driven smoothScrollTo as back-to-top so nav clicks animate
+    // even when the OS has reduce-motion on. The fixed header height is subtracted
+    // so the target section isn't left hidden underneath the header.
+    const HEADER_OFFSET = 80; // = --header-height (64) + 16, matches section[id] scroll-margin-top
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -537,10 +547,26 @@
         const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const targetY = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+          smoothScrollTo(targetY);
         }
       });
     });
+
+    // ===== LOGO -> HOME (top of landing page) =====
+    // On the landing page the logo scrolls smoothly to the top instead of
+    // reloading; on any other page (e.g. about.html) it just follows its
+    // href="welcome.html" and lands at the top of a fresh page load.
+    const logoHome = document.querySelector('.js-logo-home');
+    if (logoHome) {
+      logoHome.addEventListener('click', function (e) {
+        const page = (location.pathname.split('/').pop() || 'welcome.html').toLowerCase();
+        if (page === '' || page === 'welcome.html') {
+          e.preventDefault();
+          smoothScrollTo(0);
+        }
+      });
+    }
 
     // Note: marquee now runs at a fixed, smooth CSS-only speed (see .brands-track
     // in css/main.css). Previously this dynamically rewrote animation-duration on
@@ -600,20 +626,6 @@
       });
     }
 
-    // ===== TYPEWRITER EFFECT FOR HERO =====
-    function typewriterEffect(element, text, speed = 50) {
-      let i = 0;
-      element.textContent = '';
-      function type() {
-        if (i < text.length) {
-          element.textContent += text.charAt(i);
-          i++;
-          setTimeout(type, speed);
-        }
-      }
-      type();
-    }
-
     // ===== COUNTER ANIMATION =====
     function animateCounter(element, target, duration = 2000) {
       // Suffix ('+', '%', etc.) read from the element's own starting text
@@ -655,61 +667,6 @@
     overlayHiddenPromise.then(() => {
       document.querySelectorAll('.hero-stat').forEach(stat => statObserver.observe(stat));
     });
-
-    // ===== TEXT SCRAMBLE EFFECT =====
-    class TextScramble {
-      constructor(el) {
-        this.el = el;
-        this.chars = '!<>-_\\/[]{}&mdash;=+*^?#________';
-        this.update = this.update.bind(this);
-      }
-      setText(newText) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length);
-        const promise = new Promise(resolve => this.resolve = resolve);
-        this.queue = [];
-        for (let i = 0; i < length; i++) {
-          const from = oldText[i] || '';
-          const to = newText[i] || '';
-          const start = Math.floor(Math.random() * 40);
-          const end = start + Math.floor(Math.random() * 40);
-          this.queue.push({ from, to, start, end });
-        }
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.update();
-        return promise;
-      }
-      update() {
-        let output = '';
-        let complete = 0;
-        for (let i = 0, n = this.queue.length; i < n; i++) {
-          let { from, to, start, end, char } = this.queue[i];
-          if (this.frame >= end) {
-            complete++;
-            output += to;
-          } else if (this.frame >= start) {
-            if (!char || Math.random() < 0.28) {
-              char = this.randomChar();
-              this.queue[i].char = char;
-            }
-            output += `<span class="text-scramble-char">${char}</span>`;
-          } else {
-            output += from;
-          }
-        }
-        this.el.innerHTML = output;
-        if (complete === this.queue.length) {
-          this.resolve();
-        } else {
-          this.frameRequest = requestAnimationFrame(this.update);
-          this.frame++;
-        }
-      }
-      randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
-      }
-    }
 
     // ===== BLUR-IN ANIMATION =====
     function blurInElements() {

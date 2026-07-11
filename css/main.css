@@ -2139,3 +2139,346 @@
     right: 0;
   }
 }
+
+    /* ============================================================
+       ABOUT PAGE (about.html) - built entirely from existing tokens.
+       Reuses .section-inner / .section-eyebrow / .section-title /
+       .section-desc / .feature-grid / .feature-card / .diff-* / .cta /
+       .btn* from the landing page. Only the pieces below are new, and
+       they use logical properties so Arabic (dir=rtl) mirrors cleanly.
+       ============================================================ */
+
+    /* ---- Hero ---- */
+    .about-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: calc(var(--header-height) + 64px) 24px 80px;
+      overflow: hidden;
+    }
+    .about-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--container);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .about-hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(2.75rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      margin: 18px 0 28px;
+      max-width: 18ch;
+    }
+    .about-hero-accent { color: var(--accent); display: block; }
+    .about-hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    /* ---- Generic About section rhythm ---- */
+    .about-section { padding: clamp(72px, 10vw, 120px) 24px; position: relative; }
+
+    /* ---- Our Story + Built From Technology: two elevated cards ---- */
+    .about-split {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      /* min(100%, 300px) so a card can shrink below 300px on very narrow
+         screens (320px) instead of forcing horizontal overflow. */
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: 24px;
+    }
+    .about-split-card {
+      background: rgba(245,244,239,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(28px, 4vw, 44px);
+    }
+    .about-card-title {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .about-card-body { color: var(--text-muted); font-size: 1.05rem; line-height: 1.75; }
+
+    /* ---- Why Work With Us: table-style rows (reason | description) ---- */
+    .about-why { margin: 48px 0 0; }
+    .about-why-item {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.28fr) 1fr;
+      gap: 56px;
+      padding: 26px 0;
+      border-top: 1px solid var(--border);
+    }
+    .about-why-item:last-child { border-bottom: 1px solid var(--border); }
+    .about-why-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      margin: 0;
+    }
+    .about-why-body { color: var(--text-muted); line-height: 1.65; }
+
+    /* ---- Process: reuse .diff-item/.diff-number as full-width rows ---- */
+    .about-process-list {
+      margin: 48px 0 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .about-process-list .diff-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ---- Values: table-like definition list (no cards) ---- */
+    .about-values { margin: 48px 0 0; }
+    .about-value {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.28fr) 1fr;
+      gap: 56px;
+      padding: 26px 0;
+      border-top: 1px solid var(--border);
+    }
+    .about-value:last-child { border-bottom: 1px solid var(--border); }
+    .about-value-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .about-value-body { color: var(--text-muted); line-height: 1.65; }
+
+    /* ---- Global Direction timeline: horizontal desktop -> vertical mobile ---- */
+    .about-timeline {
+      max-width: var(--container);
+      margin: 56px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .about-node { position: relative; padding-top: 28px; border-top: 2px solid var(--border); }
+    .about-node::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      inset-inline-start: 0;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .about-node-label {
+      font-family: 'Inter Tight', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .about-node-detail { color: var(--text-muted); line-height: 1.55; font-size: 0.95rem; }
+
+    @media (max-width: 720px) {
+      .about-timeline { grid-template-columns: 1fr; gap: 0; }
+      .about-node {
+        border-top: none;
+        border-inline-start: 2px solid var(--border);
+        padding-top: 0;
+        padding-inline-start: 26px;
+        padding-bottom: 34px;
+      }
+      .about-node:last-child { padding-bottom: 0; }
+      .about-node::before { top: 2px; inset-inline-start: -7px; }
+    }
+    @media (max-width: 560px) {
+      .about-value, .about-why-item { grid-template-columns: 1fr; gap: 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-hero, .about-split-card, .about-why-item, .about-value, .about-node {
+        transition: none !important;
+      }
+    }
+    
+
+
+/* ===== EDITORIAL CHAPTER UPDATES FOR OLD THEME ===== */
+
+/* 1. Wrapper to force 01 and 02 to stack vertically */
+.about-split {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 120px; /* Adjust this to change the vertical space between 01 and 02 */
+}
+
+/* 2. Asymmetric 2-column story splits (Zig-Zag Layout) */
+.about-story-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 72px;
+  align-items: center; /* Vertically centres the content */
+}
+
+/* 3. Meta: Title & Number */
+.about-story-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.about-chapter-num {
+  display: block;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(4.5rem, 8vw, 6.5rem);
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent); /* Transparent number with orange stroke */
+  user-select: none;
+}
+.about-card-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+/* 4. Row 1 (Odd): Meta on Left, Body on Right */
+.about-story-row:nth-child(odd) .about-story-meta {
+  text-align: left;
+  align-items: flex-start;
+}
+.about-story-row:nth-child(odd) .about-story-body-wrap {
+  position: relative;
+  padding-left: 56px;
+}
+.about-story-row:nth-child(odd) .about-story-body-wrap::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -15%;
+  bottom: -15%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+}
+
+/* 5. Row 2 (Even): Body on Left, Meta on Right */
+.about-story-row:nth-child(even) {
+  grid-template-columns: 1.5fr 1fr;
+}
+.about-story-row:nth-child(even) .about-story-meta {
+  order: 2;
+  text-align: right;
+  align-items: flex-end;
+}
+.about-story-row:nth-child(even) .about-story-body-wrap {
+  order: 1;
+  position: relative;
+  padding-right: 56px;
+  text-align: left;
+}
+.about-story-row:nth-child(even) .about-story-body-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -15%;
+  bottom: -15%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+}
+
+/* 6. Section 03 — the connected system: a numbered flow of 4 stages.
+   Deliberately card-based (vs. the borderless service grid it replaced) and
+   distinct from the section-07 timeline, so the page never repeats a layout. */
+.about-flow {
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.about-flow-step {
+  padding: 30px 26px;
+  background: rgba(245, 244, 239, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.3s ease, transform 0.5s ease;
+}
+.about-flow-step:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+.about-flow-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(227,117,47,0.14);
+  color: var(--accent);
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+.about-flow-label {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.about-flow-body { color: var(--text-muted); line-height: 1.6; font-size: 0.97rem; }
+
+/* 7. Mobile Responsiveness */
+@media (max-width: 900px) {
+  .about-split {
+    gap: 64px;
+  }
+  .about-story-row, .about-story-row:nth-child(even) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .about-story-row:nth-child(odd) .about-story-meta,
+  .about-story-row:nth-child(even) .about-story-meta {
+    order: 1;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .about-story-row:nth-child(odd) .about-story-body-wrap,
+  .about-story-row:nth-child(even) .about-story-body-wrap {
+    order: 2;
+    padding: 0 0 0 28px;
+  }
+  
+  .about-story-row:nth-child(odd) .about-story-body-wrap::before,
+  .about-story-row:nth-child(even) .about-story-body-wrap::after {
+    display: none;
+  }
+  .about-story-row .about-story-body-wrap::before {
+    display: block !important;
+    content: '' !important;
+    position: absolute;
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--accent) 20%, var(--accent) 80%, transparent) !important;
+  }
+
+  .about-flow { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .about-flow { grid-template-columns: 1fr; }
+}
+
+

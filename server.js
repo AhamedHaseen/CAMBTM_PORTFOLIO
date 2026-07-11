@@ -19,9 +19,9 @@ const mimeTypes = {
 };
 
 const server = http.createServer((req, res) => {
-  // Strip query strings, default to index.html at root
+  // Strip query strings, default to welcome.html at root
   const urlPath = decodeURIComponent(req.url.split('?')[0]);
-  let filePath = path.join(ROOT, urlPath === '/' ? '/index.html' : urlPath);
+  let filePath = path.join(ROOT, urlPath === '/' ? '/welcome.html' : urlPath);
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = mimeTypes[ext] || 'application/octet-stream';
