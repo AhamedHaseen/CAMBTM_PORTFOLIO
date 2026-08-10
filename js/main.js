@@ -123,6 +123,57 @@
       }
     });
 
+    const packagesSwitcher = document.querySelector('.packages-switcher');
+    if (packagesSwitcher) {
+      const packageTabs = Array.from(packagesSwitcher.querySelectorAll('[data-package-tab]'));
+      const packagePanels = Array.from(document.querySelectorAll('[data-package-panel]'));
+      const packageGlass = packagesSwitcher.querySelector('.packages-switcher-glass');
+      let packageGlassTimer;
+
+      function activatePackageTab(index, moveFocus) {
+        const normalizedIndex = (index + packageTabs.length) % packageTabs.length;
+        const activeTab = packageTabs[normalizedIndex];
+        const activeName = activeTab.getAttribute('data-package-tab');
+        const previousIndex = packageTabs.findIndex(tab => tab.getAttribute('aria-selected') === 'true');
+
+        packagesSwitcher.style.setProperty('--package-tab-index', normalizedIndex);
+        if (packageGlass && previousIndex !== normalizedIndex) {
+          clearTimeout(packageGlassTimer);
+          packageGlass.classList.remove('is-gliding');
+          requestAnimationFrame(() => packageGlass.classList.add('is-gliding'));
+          packageGlassTimer = setTimeout(() => packageGlass.classList.remove('is-gliding'), 600);
+        }
+        packageTabs.forEach((tab, tabIndex) => {
+          const isActive = tabIndex === normalizedIndex;
+          tab.classList.toggle('is-active', isActive);
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          tab.tabIndex = isActive ? 0 : -1;
+        });
+        packagePanels.forEach(panel => {
+          const isActive = panel.getAttribute('data-package-panel') === activeName;
+          panel.classList.remove('is-active');
+          panel.hidden = !isActive;
+          if (isActive) requestAnimationFrame(() => panel.classList.add('is-active'));
+        });
+        if (moveFocus) activeTab.focus();
+      }
+
+      packageTabs.forEach((tab, tabIndex) => {
+        tab.addEventListener('click', () => activatePackageTab(tabIndex, false));
+        tab.addEventListener('keydown', event => {
+          const isRtl = document.documentElement.dir === 'rtl';
+          let nextIndex = null;
+          if (event.key === 'ArrowRight') nextIndex = tabIndex + (isRtl ? -1 : 1);
+          if (event.key === 'ArrowLeft') nextIndex = tabIndex + (isRtl ? 1 : -1);
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = packageTabs.length - 1;
+          if (nextIndex === null) return;
+          event.preventDefault();
+          activatePackageTab(nextIndex, true);
+        });
+      });
+    }
+
     // ===== CUSTOM CURSOR =====
     const cursor = document.getElementById('cursor');
     const cursorRing = document.getElementById('cursorRing');

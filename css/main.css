@@ -973,145 +973,430 @@
       font-size: 0.8rem;
     }
 
-    /* ===== PRICING ===== */
-    .pricing {
-      padding: 120px 24px 80px;
-      background: #050505;
+    /* ===== PACKAGES ===== */
+    .packages {
+      padding: 120px 24px 96px;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(227,117,47,0.08), transparent 30%),
+        #050505;
       position: relative;
+      overflow: hidden;
     }
-    .pricing-grid {
-      max-width: var(--container);
-      margin: 64px auto 0;
+    .packages-heading { text-align: center; }
+    .packages-summary {
+      max-width: 660px;
+      margin: 20px auto 0;
+    }
+    .packages-switcher {
+      --package-tab-index: 0;
+      width: min(100%, 620px);
+      min-height: 62px;
+      margin: 52px auto 0;
+      padding: 6px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      position: relative;
+      isolation: isolate;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(255,255,255,0.025),
+        0 22px 60px rgba(0,0,0,0.24);
+      -webkit-backdrop-filter: blur(26px) saturate(165%);
+      backdrop-filter: blur(26px) saturate(165%);
+    }
+    .packages-switcher::after {
+      content: '';
+      position: absolute;
+      inset: 1px 12% auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent);
+      pointer-events: none;
+    }
+    .packages-switcher-glass {
+      position: absolute;
+      z-index: -1;
+      inset-block: 6px;
+      inset-inline-start: calc((100% / 3) * var(--package-tab-index) + 6px);
+      width: calc((100% / 3) - 12px);
+      overflow: hidden;
+      border: 1px solid rgba(227,117,47,0.42);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 15%, rgba(255,192,150,0.22), transparent 40%),
+        linear-gradient(135deg, rgba(227,117,47,0.34), rgba(227,117,47,0.14));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        inset 0 -1px 0 rgba(227,117,47,0.24),
+        0 8px 30px rgba(227,117,47,0.24);
+      -webkit-backdrop-filter: blur(30px) saturate(185%);
+      backdrop-filter: blur(30px) saturate(185%);
+      transition:
+        inset-inline-start 520ms cubic-bezier(0.2, 0.9, 0.25, 1),
+        box-shadow 360ms ease;
+      will-change: inset-inline-start, transform;
+    }
+    .packages-switcher-glass::before,
+    .packages-switcher-glass::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+    }
+    .packages-switcher-glass::before {
+      inset: 1px 12% auto;
+      height: 42%;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,0.17), transparent);
+      filter: blur(3px);
+    }
+    .packages-switcher-glass::after {
+      width: 42%;
+      height: 180%;
+      inset-block-start: -40%;
+      inset-inline-start: -60%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-18deg);
+      opacity: 0;
+    }
+    .packages-switcher-glass.is-gliding {
+      animation: packageGlassMorph 560ms cubic-bezier(0.2, 0.9, 0.25, 1);
+    }
+    .packages-switcher-glass.is-gliding::after {
+      animation: packageGlassShimmer 560ms ease-out;
+    }
+    @keyframes packageGlassMorph {
+      0%, 100% { transform: scale(1); }
+      48% { transform: scaleX(1.075) scaleY(0.94); }
+    }
+    @keyframes packageGlassShimmer {
+      0% { inset-inline-start: -60%; opacity: 0; }
+      28% { opacity: 0.75; }
+      100% { inset-inline-start: 120%; opacity: 0; }
+    }
+    .packages-tab {
+      min-width: 0;
+      padding: 14px 12px;
+      position: relative;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: color 220ms ease;
+      z-index: 1;
+    }
+    .packages-tab:hover,
+    .packages-tab.is-active { color: var(--text); }
+    .packages-tab:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .packages-panels {
+      max-width: var(--container);
+      margin: 60px auto 0;
+    }
+    .packages-panel.is-active {
+      animation: packagePanelIn 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes packagePanelIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .packages-panel-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .packages-panel-number {
+      color: var(--accent);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding-top: 8px;
+    }
+    .packages-panel-heading h3 {
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 400;
+      line-height: 0.95;
+    }
+    .packages-panel-subtitle {
+      margin-top: 12px;
+      color: var(--text);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .packages-panel-tagline {
+      margin-top: 6px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    .packages-panel-tagline-only {
+      max-width: 680px;
+      margin: 0 auto 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 24px;
       align-items: stretch;
     }
-    .pricing-card {
+    .package-card {
+      min-width: 0;
       position: relative;
-      background: rgba(245,244,239,0.03);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px 32px;
+      padding: 38px 30px 30px;
       display: flex;
       flex-direction: column;
-      transition: transform 0.4s ease, border-color 0.3s ease;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(245,244,239,0.035);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+      transition: transform 280ms ease, border-color 280ms ease, background 280ms ease;
     }
-    .pricing-card:hover { transform: translateY(-4px); }
-    .pricing-card-featured {
-      background: rgba(227,117,47,0.06);
-      border-color: rgba(227,117,47,0.4);
-      transform: scale(1.04);
-      z-index: 1;
+    .package-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245,244,239,0.22);
+      background: rgba(245,244,239,0.05);
     }
-    .pricing-card-featured:hover { transform: scale(1.04) translateY(-4px); }
-    .pricing-badge {
+    .packages-panel.is-active .package-card,
+    .packages-panel.is-active .package-extra,
+    .packages-panel.is-active .packages-terms,
+    .packages-panel.is-active .packages-panel-tagline-only {
+      animation: packageContentIn 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .packages-panel.is-active .package-card:nth-child(2) { animation-delay: 55ms; }
+    .packages-panel.is-active .package-card:nth-child(3) { animation-delay: 110ms; }
+    .packages-panel.is-active .packages-terms { animation-delay: 145ms; }
+    .packages-panel.is-active .package-extra { animation-delay: 175ms; }
+    @keyframes packageContentIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .package-card-featured {
+      border-color: rgba(227,117,47,0.5);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(227,117,47,0.15), transparent 34%),
+        rgba(227,117,47,0.07);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 24px 70px rgba(227,117,47,0.08);
+    }
+    .package-badge {
       position: absolute;
-      top: -14px;
-      left: 32px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 6px 14px;
+      inset-block-start: -14px;
+      inset-inline-start: 28px;
+      padding: 6px 13px;
       border-radius: 999px;
       background: var(--accent);
-      color: var(--text);
-    }
-    .pricing-name {
-      font-family: 'Inter Tight', sans-serif;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .pricing-price {
-      font-family: 'Instrument Serif', serif;
-      font-size: 2.5rem;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    /* Only the "/mo" suffix should be small/muted - this used to be a bare
-       `span` selector, which also matched the price-amount span added
-       alongside data-price-index, silently shrinking and muting the actual
-       price number too. Scoped to .pricing-price-suffix specifically now. */
-    .pricing-price .pricing-price-suffix {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-    .pricing-term {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
-    .pricing-tc {
+      color: #0a0a0a;
       font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .package-tier {
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .package-tier-title {
+      margin-bottom: 0;
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 3vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .package-card-title {
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.05;
+    }
+    .package-card-tagline {
+      min-height: 3em;
+      margin-top: 12px;
       color: var(--text-muted);
-      opacity: 0.7;
-      text-align: center;
-      margin-top: 14px;
-    }
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 32px;
-      flex-grow: 1;
-    }
-    .pricing-features li {
-      position: relative;
-      padding-left: 26px;
       font-size: 0.9rem;
-      color: var(--text-muted);
+      font-style: italic;
       line-height: 1.5;
     }
-    .pricing-features li::before {
+    .package-features {
+      margin: 28px 0 30px;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 12px;
+      list-style: none;
+    }
+    .package-features li {
+      position: relative;
+      padding-inline-start: 27px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .package-features li::before {
       content: '\2713';
-      position: absolute;
-      left: 0;
-      top: 0;
       width: 18px;
       height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: var(--accent);
-      background: rgba(227,117,47,0.15);
+      position: absolute;
+      inset-block-start: 1px;
+      inset-inline-start: 0;
+      display: grid;
+      place-items: center;
       border-radius: 50%;
+      background: rgba(227,117,47,0.15);
+      color: var(--accent);
+      font-size: 0.66rem;
     }
-    .pricing-btn { width: 100%; text-align: center; }
-    .pricing-enterprise {
-      max-width: var(--container);
-      margin: 40px auto 0;
-      background: rgba(245,244,239,0.03);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .pricing-enterprise h3 {
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 1.25rem;
+    .package-feature-emphasis {
+      color: var(--text) !important;
       font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
     }
-    .pricing-enterprise p {
-      font-size: 0.9rem;
+    .package-note {
+      margin: -8px 0 24px;
+      padding: 12px 14px;
+      border-inline-start: 2px solid var(--accent);
+      background: rgba(227,117,47,0.07);
       color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .package-best {
+      margin-bottom: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+    .package-best span:first-child {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .package-select { width: 100%; }
+    .package-extra {
+      margin-top: 32px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+      gap: 44px;
+      align-items: start;
+      border: 1px solid rgba(227,117,47,0.34);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 0 0, rgba(227,117,47,0.13), transparent 34%),
+        rgba(245,244,239,0.035);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .package-extra-intro h4 {
+      color: var(--text);
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 3.5vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .package-extra-intro > p:not(.package-tier) {
+      margin-top: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .package-extra-select { margin-top: 26px; }
+    .package-extra-features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 28px;
+    }
+    .package-extra-features div {
+      min-width: 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .package-extra-features strong,
+    .package-extra-features span { display: block; }
+    .package-extra-features strong {
+      color: var(--text);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .package-extra-features span {
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .packages-terms {
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      text-align: end;
+    }
+    .packages-terms.packages-terms-global {
+      max-width: var(--container);
+      margin: 32px auto 0;
+      text-align: center;
     }
     @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-      .pricing-card-featured { transform: none; }
-      .pricing-card-featured:hover { transform: translateY(-4px); }
+      .packages-grid { grid-template-columns: 1fr; }
+      .package-card-tagline { min-height: 0; }
+      .package-card-featured { order: 0; }
+      .package-extra { grid-template-columns: 1fr; }
     }
-
+    @media (max-width: 600px) {
+      .packages { padding: 92px 16px 72px; }
+      .packages-switcher {
+        min-height: 56px;
+        margin-top: 38px;
+        padding: 5px;
+      }
+      .packages-switcher-glass {
+        inset-block: 5px;
+        inset-inline-start: calc((100% / 3) * var(--package-tab-index) + 5px);
+        width: calc((100% / 3) - 10px);
+      }
+      .packages-tab {
+        padding: 12px 5px;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+      }
+      .packages-panels { margin-top: 44px; }
+      .packages-panel-heading { gap: 14px; }
+      .packages-panel-number { padding-top: 5px; }
+      .package-card { padding: 34px 22px 24px; }
+      .package-card-title { font-size: 1.8rem; }
+      .package-extra { padding: 28px 22px; gap: 32px; }
+      .package-extra-features { grid-template-columns: 1fr; gap: 16px; }
+      .packages-terms { text-align: start; }
+    }
     /* ===== TESTIMONIALS ===== */
     .testimonials {
       padding: 120px 24px;
@@ -2480,5 +2765,3 @@
 @media (max-width: 560px) {
   .about-flow { grid-template-columns: 1fr; }
 }
-
-
