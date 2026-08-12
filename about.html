@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="elysia">
+<html lang="en" data-theme="elysia" class="page-preloading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +11,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://app.cal.com">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.12">
-  <link rel="stylesheet" href="css/animations.css?v=1.0.12">
+  <link rel="stylesheet" href="css/main.css?v=1.0.22">
+  <link rel="stylesheet" href="css/animations.css?v=1.0.22">
+  <style>
+    html.page-preloading, html.page-preloading body { min-height: 100%; overflow: hidden; }
+    html.page-preloading body > :not(.loading-overlay) { opacity: 0 !important; visibility: hidden !important; }
+    body.revealing { overflow: hidden !important; }
+  </style>
 </head>
 <body>
+  <div class="loading-overlay" id="pageLoading" role="status" aria-live="polite" aria-label="Loading" data-i18n-attr="aria-label:loader.loading">
+    <div class="preloader-stage">
+      <div class="preloader-meta"><span data-i18n="loader.loading">Loading</span><b><span id="pagePreloaderPct">0</span>%</b></div>
+      <div class="preloader-rule"></div>
+    </div>
+  </div>
 
   <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
@@ -28,7 +39,7 @@
       </a>
       <nav class="nav">
         <a href="welcome.html#hero" class="nav-link" data-i18n="nav.home">Home</a>
-        <a href="welcome.html#ai" class="nav-link" data-i18n="nav.systems">Systems</a>
+        <a href="portfolio.html" class="nav-link" data-i18n="nav.portfolio">Portfolio</a>
         <a href="welcome.html#why-CAMBM" class="nav-link" data-i18n="nav.whyCambm">Why CAMBM</a>
         <a href="welcome.html#packages" class="nav-link" data-i18n="nav.packages">Packages</a>
         <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
@@ -49,7 +60,7 @@
     <!-- Mobile nav panel -->
     <nav class="mobile-nav" id="mobileNav">
       <a href="welcome.html#hero" class="mobile-nav-link" data-i18n="nav.home">Home</a>
-      <a href="welcome.html#ai" class="mobile-nav-link" data-i18n="nav.systems">Systems</a>
+      <a href="portfolio.html" class="mobile-nav-link" data-i18n="nav.portfolio">Portfolio</a>
       <a href="welcome.html#why-CAMBM" class="mobile-nav-link" data-i18n="nav.whyCambm">Why CAMBM</a>
       <a href="welcome.html#packages" class="mobile-nav-link" data-i18n="nav.packages">Packages</a>
       <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">About</a>
@@ -323,8 +334,9 @@
     </div>
   </div>
 
-  <script src="js/i18n.js?v=1.0.12"></script>
-  <script src="js/main.js?v=1.0.12"></script>
+  <script src="js/i18n.js?v=1.0.22"></script>
+  <script src="js/main.js?v=1.0.22"></script>
+  <script src="js/page-loader.js?v=1.0.22"></script>
 
   <!-- Cal.com booking widget -->
   <script type="text/javascript">

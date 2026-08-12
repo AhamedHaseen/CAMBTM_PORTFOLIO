@@ -4,6 +4,44 @@
       yearEl.textContent = new Date().getFullYear();
     }
 
+    // ===== MULTI-PAGE PREFETCH =====
+    // Keep the static multi-page architecture, but warm the other documents
+    // before visitors request them.
+    const cambmPages = ['welcome.html', 'about.html', 'portfolio.html'];
+    const prefetchedPages = new Set();
+
+    function getInternalPage(anchor) {
+      if (!anchor || !anchor.href || anchor.target === '_blank' || anchor.hasAttribute('download')) return null;
+      let url;
+      try { url = new URL(anchor.href, window.location.href); } catch (error) { return null; }
+      if (url.origin !== window.location.origin) return null;
+      const page = (url.pathname.split('/').pop() || 'welcome.html').toLowerCase();
+      return cambmPages.indexOf(page) !== -1 ? { page: page, url: url } : null;
+    }
+
+    function prefetchPage(page) {
+      if (prefetchedPages.has(page)) return;
+      prefetchedPages.add(page);
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = page;
+      link.as = 'document';
+      document.head.appendChild(link);
+    }
+
+    function prefetchFromEvent(event) {
+      const target = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      const destination = getInternalPage(target);
+      if (destination) prefetchPage(destination.page);
+    }
+
+    document.addEventListener('pointerover', prefetchFromEvent, { passive: true });
+    document.addEventListener('focusin', prefetchFromEvent);
+    document.addEventListener('touchstart', prefetchFromEvent, { passive: true });
+    const prefetchAllPages = function () { cambmPages.forEach(prefetchPage); };
+    if ('requestIdleCallback' in window) window.requestIdleCallback(prefetchAllPages, { timeout: 1800 });
+    else window.setTimeout(prefetchAllPages, 900);
+
     // ===== SITE-REVEAL SIGNAL =====
     // The preloader overlay is owned entirely by the inline #bento-media-loader
     // script in welcome.html now. This promise just tells the rest of main.js
@@ -11,7 +49,7 @@
     // hero-stat count-up below) don't run while still hidden behind the loader
     // - otherwise the whole count finishes off-screen and visitors only ever
     // see the final resting numbers. Resolves on the loader's `cambm:revealed`
-    // event, or immediately for repeat visitors who skipped straight in.
+    // event, or immediately on pages that are already visible.
     const overlayHiddenPromise = new Promise((resolve) => {
       if (document.documentElement.classList.contains('bento-ready')) { resolve(); return; }
       document.addEventListener('cambm:revealed', resolve, { once: true });
@@ -231,39 +269,43 @@
     const clientPopupName = document.getElementById('clientPopupName');
     const bentoCards = document.querySelectorAll('.bento-card');
 
-    function openClientPopup(card) {
-      const img = card.querySelector('img');
-      const overlayName = card.querySelector('.bento-brand');
-      if (img && clientPopupImage) {
-        clientPopupImage.style.backgroundImage = `url("${img.getAttribute('src')}")`;
+    if (clientPopupBackdrop && clientPopupClose) {
+      function openClientPopup(card) {
+        const img = card.querySelector('img');
+        const video = card.querySelector('video');
+        const overlayName = card.querySelector('.bento-brand');
+        if (img && clientPopupImage) {
+          clientPopupImage.style.backgroundImage = `url("${img.getAttribute('src')}")`;
+        }
+        if (clientPopupName) {
+          const mediaName = img ? img.getAttribute('alt') : (video ? video.getAttribute('aria-label') : '');
+          clientPopupName.textContent = overlayName ? overlayName.textContent.trim() : (mediaName || 'Client');
+        }
+        clientPopupBackdrop.classList.add('open');
       }
-      if (clientPopupName) {
-        clientPopupName.textContent = overlayName ? overlayName.textContent.trim() : (img ? img.getAttribute('alt') : 'Client');
+      function closeClientPopup() {
+        clientPopupBackdrop.classList.remove('open');
       }
-      clientPopupBackdrop.classList.add('open');
+
+      bentoCards.forEach(card => {
+        card.addEventListener('click', () => openClientPopup(card));
+      });
+
+      clientPopupClose.addEventListener('click', closeClientPopup);
+
+      // Clicking the dimmed backdrop (i.e. outside the card itself) closes it.
+      clientPopupBackdrop.addEventListener('click', (e) => {
+        if (e.target === clientPopupBackdrop) {
+          closeClientPopup();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && clientPopupBackdrop.classList.contains('open')) {
+          closeClientPopup();
+        }
+      });
     }
-    function closeClientPopup() {
-      clientPopupBackdrop.classList.remove('open');
-    }
-
-    bentoCards.forEach(card => {
-      card.addEventListener('click', () => openClientPopup(card));
-    });
-
-    clientPopupClose.addEventListener('click', closeClientPopup);
-
-    // Clicking the dimmed backdrop (i.e. outside the card itself) closes it.
-    clientPopupBackdrop.addEventListener('click', (e) => {
-      if (e.target === clientPopupBackdrop) {
-        closeClientPopup();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && clientPopupBackdrop.classList.contains('open')) {
-        closeClientPopup();
-      }
-    });
 
     // Auto-scroll speed, in pixels PER SECOND (not per frame - see the
     // delta-time note in autoScrollStep below), for every auto-scrolling

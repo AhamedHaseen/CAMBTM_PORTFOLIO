@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cambridge Marketing</title>
   <meta name="description" content="Cambridge Marketing (CAMBM) grows brands with creative strategy, social media, paid ads, websites, POS and ERP systems - marketing and technology under one roof.">
-  <!-- <script>
-    /* Repeat visitors skip the preloader entirely. The flag persists until the
-       visitor clears their site data ("until cleared"). This runs before first
-       paint so returning visitors never see a flash of the loading bar. */
-    try {
-      if (localStorage.getItem('cambm_visited')) {
-        var de = document.documentElement;
-        de.classList.remove('bento-preloading');
-        de.classList.add('bento-ready', 'skip-preloader');
-      }
-    } catch (e) {}
-  </script> -->
   <link rel="icon" type="image/png" href="images/cambm-logo-.png">
   <link rel="apple-touch-icon" href="images/cambm-logo-.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +14,8 @@
        Do not use <link rel="preload" as="video"> here, because Chrome flags
        as="video" as an unsupported preload value. -->
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.12">
-  <link rel="stylesheet" href="css/animations.css?v=1.0.12">
+  <link rel="stylesheet" href="css/main.css?v=1.0.22">
+  <link rel="stylesheet" href="css/animations.css?v=1.0.22">
   <style id="bento-preload-gate">
     /* Keep the site hidden behind the preloader until the hero media is ready.
        Inlined so it applies on first paint, before main.css loads. */
@@ -40,8 +28,6 @@
       opacity: 0 !important;
       visibility: hidden !important;
     }
-    /* Repeat visitors (flag set): never render the overlay, show content now. */
-    /* html.skip-preloader .loading-overlay { display: none !important; } */
     /* Scroll stays locked through the reveal zoom (avoids a scrollbar flash);
        the loader script drops .revealing on the zoom's transitionend. */
     body.revealing { overflow: hidden !important; }
@@ -69,7 +55,7 @@
       <nav class="nav">
 
         <a href="#hero" class="nav-link" data-i18n="nav.home">Home</a>
-        <a href="#ai" class="nav-link" data-i18n="nav.systems">Systems</a>
+        <a href="portfolio.html" class="nav-link" data-i18n="nav.portfolio">Portfolio</a>
         <!-- <a href="#what-we-do" class="nav-link">Services</a> -->
          <a href="#why-CAMBM" class="nav-link" data-i18n="nav.whyCambm">Why CAMBM</a>
         <a href="#packages" class="nav-link" data-i18n="nav.packages">Packages</a>
@@ -91,7 +77,7 @@
     <!-- Mobile nav panel: only shown below 1024px, toggled by the hamburger button -->
     <nav class="mobile-nav" id="mobileNav">
       <a href="#hero" class="mobile-nav-link" data-i18n="nav.home">Home</a>
-      <a href="#ai" class="mobile-nav-link" data-i18n="nav.systems">Systems</a>
+      <a href="portfolio.html" class="mobile-nav-link" data-i18n="nav.portfolio">Portfolio</a>
       <!-- <a href="#what-we-do" class="mobile-nav-link">Services</a> -->
        <a href="#why-CAMBM" class="mobile-nav-link" data-i18n="nav.whyCambm">Why CAMBM</a>
       <a href="#packages" class="mobile-nav-link" data-i18n="nav.packages">Packages</a>
@@ -145,13 +131,13 @@
           <div class="bento-track">
             
             <div class="bento-card">
-              <img src="images/brand-creatives/myra.jpg" alt="Myra" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/myra.jpg" alt="Myra creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">M</span> Myra</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/hijaz_pasta.jpg" alt="hijazpasta" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/hijaz_pasta.jpg" alt="Hijaz Pasta creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
@@ -161,13 +147,13 @@
                  forever; muted+playsinline is what lets it autoplay on mobile.
                  Scrolls with the column exactly like the image cards. -->
             <div class="bento-card bento-card--video">
-              <video class="bento-video" src="images/brand-creatives/topballer-vid-creative.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <video class="bento-video" src="images/brand-creatives/topballer-vid-creative.mp4" aria-label="Top Baller video creative" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/onex-roze.jpg" alt="Onex Roze" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/onex-roze.jpg" alt="Onex Roze creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">O</span> Onex Roze</div> -->
               </div>
@@ -186,14 +172,14 @@
             
             
             <div class="bento-card bento-card--video">
-              <video class="bento-video" src="images/brand-creatives/hijaz-ad.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <video class="bento-video" src="images/brand-creatives/hijaz-ad.mp4" aria-label="Hijaz advertisement" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
             </div>
 
             <div class="bento-card">
-              <img src="images/brand-creatives/uneeflow-creative.jpg" alt="uneeflow" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/uneeflow-creative.jpg" alt="Uneeflow creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div> -->
               </div>
@@ -206,7 +192,7 @@
             </div> -->
             
             <div class="bento-card">
-              <img src="images/brand-creatives/al-fakhir.jpg" alt="Al Fakhir" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/al-fakhir.jpg" alt="Al Fakhir creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">A</span> Al Fakhir</div> -->
               </div>
@@ -214,28 +200,28 @@
             
 
             <div class="bento-card">
-              <img src="images/brand-creatives/mahanama.jpg" alt="Mahanama" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/mahanama.jpg" alt="Mahanama creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">M</span> Mahanama</div> -->
               </div>
             </div>
 
             <div class="bento-card bento-card--video">
-              <video class="bento-video" src="images/brand-creatives/zafiro-ad.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <video class="bento-video" src="images/brand-creatives/zafiro-ad.mp4" aria-label="Zafiro advertisement" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
             </div>
 
             <div class="bento-card">
-              <img src="images/brand-creatives/lucky-darbar.jpg" alt="Lucky Darbar" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/lucky-darbar.jpg" alt="Lucky Darbar creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">L</span> Lucky Darbar</div> -->
               </div>
             </div>
             
             <div class="bento-card">
-              <img src="images/brand-creatives/convenience-store.jpg" alt="The Convenience Store" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/convenience-store.jpg" alt="The Convenience Store creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> The Convenience Store</div> -->
               </div>
@@ -247,13 +233,13 @@
         <div class="bento-column">
           <div class="bento-track">
             <div class="bento-card">
-              <img src="images/brand-creatives/tuktuk-creative.jpg" alt="tuktuk" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/tuktuk-creative.jpg" alt="Tuk Tuk creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">H</span> Hijaz</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/dan-massey.jpg" alt="Dan Massey" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/dan-massey.jpg" alt="Dan Massey creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">D</span> Dan Massey</div> -->
               </div>
@@ -268,19 +254,19 @@
             </div> -->
             
             <div class="bento-card">
-              <img src="images/brand-creatives/crane-shoes.jpg" alt="Crane Shoes" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/crane-shoes.jpg" alt="Crane Shoes creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">C</span> Crane Shoes</div> -->
               </div>
             </div>
             <div class="bento-card bento-card--video">
-              <video class="bento-video" src="images/brand-creatives/myra-newspaper.mp4" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
+              <video class="bento-video" src="images/brand-creatives/myra-newspaper.mp4" aria-label="Myra newspaper video" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">T</span> Top Baller</div> -->
               </div>
             </div>
             <div class="bento-card">
-              <img src="images/brand-creatives/fly-bagdad.jpg" alt="Fly Bagdad" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/fly-bagdad.jpg" alt="Fly Bagdad creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <!-- <div class="bento-brand"><span class="bento-brand-logo">F</span> Fly Bagdad</div> -->
               </div>
@@ -301,10 +287,10 @@
         <div class="brand-card"><img src="images/brands/myra.png" alt="Myra" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/hijaz-logo.png" alt="Hijaz" loading="lazy"></div>
 
-        <div class="brand-card"><img src="images/brands/uneeflow.png" alt="uneeflow" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/milemir.png" alt="milemir" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/uneeflow.png" alt="Uneeflow" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/milemir.png" alt="Milemir" loading="lazy"></div>
         <!-- <div class="brand-card"><img src="images/brands/elitetours.png" alt="elitetours" loading="lazy"></div> -->
-        <div class="brand-card"><img src="images/brands/whitehawk.png" alt="whitehawk" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/whitehawk.png" alt="Whitehawk" loading="lazy"></div>
 
 
 
@@ -315,23 +301,23 @@
         <div class="brand-card"><img src="images/brands/rumico.png" alt="Rumico" loading="lazy"></div>
 
         <div class="brand-card"><img src="images/brands/airlink-cargo.png" alt="Airlink Cargo" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/bananaleaf.png" alt="bananaleaf" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/bluestar.png" alt="bluestar" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/brightcargo.png" alt="brightcargo" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/bananaleaf.png" alt="Banana Leaf" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/bluestar.png" alt="Blue Star" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/brightcargo.png" alt="Bright Cargo" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/creative-graphics.png" alt="Creative Graphics" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/elitealhijaz.png" alt="elitealhijaz" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/elitealhijaz.png" alt="Elite Al Hijaz" loading="lazy"></div>
         <!-- <div class="brand-card"><img src="images/brands/eubakeries-equipments.png" alt="Eubakeries Equipments" loading="lazy"></div> -->
-        <div class="brand-card"><img src="images/brands/gep.png" alt="gep" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/gep.png" alt="GEP" loading="lazy"></div>
       </div>
     </div>
     <div class="brands-marquee scroll-reveal">
       <div class="brands-track">
         <!-- <div class="brand-card"><img src="images/brands/nch.png" alt="NCH" loading="lazy"></div> -->
 
-        <div class="brand-card"><img src="images/brands/cavara.png" alt="cavara" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/wefaq monochrome logo.png" alt="tuktukmarbella" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/classictrip.png" alt="classictrip" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/iclx.png" alt="iclx" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/cavara.png" alt="Cavara" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/wefaq monochrome logo.png" alt="Wefaq" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/classictrip.png" alt="Classic Trip" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/iclx.png" alt="ICLX" loading="lazy"></div>
 
         <div class="brand-card"><img src="images/brands/mahanama.png" alt="Mahanama" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/crane-shoes.png" alt="Crane Shoes" loading="lazy"></div>
@@ -340,12 +326,12 @@
         <div class="brand-card"><img src="images/brands/fly-bagdad.png" alt="Fly Bagdad" loading="lazy"></div>
 
         <div class="brand-card"><img src="images/brands/hamada-enterprises.png" alt="Hamada Enterprises" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/krexpress.png" alt="krexpress" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/nabdemirates.png" alt="nabdemirates" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/krexpress.png" alt="KR Express" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/nabdemirates.png" alt="NABD Emirates" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/oxbridge-academy.png" alt="Oxbridge Academy" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/qrqumarentals.png" alt="qrqumarentals" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/tricoarabia.png" alt="tricoarabia" loading="lazy"></div>
-        <div class="brand-card"><img src="images/brands/victoriaingredients.png" alt="victoriaingredients" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/qrqumarentals.png" alt="QR Quma Rentals" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/tricoarabia.png" alt="Trico Arabia" loading="lazy"></div>
+        <div class="brand-card"><img src="images/brands/victoriaingredients.png" alt="Victoria Ingredients" loading="lazy"></div>
         <div class="brand-card"><img src="images/brands/zahrani-group.png" alt="Zahrani Group" loading="lazy"></div>
       </div>
     </div>
@@ -615,8 +601,8 @@ Everything is built to work together, so your brand looks professional, attracts
     <div class="packages-switcher scroll-reveal" role="tablist" data-i18n-attr="aria-label:packages.tabsAriaLabel" aria-label="Package categories">
       <span class="packages-switcher-glass" aria-hidden="true"></span>
       <button type="button" class="packages-tab is-active" id="packageTabBuild" role="tab" aria-selected="true" aria-controls="packagePanelBuild" data-package-tab="build" data-i18n="packages.tab.build">BUILD</button>
-      <button type="button" class="packages-tab" id="packageTabGrow" role="tab" aria-selected="false" aria-controls="packagePanelGrow" data-package-tab="grow" data-i18n="packages.tab.grow" tabindex="-1">GROW</button>
       <button type="button" class="packages-tab" id="packageTabCreate" role="tab" aria-selected="false" aria-controls="packagePanelCreate" data-package-tab="create" data-i18n="packages.tab.create" tabindex="-1">CREATE</button>
+      <button type="button" class="packages-tab" id="packageTabGrow" role="tab" aria-selected="false" aria-controls="packagePanelGrow" data-package-tab="grow" data-i18n="packages.tab.grow" tabindex="-1">GROW</button>
     </div>
 
     <div class="packages-panels">
@@ -748,7 +734,8 @@ Everything is built to work together, so your brand looks professional, attracts
         <p class="packages-panel-tagline packages-panel-tagline-only" data-i18n="packages.create.tagline">Professional creative support without building an in-house team.</p>
 
         <div class="packages-grid">
-          <article class="package-card">
+          <article class="package-card package-card-featured">
+            <div class="package-badge">&#9733; <span data-i18n="packages.recommended">Most Recommended</span></div>
             <h4 class="package-tier package-tier-title" data-i18n="packages.tier.starter">Starter</h4>
             <ul class="package-features">
               <li class="package-feature-emphasis" data-i18n="packages.create.starter.f1">Up to 12 Creatives / Month</li>
@@ -759,11 +746,10 @@ Everything is built to work together, so your brand looks professional, attracts
               <li data-i18n="packages.create.starter.f6">Standard Turnaround</li>
               <li data-i18n="packages.create.starter.f7">Monthly Creative Planning</li>
             </ul>
-            <button type="button" class="btn btn-secondary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Create","Select-a-plan":"Starter"}' data-package-category="Create" data-package-plan="Starter" data-i18n="packages.select">Select</button>
+            <button type="button" class="btn btn-primary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Create","Select-a-plan":"Starter"}' data-package-category="Create" data-package-plan="Starter" data-i18n="packages.select">Select</button>
           </article>
 
-          <article class="package-card package-card-featured">
-            <div class="package-badge">&#9733; <span data-i18n="packages.recommended">Most Recommended</span></div>
+          <article class="package-card">
             <h4 class="package-tier package-tier-title" data-i18n="packages.tier.prestige">Prestige</h4>
             <ul class="package-features">
               <li class="package-feature-emphasis" data-i18n="packages.create.prestige.f1">Up to 24 Creative Requests / Month*</li>
@@ -775,7 +761,7 @@ Everything is built to work together, so your brand looks professional, attracts
               <li data-i18n="packages.create.prestige.f7">Dedicated Creative Direction</li>
               <li data-i18n="packages.create.prestige.f8">Priority Turnaround</li>
             </ul>
-            <button type="button" class="btn btn-primary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Create","Select-a-plan":"Prestige"}' data-package-category="Create" data-package-plan="Prestige" data-i18n="packages.select">Select</button>
+            <button type="button" class="btn btn-secondary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Create","Select-a-plan":"Prestige"}' data-package-category="Create" data-package-plan="Prestige" data-i18n="packages.select">Select</button>
           </article>
 
           <article class="package-card">
@@ -1054,10 +1040,6 @@ Everything is built to work together, so your brand looks professional, attracts
     (function () {
       var root = document.documentElement;
 
-      // Repeat visitors were already revealed by the head skip-gate; nothing
-      // to preload/animate here.
-      if (!root.classList.contains("bento-preloading")) return;
-
       var MIN_DURATION = 1500;   // floor so a warm cache doesn't flash the bar
       var FAILSAFE     = 8000;   // reveal even if an asset hangs
       var HOLD         = 700;    // dwell at 100% before the zoom-out fires
@@ -1069,8 +1051,6 @@ Everything is built to work together, so your brand looks professional, attracts
       function reveal() {
         if (revealed) return;
         revealed = true;
-        // try { localStorage.setItem("cambm_visited", "1"); } catch (e) {}
-
         // Content fades in + hero settles; the bar zooms out, blurs and fades.
         root.classList.remove("bento-preloading");
         root.classList.add("bento-ready");
@@ -1150,8 +1130,8 @@ Everything is built to work together, so your brand looks professional, attracts
     })();
   </script>
 
-  <script src="js/i18n.js?v=1.0.12"></script>
-  <script src="js/main.js?v=1.0.12"></script>
+  <script src="js/i18n.js?v=1.0.22"></script>
+  <script src="js/main.js?v=1.0.22"></script>
 
   <!-- Cal.com booking widget: turns every button with data-cal-link into a
        popup calendar (official "element click" embed snippet). Booking
