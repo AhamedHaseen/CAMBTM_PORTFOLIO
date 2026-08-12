@@ -1699,15 +1699,6 @@
     .hero { transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
     html.bento-preloading .hero { transform: scale(1.04); }
 
-    @media (prefers-reduced-motion: reduce) {
-      .loading-overlay,
-      .preloader-stage,
-      body > :not(.loading-overlay),
-      .hero { transition-duration: 0.01ms !important; }
-      .loading-overlay.out .preloader-stage { transform: none; filter: none; }
-      html.bento-preloading .hero { transform: none; }
-    }
-    
     /* ===== CURSOR ===== */
     .cursor {
       position: fixed;
@@ -2584,12 +2575,7 @@
       .about-value, .about-why-item { grid-template-columns: 1fr; gap: 6px; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .about-hero, .about-split-card, .about-why-item, .about-value, .about-node {
-        transition: none !important;
-      }
-    }
-    
+
 
 
 /* ===== EDITORIAL CHAPTER UPDATES FOR OLD THEME ===== */
@@ -3870,10 +3856,4 @@ main { view-transition-name: site-content; }
   .portfolio-map-preview .btn { grid-column: 1 / -1; width: 100%; }
   .portfolio-final-cta { min-height: 620px; }
   .portfolio-map-shortcut { left: 14px; bottom: 14px; width: 44px; height: 44px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-hero-orbit,
-  .portfolio-scroll-line::after,
-  .portfolio-marker-pulse { animation: none; }
 }
