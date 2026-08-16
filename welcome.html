@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="elysia" class="bento-preloading">
+<html lang="en" data-theme="light" class="bento-preloading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cambridge Marketing</title>
   <meta name="description" content="Cambridge Marketing (CAMBM) grows brands with creative strategy, social media, paid ads, websites, POS and ERP systems - marketing and technology under one roof.">
-  <link rel="icon" type="image/png" href="images/cambm-logo-.png">
-  <link rel="apple-touch-icon" href="images/cambm-logo-.png">
+  <link rel="icon" type="image/png" href="images/cambm-logo-.png?v=1.0.30">
+  <link rel="icon" type="image/svg+xml" href="images/cambm-logo-dark.svg?v=1.0.30" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="images/cambm-logo-.png?v=1.0.30">
+  <script src="js/theme.js?v=1.0.30"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://app.cal.com">
@@ -14,8 +16,8 @@
        Do not use <link rel="preload" as="video"> here, because Chrome flags
        as="video" as an unsupported preload value. -->
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.23">
-  <link rel="stylesheet" href="css/animations.css?v=1.0.23">
+  <link rel="stylesheet" href="css/main.css?v=1.0.30">
+  <link rel="stylesheet" href="css/animations.css?v=1.0.30">
   <style id="bento-preload-gate">
     /* Keep the site hidden behind the preloader until the hero media is ready.
        Inlined so it applies on first paint, before main.css loads. */
@@ -50,7 +52,7 @@
   <header class="header" id="header">
     <div class="header-inner">
       <a href="welcome.html" class="logo js-logo-home" data-i18n-attr="aria-label:nav.homeAriaLabel" aria-label="Cambridge Marketing - back to top">
-        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block;">
+        <img class="theme-logo" src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block;">
       </a>
       <nav class="nav">
 
@@ -66,6 +68,10 @@
           <select class="locale-select locale-country-select" aria-label="Country"></select>
           <select class="locale-select locale-language-select" aria-label="Language"></select>
         </div>
+        <button type="button" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Change color theme" data-label-light="Switch to light theme" data-label-dark="Switch to dark theme" data-i18n-attr="data-label-light:theme.switchToLight,data-label-dark:theme.switchToDark,title:theme.title">
+          <svg class="theme-toggle-icon theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.1A8.4 8.4 0 0 1 8.9 3.6 8.6 8.6 0 1 0 20.4 15.1Z"/></svg>
+          <svg class="theme-toggle-icon theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
         <button type="button" class="btn btn-primary btn-sm js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en"}' data-i18n="nav.bookCall">Book a strategy call</button>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
@@ -84,6 +90,13 @@
       <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">About</a>
 
       <div class="mobile-nav-actions">
+        <div class="mobile-theme-row">
+          <span data-i18n="theme.appearance">Appearance</span>
+          <button type="button" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Change color theme" data-label-light="Switch to light theme" data-label-dark="Switch to dark theme" data-i18n-attr="data-label-light:theme.switchToLight,data-label-dark:theme.switchToDark,title:theme.title">
+            <svg class="theme-toggle-icon theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.1A8.4 8.4 0 0 1 8.9 3.6 8.6 8.6 0 1 0 20.4 15.1Z"/></svg>
+            <svg class="theme-toggle-icon theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          </button>
+        </div>
         <div class="locale-nav-picker locale-nav-picker-mobile">
           <select class="locale-select locale-country-select" aria-label="Country"></select>
           <select class="locale-select locale-language-select" aria-label="Language"></select>
@@ -159,7 +172,7 @@
               </div>
             </div>
             <!-- <div class="bento-card">
-              <img src="images/brand-creatives/classictrip-creative.jpg" alt="classictrip" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/classictrip-creative.jpg" alt="Classic Trip creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div>
               </div>
@@ -185,7 +198,7 @@
               </div>
             </div>
             <!-- <div class="bento-card">
-              <img src="images/brand-creatives/lucky_darbar_tikka.jpg" alt="luckydarbar2" class="bento-img" loading="lazy" decoding="async">
+              <img src="images/brand-creatives/lucky-darbar.jpg" alt="Lucky Darbar creative" class="bento-img" loading="lazy" decoding="async">
               <div class="bento-overlay">
                 <div class="bento-brand"><span class="bento-brand-logo">N</span> NCH</div>
               </div>
@@ -607,8 +620,6 @@ Everything is built to work together, so your brand looks professional, attracts
 
     <div class="packages-panels">
       <div class="packages-panel is-active" id="packagePanelBuild" role="tabpanel" aria-labelledby="packageTabBuild" data-package-panel="build">
-        <p class="packages-panel-tagline packages-panel-tagline-only" data-i18n="packages.build.tagline">Technology built around your business.</p>
-
         <div class="packages-grid">
           <article class="package-card">
             <h4 class="package-tier package-tier-title" data-i18n="packages.tier.starter">Starter</h4>
@@ -677,15 +688,13 @@ Everything is built to work together, so your brand looks professional, attracts
       </div>
 
       <div class="packages-panel" id="packagePanelGrow" role="tabpanel" aria-labelledby="packageTabGrow" data-package-panel="grow" hidden>
-        <p class="packages-panel-tagline packages-panel-tagline-only" data-i18n="packages.grow.tagline">Turn attention into measurable growth.</p>
-
         <div class="packages-grid">
           <article class="package-card">
             <h4 class="package-tier package-tier-title" data-i18n="packages.tier.starter">Starter</h4>
             <ul class="package-features">
               <li data-i18n="packages.grow.starter.f1">Social Media Management</li>
               <li data-i18n="packages.grow.starter.f2">Monthly Content Planning</li>
-              <li data-i18n="packages.grow.starter.f3">Social Media Optimization</li>
+              <li data-i18n="packages.grow.starter.f3">Social Media Profile Optimization</li>
               <li data-i18n="packages.grow.starter.f4">Monthly Growth Plan</li>
               <li data-i18n="packages.grow.starter.f5">Basic Brand Direction</li>
               <li data-i18n="packages.grow.starter.f6">Monthly Performance Report</li>
@@ -699,14 +708,17 @@ Everything is built to work together, so your brand looks professional, attracts
             <ul class="package-features">
               <li data-i18n="packages.grow.prestige.f1">Everything in Starter</li>
               <li data-i18n="packages.grow.prestige.f2">Dedicated Content Strategist</li>
-              <li data-i18n="packages.grow.prestige.f3">Content Creation</li>
-              <li data-i18n="packages.grow.prestige.f4">Premium Social Media Management</li>
-              <li data-i18n="packages.grow.prestige.f5">Strategic Content Planning</li>
+              <li data-i18n="packages.grow.prestige.f3">Professional Content Creation</li>
+              <li data-i18n="packages.grow.prestige.f4">Advanced Social Media Management</li>
+              <li data-i18n="packages.grow.prestige.f5">Strategic Monthly Content Plan</li>
               <li data-i18n="packages.grow.prestige.f6">Creative Direction</li>
               <li data-i18n="packages.grow.prestige.f7">Monthly Campaign Planning</li>
-              <li data-i18n="packages.grow.prestige.f8">Performance Marketing Management</li>
-              <li data-i18n="packages.grow.prestige.f9">Audience &amp; Competitor Analysis</li>
-              <li data-i18n="packages.grow.prestige.f10">Detailed Growth Reporting</li>
+              <li data-i18n="packages.grow.prestige.f8">Meta Ads Management</li>
+              <li data-i18n="packages.grow.prestige.f9">Facebook &amp; Instagram Advertising</li>
+              <li data-i18n="packages.grow.prestige.f10">TikTok Ads Management</li>
+              <li data-i18n="packages.grow.prestige.f11">Audience &amp; Competitor Research</li>
+              <li data-i18n="packages.grow.prestige.f12">Campaign Optimization</li>
+              <li data-i18n="packages.grow.prestige.f13">Detailed Monthly Growth Report</li>
             </ul>
             <button type="button" class="btn btn-primary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Growth","Select-a-plan":"Prestige"}' data-package-category="Growth" data-package-plan="Prestige" data-i18n="packages.select">Select</button>
           </article>
@@ -715,15 +727,20 @@ Everything is built to work together, so your brand looks professional, attracts
             <h4 class="package-tier package-tier-title" data-i18n="packages.tier.elite">Elite</h4>
             <ul class="package-features">
               <li data-i18n="packages.grow.elite.f1">Everything in Prestige</li>
-              <li data-i18n="packages.grow.elite.f2">Senior Marketing Strategist</li>
-              <li data-i18n="packages.grow.elite.f3">Complete Brand Management</li>
+              <li data-i18n="packages.grow.elite.f2">Senior Growth Strategist</li>
+              <li data-i18n="packages.grow.elite.f3">Advanced Brand &amp; Marketing Direction</li>
               <li data-i18n="packages.grow.elite.f4">Advanced Campaign Strategy</li>
-              <li data-i18n="packages.grow.elite.f5">Multi-Channel Performance Marketing</li>
-              <li data-i18n="packages.grow.elite.f6">Advanced Creative Direction</li>
-              <li data-i18n="packages.grow.elite.f7">Campaign &amp; Launch Planning</li>
-              <li data-i18n="packages.grow.elite.f8">Funnel &amp; Conversion Strategy</li>
-              <li data-i18n="packages.grow.elite.f9">Continuous Campaign Optimization</li>
-              <li data-i18n="packages.grow.elite.f10">Advanced Performance Reporting</li>
+              <li data-i18n="packages.grow.elite.f5">Meta Ads Management</li>
+              <li data-i18n="packages.grow.elite.f6">Facebook &amp; Instagram Advertising</li>
+              <li data-i18n="packages.grow.elite.f7">TikTok Ads Management</li>
+              <li data-i18n="packages.grow.elite.f8">Google Ads Management</li>
+              <li data-i18n="packages.grow.elite.f9">Search, Display &amp; Performance Campaigns</li>
+              <li data-i18n="packages.grow.elite.f10">Multi Channel Advertising Strategy</li>
+              <li data-i18n="packages.grow.elite.f11">Campaign &amp; Launch Planning</li>
+              <li data-i18n="packages.grow.elite.f12">Funnel &amp; Conversion Strategy</li>
+              <li data-i18n="packages.grow.elite.f13">Conversion Tracking &amp; Performance Optimization</li>
+              <li data-i18n="packages.grow.elite.f14">Continuous Campaign Optimization</li>
+              <li data-i18n="packages.grow.elite.f15">Advanced Performance &amp; Growth Reporting</li>
             </ul>
             <button type="button" class="btn btn-secondary package-select js-open-cal" data-cal-link="cambridge.marketing/30min" data-cal-namespace="strategy-call" data-cal-config='{"layout":"month_view","language":"en","locale":"en","Select-a-package":"Growth","Select-a-plan":"Elite"}' data-package-category="Growth" data-package-plan="Elite" data-i18n="packages.select">Select</button>
           </article>
@@ -731,8 +748,6 @@ Everything is built to work together, so your brand looks professional, attracts
       </div>
 
       <div class="packages-panel" id="packagePanelCreate" role="tabpanel" aria-labelledby="packageTabCreate" data-package-panel="create" hidden>
-        <p class="packages-panel-tagline packages-panel-tagline-only" data-i18n="packages.create.tagline">Professional creative support without building an in-house team.</p>
-
         <div class="packages-grid">
           <article class="package-card package-card-featured">
             <div class="package-badge">&#9733; <span data-i18n="packages.recommended">Most Recommended</span></div>
@@ -874,7 +889,7 @@ Everything is built to work together, so your brand looks professional, attracts
       <div class="footer-top" style="display: none;">
         <div>
           <div class="footer-brand">
-            <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
+            <img class="theme-logo" src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
           </div>
           <p class="footer-desc">Marketing that grows you. Technology that runs you. One team for campaigns, brand, and the systems behind your business.</p>
         </div>
@@ -909,9 +924,29 @@ Everything is built to work together, so your brand looks professional, attracts
           </ul>
         </div>
       </div>
+      <section class="footer-offices" aria-label="Our offices" data-i18n-attr="aria-label:footer.office.label">
+        <article class="footer-office">
+          <span class="footer-office-code" aria-hidden="true">SA</span>
+          <h3 data-i18n="footer.office.sa.title">Cambridge Marketing - Saudi Arabia</h3>
+          <dl class="footer-office-details">
+            <div><dt data-i18n="footer.office.phone">Contact number</dt><dd><a href="tel:+966557323125">+966 55 732 3125</a></dd></div>
+            <div><dt data-i18n="footer.office.address">Address</dt><dd><address data-i18n="footer.office.sa.address">City Centre, Mishrifah, Jeddah, Saudi Arabia</address></dd></div>
+            <div><dt data-i18n="footer.office.email">Email</dt><dd><a href="mailto:marketing@cambt.com">marketing@cambt.com</a></dd></div>
+          </dl>
+        </article>
+        <article class="footer-office">
+          <span class="footer-office-code" aria-hidden="true">LK</span>
+          <h3 data-i18n="footer.office.lk.title">Cambridge Marketing - Sri Lanka</h3>
+          <dl class="footer-office-details">
+            <div><dt data-i18n="footer.office.phone">Contact number</dt><dd><a href="tel:+94766490522">+94 76 649 0522</a></dd></div>
+            <div><dt data-i18n="footer.office.address">Address</dt><dd><address data-i18n="footer.office.lk.address">No 275, 2nd Floor, Nawala Road, Sri Jayawardenepura Kotte, Colombo, Srilanka</address></dd></div>
+            <div><dt data-i18n="footer.office.email">Email</dt><dd><a href="mailto:marketing@cambt.com">marketing@cambt.com</a></dd></div>
+          </dl>
+        </article>
+      </section>
       <div class="footer-bottom">
-        <img src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
-        <p class="footer-copyright">&copy; <span id="currentYear">2026</span> Cambridge Marketing. <span data-i18n="footer.rights">All rights reserved.</span></p>
+        <img class="theme-logo" src="images/cambridge-logo.png" alt="Cambridge Marketing" width="133" height="40" style="height: 40px; width: auto; display: block; filter: brightness(10);">
+        <p class="footer-copyright">&copy; <span id="currentYear">2026</span> Cambridge Marketing (PVT) Ltd. <span data-i18n="footer.rights">All rights reserved.</span></p>
         <div class="footer-socials">
           
           <!-- WhatsApp: to change the prefilled message, edit the text after
@@ -941,6 +976,15 @@ Everything is built to work together, so your brand looks professional, attracts
     </div>
   </footer>
 
+  <nav class="contact-actions" aria-label="Quick contact" data-i18n-attr="aria-label:contact.quickActions">
+    <a class="contact-action contact-action-whatsapp js-region-whatsapp" href="https://wa.me/94766490522?text=Hi%20Cambridge%20Marketing!%20I%20found%20you%20through%20your%20website%20and%20I%27d%20like%20to%20grow%20my%20business%20with%20you.%20Can%20we%20talk%3F" aria-label="Chat on WhatsApp" data-i18n-attr="aria-label:contact.whatsappAria" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a class="contact-action contact-action-call js-region-call" href="tel:+94766490522" aria-label="Call Cambridge Marketing" data-i18n-attr="aria-label:contact.callAria">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.1 3.5 9.5 8 7.8 9.8c1.3 2.7 3.6 5 6.3 6.3l1.8-1.7 4.5 2.4-.6 3c-.2.8-.9 1.4-1.8 1.4C9.7 21.2 2.8 14.3 2.8 6c0-.9.6-1.6 1.4-1.8l2.9-.7Z"/></svg>
+    </a>
+  </nav>
+
   <!-- Client card popup: shown on clicking a bento gallery image.
        Displays the clicked image and the client name only. -->
   <div class="client-popup-backdrop" id="clientPopupBackdrop">
@@ -963,9 +1007,9 @@ Everything is built to work together, so your brand looks professional, attracts
     <div class="locale-popup" role="dialog" aria-modal="true" aria-label="Select your region">
       <h3 class="locale-popup-title" data-i18n="locale.popupTitle">Choose your country &amp; language</h3>
       <p class="locale-popup-desc" data-i18n="locale.popupDesc">We'll tailor pricing and language to your region.</p>
-      <label class="locale-field-label" data-i18n="locale.countryLabel">Country</label>
+      <label class="locale-field-label" for="localePopupCountry" data-i18n="locale.countryLabel">Country</label>
       <select class="locale-select" id="localePopupCountry"></select>
-      <label class="locale-field-label" data-i18n="locale.languageLabel">Language</label>
+      <label class="locale-field-label" for="localePopupLanguage" data-i18n="locale.languageLabel">Language</label>
       <select class="locale-select" id="localePopupLanguage"></select>
       <button type="button" class="btn btn-primary locale-popup-confirm" id="localePopupConfirm" data-i18n="locale.confirm">Continue</button>
       <p class="locale-popup-note" data-i18n="locale.changeNote">You can change this anytime from the menu.</p>
@@ -980,20 +1024,20 @@ Everything is built to work together, so your brand looks professional, attracts
       <h3 class="contact-popup-title" data-i18n="contact.title">Contact Enterprise Sales</h3>
       <p class="contact-popup-desc" data-i18n="contact.desc">Tell us about your business and we'll get back to you shortly.</p>
       <form id="contactForm" class="contact-form">
-        <label data-i18n="contact.nameLabel">Full name</label>
-        <input type="text" name="name" required minlength="2" maxlength="100"
+        <label for="contactName" data-i18n="contact.nameLabel">Full name</label>
+        <input id="contactName" type="text" name="name" required minlength="2" maxlength="100"
           pattern="[\p{L}\p{M}\s.'\-]{2,100}"
           title="Please enter a name using letters only (no numbers or symbols)">
-        <label data-i18n="contact.emailLabel">Email</label>
-        <input type="email" name="email" required maxlength="150">
-        <label data-i18n="contact.companyLabel">Company</label>
-        <input type="text" name="company" minlength="2" maxlength="100">
-        <label data-i18n="contact.phoneLabel">Phone (optional)</label>
-        <input type="tel" name="phone" pattern="\+[0-9][0-9\s\-]{6,18}"
+        <label for="contactEmail" data-i18n="contact.emailLabel">Email</label>
+        <input id="contactEmail" type="email" name="email" required maxlength="150">
+        <label for="contactCompany" data-i18n="contact.companyLabel">Company</label>
+        <input id="contactCompany" type="text" name="company" minlength="2" maxlength="100">
+        <label for="contactPhone" data-i18n="contact.phoneLabel">Phone (optional)</label>
+        <input id="contactPhone" type="tel" name="phone" pattern="\+[0-9][0-9\s\-]{6,18}"
           placeholder="+94 77 123 4567"
           title="Include your country code, e.g. +94 77 123 4567">
-        <label data-i18n="contact.messageLabel">Message</label>
-        <textarea name="message" rows="4" required minlength="10" maxlength="2000"></textarea>
+        <label for="contactMessage" data-i18n="contact.messageLabel">Message</label>
+        <textarea id="contactMessage" name="message" rows="4" required minlength="10" maxlength="2000"></textarea>
         <input type="hidden" name="_subject" value="Enterprise inquiry - Cambridge Marketing">
         <button type="submit" class="btn btn-primary contact-form-submit" data-i18n="contact.send">Send message</button>
         <p class="contact-form-status" id="contactFormStatus" role="status"></p>
@@ -1013,20 +1057,20 @@ Everything is built to work together, so your brand looks professional, attracts
       <p class="contact-popup-desc" id="actionPopupDesc">Tell us a bit about your business and we'll get back to you shortly.</p>
       <p class="action-popup-plan" id="actionPopupPlan" style="display:none;"></p>
       <form id="actionPopupForm" class="contact-form">
-        <label data-i18n="contact.nameLabel">Full name</label>
-        <input type="text" name="name" required minlength="2" maxlength="100"
+        <label for="actionName" data-i18n="contact.nameLabel">Full name</label>
+        <input id="actionName" type="text" name="name" required minlength="2" maxlength="100"
           pattern="[\p{L}\p{M}\s.'\-]{2,100}"
           title="Please enter a name using letters only (no numbers or symbols)">
-        <label data-i18n="contact.emailLabel">Email</label>
-        <input type="email" name="email" required maxlength="150">
-        <label data-i18n="contact.companyLabel">Company</label>
-        <input type="text" name="company" minlength="2" maxlength="100">
-        <label data-i18n="contact.phoneLabel">Phone (optional)</label>
-        <input type="tel" name="phone" pattern="\+[0-9][0-9\s\-]{6,18}"
+        <label for="actionEmail" data-i18n="contact.emailLabel">Email</label>
+        <input id="actionEmail" type="email" name="email" required maxlength="150">
+        <label for="actionCompany" data-i18n="contact.companyLabel">Company</label>
+        <input id="actionCompany" type="text" name="company" minlength="2" maxlength="100">
+        <label for="actionPhone" data-i18n="contact.phoneLabel">Phone (optional)</label>
+        <input id="actionPhone" type="tel" name="phone" pattern="\+[0-9][0-9\s\-]{6,18}"
           placeholder="+94 77 123 4567"
           title="Include your country code, e.g. +94 77 123 4567">
-        <label data-i18n="contact.messageLabel">Message</label>
-        <textarea name="message" rows="4" maxlength="2000"></textarea>
+        <label for="actionMessage" data-i18n="contact.messageLabel">Message</label>
+        <textarea id="actionMessage" name="message" rows="4" maxlength="2000"></textarea>
         <input type="hidden" name="plan" id="actionPopupPlanField" value="">
         <input type="hidden" name="_subject" id="actionPopupSubjectField" value="">
         <button type="submit" class="btn btn-primary contact-form-submit" data-i18n="contact.send">Send message</button>
@@ -1130,8 +1174,8 @@ Everything is built to work together, so your brand looks professional, attracts
     })();
   </script>
 
-  <script src="js/i18n.js?v=1.0.23"></script>
-  <script src="js/main.js?v=1.0.23"></script>
+  <script src="js/i18n.js?v=1.0.30"></script>
+  <script src="js/main.js?v=1.0.30"></script>
 
   <!-- Cal.com booking widget: turns every button with data-cal-link into a
        popup calendar (official "element click" embed snippet). Booking
@@ -1167,7 +1211,7 @@ Everything is built to work together, so your brand looks professional, attracts
     Cal("init", "strategy-call", { origin: "https://cal.com" });
 
     Cal.ns["strategy-call"]("ui", {
-      theme: "light",
+      theme: document.documentElement.dataset.theme,
       styles: { branding: { brandColor: "#e3752f" } },
       hideEventTypeDetails: false,
       layout: "month_view"

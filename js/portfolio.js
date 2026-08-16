@@ -259,7 +259,7 @@
         '<div class="portfolio-card-media">' + logoStageMarkup(project) + '</div>' +
         '<div class="portfolio-card-content">' +
           '<div><h3>' + escapeHtml(project.brand) + '</h3><p>' + escapeHtml(projectCopy(project, 'teaser')) + '</p></div>' +
-          '<span class="portfolio-card-arrow" aria-hidden="true">↗</span>' +
+          '<span class="portfolio-card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.9 17.1 17 7M9.1 6.9c2.8-.1 5.4 0 8 .1.2 2.7.2 5.3 0 8"/></svg></span>' +
         '</div>' +
         '<div class="portfolio-card-tags">' + tagsMarkup(project) + '</div>' +
       '</div>' +

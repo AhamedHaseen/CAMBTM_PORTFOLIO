@@ -26,6 +26,7 @@
       link.rel = 'prefetch';
       link.href = page;
       link.as = 'document';
+      link.fetchPriority = 'low';
       document.head.appendChild(link);
     }
 
@@ -39,8 +40,16 @@
     document.addEventListener('focusin', prefetchFromEvent);
     document.addEventListener('touchstart', prefetchFromEvent, { passive: true });
     const prefetchAllPages = function () { cambmPages.forEach(prefetchPage); };
-    if ('requestIdleCallback' in window) window.requestIdleCallback(prefetchAllPages, { timeout: 1800 });
-    else window.setTimeout(prefetchAllPages, 900);
+    function scheduleIdlePrefetch() {
+      if ('requestIdleCallback' in window) window.requestIdleCallback(prefetchAllPages, { timeout: 4000 });
+      else window.setTimeout(prefetchAllPages, 2500);
+    }
+    if (document.documentElement.classList.contains('bento-preloading') ||
+        document.documentElement.classList.contains('page-preloading')) {
+      document.addEventListener('cambm:revealed', scheduleIdlePrefetch, { once: true });
+    } else {
+      scheduleIdlePrefetch();
+    }
 
     // ===== SITE-REVEAL SIGNAL =====
     // The preloader overlay is owned entirely by the inline #bento-media-loader
@@ -63,8 +72,21 @@
     // jank/stutter on lower-powered phones.
     const header = document.getElementById('header');
     const parallaxElements = document.querySelectorAll('.hero-bg, .cta-bg');
+    const visibleParallaxElements = new Set();
     const backToTop = document.getElementById('backToTop');
     let ticking = false;
+
+    if ('IntersectionObserver' in window) {
+      const parallaxObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) visibleParallaxElements.add(entry.target);
+          else visibleParallaxElements.delete(entry.target);
+        });
+      }, { rootMargin: '20% 0px' });
+      parallaxElements.forEach(el => parallaxObserver.observe(el));
+    } else {
+      parallaxElements.forEach(el => visibleParallaxElements.add(el));
+    }
 
     function onScrollFrame() {
       const currentScroll = window.pageYOffset;
@@ -73,7 +95,7 @@
       } else {
         header.classList.remove('scrolled');
       }
-      parallaxElements.forEach(el => {
+      visibleParallaxElements.forEach(el => {
         el.style.transform = `translateY(${currentScroll * 0.3}px)`;
       });
       if (currentScroll > 600) {
@@ -221,19 +243,29 @@
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     
     if (!isTouchDevice) {
-      document.addEventListener('mousemove', (e) => {
-        cursorX = e.clientX;
-        cursorY = e.clientY;
-      });
-      
+      let cursorFrame = null;
+
       function animateCursor() {
         cursor.style.transform = `translate(${cursorX - 4}px, ${cursorY - 4}px)`;
         ringX += (cursorX - ringX) * 0.15;
         ringY += (cursorY - ringY) * 0.15;
         cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
-        requestAnimationFrame(animateCursor);
+
+        if (Math.abs(cursorX - ringX) > 0.1 || Math.abs(cursorY - ringY) > 0.1) {
+          cursorFrame = requestAnimationFrame(animateCursor);
+        } else {
+          ringX = cursorX;
+          ringY = cursorY;
+          cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
+          cursorFrame = null;
+        }
       }
-      animateCursor();
+
+      document.addEventListener('mousemove', (e) => {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        if (cursorFrame === null) cursorFrame = requestAnimationFrame(animateCursor);
+      });
       
       // Hover effect on interactive elements
       const interactiveElements = document.querySelectorAll('a, button, .service-card, .feature-card');
@@ -317,6 +349,41 @@
     const AUTO_SCROLL_SPEED_MOBILE = 37;
     const DEFAULT_AUTO_SCROLL_SPEED = isTouchDevice ? AUTO_SCROLL_SPEED_MOBILE : AUTO_SCROLL_SPEED;
 
+    function getZoomSpeedMultiplier() {
+      const outerWidth = window.outerWidth;
+      if (!outerWidth || outerWidth < 500) return 1;
+      const zoomRatio = window.innerWidth / outerWidth;
+      return Math.min(4, Math.max(1, zoomRatio));
+    }
+
+    let zoomSpeedMultiplier = getZoomSpeedMultiplier();
+    const autoScrollTasks = [];
+    let autoScrollTimestamp = null;
+
+    function runAutoScrollFrame(timestamp) {
+      if (autoScrollTimestamp === null) {
+        autoScrollTimestamp = timestamp;
+      } else {
+        const deltaMs = Math.min(timestamp - autoScrollTimestamp, 1000);
+        autoScrollTimestamp = timestamp;
+        autoScrollTasks.forEach(task => task(deltaMs, zoomSpeedMultiplier));
+      }
+      requestAnimationFrame(runAutoScrollFrame);
+    }
+
+    function registerAutoScroll(task) {
+      autoScrollTasks.push(task);
+      if (autoScrollTasks.length === 1) requestAnimationFrame(runAutoScrollFrame);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) autoScrollTimestamp = null;
+    });
+
+    window.addEventListener('resize', () => {
+      zoomSpeedMultiplier = getZoomSpeedMultiplier();
+    }, { passive: true });
+
     // ===== INFINITE-LOOP SCROLL SLIDERS =====
     // Both the 3 vertical hero columns and the horizontal brand strip are plain
     // native scroll containers (no CSS animation). To make them loop seamlessly:
@@ -377,6 +444,13 @@
       });
     }
 
+    function unobserveBentoVideos(container) {
+      if (!bentoVideoObserver) return;
+      container.querySelectorAll('video.bento-video').forEach(function (video) {
+        bentoVideoObserver.unobserve(video);
+      });
+    }
+
     function makeLoopSlider(container, axis, direction = 1, speed = DEFAULT_AUTO_SCROLL_SPEED) {
       const track = container.firstElementChild;
       if (!track) return;
@@ -407,6 +481,7 @@
         // no-op like it is for images.
         if (setSize && !force) return;
         // One set on its own, measured.
+        unobserveBentoVideos(container);
         track.innerHTML = originalHTML;
         setSize = axis === 'y' ? track.scrollHeight : track.scrollWidth;
         if (!setSize) return;
@@ -438,11 +513,16 @@
       // scroll position) on basically every scroll gesture, which is what
       // looked like the slider "stopping and resetting" while scrolling.
       let lastInnerWidth = window.innerWidth;
+      let resizeFrame = null;
       window.addEventListener('resize', () => {
         if (window.innerWidth === lastInnerWidth) return;
         lastInnerWidth = window.innerWidth;
-        build(true); // force: card widths genuinely changed, must re-measure
-      });
+        if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = null;
+          build(true); // force: card widths genuinely changed, must re-measure
+        });
+      }, { passive: true });
 
       // As the user scrolls, keep them near the centre by jumping in whole
       // set-lengths whenever they've drifted more than one set from centre.
@@ -523,29 +603,17 @@
       // whole pixels out to the DOM once they add up) means any speed, no
       // matter how small, eventually moves it.
       let remainder = 0;
-      let lastTimestamp = null;
-      function autoScrollStep(timestamp) {
-        if (lastTimestamp === null) {
-          lastTimestamp = timestamp;
-          requestAnimationFrame(autoScrollStep);
-          return;
-        }
-        // Clamp so returning from a backgrounded/throttled tab (where the
-        // gap between frames can be seconds long) doesn't fast-forward the
-        // scroll position in one big jump.
-        const deltaMs = Math.min(timestamp - lastTimestamp, 100);
-        lastTimestamp = timestamp;
+      registerAutoScroll((deltaMs, zoomMultiplier) => {
         if (!paused && !dragging && setSize) {
-          remainder += speed * (deltaMs / 1000) * direction;
+          remainder += speed * zoomMultiplier * (deltaMs / 1000) * direction;
           const whole = Math.trunc(remainder);
           if (whole !== 0) {
-            container[posProp] += whole;
-            remainder -= whole;
+            const previousPosition = container[posProp];
+            container[posProp] = previousPosition + whole;
+            remainder -= container[posProp] - previousPosition;
           }
         }
-        requestAnimationFrame(autoScrollStep);
-      }
-      requestAnimationFrame(autoScrollStep);
+      });
 
       // Horizontal strip: click-and-drag to scroll (plus native wheel/trackpad).
       if (axis === 'x') {
