@@ -250,18 +250,16 @@
   }
 
   function projectCardMarkup(project) {
-    return '<article class="portfolio-card portfolio-card-' + escapeHtml(project.variant) + '" data-project-id="' + escapeHtml(project.id) + '">' +
+    return '<article class="portfolio-card" data-project-id="' + escapeHtml(project.id) + '">' +
       '<div class="portfolio-card-face">' +
       '<button type="button" class="portfolio-card-open" aria-expanded="false" aria-controls="case-' + escapeHtml(project.id) + '" data-open-project="' + escapeHtml(project.id) + '">' +
       '<span class="portfolio-visually-hidden">' + escapeHtml(translate('portfolio.card.open', { brand: project.brand })) + '</span>' +
       '</button>' +
-      '<div class="portfolio-card-topline"><span>' + escapeHtml(project.index) + '</span><span>' + escapeHtml(locationLabel(project)) + '</span></div>' +
       '<div class="portfolio-card-media">' + logoStageMarkup(project) + '</div>' +
       '<div class="portfolio-card-content">' +
-      '<div><h3>' + escapeHtml(project.brand) + '</h3><p>' + escapeHtml(projectCopy(project, 'teaser')) + '</p></div>' +
+      '<h3>' + escapeHtml(project.brand) + '</h3>' +
       '<span class="portfolio-card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.9 17.1 17 7M9.1 6.9c2.8-.1 5.4 0 8 .1.2 2.7.2 5.3 0 8"/></svg></span>' +
       '</div>' +
-      '<div class="portfolio-card-tags">' + tagsMarkup(project) + '</div>' +
       '</div>' +
       caseStudyMarkup(project) +
       '</article>';
@@ -442,6 +440,7 @@
   }
 
   function renderWorldMarkers() {
+    if (!mapMarkers) return;
     const countries = state.registry.countries;
     const labelPositions = {
       IQ: { x: -18, y: -9, anchor: 'end' },
@@ -473,6 +472,7 @@
   }
 
   function renderCountryMarkers(countryCode) {
+    if (!mapMarkers) return;
     const projects = state.projects.filter(function (project) {
       return project.location && project.location.country === countryCode;
     });
