@@ -627,31 +627,37 @@
       }
     });
 
-    mapMarkers.addEventListener('click', function (event) {
-      const countryMarker = event.target.closest('[data-map-country]');
-      const projectMarker = event.target.closest('[data-map-project]');
-      if (countryMarker) openCountry(countryMarker.getAttribute('data-map-country'));
-      if (projectMarker) renderMapPreview(projectMarker.getAttribute('data-map-project'));
-    });
+    if (mapMarkers) {
+      mapMarkers.addEventListener('click', function (event) {
+        const countryMarker = event.target.closest('[data-map-country]');
+        const projectMarker = event.target.closest('[data-map-project]');
+        if (countryMarker) openCountry(countryMarker.getAttribute('data-map-country'));
+        if (projectMarker) renderMapPreview(projectMarker.getAttribute('data-map-project'));
+      });
 
-    mapMarkers.addEventListener('keydown', function (event) {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      const marker = event.target.closest('[data-map-country], [data-map-project]');
-      if (!marker) return;
-      event.preventDefault();
-      const countryCode = marker.getAttribute('data-map-country');
-      const projectId = marker.getAttribute('data-map-project');
-      if (countryCode) openCountry(countryCode);
-      if (projectId) renderMapPreview(projectId);
-    });
+      mapMarkers.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const marker = event.target.closest('[data-map-country], [data-map-project]');
+        if (!marker) return;
+        event.preventDefault();
+        const countryCode = marker.getAttribute('data-map-country');
+        const projectId = marker.getAttribute('data-map-project');
+        if (countryCode) openCountry(countryCode);
+        if (projectId) renderMapPreview(projectId);
+      });
+    }
 
-    mapBack.addEventListener('click', returnToWorld);
+    if (mapBack) {
+      mapBack.addEventListener('click', returnToWorld);
+    }
 
-    mapPreview.addEventListener('click', function (event) {
-      const button = event.target.closest('[data-map-view-case]');
-      if (!button) return;
-      openProject(button.getAttribute('data-map-view-case'), { focus: true, scroll: true });
-    });
+    if (mapPreview) {
+      mapPreview.addEventListener('click', function (event) {
+        const button = event.target.closest('[data-map-view-case]');
+        if (!button) return;
+        openProject(button.getAttribute('data-map-view-case'), { focus: true, scroll: true });
+      });
+    }
 
     if (mapShortcut) {
       mapShortcut.addEventListener('click', function (event) {
@@ -695,8 +701,12 @@
     bindMapShortcutVisibility();
     updateFilterControls();
     renderProjects(false);
-    renderWorldMarkers();
-    mapStatus.textContent = translate('portfolio.map.worldStatus');
+    
+    if (mapMarkers && mapStatus) {
+      renderWorldMarkers();
+      mapStatus.textContent = translate('portfolio.map.worldStatus');
+    }
+    
     requestAnimationFrame(applyHashState);
   }
 
