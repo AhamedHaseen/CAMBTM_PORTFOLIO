@@ -7,7 +7,7 @@
     // ===== MULTI-PAGE PREFETCH =====
     // Keep the static multi-page architecture, but warm the other documents
     // before visitors request them.
-    const cambmPages = ['welcome.html', 'about.html', 'portfolio.html'];
+    const cambmPages = ['welcome.html', 'about.html', 'portfolio-under-construction.html'];
     const prefetchedPages = new Set();
 
     function getInternalPage(anchor) {
