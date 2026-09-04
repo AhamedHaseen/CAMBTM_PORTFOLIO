@@ -255,6 +255,7 @@
       '<button type="button" class="portfolio-card-open" aria-expanded="false" aria-controls="case-' + escapeHtml(project.id) + '" data-open-project="' + escapeHtml(project.id) + '">' +
       '<span class="portfolio-visually-hidden">' + escapeHtml(translate('portfolio.card.open', { brand: project.brand })) + '</span>' +
       '</button>' +
+      '<div class="portfolio-card-topline"><span>' + escapeHtml(project.index) + '</span><span>' + escapeHtml(locationLabel(project)) + '</span></div>' +
       '<div class="portfolio-card-media">' + logoStageMarkup(project) + '</div>' +
       '<div class="portfolio-card-content">' +
       '<h3>' + escapeHtml(project.brand) + '</h3>' +
