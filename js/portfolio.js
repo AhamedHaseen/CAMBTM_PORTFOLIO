@@ -218,53 +218,53 @@
 
     return '<div class="portfolio-case-shell" id="case-' + escapeHtml(project.id) + '" aria-hidden="true">' +
       '<div class="portfolio-case-inner">' +
-        '<div class="portfolio-case-topline"><span>' + escapeHtml(translate('portfolio.case.label')) + ' / ' + escapeHtml(project.index) + '</span>' +
-          '<button type="button" class="portfolio-case-close" data-close-project="' + escapeHtml(project.id) + '"><span>' + escapeHtml(translate('portfolio.case.close')) + '</span><i aria-hidden="true">×</i></button></div>' +
-        '<header class="portfolio-case-header">' +
-          '<div><span class="portfolio-case-location">' + escapeHtml(locationLabel(project)) + '</span>' +
-          '<h3 id="case-heading-' + escapeHtml(project.id) + '" tabindex="-1">' + escapeHtml(project.brand) + '</h3></div>' +
-          '<p>' + escapeHtml(projectCopy(project, 'overview')) + '</p>' +
-        '</header>' +
-        '<div class="portfolio-case-facts">' +
-          '<div><span>' + escapeHtml(translate('portfolio.case.industry')) + '</span><strong>' + escapeHtml(industryLabel(project.industry)) + '</strong></div>' +
-          '<div><span>' + escapeHtml(translate('portfolio.case.market')) + '</span><strong>' + escapeHtml(marketLabel(project.market)) + '</strong></div>' +
-        '</div>' +
-        '<div class="portfolio-case-narrative">' +
-          '<section><span>01</span><h4>' + escapeHtml(translate('portfolio.case.challenge')) + '</h4><p>' + escapeHtml(projectCopy(project, 'challenge')) + '</p></section>' +
-          '<section><span>02</span><h4>' + escapeHtml(translate('portfolio.case.approach')) + '</h4><p>' + escapeHtml(projectCopy(project, 'approach')) + '</p></section>' +
-        '</div>' +
-        '<div class="portfolio-case-deliverables">' +
-          '<span class="portfolio-kicker">' + escapeHtml(translate('portfolio.case.deliverables')) + '</span><p>' + escapeHtml(projectCopy(project, 'deliverables')) + '</p>' +
-        '</div>' +
-        '<div class="portfolio-case-metrics">' + metrics + '</div>' +
-        '<div class="portfolio-case-conversion">' +
-          '<div><span class="portfolio-kicker">' + escapeHtml(translate('portfolio.case.nextStep')) + '</span><h4>' + escapeHtml(translate('portfolio.case.ctaTitle')) + '</h4></div>' +
-          '<button type="button" class="btn btn-primary js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config="{&quot;layout&quot;:&quot;month_view&quot;,&quot;language&quot;:&quot;en&quot;,&quot;locale&quot;:&quot;en&quot;}">' + escapeHtml(translate('portfolio.case.ctaButton')) + '</button>' +
-        '</div>' +
-        '<nav class="portfolio-case-nav" aria-label="' + escapeHtml(translate('portfolio.case.navigationAria')) + '">' +
-          '<button type="button" data-case-direction="previous"><span aria-hidden="true">←</span><span>' + escapeHtml(translate('portfolio.case.previous')) + '</span></button>' +
-          '<button type="button" data-case-direction="next"><span>' + escapeHtml(translate('portfolio.case.next')) + '</span><span aria-hidden="true">→</span></button>' +
-        '</nav>' +
+      '<div class="portfolio-case-topline"><span>' + escapeHtml(translate('portfolio.case.label')) + ' / ' + escapeHtml(project.index) + '</span>' +
+      '<button type="button" class="portfolio-case-close" data-close-project="' + escapeHtml(project.id) + '"><span>' + escapeHtml(translate('portfolio.case.close')) + '</span><i aria-hidden="true">×</i></button></div>' +
+      '<header class="portfolio-case-header">' +
+      '<div><span class="portfolio-case-location">' + escapeHtml(locationLabel(project)) + '</span>' +
+      '<h3 id="case-heading-' + escapeHtml(project.id) + '" tabindex="-1">' + escapeHtml(project.brand) + '</h3></div>' +
+      '<p>' + escapeHtml(projectCopy(project, 'overview')) + '</p>' +
+      '</header>' +
+      '<div class="portfolio-case-facts">' +
+      '<div><span>' + escapeHtml(translate('portfolio.case.industry')) + '</span><strong>' + escapeHtml(industryLabel(project.industry)) + '</strong></div>' +
+      '<div><span>' + escapeHtml(translate('portfolio.case.market')) + '</span><strong>' + escapeHtml(marketLabel(project.market)) + '</strong></div>' +
       '</div>' +
-    '</div>';
+      '<div class="portfolio-case-narrative">' +
+      '<section><span>01</span><h4>' + escapeHtml(translate('portfolio.case.challenge')) + '</h4><p>' + escapeHtml(projectCopy(project, 'challenge')) + '</p></section>' +
+      '<section><span>02</span><h4>' + escapeHtml(translate('portfolio.case.approach')) + '</h4><p>' + escapeHtml(projectCopy(project, 'approach')) + '</p></section>' +
+      '</div>' +
+      '<div class="portfolio-case-deliverables">' +
+      '<span class="portfolio-kicker">' + escapeHtml(translate('portfolio.case.deliverables')) + '</span><p>' + escapeHtml(projectCopy(project, 'deliverables')) + '</p>' +
+      '</div>' +
+      '<div class="portfolio-case-metrics">' + metrics + '</div>' +
+      '<div class="portfolio-case-conversion">' +
+      '<div><span class="portfolio-kicker">' + escapeHtml(translate('portfolio.case.nextStep')) + '</span><h4>' + escapeHtml(translate('portfolio.case.ctaTitle')) + '</h4></div>' +
+      '<button type="button" class="btn btn-primary js-open-cal" data-cal-link="cambridge.marketing" data-cal-namespace="strategy-call" data-cal-config="{&quot;layout&quot;:&quot;month_view&quot;,&quot;language&quot;:&quot;en&quot;,&quot;locale&quot;:&quot;en&quot;}">' + escapeHtml(translate('portfolio.case.ctaButton')) + '</button>' +
+      '</div>' +
+      '<nav class="portfolio-case-nav" aria-label="' + escapeHtml(translate('portfolio.case.navigationAria')) + '">' +
+      '<button type="button" data-case-direction="previous"><span aria-hidden="true">←</span><span>' + escapeHtml(translate('portfolio.case.previous')) + '</span></button>' +
+      '<button type="button" data-case-direction="next"><span>' + escapeHtml(translate('portfolio.case.next')) + '</span><span aria-hidden="true">→</span></button>' +
+      '</nav>' +
+      '</div>' +
+      '</div>';
   }
 
   function projectCardMarkup(project) {
     return '<article class="portfolio-card portfolio-card-' + escapeHtml(project.variant) + '" data-project-id="' + escapeHtml(project.id) + '">' +
       '<div class="portfolio-card-face">' +
-        '<button type="button" class="portfolio-card-open" aria-expanded="false" aria-controls="case-' + escapeHtml(project.id) + '" data-open-project="' + escapeHtml(project.id) + '">' +
-          '<span class="portfolio-visually-hidden">' + escapeHtml(translate('portfolio.card.open', { brand: project.brand })) + '</span>' +
-        '</button>' +
-        '<div class="portfolio-card-topline"><span>' + escapeHtml(project.index) + '</span><span>' + escapeHtml(locationLabel(project)) + '</span></div>' +
-        '<div class="portfolio-card-media">' + logoStageMarkup(project) + '</div>' +
-        '<div class="portfolio-card-content">' +
-          '<div><h3>' + escapeHtml(project.brand) + '</h3><p>' + escapeHtml(projectCopy(project, 'teaser')) + '</p></div>' +
-          '<span class="portfolio-card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.9 17.1 17 7M9.1 6.9c2.8-.1 5.4 0 8 .1.2 2.7.2 5.3 0 8"/></svg></span>' +
-        '</div>' +
-        '<div class="portfolio-card-tags">' + tagsMarkup(project) + '</div>' +
+      '<button type="button" class="portfolio-card-open" aria-expanded="false" aria-controls="case-' + escapeHtml(project.id) + '" data-open-project="' + escapeHtml(project.id) + '">' +
+      '<span class="portfolio-visually-hidden">' + escapeHtml(translate('portfolio.card.open', { brand: project.brand })) + '</span>' +
+      '</button>' +
+      '<div class="portfolio-card-topline"><span>' + escapeHtml(project.index) + '</span><span>' + escapeHtml(locationLabel(project)) + '</span></div>' +
+      '<div class="portfolio-card-media">' + logoStageMarkup(project) + '</div>' +
+      '<div class="portfolio-card-content">' +
+      '<div><h3>' + escapeHtml(project.brand) + '</h3><p>' + escapeHtml(projectCopy(project, 'teaser')) + '</p></div>' +
+      '<span class="portfolio-card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.9 17.1 17 7M9.1 6.9c2.8-.1 5.4 0 8 .1.2 2.7.2 5.3 0 8"/></svg></span>' +
+      '</div>' +
+      '<div class="portfolio-card-tags">' + tagsMarkup(project) + '</div>' +
       '</div>' +
       caseStudyMarkup(project) +
-    '</article>';
+      '</article>';
   }
 
   function visibleProjects() {
@@ -701,12 +701,12 @@
     bindMapShortcutVisibility();
     updateFilterControls();
     renderProjects(false);
-    
+
     if (mapMarkers && mapStatus) {
       renderWorldMarkers();
       mapStatus.textContent = translate('portfolio.map.worldStatus');
     }
-    
+
     requestAnimationFrame(applyHashState);
   }
 
