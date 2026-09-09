@@ -1,0 +1,309 @@
+import React, { useEffect } from "react";
+
+export default function PortfolioUnderConstruction({ page = "portfolio" }) {
+  const isPackages = page === "packages";
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Dispatch event to re-trigger vanilla JS DOM logic
+    window.dispatchEvent(new Event("DOMContentLoaded"));
+    const revealEvent = new CustomEvent("cambm:revealed");
+    document.dispatchEvent(revealEvent);
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls)
+      window.CAMBMTheme.initControls();
+    if (window.initI18n) window.initI18n();
+  }, []);
+
+  return (
+    <>
+      <div className="cursor" id="cursor"></div>
+      <div className="cursor-ring" id="cursorRing"></div>
+
+      <header className="header" id="header">
+        <div className="header-inner">
+          <a
+            href="/"
+            className="logo js-logo-home"
+            data-i18n-attr="aria-label:nav.homeAriaLabel"
+            aria-label="Cambridge Marketing, back to top"
+          >
+            <img
+              className="theme-logo"
+              src="images/cambridge-logo.png"
+              alt="Cambridge Marketing"
+              width="133"
+              height="40"
+              style={{ height: "40px", width: "auto", display: "block" }}
+            />
+          </a>
+          <nav className="nav">
+            <a href="/" className="nav-link" data-i18n="nav.home">
+              Home
+            </a>
+            <a href="/portfolio" className="nav-link" data-i18n="nav.portfolio">
+              Portfolio
+            </a>
+            <a
+              href="/#why-CAMBM"
+              data-scroll-target="why-CAMBM"
+              className="nav-link"
+              data-i18n="nav.whyCambm"
+            >
+              Why CAMBM
+            </a>
+            <a href="/#packages" className="nav-link" data-i18n="nav.packages">
+              Packages
+            </a>
+            <a href="/about" className="nav-link" data-i18n="nav.about">
+              About
+            </a>
+          </nav>
+          <div className="header-actions">
+            <div className="locale-nav-picker">
+              <select
+                className="locale-select locale-country-select"
+                aria-label="Country/Currency"
+              ></select>
+              <select
+                className="locale-select locale-language-select"
+                aria-label="Language"
+              ></select>
+            </div>
+            <button
+              type="button"
+              className="theme-toggle"
+              aria-label="Switch to light theme"
+              aria-pressed="false"
+              title="Change color theme"
+              data-label-light="Switch to light theme"
+              data-label-dark="Switch to dark theme"
+              data-i18n-attr="data-label-light:theme.switchToLight,data-label-dark:theme.switchToDark,title:theme.title"
+            >
+              <svg
+                className="theme-toggle-icon theme-toggle-moon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M20.4 15.1A8.4 8.4 0 0 1 8.9 3.6 8.6 8.6 0 1 0 20.4 15.1Z" />
+              </svg>
+              <svg
+                className="theme-toggle-icon theme-toggle-sun"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="3.5" />
+                <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm js-open-cal"
+              data-cal-link="cambridge.marketing"
+              data-cal-namespace="strategy-call"
+              data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+              data-i18n="nav.bookCall"
+            >
+              Book a strategy call
+            </button>
+          </div>
+          <button
+            className="nav-toggle"
+            id="navToggle"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav className="mobile-nav" id="mobileNav">
+          <a href="/" className="mobile-nav-link" data-i18n="nav.home">
+            Home
+          </a>
+          <a
+            href="/portfolio"
+            className="mobile-nav-link"
+            data-i18n="nav.portfolio"
+          >
+            Portfolio
+          </a>
+          <a
+            href="/#why-CAMBM"
+            data-scroll-target="why-CAMBM"
+            className="mobile-nav-link"
+            data-i18n="nav.whyCambm"
+          >
+            Why CAMBM
+          </a>
+          <a
+            href="/#packages"
+            className="mobile-nav-link"
+            data-i18n="nav.packages"
+          >
+            Packages
+          </a>
+          <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
+            About
+          </a>
+          <div className="mobile-nav-actions">
+            <div className="mobile-theme-row">
+              <span data-i18n="theme.appearance">Appearance</span>
+              <button
+                type="button"
+                className="theme-toggle"
+                aria-label="Switch to light theme"
+                aria-pressed="false"
+                title="Change color theme"
+                data-label-light="Switch to light theme"
+                data-label-dark="Switch to dark theme"
+                data-i18n-attr="data-label-light:theme.switchToLight,data-label-dark:theme.switchToDark,title:theme.title"
+              >
+                <svg
+                  className="theme-toggle-icon theme-toggle-moon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M20.4 15.1A8.4 8.4 0 0 1 8.9 3.6 8.6 8.6 0 1 0 20.4 15.1Z" />
+                </svg>
+                <svg
+                  className="theme-toggle-icon theme-toggle-sun"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="3.5" />
+                  <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+              </button>
+            </div>
+            <div className="locale-nav-picker locale-nav-picker-mobile">
+              <select
+                className="locale-select locale-country-select"
+                aria-label="Country/Currency"
+              ></select>
+              <select
+                className="locale-select locale-language-select"
+                aria-label="Language"
+              ></select>
+            </div>
+            <button
+              type="button"
+              className="btn btn-primary js-open-cal"
+              data-cal-link="cambridge.marketing"
+              data-cal-namespace="strategy-call"
+              data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+              data-i18n="nav.bookCall"
+            >
+              Book a strategy call
+            </button>
+          </div>
+        </nav>
+      </header>
+      <div className="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+
+      <main className="construction-main">
+        <section className="construction-hero">
+          <div className="construction-inner">
+            {isPackages ? (
+              <>
+                <h1 className="construction-title">
+                  Our packages are being prepared.
+                </h1>
+                <p className="construction-body">
+                  We are shaping flexible growth plans for every stage of your
+                  business. Package details will be available soon.
+                </p>
+              </>
+            ) : (
+              <>
+                <h1
+                  className="construction-title"
+                  data-i18n="construction.title"
+                >
+                  Our portfolio is being rebuilt.
+                </h1>
+                <p className="construction-body" data-i18n="construction.body">
+                  We’re preparing a clearer view of our selected work and case
+                  studies. It will be available soon.
+                </p>
+              </>
+            )}
+            <div className="construction-actions">
+              <a
+                className="btn btn-secondary"
+                href="/"
+                data-i18n="construction.home"
+              >
+                Return home
+              </a>
+              <button
+                type="button"
+                className="btn btn-primary js-open-cal"
+                data-cal-link="cambridge.marketing"
+                data-cal-namespace="strategy-call"
+                data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+                data-i18n="nav.bookCall"
+              >
+                Book a strategy call
+              </button>
+            </div>
+            <div
+              className="construction-progress"
+              role="status"
+              aria-live="polite"
+            >
+              <div
+                className="construction-progress-rule"
+                aria-hidden="true"
+              ></div>
+              <p
+                className="construction-status"
+                data-i18n={isPackages ? undefined : "construction.status"}
+              >
+                {isPackages
+                  ? "Package details coming soon"
+                  : "Portfolio update in progress"}
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div className="locale-popup-backdrop" id="localePopupBackdrop">
+        <div
+          className="locale-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Select your region"
+        >
+          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
+            Choose your language
+          </h3>
+          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
+            We'll tailor the language to you.
+          </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupLanguage"
+            data-i18n="locale.languageLabel"
+          >
+            Language
+          </label>
+          <select className="locale-select" id="localePopupLanguage"></select>
+          <button
+            type="button"
+            className="btn btn-primary locale-popup-confirm"
+            id="localePopupConfirm"
+            data-i18n="locale.confirm"
+          >
+            Continue
+          </button>
+          <p className="locale-popup-note" data-i18n="locale.changeNote">
+            You can change this anytime from the menu.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,289 @@
+/* ==========================================================================
+   CAMBM CURVED ROADMAP (ABOUT PAGE CHAPTER 07)
+   - Clean, simple, minimalist curved road
+   - Uses theme variables (clean white card & white background in light mode)
+   - High-contrast typography & subtle orange accent
+   ========================================================================== */
+
+.curved-roadmap-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: var(--container, 1280px);
+  margin: 48px auto 0;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop Curved Highway (Simple & Clean)
+   -------------------------------------------------------------------------- */
+.curved-roadmap-desktop {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  display: block;
+}
+
+.curved-roadmap-svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 360px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Road Styling for Dark Mode (Default) & Light Mode */
+.road-bed-track {
+  stroke: rgba(255, 255, 255, 0.18);
+}
+
+.road-surface-track {
+  stroke: #ffffff;
+}
+
+.road-center-line {
+  stroke: #ff5a00;
+  opacity: 0.9;
+}
+
+.road-station-outer {
+  fill: #18181b;
+}
+
+/* Light Mode Overrides: Black Curve */
+[data-theme="light"] .road-bed-track,
+html[data-theme="light"] .road-bed-track,
+body[data-theme="light"] .road-bed-track {
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .road-surface-track,
+html[data-theme="light"] .road-surface-track,
+body[data-theme="light"] .road-surface-track {
+  stroke: #111113;
+}
+
+[data-theme="light"] .road-station-outer,
+html[data-theme="light"] .road-station-outer,
+body[data-theme="light"] .road-station-outer {
+  fill: #ffffff;
+}
+
+[data-theme="light"] .mobile-road-track,
+html[data-theme="light"] .mobile-road-track,
+body[data-theme="light"] .mobile-road-track {
+  background: #111113;
+}
+
+/* --------------------------------------------------------------------------
+   Milestone Cards Grid & Stable Positioning
+   -------------------------------------------------------------------------- */
+.curved-milestones-grid {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  min-height: 380px;
+  align-items: center;
+}
+
+.roadmap-card-station {
+  position: relative;
+}
+
+/* Stable static offsets along the curve */
+.roadmap-card-station.station-1 {
+  transform: translateY(-40px);
+}
+.roadmap-card-station.station-2 {
+  transform: translateY(55px);
+}
+.roadmap-card-station.station-3 {
+  transform: translateY(-55px);
+}
+.roadmap-card-station.station-4 {
+  transform: translateY(40px);
+}
+
+/* Card Inner Shell - Simple White / Theme Card */
+.station-card-inner {
+  position: relative;
+  background: var(--bg-card, #202022);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  border-radius: 18px;
+  padding: 18px 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+[data-theme="light"] .station-card-inner,
+html[data-theme="light"] .station-card-inner,
+body[data-theme="light"] .station-card-inner {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.04);
+}
+
+.roadmap-card-station.status-active .station-card-inner {
+  border-color: rgba(255, 90, 0, 0.45);
+}
+
+/* Station Header */
+.station-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.station-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 90, 0, 0.08);
+  border: 1px solid rgba(255, 90, 0, 0.25);
+  color: #ff5a00;
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.station-step {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted, #888888);
+  letter-spacing: 0.08em;
+}
+
+/* Station Year - Constant color, does not change on hover */
+.station-year {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text, #ededed);
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+}
+
+[data-theme="light"] .station-year,
+html[data-theme="light"] .station-year,
+body[data-theme="light"] .station-year {
+  color: #0a0a0a;
+}
+
+/* Station Detail - Constant orange accent, does not change on hover */
+.station-detail {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ff5a00;
+  line-height: 1.35;
+  margin: 2px 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Vertical Timeline (< 860px)
+   -------------------------------------------------------------------------- */
+.curved-roadmap-mobile {
+  display: none;
+  position: relative;
+  width: 100%;
+  padding-left: 28px;
+  box-sizing: border-box;
+}
+
+.mobile-road-track {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 11px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--accent, #ff5a00);
+}
+
+.mobile-roadmap-step {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.mobile-roadmap-step:last-child {
+  margin-bottom: 0;
+}
+
+.mobile-step-node {
+  position: absolute;
+  top: 18px;
+  left: -28px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-section, #ffffff);
+  border: 2px solid var(--accent, #ff5a00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.mobile-node-circle {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text, #0a0a0a);
+}
+
+.mobile-step-card {
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-subtle, rgba(10, 10, 10, 0.1));
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+}
+
+.mobile-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-year-badge {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ff5a00;
+}
+
+.mobile-step-detail {
+  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff5a00;
+  line-height: 1.35;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .curved-roadmap-desktop {
+    display: none;
+  }
+  .curved-roadmap-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+}
