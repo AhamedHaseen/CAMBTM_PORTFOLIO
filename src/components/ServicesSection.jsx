@@ -68,9 +68,9 @@ const I18N_SERVICES = {
     combos: {
       eyebrow: "Combo Packages",
       title: "Connected services. One clear engagement.",
-      desc: "For businesses that need several capabilities working together, our combo packages combine content, marketing and technology into a single managed engagement.",
-      note: "No public pricing displayed. Package scope can be adapted after a short requirements discussion.",
-      discussBtn: "Discuss Package",
+      desc: "Combo packages combine content, marketing, and technology into one managed solution.",
+      note: "Package scope can be adapted after a short requirements discussion.",
+      discussBtn: "Discuss",
       cards: [
         {
           id: "video",
@@ -184,9 +184,9 @@ const I18N_SERVICES = {
     combos: {
       eyebrow: "Paquetes Combinados",
       title: "Servicios conectados. Una sola contratación clara.",
-      desc: "Para empresas que necesitan varias capacidades trabajando juntas, nuestros paquetes combinan contenido, marketing y tecnología en una sola gestión.",
-      note: "Sin precios públicos. El alcance del paquete se adapta tras una breve conversación sobre tus requerimientos.",
-      discussBtn: "Consultar Paquete",
+      desc: "Los paquetes combinados combinan contenido, marketing y tecnología en una única solución gestionada.",
+      note: "El alcance del paquete se adapta tras una breve conversación sobre tus requerimientos.",
+      discussBtn: "Consultar",
       cards: [
         {
           id: "video",
@@ -300,9 +300,9 @@ const I18N_SERVICES = {
     combos: {
       eyebrow: "باقات مدمجة",
       title: "خدمات مترابطة. تعاقد واضح ومحدد.",
-      desc: "للشركات التي تحتاج قدرات متعددة تعمل معاً بتناغم، تجمع باقاتنا بين المحتوى والتسويق والتكنولوجيا في إدارة واحدة متكاملة.",
-      note: "لا تظهر أسعار معلنة. يتم تحديد نطاق الباقة بعد جلسة مناقشة سريعة لمتطلبات عملك.",
-      discussBtn: "مناقشة الباقة",
+      desc: "تجمع الباقات المدمجة بين المحتوى والتسويق والتكنولوجيا في حل متكامل مُدار.",
+      note: "يتم تحديد نطاق الباقة بعد جلسة مناقشة سريعة لمتطلبات عملك.",
+      discussBtn: "ناقش",
       cards: [
         {
           id: "video",
@@ -416,9 +416,9 @@ const I18N_SERVICES = {
     combos: {
       eyebrow: "සංයුක්ත පැකේජ",
       title: "සම්බන්ධිත සේවාවන්. එක් පැහැදිලි ගිවිසුමක්.",
-      desc: "එකට ක්‍රියා කරන හැකියාවන් කිහිපයක් අවශ්‍ය ව්‍යාපාර සඳහා, අපගේ සංයුක්ත පැකේජ අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණයකට ඒකාබද්ධ කරයි.",
-      note: "පොදු මිල ගණන් ප්‍රදර්ශනය නොකෙරේ. කෙටි අවශ්‍යතා සාකච්ඡාවකින් පසු පැකේජයේ විෂය පථය වෙනස් කළ හැක.",
-      discussBtn: "පැකේජය ගැන සාකච්ඡා කරන්න",
+      desc: "සංයුක්ත පැකේජ මඟින් අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණය කළ විසඳුමකට ඒකාබද්ධ කරයි.",
+      note: "කෙටි අවශ්‍යතා සාකච්ඡාවකින් පසු පැකේජයේ විෂය පථය වෙනස් කළ හැක.",
+      discussBtn: "සාකච්ඡා කරන්න",
       cards: [
         {
           id: "video",
@@ -532,9 +532,9 @@ const I18N_SERVICES = {
     combos: {
       eyebrow: "கூட்டு தொகுப்புகள்",
       title: "இணைக்கப்பட்ட சேவைகள். ஒரு தெளிவான ஒப்பந்தம்.",
-      desc: "பல திறன்கள் ஒன்றாகச் செயல்பட வேண்டிய வணிகங்களுக்கு, எங்கள் கூட்டு தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒற்றை நிர்வாகத்தில் இணைக்கின்றன.",
-      note: "பொதுவான விலைகள் காட்டப்படவில்லை. குறுகிய தேவைகள் குறித்த கலந்துரையாடலுக்குப் பிறகு தொகுப்பின் அளவை மாற்றியமைக்கலாம்.",
-      discussBtn: "தொகுப்பை பற்றி பேசுக",
+      desc: "காம்போ தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒரே நிர்வகிக்கப்பட்ட தீர்வாக இணைக்கின்றன.",
+      note: "குறுகிய தேவைகள் குறித்த கலந்துரையாடலுக்குப் பிறகு தொகுப்பின் அளவை மாற்றியமைக்கலாம்.",
+      discussBtn: "கலந்துரையாட",
       cards: [
         {
           id: "video",
@@ -1083,8 +1083,9 @@ export default function ServicesSection() {
             <p
               className="right-note"
               style={{
-                fontSize: "13px",
-                maxWidth: "600px",
+                fontSize: "14px",
+                color: "var(--muted)",
+                maxWidth: "680px",
                 margin: "12px auto 0",
                 textAlign: "center",
               }}
@@ -1111,12 +1112,12 @@ export default function ServicesSection() {
                   <span className="engagement">{card.engagement}</span>
                   <button
                     type="button"
-                    className="srv-combo-cta js-open-cal"
+                    className="srv-intro-cta combo-discuss-btn js-open-cal"
                     data-cal-link="cambridge.marketing"
                     data-cal-namespace="strategy-call"
                     onClick={(e) => openCalModal(card.title, e)}
                   >
-                    {activeLocaleData.combos.discussBtn}
+                    {activeLocaleData.combos.discussBtn} <span>→</span>
                   </button>
                 </div>
               </article>

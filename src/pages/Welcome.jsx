@@ -289,7 +289,7 @@ export default function Welcome() {
             </button>
             <button
               type="button"
-              className="btn btn-primary btn-sm js-open-cal"
+              className="btn btn-primary js-open-cal"
               data-cal-link="cambridge.marketing"
               data-cal-namespace="strategy-call"
               data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
@@ -767,7 +767,7 @@ export default function Welcome() {
               className="section-title scroll-reveal"
               data-i18n="comparison.title"
             >
-              Hiring In-House of Traditional Outsourcing?
+              Hiring In-House or Traditional Outsourcing?
               <br />
               <em>Neither</em>
             </h2>
