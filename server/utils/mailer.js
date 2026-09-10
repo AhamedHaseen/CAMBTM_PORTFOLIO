@@ -1,4 +1,3 @@
-import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -9,9 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const ADMIN_EMAIL = process.env.ADMIN_NOTIFY_EMAIL || 'ahamedhaseen2003@gmail.com';
-const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const FROM_EMAIL_DEFAULT = process.env.RESEND_FROM_EMAIL || 'Cambridge Marketing Security <onboarding@resend.dev>';
+
+const FROM_EMAIL_DEFAULT = process.env.FROM_EMAIL || 'Cambridge Marketing Security <noreply@cambridgemarketing.com>';
 
 // In-memory SMTP configuration cache
 let activeSmtpConfig = {
@@ -27,16 +25,6 @@ let activeSmtpConfig = {
 };
 
 let cachedTransporter = null;
-
-// Initialize Resend client if API key is provided
-let resendClient = null;
-if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
-  try {
-    resendClient = new Resend(RESEND_API_KEY);
-  } catch (e) {
-    console.error('⚠️ Could not initialize Resend client:', e.message);
-  }
-}
 
 /**
  * Initialize / Reload SMTP config from DB
@@ -179,7 +167,7 @@ export async function testSmtpConnection(testConfig, targetEmail) {
 }
 
 /**
- * Core send helper: Uses Active SMTP first, Resend API second, console mock third.
+ * Core send helper: Uses Active SMTP first, console mock fallback second.
  */
 export async function sendEmail({ to, subject, html, text, replyTo = null, from = null }) {
   const recipient = Array.isArray(to) ? to : [to];
@@ -206,39 +194,11 @@ export async function sendEmail({ to, subject, html, text, replyTo = null, from 
         return { success: true, provider: 'smtp', id: info.messageId };
       }
     } catch (err) {
-      console.error('⚠️ SMTP dispatch error, trying fallbacks:', err.message);
+      console.error('⚠️ SMTP dispatch error, falling back to mock:', err.message);
     }
   }
 
-  // 2. Try Resend if configured
-  if (resendClient) {
-    try {
-      const fromAddress = from || FROM_EMAIL_DEFAULT;
-      const payload = {
-        from: fromAddress,
-        to: recipient,
-        subject,
-        html,
-        text
-      };
-      if (replyTo) {
-        payload.reply_to = replyTo;
-      }
-
-      const response = await resendClient.emails.send(payload);
-
-      if (response.error) {
-        console.warn('⚠️ Resend API returned error:', response.error);
-      } else {
-        console.log(`✉️ [Resend] Email sent successfully to ${recipient.join(', ')} (ID: ${response.data?.id || 'ok'})`);
-        return { success: true, provider: 'resend', id: response.data?.id };
-      }
-    } catch (err) {
-      console.error('⚠️ Resend dispatch failed, falling back to mock:', err.message);
-    }
-  }
-
-  // 3. Fallback mock / development output
+  // 2. Fallback mock / development output
   console.log('\n======================================================');
   console.log('📧 [EMAIL DISPATCHED TO ADMIN / USER]');
   console.log(`To: ${recipient.join(', ')}`);

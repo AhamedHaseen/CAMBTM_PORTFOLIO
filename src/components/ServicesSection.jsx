@@ -581,6 +581,12 @@ const I18N_SERVICES = {
 
 const getSavedLang = () => {
   if (typeof window === "undefined") return "en";
+  if (typeof window.cambmGetLanguage === "function") {
+    const lang = window.cambmGetLanguage();
+    if (lang && I18N_SERVICES[lang]) return lang;
+  }
+  const htmlLang = document.documentElement.lang;
+  if (htmlLang && I18N_SERVICES[htmlLang]) return htmlLang;
   try {
     const saved = localStorage.getItem("cambm_locale");
     if (saved) {
@@ -590,8 +596,6 @@ const getSavedLang = () => {
       }
     }
   } catch (e) {}
-  const htmlLang = document.documentElement.lang;
-  if (htmlLang && I18N_SERVICES[htmlLang]) return htmlLang;
   return "en";
 };
 
@@ -651,17 +655,33 @@ export default function ServicesSection() {
     };
 
     document.addEventListener("cambm:localechange", handleLocaleChange);
+    window.addEventListener("cambm:localechange", handleLocaleChange);
     window.addEventListener("storage", handleLocaleChange);
 
+    // Observer on html lang attribute to catch instant header dropdown changes
+    const observer = new MutationObserver(() => {
+      const currentHtmlLang = document.documentElement.lang;
+      if (currentHtmlLang && I18N_SERVICES[currentHtmlLang] && currentHtmlLang !== currentLang) {
+        setCurrentLang(currentHtmlLang);
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang", "dir"],
+    });
+
     // Initial check from document element in case changed prior
-    const currentDocLang = document.documentElement.lang;
+    const currentDocLang = document.documentElement.lang || getSavedLang();
     if (currentDocLang && I18N_SERVICES[currentDocLang] && currentDocLang !== currentLang) {
       setCurrentLang(currentDocLang);
     }
 
     return () => {
       document.removeEventListener("cambm:localechange", handleLocaleChange);
+      window.removeEventListener("cambm:localechange", handleLocaleChange);
       window.removeEventListener("storage", handleLocaleChange);
+      observer.disconnect();
     };
   }, [currentLang]);
 
@@ -682,15 +702,119 @@ export default function ServicesSection() {
 
       if (catItems.length > 0) {
         grouped[cat] = catItems.map((item, idx) => ({
-          id: item.id || `srv_${idx}`,
+          id: item.id || `${cat.charAt(0)}${idx + 1}`,
           num: String(idx + 1).padStart(2, "0"),
           name: item.name,
-          desc: item.description,
+          desc: item.description || item.desc,
+          translations: item.translations,
+          name_es: item.name_es,
+          desc_es: item.description_es || item.desc_es,
+          name_ar: item.name_ar,
+          desc_ar: item.description_ar || item.desc_ar,
+          name_si: item.name_si,
+          desc_si: item.description_si || item.desc_si,
+          name_ta: item.name_ta,
+          desc_ta: item.description_ta || item.desc_ta,
         }));
       }
     });
 
     setDynamicServices(grouped);
+  }, []);
+
+  // Multi-language translation resolver: maps any service (existing or future) to the selected language
+  const getTranslatedService = useCallback((item, index, category, lang) => {
+    if (!item) return item;
+
+    // If English, return item's English name and desc
+    if (lang === "en") {
+      return {
+        ...item,
+        name: item.name,
+        desc: item.desc || item.description,
+      };
+    }
+
+    const localeServices = I18N_SERVICES[lang]?.[category]?.services || [];
+    const enServices = I18N_SERVICES.en?.[category]?.services || [];
+
+    // 1. Direct explicit translation object if present (e.g. from future DB updates { translations: { es: { name, desc } } })
+    if (item.translations && item.translations[lang]) {
+      return {
+        ...item,
+        name: item.translations[lang].name || item.name,
+        desc:
+          item.translations[lang].desc ||
+          item.translations[lang].description ||
+          item.desc ||
+          item.description,
+      };
+    }
+
+    // 2. Direct lang-specific fields (e.g. item.name_es, item.desc_es)
+    if (item[`name_${lang}`]) {
+      return {
+        ...item,
+        name: item[`name_${lang}`],
+        desc:
+          item[`desc_${lang}`] ||
+          item[`description_${lang}`] ||
+          item.desc ||
+          item.description,
+      };
+    }
+
+    // 3. Match by ID (b1 -> index 0, b2 -> index 1, c1 -> 0, g1 -> 0)
+    if (item.id && typeof item.id === "string") {
+      const prefix = category === "build" ? "b" : category === "create" ? "c" : "g";
+      if (item.id.toLowerCase().startsWith(prefix)) {
+        const idNum = parseInt(item.id.slice(prefix.length), 10);
+        if (!isNaN(idNum) && idNum >= 1 && idNum <= localeServices.length) {
+          const match = localeServices[idNum - 1];
+          if (match) {
+            return {
+              ...item,
+              num: match.num || item.num,
+              name: match.name,
+              desc: match.desc,
+            };
+          }
+        }
+      }
+    }
+
+    // 4. Match by English name comparison against I18N_SERVICES.en
+    if (item.name) {
+      const cleanName = item.name.trim().toLowerCase();
+      const matchIdx = enServices.findIndex(
+        (enItem) => enItem.name.trim().toLowerCase() === cleanName
+      );
+      if (matchIdx !== -1 && localeServices[matchIdx]) {
+        return {
+          ...item,
+          num: localeServices[matchIdx].num || item.num,
+          name: localeServices[matchIdx].name,
+          desc: localeServices[matchIdx].desc,
+        };
+      }
+    }
+
+    // 5. Match by index position in the category list
+    if (typeof index === "number" && localeServices[index]) {
+      return {
+        ...item,
+        num: localeServices[index].num || item.num,
+        name: localeServices[index].name,
+        desc: localeServices[index].desc,
+      };
+    }
+
+    // 6. Fallback to item's own name and description for any future unknown service
+    return {
+      ...item,
+      name: item.name,
+      desc: item.desc || item.description,
+    };
   }, []);
 
   useEffect(() => {
@@ -740,13 +864,16 @@ export default function ServicesSection() {
   const currentTab = useMemo(() => {
     const baseTab = activeLocaleData[activeTab] || I18N_SERVICES.en[activeTab];
     if (dynamicServices && dynamicServices[activeTab] && dynamicServices[activeTab].length > 0) {
+      const translatedServices = dynamicServices[activeTab].map((item, idx) =>
+        getTranslatedService(item, idx, activeTab, currentLang)
+      );
       return {
         ...baseTab,
-        services: dynamicServices[activeTab],
+        services: translatedServices,
       };
     }
     return baseTab;
-  }, [activeLocaleData, activeTab, dynamicServices]);
+  }, [activeLocaleData, activeTab, dynamicServices, currentLang, getTranslatedService]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
