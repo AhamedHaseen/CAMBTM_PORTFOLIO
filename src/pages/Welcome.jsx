@@ -453,6 +453,7 @@ export default function Welcome() {
           </div>
           <motion.div
             className="hero-bento"
+            data-lenis-prevent
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -461,7 +462,7 @@ export default function Welcome() {
             }}
           >
             {/* Column 1 (Left Track) */}
-            <div className="bento-column" style={{ display: bentoColumns.col1.length === 0 ? 'none' : undefined }}>
+            <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col1.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col1) }}
@@ -469,7 +470,7 @@ export default function Welcome() {
             </div>
 
             {/* Column 2 (Center Track) */}
-            <div className="bento-column" style={{ display: bentoColumns.col2.length === 0 ? 'none' : undefined }}>
+            <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col2.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col2) }}
@@ -477,7 +478,7 @@ export default function Welcome() {
             </div>
 
             {/* Column 3 (Right Track) */}
-            <div className="bento-column" style={{ display: bentoColumns.col3.length === 0 ? 'none' : undefined }}>
+            <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col3.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col3) }}

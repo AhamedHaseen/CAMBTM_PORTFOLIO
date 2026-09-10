@@ -3,6 +3,11 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
+  --font-serif: 'Instrument Serif', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-tight: 'Inter Tight', sans-serif;
+  --radius: 0.5rem;
+  --transition: 0.3s ease-in-out;
   --orange: var(--mood-orange, #FF5A00);
   --ink: var(--text-primary, #0A0A0A);
   --charcoal: var(--mood-charcoal, #1E1E1E);
@@ -21,31 +26,97 @@
   --glass: #2a2a2a;
 }
 
-/* ── Font Family: Inter, sans-serif across Services & Packages ── */
-.srv-section,
-.srv-section *,
-.packages-heading,
-.packages-heading *,
-.combos,
-.combos * {
-  font-family: "Inter", sans-serif !important;
+/* ── Typography Hierarchy matching marketing.cambt.com ── */
+.packages-heading .section-title,
+.combos-heading .section-title,
+.combos h2,
+#combo-title,
+.service-intro h2,
+.combo-card h3,
+.hosting h3 {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
 }
 
-/* ── Section Title: Proportional Size (Choose what your business needs) ── */
+.packages-heading .section-eyebrow,
+.combos-heading .section-eyebrow,
+.combos .eyebrow,
+.eyebrow,
+.service-code,
+.packages-tab,
+.tab,
+.srv-intro-cta,
+.srv-combo-cta,
+.tag,
+.service-row strong,
+.service-row .num {
+  font-family: var(--font-sans, "Inter", sans-serif) !important;
+}
+
+.srv-section p,
+.service-intro p,
+.service-intro .micro,
+.service-row span,
+.combos .lede,
+.combos .right-note,
+.combo-card .best,
+.combo-items li,
+.engagement,
+.host-note,
+.hosting p,
+.handoff-note,
+.srv-section button,
+.srv-section span {
+  font-family: var(--font-tight, "Inter Tight", sans-serif) !important;
+}
+
+/* ── Section Title & Highlighted Needs ── */
 .packages-heading .section-title {
-  font-size: clamp(28px, 3.2vw, 42px) !important;
-  font-weight: 700 !important;
-  line-height: 1.18 !important;
-  letter-spacing: -0.02em !important;
+  font-size: clamp(34px, 4.2vw, 54px) !important;
+  font-weight: 400 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.01em !important;
   margin-bottom: 16px !important;
   color: var(--ink) !important;
 }
 
-/* ── Zero-Lag Scrolling: Eliminate translate shifts and render delays on heavy shells ── */
+.packages-heading .section-title em,
+.packages-heading .section-title .highlight-needs,
+.highlight-needs {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-style: italic !important;
+  color: #ff5a00 !important;
+}
+
+/* ── Category Intro Titles: Build, Create, Grow ── */
+.service-intro h2 {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-size: clamp(44px, 5.2vw, 64px) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  margin: 0;
+  color: var(--ink) !important;
+}
+
+.combos h2,
+.combos-heading .section-title,
+#combo-title {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-size: clamp(32px, 3.8vw, 48px) !important;
+  font-weight: 400 !important;
+  color: var(--ink) !important;
+}
+
+.combo-card h3 {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-size: 32px !important;
+  font-weight: 400 !important;
+  color: var(--ink) !important;
+}
+
+/* ── Zero-Lag Scrolling: Eliminate translate shifts and render delays on heavy elements ── */
 .srv-section .scroll-reveal,
 .srv-section .scroll-reveal.revealed,
 .srv-section .segmented-wrap,
-.srv-section .service-shell,
 .srv-section .combos-heading,
 .srv-section .combo-card {
   opacity: 1 !important;
@@ -87,83 +158,86 @@
   text-align: right;
 }
 
-/* ── Segmented Switcher with Smooth Sliding Glider ── */
-.segmented-wrap {
-  display: flex;
-  justify-content: center;
-  margin: 30px 0 34px;
-}
-
-.segmented {
-  position: relative;
-  display: flex;
-  width: min(650px, 100%);
+/* ── Packages Switcher (Create, Grow, Build) ── */
+.srv-section .packages-switcher,
+.packages-switcher {
+  --package-tab-index: 0;
+  width: min(100%, 620px);
+  min-height: 60px;
+  margin: 36px auto 52px !important;
   padding: 6px;
-  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
   border-radius: 999px;
-  background: var(--glass, rgba(255, 255, 255, 0.7));
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
-  box-shadow: 0 18px 45px rgba(61, 38, 25, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transform: translateZ(0);
+  background: var(--glass, rgba(255, 255, 255, 0.74));
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
 }
 
-.segmented-glider {
+[data-theme="dark"] .packages-switcher {
+  background: #2a2a2a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
+.packages-switcher-glass {
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 6px;
-  width: calc((100% - 12px) / 3);
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 145, 77, 0.28) 0%, rgba(255, 110, 40, 0.18) 100%);
-  border: 1px solid rgba(255, 110, 40, 0.45);
-  box-shadow: 0 6px 20px rgba(255, 90, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transition: transform 0.38s cubic-bezier(0.25, 1, 0.3, 1);
-  pointer-events: none;
   z-index: 1;
+  inset-block: 6px;
+  inset-inline-start: calc((100% / 3) * var(--package-tab-index) + 6px);
+  width: calc((100% / 3) - 12px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 90, 0, 0.42);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 15%, rgba(241, 150, 106, 0.22), transparent 40%),
+    linear-gradient(135deg, rgba(255, 90, 0, 0.34), rgba(255, 90, 0, 0.14));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 90, 0, 0.24),
+    0 8px 24px rgba(255, 90, 0, 0.22);
+  -webkit-backdrop-filter: blur(24px) saturate(185%);
+  backdrop-filter: blur(24px) saturate(185%);
+  transition: inset-inline-start 0.42s cubic-bezier(0.2, 0.9, 0.25, 1);
+  pointer-events: none;
 }
 
-.tab {
+.packages-tab {
   position: relative;
   z-index: 2;
-  flex: 1;
-  appearance: none;
+  min-width: 0;
+  padding: 13px 16px;
   border: 0;
-  background: transparent !important;
   border-radius: 999px;
-  padding: 14px 24px;
-  font-family: "Inter", sans-serif !important;
-  font-size: 13.5px;
+  background: transparent !important;
+  color: var(--muted);
+  font-family: var(--font-sans, "Inter", sans-serif) !important;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  line-height: 1;
   cursor: pointer;
-  color: var(--ink, #18181b);
-  opacity: 0.88;
   transition: color 0.2s ease, opacity 0.2s ease;
   text-align: center;
   box-shadow: none !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.2;
 }
 
-.tab:hover {
-  /* Do not change color on hover per user request */
-  color: var(--ink, #18181b);
+.packages-tab:hover,
+.packages-tab.is-active {
+  color: var(--ink) !important;
   opacity: 1;
-}
-
-.tab.active {
-  color: var(--ink, #0a0a0a);
-  font-weight: 700;
-  opacity: 1;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
 }
 
 /* ── Service Shell & Grid ── */
+.srv-section .page {
+  margin-top: 36px !important;
+}
+
 .service-shell {
   border: 1px solid var(--line);
   border-radius: 30px;
@@ -172,21 +246,7 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 30px 75px rgba(34, 24, 18, 0.06);
-  transform: translateZ(0);
-  contain: paint layout;
-  animation: srvShellIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes srvShellIn {
-  from {
-    opacity: 0.7;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  min-height: 560px;
 }
 
 .service-main {
@@ -737,9 +797,56 @@
   }
 }
 
+@media (max-width: 768px) {
+  .combos {
+    margin-top: 56px;
+  }
+
+  .combo-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .combo-card {
+    min-height: auto;
+    width: 100%;
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .combo-footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    padding-top: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .combo-footer .engagement {
+    text-align: center !important;
+    width: 100% !important;
+    white-space: normal !important;
+    font-size: 11px !important;
+  }
+
+  .combo-footer .srv-combo-cta {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    height: 44px !important;
+    max-height: 44px !important;
+    box-sizing: border-box !important;
+  }
+}
+
 @media (max-width: 600px) {
+  .packages-tab,
   .tab {
-    padding: 12px 10px;
+    padding: 12px 8px;
     font-size: 11.5px;
   }
 
@@ -748,7 +855,7 @@
   }
 
   .service-intro h2 {
-    font-size: 36px;
+    font-size: 36px !important;
   }
 
   .service-list {
@@ -769,12 +876,12 @@
   }
 
   .combo-card {
-    padding: 24px;
+    padding: 20px;
     border-radius: 20px;
   }
 
   .combo-card h3 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
 
   .handoff-note {

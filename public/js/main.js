@@ -748,16 +748,10 @@ function makeLoopSlider(
     { passive: true },
   );
 
-  // Pause auto-scroll on hover; resume from the same spot on mouse-leave.
-  // Gated to non-touch devices only: touchscreens fire a synthetic
-  // "mouseenter" for click-compatibility on tap, but never a matching
-  // "mouseleave" (there's no real cursor to leave), which without this
-  // guard would set paused = true on the very first tap and never clear
-  // it again - permanently freezing the animation on that device from
-  // then on. That's device/interaction-dependent, which is exactly why
-  // this could look fine on one device and be stuck solid on another.
+  // Pause horizontal marquee on hover; for vertical bento columns (axis === "y"),
+  // keep auto-scrolling smoothly above and below.
   container.addEventListener("mouseenter", () => {
-    if (!isTouchDevice) paused = true;
+    if (!isTouchDevice && axis !== "y") paused = true;
   });
   container.addEventListener("mouseleave", () => {
     if (!isTouchDevice) paused = false;
@@ -864,6 +858,17 @@ function makeLoopSlider(
   // already scroll the column since it's overflow-y:auto). Mirrors the
   // horizontal slider's drag behavior, just on the Y axis.
   if (axis === "y") {
+    // Fast, smooth vertical wheel scroll directly on the bento column without scrolling the full website
+    container.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        container.scrollTop += e.deltaY * 1.35;
+      },
+      { passive: false }
+    );
+
     let down = false,
       startY = 0,
       startScroll = 0,
@@ -902,9 +907,27 @@ function makeLoopSlider(
 }
 
 // Columns auto-scroll DOWN, UP, DOWN (direction: +1 = down, -1 = up).
-document.querySelectorAll(".bento-column").forEach((col, i) => {
+const bentoCols = document.querySelectorAll(".bento-column");
+bentoCols.forEach((col, i) => {
   makeLoopSlider(col, "y", i === 1 ? -1 : 1);
 });
+
+// Bento container level wheel capture to ensure zero page-scroll and fast smooth bento-only scrolling
+const heroBentoEl = document.querySelector(".hero-bento");
+if (heroBentoEl) {
+  heroBentoEl.addEventListener(
+    "wheel",
+    (e) => {
+      const col = e.target.closest(".bento-column") || bentoCols[0];
+      if (col) {
+        e.preventDefault();
+        e.stopPropagation();
+        col.scrollTop += e.deltaY * 1.35;
+      }
+    },
+    { passive: false }
+  );
+}
 // Two brand-logo rows, scrolling opposite ways: row 1 right-to-left
 // (+1 = increasing scrollLeft), row 2 left-to-right (-1).
 document.querySelectorAll(".brands-marquee").forEach((marquee, i) => {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import "../css/services-redesign.css";
 
 const I18N_SERVICES = {
   en: {
     eyebrow: "Our Services",
     title: "Choose what your business needs",
+    titleHtml: "Choose what your business <em class=\"highlight-needs\">needs</em>",
     tabs: { build: "BUILD", create: "CREATE", grow: "GROW" },
     discussBtn: "Discuss",
     build: {
@@ -120,6 +122,7 @@ const I18N_SERVICES = {
   es: {
     eyebrow: "Nuestros Servicios",
     title: "Elige lo que tu empresa necesita",
+    titleHtml: "Elige lo que tu empresa <em class=\"highlight-needs\">necesita</em>",
     tabs: { build: "CONSTRUIR", create: "CREAR", grow: "CRECER" },
     discussBtn: "Conversar",
     build: {
@@ -235,6 +238,7 @@ const I18N_SERVICES = {
   ar: {
     eyebrow: "خدماتنا",
     title: "اختر ما يحتاجه عملك التجاري",
+    titleHtml: "اختر ما <em class=\"highlight-needs\">يحتاجه</em> عملك التجاري",
     tabs: { build: "بناء", create: "ابتكار", grow: "نمو" },
     discussBtn: "ناقش معنا",
     build: {
@@ -350,6 +354,7 @@ const I18N_SERVICES = {
   si: {
     eyebrow: "අපගේ සේවාවන්",
     title: "ඔබේ ව්‍යාපාරයට අවශ්‍ය දේ තෝරන්න",
+    titleHtml: "ඔබේ ව්‍යාපාරයට <em class=\"highlight-needs\">අවශ්‍ය දේ</em> තෝරන්න",
     tabs: { build: "ගොඩනැගීම", create: "නිර්මාණය", grow: "වර්ධනය" },
     discussBtn: "සාකච්ඡා කරන්න",
     build: {
@@ -465,6 +470,7 @@ const I18N_SERVICES = {
   ta: {
     eyebrow: "எங்கள் சேவைகள்",
     title: "உங்கள் வணிகத்திற்கு தேவையானதை தேர்வு செய்யவும்",
+    titleHtml: "உங்கள் வணிகத்திற்கு <em class=\"highlight-needs\">தேவையானதை</em> தேர்வு செய்யவும்",
     tabs: { build: "உருவாக்குதல்", create: "படைத்தல்", grow: "வளர்த்தல்" },
     discussBtn: "கலந்துரையாட",
     build: {
@@ -888,118 +894,170 @@ export default function ServicesSection() {
         <p className="section-eyebrow" data-i18n="packages.eyebrow">
           {activeLocaleData.eyebrow}
         </p>
-        <h2 className="section-title" data-i18n="packages.title">
-          {activeLocaleData.title}
-        </h2>
+        <h2
+          className="section-title"
+          data-i18n="packages.title"
+          dangerouslySetInnerHTML={{
+            __html: activeLocaleData.titleHtml || activeLocaleData.title,
+          }}
+        />
       </div>
 
-      {/* Segmented Switcher */}
-      <div className="segmented-wrap">
-        <div className="segmented" role="tablist" aria-label="Service categories">
-          <div
-            className="segmented-glider"
-            style={{
-              transform: `translateX(${
-                activeTab === "build" ? "0%" : activeTab === "create" ? "100%" : "200%"
-              })`,
-            }}
-          />
-          <button
-            type="button"
-            className={`tab ${activeTab === "build" ? "active" : ""}`}
-            data-tab="build"
-            data-i18n="packages.tab.build"
-            onClick={() => setActiveTab("build")}
-          >
-            {activeLocaleData.tabs.build}
-          </button>
-          <button
-            type="button"
-            className={`tab ${activeTab === "create" ? "active" : ""}`}
-            data-tab="create"
-            data-i18n="packages.tab.create"
-            onClick={() => setActiveTab("create")}
-          >
-            {activeLocaleData.tabs.create}
-          </button>
-          <button
-            type="button"
-            className={`tab ${activeTab === "grow" ? "active" : ""}`}
-            data-tab="grow"
-            data-i18n="packages.tab.grow"
-            onClick={() => setActiveTab("grow")}
-          >
-            {activeLocaleData.tabs.grow}
-          </button>
-        </div>
+      {/* Packages Switcher */}
+      <div
+        className="packages-switcher scroll-reveal revealed"
+        role="tablist"
+        data-i18n-attr="aria-label:packages.tabsAriaLabel"
+        aria-label="Package categories"
+        style={{
+          "--package-tab-index": activeTab === "build" ? 0 : activeTab === "create" ? 1 : 2,
+        }}
+      >
+        <span className="packages-switcher-glass" aria-hidden="true"></span>
+        <button
+          type="button"
+          className={`packages-tab ${activeTab === "build" ? "is-active" : ""}`}
+          id="packageTabBuild"
+          role="tab"
+          aria-selected={activeTab === "build"}
+          aria-controls="packagePanelBuild"
+          data-package-tab="build"
+          data-i18n="packages.tab.build"
+          tabIndex={activeTab === "build" ? 0 : -1}
+          onClick={() => setActiveTab("build")}
+        >
+          {activeLocaleData.tabs.build}
+        </button>
+        <button
+          type="button"
+          className={`packages-tab ${activeTab === "create" ? "is-active" : ""}`}
+          id="packageTabCreate"
+          role="tab"
+          aria-selected={activeTab === "create"}
+          aria-controls="packagePanelCreate"
+          data-package-tab="create"
+          data-i18n="packages.tab.create"
+          tabIndex={activeTab === "create" ? 0 : -1}
+          onClick={() => setActiveTab("create")}
+        >
+          {activeLocaleData.tabs.create}
+        </button>
+        <button
+          type="button"
+          className={`packages-tab ${activeTab === "grow" ? "is-active" : ""}`}
+          id="packageTabGrow"
+          role="tab"
+          aria-selected={activeTab === "grow"}
+          aria-controls="packagePanelGrow"
+          data-package-tab="grow"
+          data-i18n="packages.tab.grow"
+          tabIndex={activeTab === "grow" ? 0 : -1}
+          onClick={() => setActiveTab("grow")}
+        >
+          {activeLocaleData.tabs.grow}
+        </button>
       </div>
 
       {/* Dynamic Service Panel */}
-      <div className="page" style={{ maxWidth: "1360px", margin: "0 auto", padding: "0 24px" }}>
-        <div className="service-shell" key={activeTab}>
-          <div className="service-main">
-            <aside className="service-intro" key={`intro-${activeTab}`}>
-              <h2>{currentTab.title}</h2>
-              <p>{currentTab.desc}</p>
-              <div style={{ marginTop: "24px" }}>
-                <button
-                  type="button"
-                  className="srv-intro-cta js-open-cal"
-                  data-cal-link="cambridge.marketing"
-                  data-cal-namespace="strategy-call"
-                  onClick={(e) => openCalModal(`${currentTab.title} Services`, e)}
-                >
-                  {activeLocaleData.discussBtn} <span>→</span>
-                </button>
-              </div>
-              <div className="micro">{currentTab.micro}</div>
-            </aside>
-            <div className="service-list" key={`list-${activeTab}-${currentLang}`}>
-              {currentTab.services.map((item) => (
-                <div
-                  key={item.id || item.num}
-                  className="service-row"
-                  onClick={(e) => openCalModal(`${item.name} (${currentTab.title})`, e)}
-                  style={{ cursor: "pointer" }}
-                  title={`Discuss ${item.name}`}
-                >
-                  <div className="num">{item.num}</div>
-                  <div>
-                    <strong>{item.name}</strong>
-                    <span>{item.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Hosting section for BUILD tab */}
-          {currentTab.hosting && (
-            <div className="hosting">
-              <div>
-                <p className="eyebrow" style={{ marginBottom: "10px" }}>
-                  {currentTab.hosting.eyebrow}
-                </p>
-                <h3>{currentTab.hosting.title}</h3>
-                <p>{currentTab.hosting.desc}</p>
-              </div>
-              <div className="hosting-plans">
-                {currentTab.hosting.plans.map((plan) => (
-                  <div
-                    key={plan}
-                    className="host-pill"
-                    onClick={(e) => openCalModal(plan, e)}
-                    style={{ cursor: "pointer" }}
-                    title={`Discuss ${plan}`}
+      <div className="page" style={{ maxWidth: "1360px", margin: "44px auto 0", padding: "0 24px" }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            className="service-shell"
+            initial={{ opacity: 0, y: 12, scale: 0.995 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.995 }}
+            transition={{
+              duration: 0.26,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <div className="service-main">
+              <motion.aside
+                className="service-intro"
+                initial={{ opacity: 0, x: -14 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.32, delay: 0.04, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h2>{currentTab.title}</h2>
+                <p>{currentTab.desc}</p>
+                <div style={{ marginTop: "24px" }}>
+                  <button
+                    type="button"
+                    className="srv-intro-cta js-open-cal"
+                    data-cal-link="cambridge.marketing"
+                    data-cal-namespace="strategy-call"
+                    onClick={(e) => openCalModal(`${currentTab.title} Services`, e)}
                   >
-                    {plan}
-                  </div>
+                    {activeLocaleData.discussBtn} <span>→</span>
+                  </button>
+                </div>
+                <div className="micro">{currentTab.micro}</div>
+              </motion.aside>
+              <motion.div
+                className="service-list"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.06 }}
+              >
+                {currentTab.services.map((item, idx) => (
+                  <motion.div
+                    key={item.id || item.num}
+                    className="service-row"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.25,
+                      delay: Math.min(idx * 0.02, 0.16),
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    onClick={(e) => openCalModal(`${item.name} (${currentTab.title})`, e)}
+                    style={{ cursor: "pointer" }}
+                    title={`Discuss ${item.name}`}
+                  >
+                    <div className="num">{item.num}</div>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <span>{item.desc}</span>
+                    </div>
+                  </motion.div>
                 ))}
-                <div className="host-note">{currentTab.hosting.note}</div>
-              </div>
+              </motion.div>
             </div>
-          )}
-        </div>
+
+            {/* Hosting section for BUILD tab */}
+            {currentTab.hosting && (
+              <motion.div
+                className="hosting"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.08 }}
+              >
+                <div>
+                  <p className="eyebrow" style={{ marginBottom: "10px" }}>
+                    {currentTab.hosting.eyebrow}
+                  </p>
+                  <h3>{currentTab.hosting.title}</h3>
+                  <p>{currentTab.hosting.desc}</p>
+                </div>
+                <div className="hosting-plans">
+                  {currentTab.hosting.plans.map((plan) => (
+                    <div
+                      key={plan}
+                      className="host-pill"
+                      onClick={(e) => openCalModal(plan, e)}
+                      style={{ cursor: "pointer" }}
+                      title={`Discuss ${plan}`}
+                    >
+                      {plan}
+                    </div>
+                  ))}
+                  <div className="host-note">{currentTab.hosting.note}</div>
+                </div>
+              </motion.div>
+            )}
+          </motion.div>
+        </AnimatePresence>
 
         {/* ── Combo Packages Section ── */}
         <section className="combos" aria-labelledby="combo-title">

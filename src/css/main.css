@@ -42,6 +42,11 @@
   --border-light: var(--border-subtle);
   --container: 1280px;
   --header-height: 64px;
+  --font-serif: 'Instrument Serif', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-tight: 'Inter Tight', sans-serif;
+  --radius: 0.5rem;
+  --transition: 0.3s ease-in-out;
   color-scheme: dark;
 }
 
@@ -238,6 +243,25 @@ html.lenis body {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(255, 90, 0, 0.22);
+}
+
+/* Strategy Call Button Prominence */
+.hero-actions .btn,
+.hero-actions .btn-primary,
+.hero-actions .js-open-cal,
+.cta-actions .btn,
+.cta-actions .btn-primary,
+.cta-actions .js-open-cal {
+  font-size: 1.06rem !important;
+  font-weight: 700 !important;
+  padding: 13px 30px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.header-actions .js-open-cal {
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  padding: 10px 22px !important;
 }
 
 .btn-secondary {
@@ -1389,7 +1413,7 @@ html.lenis body {
   --package-tab-index: 0;
   width: min(100%, 620px);
   min-height: 62px;
-  margin: 52px auto 0;
+  margin: 44px auto 52px;
   padding: 6px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
