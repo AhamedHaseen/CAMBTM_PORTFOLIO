@@ -17,7 +17,9 @@ import {
   Moon,
   Database,
   Users,
-  Layers
+  Layers,
+  Package,
+  MapPin
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from './Toast';
@@ -144,6 +146,24 @@ export default function AdminLayout() {
               >
                 <Layers size={18} />
                 <span>Services & Packages</span>
+              </NavLink>
+
+              <NavLink
+                to="/studio/combo-packages"
+                className={({ isActive }) => `adm-nav-link ${isActive ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <Package size={18} />
+                <span>Combo Packages</span>
+              </NavLink>
+
+              <NavLink
+                to="/studio/contacts"
+                className={({ isActive }) => `adm-nav-link ${isActive ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <MapPin size={18} />
+                <span>Contact & Offices</span>
               </NavLink>
 
               {(user?.role === 'admin' || user?.role === 'superadmin' || (user?.permissions || []).includes('*') || (user?.permissions || []).includes('manage_brands')) && (

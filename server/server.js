@@ -22,6 +22,8 @@ import heroBentoRoutes from './routes/heroBento.js';
 import usersRoutes from './routes/users.js';
 import databaseRoutes from './routes/database.js';
 import servicesRoutes from './routes/services.js';
+import combosRoutes from './routes/combos.js';
+import contactsRoutes from './routes/contacts.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -92,6 +94,8 @@ app.use('/api/login-history', loginLogsRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/hero-bento', heroBentoRoutes);
 app.use('/api/services', servicesRoutes);
+app.use('/api/combos', combosRoutes);
+app.use('/api/contacts', contactsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

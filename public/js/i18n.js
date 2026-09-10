@@ -115,6 +115,7 @@
     "theme.title": "Change color theme",
     "nav.systems": "Systems",
     "nav.whyCambm": "Why CAMBM",
+    "nav.services": "Services",
     "nav.packages": "Packages",
     "nav.bookCall": "Book a strategy call",
     "nav.about": "About",
@@ -419,7 +420,8 @@
     "theme.title": "Cambiar tema de color",
     "nav.systems": "Sistemas",
     "nav.whyCambm": "Por qué CAMBM",
-    "nav.packages": "Nuestros Servicios",
+    "nav.services": "Servicios",
+    "nav.packages": "Paquetes",
     "nav.bookCall": "Reservar una llamada",
     "nav.about": "Nosotros",
     "nav.homeAriaLabel": "Cambridge Marketing, ir a la página de inicio",
@@ -738,7 +740,8 @@
     "theme.title": "تغيير سمة الألوان",
     "nav.systems": "الأنظمة",
     "nav.whyCambm": "لماذا كامبريدج",
-    "nav.packages": "خدماتنا",
+    "nav.services": "الخدمات",
+    "nav.packages": "الباقات",
     "nav.bookCall": "احجز مكالمة استراتيجية",
     "nav.about": "من نحن",
     "nav.homeAriaLabel": "Cambridge Marketing, الانتقال إلى الصفحة الرئيسية",
@@ -1030,7 +1033,8 @@
     "theme.title": "වර්ණ තේමාව වෙනස් කරන්න",
     "nav.systems": "පද්ධති",
     "nav.whyCambm": "මන්ද කැම්බ්‍රිජ්",
-    "nav.packages": "අපගේ සේවාවන්",
+    "nav.services": "සේවා",
+    "nav.packages": "පැකේජ",
     "nav.bookCall": "උපායමාර්ග ඇමතුමක් වෙන් කරන්න",
     "nav.about": "අප ගැන",
     "nav.homeAriaLabel": "Cambridge Marketing, මුල් පිටුවට යන්න",
@@ -1341,7 +1345,8 @@
     "theme.title": "வண்ணத் தீமை மாற்றவும்",
     "nav.systems": "அமைப்புகள்",
     "nav.whyCambm": "ஏன் கேம்ப்ரிட்ஜ்",
-    "nav.packages": "எங்கள் சேவைகள்",
+    "nav.services": "சேவைகள்",
+    "nav.packages": "தொகுப்புகள்",
     "nav.bookCall": "மூலோபாய அழைப்பை பதிவு செய்யவும்",
     "nav.about": "எங்களைப் பற்றி",
     "nav.homeAriaLabel":
@@ -4024,8 +4029,8 @@
       trigger.insertAdjacentHTML(
         "beforeend",
         '<svg class="c-select-arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">' +
-          '<path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.4" ' +
-          'stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        '<path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+        'stroke-linecap="round" stroke-linejoin="round"/></svg>',
       );
 
       const menu = document.createElement("ul");

@@ -40,8 +40,19 @@ export default function Packages() {
             <a href="/" className="nav-link" data-i18n="nav.home">
               Home
             </a>
-            <a href="/portfolio" className="nav-link" data-i18n="nav.portfolio">
-              Portfolio
+            <a
+              href="/#services"
+              className="nav-link"
+              data-i18n="nav.services"
+            >
+              Services
+            </a>
+            <a
+              href="/#combo-packages"
+              className="nav-link"
+              data-i18n="nav.packages"
+            >
+              Packages
             </a>
             <a
               href="/#why-CAMBM"
@@ -50,14 +61,6 @@ export default function Packages() {
               data-i18n="nav.whyCambm"
             >
               Why CAMBM
-            </a>
-            <a
-              href="/packages"
-              className="nav-link"
-              data-i18n="nav.packages"
-              aria-current="page"
-            >
-              Our Services
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -128,11 +131,18 @@ export default function Packages() {
             Home
           </a>
           <a
-            href="/portfolio"
+            href="/#services"
             className="mobile-nav-link"
-            data-i18n="nav.portfolio"
+            data-i18n="nav.services"
           >
-            Portfolio
+            Services
+          </a>
+          <a
+            href="/#combo-packages"
+            className="mobile-nav-link"
+            data-i18n="nav.packages"
+          >
+            Packages
           </a>
           <a
             href="/#why-CAMBM"
@@ -141,13 +151,6 @@ export default function Packages() {
             data-i18n="nav.whyCambm"
           >
             Why CAMBM
-          </a>
-          <a
-            href="/packages"
-            className="mobile-nav-link"
-            data-i18n="nav.packages"
-          >
-            Our Services
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

@@ -601,7 +601,7 @@ const getSavedLang = () => {
         return parsed.language;
       }
     }
-  } catch (e) {}
+  } catch (e) { }
   return "en";
 };
 
@@ -832,7 +832,7 @@ export default function ServicesSection() {
           populateServices(parsed);
         }
       }
-    } catch (e) {}
+    } catch (e) { }
 
     fetch("/api/services")
       .then((res) => (res.ok ? res.json() : null))
@@ -842,10 +842,10 @@ export default function ServicesSection() {
           populateServices(list);
           try {
             localStorage.setItem("cambm_services", JSON.stringify(list));
-          } catch (e) {}
+          } catch (e) { }
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     const handleUpdate = () => {
       try {
@@ -854,7 +854,7 @@ export default function ServicesSection() {
           const parsed = JSON.parse(saved);
           populateServices(parsed);
         }
-      } catch (e) {}
+      } catch (e) { }
     };
 
     window.addEventListener("cambm_services_updated", handleUpdate);
@@ -862,6 +862,63 @@ export default function ServicesSection() {
       window.removeEventListener("cambm_services_updated", handleUpdate);
     };
   }, [populateServices]);
+
+  // Dynamic Combos from API / Admin / LocalStorage
+  const [dynamicCombos, setDynamicCombos] = useState(() => {
+    try {
+      const cached = localStorage.getItem("cambm_combos") || localStorage.getItem("cambm_admin_combos");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return [];
+  });
+
+  const loadCombos = useCallback(() => {
+    const endpoints = ['/api/combos', 'http://127.0.0.1:5000/api/combos'];
+    const tryFetch = async () => {
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.success && Array.isArray(data.combos) && data.combos.length > 0) {
+              setDynamicCombos(data.combos);
+              try {
+                localStorage.setItem("cambm_combos", JSON.stringify(data.combos));
+                localStorage.setItem("cambm_admin_combos", JSON.stringify(data.combos));
+              } catch (e) {}
+              return;
+            }
+          }
+        } catch (e) {}
+      }
+    };
+    tryFetch();
+  }, []);
+
+  useEffect(() => {
+    loadCombos();
+
+    const handleCombosUpdate = () => {
+      try {
+        const saved = localStorage.getItem("cambm_combos") || localStorage.getItem("cambm_admin_combos");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) setDynamicCombos(parsed);
+        }
+      } catch (e) {}
+      loadCombos();
+    };
+
+    window.addEventListener("cambm_combos_updated", handleCombosUpdate);
+    window.addEventListener("storage", handleCombosUpdate);
+    return () => {
+      window.removeEventListener("cambm_combos_updated", handleCombosUpdate);
+      window.removeEventListener("storage", handleCombosUpdate);
+    };
+  }, [loadCombos]);
 
   const activeLocaleData = useMemo(() => {
     return I18N_SERVICES[currentLang] || I18N_SERVICES.en;
@@ -881,6 +938,51 @@ export default function ServicesSection() {
     return baseTab;
   }, [activeLocaleData, activeTab, dynamicServices, currentLang, getTranslatedService]);
 
+  const comboCardsToDisplay = useMemo(() => {
+    if (dynamicCombos && dynamicCombos.length > 0) {
+      const activeCombos = dynamicCombos
+        .filter(c => c.status !== 'inactive')
+        .sort((a, b) => (Number(a.display_order) || 0) - (Number(b.display_order) || 0));
+
+      if (activeCombos.length > 0) {
+        return activeCombos.map(c => {
+          let items = [];
+          if (Array.isArray(c.items)) {
+            items = c.items.map(it => typeof it === 'object' && it !== null ? (it.text || it.name || JSON.stringify(it)) : String(it));
+          } else if (typeof c.items === 'string') {
+            try {
+              const p = JSON.parse(c.items);
+              if (Array.isArray(p)) items = p.map(String);
+              else items = c.items.split('\n').map(s => s.trim()).filter(Boolean);
+            } catch {
+              items = c.items.split('\n').map(s => s.trim()).filter(Boolean);
+            }
+          }
+
+          let title = c.title;
+          let desc = c.description || c.desc || '';
+          if (currentLang !== 'en' && activeLocaleData.combos?.cards) {
+            const locMatch = activeLocaleData.combos.cards.find(lc => lc.id === c.id || lc.title?.toLowerCase() === c.title?.toLowerCase());
+            if (locMatch) {
+              title = locMatch.title || title;
+              desc = locMatch.desc || desc;
+            }
+          }
+
+          return {
+            id: c.id,
+            title,
+            desc,
+            items,
+            engagement: c.engagement || 'MONTHLY ENGAGEMENT',
+            featured: Boolean(c.featured)
+          };
+        });
+      }
+    }
+    return activeLocaleData.combos.cards;
+  }, [dynamicCombos, activeLocaleData, currentLang]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("cambm:observe-reveal"));
@@ -889,6 +991,7 @@ export default function ServicesSection() {
 
   return (
     <section className="packages srv-section" id="packages" style={{ scrollMarginTop: "90px" }}>
+      <span id="services" style={{ display: "block", position: "relative", top: "-90px", visibility: "hidden" }} aria-hidden="true" />
       {/* Section Header */}
       <div className="section-inner packages-heading">
         <p className="section-eyebrow" data-i18n="packages.eyebrow">
@@ -1027,40 +1130,144 @@ export default function ServicesSection() {
 
             {/* Hosting section for BUILD tab */}
             {currentTab.hosting && (
-              <motion.div
-                className="hosting"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.08 }}
-              >
-                <div>
-                  <p className="eyebrow" style={{ marginBottom: "10px" }}>
-                    {currentTab.hosting.eyebrow}
-                  </p>
-                  <h3>{currentTab.hosting.title}</h3>
-                  <p>{currentTab.hosting.desc}</p>
-                </div>
-                <div className="hosting-plans">
-                  {currentTab.hosting.plans.map((plan) => (
-                    <div
-                      key={plan}
-                      className="host-pill"
-                      onClick={(e) => openCalModal(plan, e)}
-                      style={{ cursor: "pointer" }}
-                      title={`Discuss ${plan}`}
-                    >
-                      {plan}
+              <>
+                {/* Unified Hosting Section for BUILD tab */}
+                <div className="hosting-block-wrapper">
+                  <div className="hosting">
+                    <div className="hosting-intro">
+                      <p className="eyebrow" style={{ marginBottom: "10px" }}>
+                        {currentTab.hosting.eyebrow}
+                      </p>
+                      <h3>{currentTab.hosting.title}</h3>
+                      <p>{currentTab.hosting.desc}</p>
                     </div>
-                  ))}
-                  <div className="host-note">{currentTab.hosting.note}</div>
+                    {currentTab.hosting.note && (
+                      <div className="hosting-note-wrap">
+                        <span className="host-note-badge">{currentTab.hosting.note}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Hosting Comparison Table */}
+                  <div className="hosting-table-wrap">
+                    <table className="hosting-table">
+                      <thead>
+                        <tr>
+                          <th>Feature</th>
+                          <th>
+                            <div
+                              className="host-header-plan"
+                              onClick={(e) => openCalModal("Starter Hosting", e)}
+                              style={{ cursor: "pointer" }}
+                              title="Discuss Starter Hosting"
+                            >
+                              <span className="host-header-name">Starter Hosting</span>
+                              <span className="host-plan-term">Annual</span>
+                            </div>
+                          </th>
+                          <th>
+                            <div
+                              className="host-header-plan"
+                              onClick={(e) => openCalModal("Marketing Hosting", e)}
+                              style={{ cursor: "pointer" }}
+                              title="Discuss Marketing Hosting"
+                            >
+                              <span className="host-header-name">Marketing Hosting</span>
+                              <span className="host-plan-term">Annual</span>
+                            </div>
+                          </th>
+                          <th>
+                            <div
+                              className="host-header-plan"
+                              onClick={(e) => openCalModal("Elite Hosting", e)}
+                              style={{ cursor: "pointer" }}
+                              title="Discuss Elite Hosting"
+                            >
+                              <span className="host-header-name">Elite Hosting</span>
+                              <span className="host-plan-term">Annual</span>
+                            </div>
+                          </th>
+                          <th>
+                            <div
+                              className="host-header-plan"
+                              onClick={(e) => openCalModal("Enterprise Hosting", e)}
+                              style={{ cursor: "pointer" }}
+                              title="Discuss Enterprise Hosting"
+                            >
+                              <span className="host-header-name">Enterprise Hosting</span>
+                              <span className="host-plan-term">Annual</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                      <tr>
+                        <td className="feat-col">Business Mail /Domain</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>15</td>
+                        <td>50</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Disk Space</td>
+                        <td>25 GB</td>
+                        <td>40 GB</td>
+                        <td>100 GB</td>
+                        <td>250 GB</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Domain</td>
+                        <td>1 Free Domain</td>
+                        <td>1 Free Domain</td>
+                        <td>1 Free Domain</td>
+                        <td>2 Domains</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Maintenance</td>
+                        <td>Free</td>
+                        <td>Free</td>
+                        <td>Free</td>
+                        <td>Free</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Storage / Mail</td>
+                        <td>1 GB</td>
+                        <td>1 GB</td>
+                        <td>15 GB</td>
+                        <td>15 GB</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">SSL Certificate</td>
+                        <td>Included</td>
+                        <td>Included</td>
+                        <td>Included</td>
+                        <td>Included</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Backup Plan</td>
+                        <td>Monthly</td>
+                        <td>Monthly</td>
+                        <td>Weekly</td>
+                        <td>Daily</td>
+                      </tr>
+                      <tr>
+                        <td className="feat-col">Bandwidth</td>
+                        <td>30 GB</td>
+                        <td>60 GB</td>
+                        <td>100 GB</td>
+                        <td>Unlimited</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-              </motion.div>
+              </div>
+            </>
             )}
           </motion.div>
         </AnimatePresence>
 
         {/* ── Combo Packages Section ── */}
-        <section className="combos" aria-labelledby="combo-title">
+        <section className="combos" id="combo-packages" aria-labelledby="combo-title" style={{ scrollMarginTop: "90px" }}>
           <div className="combos-heading" style={{ textAlign: "center", marginBottom: "38px" }}>
             <p className="section-eyebrow eyebrow" style={{ margin: "0 auto 12px", textAlign: "center" }} data-i18n="packages.combos.eyebrow">
               {activeLocaleData.combos.eyebrow}
@@ -1096,10 +1303,10 @@ export default function ServicesSection() {
           </div>
 
           <div className="combo-grid">
-            {activeLocaleData.combos.cards.map((card) => (
+            {comboCardsToDisplay.map((card) => (
               <article
-                key={card.id}
-                className="combo-card"
+                key={card.id || card.title}
+                className={`combo-card ${card.featured ? "is-featured" : ""}`}
               >
                 <h3>{card.title}</h3>
                 <p className="best">{card.desc}</p>

@@ -29,6 +29,8 @@ import LoginHistory from "./admin/pages/LoginHistory";
 import UsersManager from "./admin/pages/UsersManager";
 import Settings from "./admin/pages/Settings";
 import ServicesManager from "./admin/pages/ServicesManager";
+import ComboPackagesManager from "./admin/pages/ComboPackagesManager";
+import ContactManager from "./admin/pages/ContactManager";
 
 function App() {
   useEffect(() => {
@@ -130,6 +132,8 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="services" element={<ServicesManager />} />
+              <Route path="combo-packages" element={<ComboPackagesManager />} />
+              <Route path="contacts" element={<ContactManager />} />
               <Route
                 path="portfolio"
                 element={

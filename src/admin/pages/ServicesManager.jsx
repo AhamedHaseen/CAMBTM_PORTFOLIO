@@ -338,7 +338,7 @@ export default function ServicesManager() {
   }, [services]);
 
   return (
-    <div className="adm-content">
+    <div>
       {/* Page Header */}
       <div className="adm-page-header">
         <div>

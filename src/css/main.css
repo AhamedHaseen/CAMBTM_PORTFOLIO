@@ -260,9 +260,9 @@ html.lenis body {
 
 .header-actions .js-open-cal,
 .header-actions .btn {
-  font-size: 1.02rem !important;
-  font-weight: 700 !important;
-  padding: 11px 26px !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  padding: 9px 20px !important;
   letter-spacing: 0.01em !important;
 }
 
@@ -377,6 +377,8 @@ html.lenis body {
 
 .mobile-nav-actions .btn {
   width: 100%;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
 }
 
 .mobile-nav-backdrop {
@@ -2146,7 +2148,7 @@ html.lenis body {
 
 .footer-offices {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 20px;
   padding-bottom: 56px;
   margin-bottom: 40px;
