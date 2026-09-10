@@ -152,7 +152,7 @@ body[data-theme="light"] .station-card-inner {
   background: rgba(255, 90, 0, 0.08);
   border: 1px solid rgba(255, 90, 0, 0.25);
   color: #ff5a00;
-  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -160,19 +160,19 @@ body[data-theme="light"] .station-card-inner {
 }
 
 .station-step {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--text-muted, #888888);
+  color: var(--text-muted, #9a9a9a);
   letter-spacing: 0.08em;
 }
 
-/* Station Year - Constant color, does not change on hover */
+/* Station Year - Clean Modern Bold */
 .station-year {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
   font-size: 1.45rem;
   font-weight: 800;
-  color: var(--text, #ededed);
+  color: var(--text-primary, #ffffff);
   letter-spacing: -0.02em;
   margin-top: 4px;
 }
@@ -180,17 +180,23 @@ body[data-theme="light"] .station-card-inner {
 [data-theme="light"] .station-year,
 html[data-theme="light"] .station-year,
 body[data-theme="light"] .station-year {
-  color: #0a0a0a;
+  color: var(--mood-black, #0a0a0a);
 }
 
-/* Station Detail - Constant orange accent, does not change on hover */
+/* Station Detail - Soft Secondary Muted Text */
 .station-detail {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-family: var(--font-sans, 'Inter', sans-serif);
   font-size: 0.88rem;
-  font-weight: 600;
-  color: #ff5a00;
-  line-height: 1.35;
-  margin: 2px 0 0;
+  font-weight: 500;
+  color: var(--text-secondary, #dcdcdc);
+  line-height: 1.45;
+  margin: 4px 0 0;
+}
+
+[data-theme="light"] .station-detail,
+html[data-theme="light"] .station-detail,
+body[data-theme="light"] .station-detail {
+  color: var(--mood-graphite, #464646);
 }
 
 /* --------------------------------------------------------------------------
@@ -239,21 +245,34 @@ body[data-theme="light"] .station-year {
 }
 
 .mobile-node-circle {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--text, #0a0a0a);
+  color: var(--text-primary, #ffffff);
+}
+
+[data-theme="light"] .mobile-node-circle,
+html[data-theme="light"] .mobile-node-circle,
+body[data-theme="light"] .mobile-node-circle {
+  color: var(--mood-black, #0a0a0a);
 }
 
 .mobile-step-card {
-  background: var(--bg-card, #ffffff);
-  border: 1px solid var(--border-subtle, rgba(10, 10, 10, 0.1));
+  background: var(--bg-card, #202022);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   border-radius: 16px;
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .mobile-step-card,
+html[data-theme="light"] .mobile-step-card,
+body[data-theme="light"] .mobile-step-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .mobile-card-top {
@@ -263,19 +282,31 @@ body[data-theme="light"] .station-year {
 }
 
 .mobile-year-badge {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
-  font-size: 1.15rem;
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
+  font-size: 1.25rem;
   font-weight: 800;
-  color: #ff5a00;
+  color: var(--text-primary, #ffffff);
+}
+
+[data-theme="light"] .mobile-year-badge,
+html[data-theme="light"] .mobile-year-badge,
+body[data-theme="light"] .mobile-year-badge {
+  color: var(--mood-black, #0a0a0a);
 }
 
 .mobile-step-detail {
-  font-family: var(--font-mono, 'Inter Tight', monospace);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #ff5a00;
-  line-height: 1.35;
-  margin: 0;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary, #dcdcdc);
+  line-height: 1.45;
+  margin: 4px 0 0;
+}
+
+[data-theme="light"] .mobile-step-detail,
+html[data-theme="light"] .mobile-step-detail,
+body[data-theme="light"] .mobile-step-detail {
+  color: var(--mood-graphite, #464646);
 }
 
 @media (max-width: 860px) {
