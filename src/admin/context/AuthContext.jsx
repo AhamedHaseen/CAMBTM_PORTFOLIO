@@ -12,18 +12,14 @@ export function AuthProvider({ children }) {
 
   // Check current session on initial load
   const checkAuth = async () => {
-    const token = localStorage.getItem('cambm_token');
-    if (!token) {
-      setUser(null);
-      setLoading(false);
-      return;
-    }
-
     try {
       const res = await apiRequest('/api/auth/me');
       const data = await parseResponseJson(res);
       if (data && data.success && data.user) {
         setUser(data.user);
+        if (data.token) {
+          localStorage.setItem('cambm_token', data.token);
+        }
         setLoading(false);
         return;
       }
@@ -69,7 +65,7 @@ export function AuthProvider({ children }) {
       method: 'POST',
       body: JSON.stringify({ email, password, rememberMe })
     });
-    
+
     const data = await parseResponseJson(res);
 
     if (!res.ok || !data.success) {

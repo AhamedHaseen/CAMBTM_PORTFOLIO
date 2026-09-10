@@ -21,6 +21,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
 import { formatLocalDateTime } from '../utils/date';
+import { apiRequest } from '../utils/api';
 
 const ALL_PERMISSIONS = [
   { id: 'manage_portfolio', label: 'Portfolio Management', desc: 'Create, edit, publish and delete portfolio case studies' },
@@ -71,14 +72,7 @@ export default function UsersManager() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('/api/users', {
-        headers: {
-          'Accept': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
-      });
+      const res = await apiRequest('/api/users');
       const data = await res.json();
       if (data.success) {
         setUsers(data.users || []);
@@ -177,14 +171,8 @@ export default function UsersManager() {
       const url = isEditing ? `/api/users/${editId}` : '/api/users';
       const method = isEditing ? 'PUT' : 'POST';
 
-      const res = await fetch(url, {
+      const res = await apiRequest(url, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: JSON.stringify(formData)
       });
 
@@ -206,13 +194,8 @@ export default function UsersManager() {
   const handleDeleteUser = async () => {
     if (!userToDelete) return;
     try {
-      const res = await fetch(`/api/users/${userToDelete.id}`, {
-        method: 'DELETE',
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
+      const res = await apiRequest(`/api/users/${userToDelete.id}`, {
+        method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {
@@ -237,14 +220,8 @@ export default function UsersManager() {
 
     setResettingPassword(true);
     try {
-      const res = await fetch('/api/auth/admin-reset-password', {
+      const res = await apiRequest('/api/auth/admin-reset-password', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: JSON.stringify({
           userId: userToReset.id,
           newPassword: newResetPassword,

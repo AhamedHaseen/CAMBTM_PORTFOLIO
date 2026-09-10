@@ -1652,8 +1652,12 @@
   };
 
   Object.assign(TRANSLATIONS.en, {
-    "packages.eyebrow": "Our Packages",
+    "packages.eyebrow": "Our Services",
     "packages.title": "Choose what your business needs",
+    "packages.combos.eyebrow": "Combo Packages",
+    "packages.combos.title": "Connected services. One clear engagement.",
+    "packages.combos.desc": "For businesses that need several capabilities working together, our combo packages combine content, marketing and technology into a single managed engagement.",
+    "packages.combos.note": "No public pricing displayed. Package scope can be adapted after a short requirements discussion.",
     "packages.summary":
       "BUILD the infrastructure. GROW the business. CREATE what the audience sees.",
     "packages.tabsAriaLabel": "Package categories",
@@ -1851,8 +1855,12 @@
   });
 
   Object.assign(TRANSLATIONS.es, {
-    "packages.eyebrow": "Nuestros paquetes",
-    "packages.title": "Elige lo que necesita tu negocio",
+    "packages.eyebrow": "Nuestros Servicios",
+    "packages.title": "Elige lo que tu empresa necesita",
+    "packages.combos.eyebrow": "Paquetes Combinados",
+    "packages.combos.title": "Servicios conectados. Una sola contratación clara.",
+    "packages.combos.desc": "Para empresas que necesitan varias capacidades trabajando juntas, nuestros paquetes combinan contenido, marketing y tecnología en una sola gestión.",
+    "packages.combos.note": "Sin precios públicos. El alcance del paquete se adapta tras una breve conversación sobre tus requerimientos.",
     "packages.summary":
       "CONSTRUYE la infraestructura. HAZ CRECER el negocio. CREA lo que ve la audiencia.",
     "packages.tabsAriaLabel": "Categorías de paquetes",
@@ -2060,8 +2068,12 @@
   });
 
   Object.assign(TRANSLATIONS.ar, {
-    "packages.eyebrow": "باقاتنا",
-    "packages.title": "اختر ما يحتاجه عملك",
+    "packages.eyebrow": "خدماتنا",
+    "packages.title": "اختر ما يحتاجه عملك التجاري",
+    "packages.combos.eyebrow": "باقات مدمجة",
+    "packages.combos.title": "خدمات مترابطة. تعاقد واضح ومحدد.",
+    "packages.combos.desc": "للشركات التي تحتاج قدرات متعددة تعمل معاً بتناغم، تجمع باقاتنا بين المحتوى والتسويق والتكنولوجيا في إدارة واحدة متكاملة.",
+    "packages.combos.note": "لا تظهر أسعار معلنة. يتم تحديد نطاق الباقة بعد جلسة مناقشة سريعة لمتطلبات عملك.",
     "packages.summary":
       "ابنِ البنية التحتية. نمِّ أعمالك. ابتكر ما يراه جمهورك.",
     "packages.tabsAriaLabel": "فئات الباقات",
@@ -2251,8 +2263,12 @@
   });
 
   Object.assign(TRANSLATIONS.si, {
-    "packages.eyebrow": "අපගේ පැකේජ",
+    "packages.eyebrow": "අපගේ සේවාවන්",
     "packages.title": "ඔබේ ව්‍යාපාරයට අවශ්‍ය දේ තෝරන්න",
+    "packages.combos.eyebrow": "සංයුක්ත පැකේජ",
+    "packages.combos.title": "සම්බන්ධිත සේවාවන්. එක් පැහැදිලි ගිවිසුමක්.",
+    "packages.combos.desc": "එකට ක්‍රියා කරන හැකියාවන් කිහිපයක් අවශ්‍ය ව්‍යාපාර සඳහා, අපගේ සංයුක්ත පැකේජ අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණයකට ඒකාබද්ධ කරයි.",
+    "packages.combos.note": "පොදු මිල ගණන් ප්‍රදර්ශනය නොකෙරේ. කෙටි අවශ්‍යතා සාකච්ඡාවකින් පසු පැකේජයේ විෂය පථය වෙනස් කළ හැක.",
     "packages.summary":
       "යටිතල පහසුකම් ගොඩනඟන්න. ව්‍යාපාරය වර්ධනය කරන්න. ප්‍රේක්ෂකයා දකින දේ නිර්මාණය කරන්න.",
     "packages.tabsAriaLabel": "පැකේජ කාණ්ඩ",
@@ -2453,8 +2469,12 @@
   });
 
   Object.assign(TRANSLATIONS.ta, {
-    "packages.eyebrow": "எங்கள் தொகுப்புகள்",
-    "packages.title": "உங்கள் வணிகத்திற்குத் தேவையானதைத் தேர்ந்தெடுக்கவும்",
+    "packages.eyebrow": "எங்கள் சேவைகள்",
+    "packages.title": "உங்கள் வணிகத்திற்கு தேவையானதை தேர்வு செய்யவும்",
+    "packages.combos.eyebrow": "கூட்டு தொகுப்புகள்",
+    "packages.combos.title": "இணைக்கப்பட்ட சேவைகள். ஒரு தெளிவான ஒப்பந்தம்.",
+    "packages.combos.desc": "பல திறன்கள் ஒன்றாகச் செயல்பட வேண்டிய வணிகங்களுக்கு, எங்கள் கூட்டு தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒற்றை நிர்வாகத்தில் இணைக்கின்றன.",
+    "packages.combos.note": "பொதுவான விலைகள் காட்டப்படவில்லை. குறுகிய தேவைகள் குறித்த கலந்துரையாடலுக்குப் பிறகு தொகுப்பின் அளவை மாற்றியமைக்கலாம்.",
     "packages.summary":
       "கட்டமைப்பை உருவாக்குங்கள். வணிகத்தை வளருங்கள். பார்வையாளர்கள் காண்பதை உருவாக்குங்கள்.",
     "packages.tabsAriaLabel": "தொகுப்பு வகைகள்",

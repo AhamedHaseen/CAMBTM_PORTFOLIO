@@ -21,6 +21,7 @@ import {
   Database
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { apiRequest } from '../utils/api';
 
 import { formatLocalDateOnly, formatLocalTimeOnly } from '../utils/date';
 
@@ -49,13 +50,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetch('/api/dashboard/summary', {
-      headers: {
-        ...(localStorage.getItem('cambm_token')
-          ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-          : {})
-      }
-    })
+    apiRequest('/api/dashboard/summary')
       .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
       .then(resData => {
         if (resData && resData.success) {

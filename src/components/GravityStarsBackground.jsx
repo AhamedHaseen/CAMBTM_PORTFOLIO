@@ -80,7 +80,7 @@ export default function GravityStarsBackground({
     let currentColor = "rgba(255, 90, 0, 0.8)";
     try {
       currentColor = getComputedStyle(container).color || currentColor;
-    } catch (e) {}
+    } catch (e) { }
 
     // Intersection observer to pause rendering when offscreen
     const visObserver = new IntersectionObserver((entries) => {

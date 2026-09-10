@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { History, ShieldCheck, ShieldAlert, Laptop, Smartphone, Search, RefreshCw, Clock, Calendar } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { formatLocalDateTime } from '../utils/date';
+import { apiRequest } from '../utils/api';
 
 export default function LoginHistory() {
   const [logs, setLogs] = useState([]);
@@ -22,14 +23,7 @@ export default function LoginHistory() {
       const params = new URLSearchParams();
       if (statusFilter !== 'All') params.append('status', statusFilter);
 
-      const res = await fetch(`/api/login-history?${params.toString()}`, {
-        headers: {
-          'Accept': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
-      });
+      const res = await apiRequest(`/api/login-history?${params.toString()}`);
       const contentType = res.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await res.json();

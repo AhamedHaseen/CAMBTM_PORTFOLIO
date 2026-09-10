@@ -5,8 +5,6 @@ export default function Portfolio() {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.classList.add("portfolio-page");
-
-    window.dispatchEvent(new Event("DOMContentLoaded"));
     document.dispatchEvent(new CustomEvent("cambm:revealed"));
     if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
       window.CAMBMTheme.initControls();

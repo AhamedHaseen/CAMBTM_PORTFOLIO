@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import { apiRequest } from '../utils/api';
 import {
   ArrowLeft,
   Save,
@@ -60,7 +61,7 @@ export default function PortfolioForm() {
 
   // Fetch available brands from DB
   useEffect(() => {
-    fetch('/api/brands?all=true', { headers: { 'Accept': 'application/json' } })
+    apiRequest('/api/brands?all=true')
       .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
       .then(data => {
         if (data && data.brands) {
@@ -72,7 +73,7 @@ export default function PortfolioForm() {
 
   useEffect(() => {
     if (isEdit) {
-      fetch(`/api/portfolio/${id}`, { headers: { 'Accept': 'application/json' } })
+      apiRequest(`/api/portfolio/${id}`)
         .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
         .then(data => {
           if (data && data.success && data.project) {
@@ -111,14 +112,14 @@ export default function PortfolioForm() {
         .finally(() => setLoading(false));
     } else {
       // Auto compute next order
-      fetch('/api/portfolio', { headers: { 'Accept': 'application/json' } })
+      apiRequest('/api/portfolio')
         .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
         .then(data => {
           if (data && data.projects) {
             setFormData(prev => ({ ...prev, display_order: data.projects.length + 1 }));
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [id, isEdit]);
 
@@ -176,14 +177,8 @@ export default function PortfolioForm() {
       const url = isEdit ? `/api/portfolio/${id}` : '/api/portfolio';
       const method = isEdit ? 'PUT' : 'POST';
 
-      const res = await fetch(url, {
+      const res = await apiRequest(url, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: JSON.stringify(payload)
       });
 

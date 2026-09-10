@@ -518,6 +518,9 @@
       overscroll-behavior: contain;
       /* don't chain scroll to the page */
       cursor: grab;
+      transform: translateZ(0);
+      will-change: scroll-position;
+      contain: paint;
       -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
       mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
     }
@@ -543,6 +546,8 @@
       border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
+      transform: translateZ(0);
+      contain: paint;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       flex-shrink: 0;
       aspect-ratio: 4 / 5;
@@ -652,6 +657,9 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       overscroll-behavior-x: contain;
+      transform: translateZ(0);
+      will-change: scroll-position;
+      contain: paint;
       -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
       mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
       cursor: grab;

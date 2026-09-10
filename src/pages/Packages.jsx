@@ -5,7 +5,6 @@ import "../css/services-redesign.css";
 export default function Packages() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    window.dispatchEvent(new Event("DOMContentLoaded"));
     const revealEvent = new CustomEvent("cambm:revealed");
     document.dispatchEvent(revealEvent);
     if (window.CAMBMTheme && window.CAMBMTheme.initControls)

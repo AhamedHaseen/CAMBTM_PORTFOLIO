@@ -89,7 +89,7 @@ router.post('/login', loginLimiter, async (req, res) => {
       const remainingAttempts = Math.max(0, 3 - failedCount);
       return res.status(401).json({
         success: false,
-        error: remainingAttempts > 0 
+        error: remainingAttempts > 0
           ? `Invalid password. ${remainingAttempts} attempt(s) remaining before account lockout.`
           : 'Account has been locked for 10 minutes due to 3 consecutive failed attempts.'
       });
@@ -160,10 +160,12 @@ router.post('/login', loginLimiter, async (req, res) => {
     const token = generateToken(user, rememberMe);
 
     // Set secure HTTP-only cookie
+    const isProd = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
       maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000
     };
 
@@ -331,12 +333,16 @@ router.post('/verify-2fa', async (req, res) => {
 
     const token = generateToken(user, decoded.rememberMe);
 
-    res.cookie('cambm_token', token, {
+    const isProd = process.env.NODE_ENV === 'production';
+    const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
       maxAge: decoded.rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000
-    });
+    };
+
+    res.cookie('cambm_token', token, cookieOptions);
 
     await recordLoginLog(req, { email: user.email, status: 'SUCCESS', adminUser: user.full_name });
     await recordAudit(req, {
@@ -477,12 +483,28 @@ router.post('/disable-2fa', requireAuth, async (req, res) => {
 /**
  * POST /api/auth/logout
  */
-router.post('/logout', requireAuth, async (req, res) => {
+router.post('/logout', async (req, res) => {
   try {
-    const user = req.user;
-    res.clearCookie('cambm_token');
-    await recordLogout(user.email);
-    await recordAudit(req, { action: 'LOGOUT', module: 'Auth', recordId: String(user.id), description: `Admin logged out: ${user.full_name}` });
+    const isProd = process.env.NODE_ENV === 'production';
+    res.clearCookie('cambm_token', { path: '/', sameSite: isProd ? 'none' : 'lax', secure: isProd });
+
+    let token = req.cookies?.cambm_token;
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (decoded && decoded.id) {
+          const userRes = await query('SELECT email, full_name FROM users WHERE id = $1', [decoded.id]);
+          if (userRes.rows.length > 0) {
+            await recordLogout(userRes.rows[0].email);
+            await recordAudit(req, { action: 'LOGOUT', module: 'Auth', recordId: String(decoded.id), description: `Admin logged out: ${userRes.rows[0].full_name}` });
+          }
+        }
+      } catch (e) {}
+    }
+
     return res.json({
       success: true,
       message: 'Logged out successfully.'

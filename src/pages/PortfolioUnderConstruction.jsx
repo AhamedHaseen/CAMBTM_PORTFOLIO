@@ -4,8 +4,6 @@ export default function PortfolioUnderConstruction({ page = "portfolio" }) {
   const isPackages = page === "packages";
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Dispatch event to re-trigger vanilla JS DOM logic
-    window.dispatchEvent(new Event("DOMContentLoaded"));
     const revealEvent = new CustomEvent("cambm:revealed");
     document.dispatchEvent(revealEvent);
     if (window.CAMBMTheme && window.CAMBMTheme.initControls)

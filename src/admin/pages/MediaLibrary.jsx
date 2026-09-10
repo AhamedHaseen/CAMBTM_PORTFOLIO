@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import ConfirmModal from '../components/ConfirmModal';
+import { apiRequest } from '../utils/api';
 
 export default function MediaLibrary() {
   const [media, setMedia] = useState([]);
@@ -34,13 +35,7 @@ export default function MediaLibrary() {
       if (typeFilter !== 'all') params.append('type', typeFilter);
       if (search) params.append('search', search);
 
-      const res = await fetch(`/api/media?${params.toString()}`, {
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
-      });
+      const res = await apiRequest(`/api/media?${params.toString()}`);
       const contentType = res.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await res.json();
@@ -73,13 +68,8 @@ export default function MediaLibrary() {
     formData.append('file', files[0]);
 
     try {
-      const res = await fetch('/api/media/upload', {
+      const res = await apiRequest('/api/media/upload', {
         method: 'POST',
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: formData
       });
 
@@ -108,13 +98,8 @@ export default function MediaLibrary() {
   const handleDelete = async () => {
     if (!deleteId) return;
     try {
-      const res = await fetch(`/api/media/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
+      const res = await apiRequest(`/api/media/${deleteId}`, {
+        method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {

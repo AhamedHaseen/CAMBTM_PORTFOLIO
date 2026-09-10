@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShieldAlert, Search, Filter, Eye, X, FileJson, Clock, Download, RefreshCw, Calendar, ShieldCheck } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { formatLocalDateTime } from '../utils/date';
+import { apiRequest } from '../utils/api';
 
 const MODULES = ['All', 'Auth', 'Security', 'User Management', 'Portfolio', 'Creatives', 'Videos', 'Brands', 'Media', 'Settings', 'Database', 'System'];
 const ACTIONS = ['All', 'LOGIN', 'LOGIN_2FA', 'LOGOUT', 'FAILED_LOGIN', 'FAILED_2FA', 'ENABLE_2FA', 'DISABLE_2FA', 'CREATE', 'UPDATE', 'DELETE', 'PUBLISH', 'EXPORT_DATABASE', 'CREATE_BACKUP', 'UPDATE_DB_CONNECTION'];
@@ -31,14 +32,7 @@ export default function AuditLogs() {
       if (actionFilter !== 'All') params.append('action', actionFilter);
       if (search) params.append('search', search);
 
-      const res = await fetch(`/api/audit-logs?${params.toString()}`, {
-        headers: {
-          'Accept': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
-      });
+      const res = await apiRequest(`/api/audit-logs?${params.toString()}`);
       const contentType = res.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await res.json();
@@ -109,7 +103,7 @@ export default function AuditLogs() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `audit_logs_${new Date().toISOString().slice(0,10)}.csv`);
+    link.setAttribute('download', `audit_logs_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

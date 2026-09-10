@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiRequest } from '../utils/api';
 import {
   Plus,
   Sparkles,
@@ -44,7 +45,7 @@ export default function CreativesManager() {
 
   const fetchCreatives = async () => {
     try {
-      const res = await fetch('/api/creatives', { headers: { 'Accept': 'application/json' } });
+      const res = await apiRequest('/api/creatives');
       const contentType = res.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await res.json();
@@ -110,14 +111,8 @@ export default function CreativesManager() {
       const url = editingItem ? `/api/creatives/${editingItem.id}` : '/api/creatives';
       const method = editingItem ? 'PUT' : 'POST';
 
-      const res = await fetch(url, {
+      const res = await apiRequest(url, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: JSON.stringify(form)
       });
 
@@ -137,13 +132,8 @@ export default function CreativesManager() {
   const handleDelete = async () => {
     if (!deleteId) return;
     try {
-      const res = await fetch(`/api/creatives/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
+      const res = await apiRequest(`/api/creatives/${deleteId}`, {
+        method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {

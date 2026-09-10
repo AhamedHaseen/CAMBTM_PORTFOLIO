@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from './Toast';
+import { apiRequest } from '../utils/api';
 
 export default function AdminLayout() {
   const { user, logout } = useAuth();
@@ -30,7 +31,7 @@ export default function AdminLayout() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('adm_theme') || 'dark');
-  const [dbStatus, setDbStatus] = useState({ isSupabase: false, engine: 'connecting' });
+  const [dbStatus, setDbStatus] = useState({ isSupabase: false, engine: 'local' });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-admin-theme', theme);
@@ -40,14 +41,7 @@ export default function AdminLayout() {
 
   // Fetch health / database status
   useEffect(() => {
-    fetch('/api/settings', {
-      headers: {
-        'Accept': 'application/json',
-        ...(localStorage.getItem('cambm_token')
-          ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-          : {})
-      }
-    })
+    apiRequest('/api/settings')
       .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
       .then(data => {
         if (data && data.system) {
@@ -57,7 +51,7 @@ export default function AdminLayout() {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const toggleTheme = () => {

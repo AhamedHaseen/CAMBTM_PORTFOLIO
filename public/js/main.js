@@ -147,6 +147,37 @@ window.addEventListener(
   { passive: true },
 );
 
+// ===== LENIS SMOOTH SCROLL ENGINE =====
+let lenisInstance = null;
+if (
+  typeof window.Lenis !== "undefined" &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  try {
+    lenisInstance = new window.Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      syncTouch: false, // Keep native touch inertia on mobile
+      wheelMultiplier: 0.95,
+      autoResize: true,
+    });
+
+    function lenisRaf(time) {
+      if (lenisInstance) {
+        lenisInstance.raf(time);
+        requestAnimationFrame(lenisRaf);
+      }
+    }
+    requestAnimationFrame(lenisRaf);
+    window.__cambmLenis = lenisInstance;
+  } catch (err) {
+    console.warn("Lenis init skipped:", err);
+  }
+}
+
 // Manual eased scrolling rather than native scrollTo/scrollIntoView with
 // behavior:'smooth': browsers silently downgrade native smooth scrolling to
 // an instant jump when the visitor's OS has "reduce motion" turned on, which
@@ -158,6 +189,10 @@ function easeInOutQuad(t) {
   return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 }
 function smoothScrollTo(targetY, duration = 600) {
+  if (window.__cambmLenis) {
+    window.__cambmLenis.scrollTo(targetY, { duration: duration / 1000 });
+    return;
+  }
   const startY = window.pageYOffset;
   const maxY = Math.max(
     0,
@@ -358,9 +393,6 @@ if (!isTouchDevice && cursor && cursorRing) {
 }
 
 // ===== SCROLL REVEAL =====
-const revealElements = document.querySelectorAll(
-  ".scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale",
-);
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -370,10 +402,21 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+  { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
 );
 
-revealElements.forEach((el) => revealObserver.observe(el));
+function observeNewRevealElements() {
+  document
+    .querySelectorAll(
+      ".scroll-reveal:not(.revealed), .scroll-reveal-left:not(.revealed), .scroll-reveal-right:not(.revealed), .scroll-reveal-scale:not(.revealed)",
+    )
+    .forEach((el) => revealObserver.observe(el));
+}
+window.observeNewRevealElements = observeNewRevealElements;
+window.addEventListener("cambm:revealed", observeNewRevealElements);
+window.addEventListener("cambm:observe-reveal", observeNewRevealElements);
+
+observeNewRevealElements();
 
 // ===== CLIENT CARD POPUP (bento gallery cards) =====
 // Opens ONLY on click of an individual image. Shows that image's picture
@@ -515,29 +558,31 @@ const bentoVideoObserver =
           if (entry.isIntersecting) {
             v.muted = true;
             v.playsInline = true;
-            const p = v.play();
-            if (p && typeof p.catch === "function") p.catch(function () { });
+            if (v.paused) {
+              const p = v.play();
+              if (p && typeof p.catch === "function") p.catch(function () { });
+            }
           } else {
-            v.pause();
+            if (!v.paused) {
+              v.pause();
+            }
           }
         });
       },
-      { rootMargin: "150px 0px 150px 0px", threshold: 0.01 },
+      { rootMargin: "50px 0px 50px 0px", threshold: 0.05 },
     )
     : null;
 function observeBentoVideos(container) {
   container.querySelectorAll("video.bento-video").forEach(function (v) {
     v.muted = true;
     v.playsInline = true;
+    v.pause();
     if (!v.src && v.dataset.videoKey && window.BENTO_VIDEOS) {
       var uri = window.BENTO_VIDEOS[v.dataset.videoKey];
       if (uri) v.src = uri;
     }
     if (bentoVideoObserver) {
       bentoVideoObserver.observe(v);
-    } else {
-      var p = v.play();
-      if (p && typeof p.catch === "function") p.catch(function () { });
     }
   });
 }
@@ -568,6 +613,19 @@ function makeLoopSlider(
   let recentering = false;
   let dragging = false; // true while a manual drag/touch interaction is in progress
   let paused = false; // true while the mouse is hovering the slider
+  let inViewport = true; // pause frame ticks and DOM mutations when offscreen
+
+  if ("IntersectionObserver" in window) {
+    const vpObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inViewport = entry.isIntersecting;
+        });
+      },
+      { rootMargin: "150px 0px 150px 0px" },
+    );
+    vpObserver.observe(container);
+  }
 
   function build(force) {
     if (setSize && !force) return;
@@ -740,27 +798,9 @@ function makeLoopSlider(
   // paused (hover) or being manually dragged/touched. Reuses the same
   // posProp the manual controls and the recentring listener above use,
   // so it just looks like a very slow, continuous manual scroll.
-  //
-  // Movement is scaled by the actual elapsed time between frames
-  // (rAF's timestamp argument), not a fixed amount per frame. Frame rate
-  // isn't the same across devices - a 60Hz laptop gets ~60 frames/sec,
-  // but plenty of phones run 90Hz or 120Hz screens, meaning noticeably
-  // more frames (and, at a flat px/frame rate, noticeably faster visible
-  // motion) in the same second. That's why the speed used to look
-  // different on laptop vs. phone even though the code was identical.
-  // Scaling by real elapsed time makes the speed the same everywhere
-  // regardless of the display's refresh rate.
-  //
-  // `remainder` banks the fractional pixels a given frame's delta didn't
-  // use up. container.scrollTop/scrollLeft round to whole pixels on
-  // read, so writing a sub-1px delta straight to it gets silently
-  // discarded - below a certain speed the position would never advance
-  // at all. Accumulating the fraction here instead (and only flushing
-  // whole pixels out to the DOM once they add up) means any speed, no
-  // matter how small, eventually moves it.
   let remainder = 0;
   registerAutoScroll((deltaMs, zoomMultiplier) => {
-    if (!paused && !dragging && setSize) {
+    if (!paused && !dragging && inViewport && setSize) {
       remainder += speed * zoomMultiplier * (deltaMs / 1000) * direction;
       const whole = Math.trunc(remainder);
       if (whole !== 0) {

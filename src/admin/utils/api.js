@@ -48,7 +48,7 @@ export async function apiRequest(endpoint, options = {}) {
 
   // Primary URL using Vite relative proxy
   const primaryUrl = cleanEndpoint;
-  
+
   // Direct fallback URL in case Vite dev proxy is stale or un-restarted
   const fallbackUrl = `http://127.0.0.1:5000${cleanEndpoint}`;
 

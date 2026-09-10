@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { apiRequest } from '../utils/api';
 import {
   Plus,
   Search,
@@ -39,7 +40,7 @@ export default function PortfolioList() {
       if (selectedCategory !== 'All') params.set('category', selectedCategory);
       if (selectedStatus !== 'all') params.set('status', selectedStatus);
 
-      const res = await fetch(`/api/portfolio?${params.toString()}`);
+      const res = await apiRequest(`/api/portfolio?${params.toString()}`);
       const data = await res.json();
       if (data.success) {
         setProjects(data.projects || []);
@@ -77,14 +78,8 @@ export default function PortfolioList() {
     setProjects(prev => prev.map(p => p.id === project.id ? { ...p, status: targetStatus } : p));
 
     try {
-      const res = await fetch(`/api/portfolio/${project.id}/publish`, {
+      const res = await apiRequest(`/api/portfolio/${project.id}/publish`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        },
         body: JSON.stringify({ status: targetStatus })
       });
       const data = await res.json();
@@ -109,13 +104,8 @@ export default function PortfolioList() {
     // In-place optimistic deletion
     setProjects(prev => prev.filter(p => p.id !== idToDelete));
     try {
-      const res = await fetch(`/api/portfolio/${idToDelete}`, {
-        method: 'DELETE',
-        headers: {
-          ...(localStorage.getItem('cambm_token')
-            ? { 'Authorization': `Bearer ${localStorage.getItem('cambm_token')}` }
-            : {})
-        }
+      const res = await apiRequest(`/api/portfolio/${idToDelete}`, {
+        method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {

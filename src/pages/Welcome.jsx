@@ -1,9 +1,8 @@
 import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
-import GravityStarsBackground from "../components/GravityStarsBackground";
-import MotionPageLoader from "../components/MotionPageLoader";
 import AnimatedCounter from "../components/AnimatedCounter";
 import ServicesSection from "../components/ServicesSection";
+import MotionPageLoader from "../components/MotionPageLoader";
 
 const getMediaUrl = (url) => {
   if (!url) return '';
@@ -93,12 +92,12 @@ const renderBentoCardsHTML = (items) => {
 
     if (isVid) {
       return `<div class="${cardClass}">` +
-        `<video class="bento-video" src="${mediaUrl}" ${posterUrl ? `poster="${posterUrl}"` : ''} aria-label="${name}" autoplay loop muted playsinline preload="auto" fetchpriority="high" disablepictureinpicture></video>` +
+        `<video class="bento-video" src="${mediaUrl}" ${posterUrl ? `poster="${posterUrl}"` : ''} aria-label="${name}" loop muted playsinline preload="none" disablepictureinpicture></video>` +
         `<div class="bento-overlay"></div>` +
         `</div>`;
     }
     return `<div class="${cardClass}">` +
-      `<img src="${mediaUrl}" alt="${name}" class="bento-img" loading="eager" decoding="async" />` +
+      `<img src="${mediaUrl}" alt="${name}" class="bento-img" loading="lazy" decoding="async" />` +
       `<div class="bento-overlay"></div>` +
       `</div>`;
   }).join('');
@@ -110,7 +109,7 @@ const renderBrandCardsHTML = (items) => {
     const logoUrl = getMediaUrl(b.logo_url);
     const name = (b.company_name || '').replace(/"/g, '&quot;');
     return `<div class="brand-card">` +
-      `<img src="${logoUrl}" alt="${name}" loading="lazy" />` +
+      `<img src="${logoUrl}" alt="${name}" loading="lazy" decoding="async" />` +
       `</div>`;
   }).join('');
 };
@@ -190,8 +189,7 @@ export default function Welcome() {
       window.scrollTo(0, 0);
     }
 
-    // Dispatch event to re-trigger vanilla JS DOM logic
-    window.dispatchEvent(new Event("DOMContentLoaded"));
+    // Dispatch event to re-trigger vanilla JS animations safely
     const revealEvent = new CustomEvent("cambm:revealed");
     document.dispatchEvent(revealEvent);
     if (window.CAMBMTheme && window.CAMBMTheme.initControls)
@@ -405,9 +403,7 @@ export default function Welcome() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="hero-bg">
-          <GravityStarsBackground />
-        </div>
+        <div className="hero-bg"></div>
         <div className="hero-inner">
           <div className="hero-content">
             <p className="hero-eyebrow" data-i18n="hero.eyebrow">
