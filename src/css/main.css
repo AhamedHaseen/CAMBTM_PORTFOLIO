@@ -246,15 +246,22 @@ html.lenis body {
 }
 
 /* Strategy Call Button Prominence */
-.hero-actions .btn,
-.hero-actions .btn-primary,
-.hero-actions .js-open-cal,
 .cta-actions .btn,
 .cta-actions .btn-primary,
 .cta-actions .js-open-cal {
   font-size: 1.06rem !important;
   font-weight: 700 !important;
   padding: 13px 30px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.hero-actions .btn,
+.hero-actions .btn-primary,
+.hero-actions .btn-secondary,
+.hero-actions .js-open-cal {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  padding: 10px 22px !important;
   letter-spacing: 0.01em !important;
 }
 
@@ -699,6 +706,7 @@ html.lenis body {
   color: var(--text-dark);
   position: relative;
   overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 .brands-inner {
@@ -726,7 +734,9 @@ html.lenis body {
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  overscroll-behavior: contain;
   overscroll-behavior-x: contain;
+  overscroll-behavior-y: contain;
   transform: translateZ(0);
   will-change: scroll-position;
   contain: paint;
@@ -6434,4 +6444,23 @@ body {
   .header-actions .theme-toggle {
     display: none;
   }
+}
+
+/* ── Tamil & Regional Typography Adjustments ── */
+html[lang="ta"] body {
+  font-family: "Noto Sans Tamil", "Inter", sans-serif;
+}
+
+html[lang="ta"] .section-title,
+html[lang="ta"] h1,
+html[lang="ta"] h2,
+html[lang="ta"] h3 {
+  letter-spacing: normal;
+  line-height: 1.35;
+}
+
+html[lang="ta"] .nav a,
+html[lang="ta"] .header-actions,
+html[lang="ta"] .btn {
+  font-family: "Noto Sans Tamil", "Inter Tight", sans-serif;
 }

@@ -841,14 +841,14 @@ function makeLoopSlider(
       },
       true,
     );
-    // Translate vertical wheel into horizontal scroll for convenience.
+    // Fast, smooth horizontal wheel scroll directly on the marquee without scrolling the full website
     container.addEventListener(
       "wheel",
       (e) => {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-          e.preventDefault();
-          container.scrollLeft += e.deltaY;
-        }
+        e.preventDefault();
+        e.stopPropagation();
+        const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        container.scrollLeft += delta * 1.35;
       },
       { passive: false },
     );
@@ -928,6 +928,7 @@ if (heroBentoEl) {
     { passive: false }
   );
 }
+
 // Two brand-logo rows, scrolling opposite ways: row 1 right-to-left
 // (+1 = increasing scrollLeft), row 2 left-to-right (-1).
 document.querySelectorAll(".brands-marquee").forEach((marquee, i) => {

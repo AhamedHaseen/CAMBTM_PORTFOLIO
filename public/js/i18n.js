@@ -3805,6 +3805,9 @@
     document.dispatchEvent(
       new CustomEvent("cambm:localechange", { detail: { language: lang } }),
     );
+    window.dispatchEvent(
+      new CustomEvent("cambm:localechange", { detail: { language: lang } }),
+    );
   }
 
   function formatPrice(countryCode, packageIndex) {

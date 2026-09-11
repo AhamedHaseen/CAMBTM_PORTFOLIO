@@ -31,9 +31,25 @@ const I18N_SERVICES = {
       hosting: {
         eyebrow: "Hosting & Infrastructure",
         title: "Hosting that scales with the system.",
-        desc: "Annual hosting plans are available for standard business requirements, with customised hosting solutions for higher traffic, storage, security, email or infrastructure needs.",
-        plans: ["Starter Hosting", "Marketing Hosting", "Elite Hosting", "Enterprise Hosting"],
-        note: "Custom infrastructure can be scoped around your technical requirements.",
+        desc: "Plans are available for standard business requirements, with customised solutions for higher traffic, storage, security, email or infrastructure needs.",
+        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+        terms: "Terms and conditions apply",
+        table: {
+          headers: {
+            feature: "Feature",
+            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+          },
+          rows: [
+            { feature: "Business Mail / Domain", values: ["2", "5", "15", "50"] },
+            { feature: "Disk Space", values: ["25 GB", "40 GB", "100 GB", "250 GB"] },
+            { feature: "Domain", values: ["1 Free Domain", "1 Free Domain", "1 Free Domain", "2 Domains"] },
+            { feature: "Maintenance", values: ["Free", "Free", "Free", "Free"] },
+            { feature: "Storage / Mail", values: ["1 GB", "1 GB", "15 GB", "15 GB"] },
+            { feature: "SSL Certificate", values: ["Included", "Included", "Included", "Included"] },
+            { feature: "Backup Plan", values: ["Monthly", "Monthly", "Weekly", "Daily"] },
+            { feature: "Bandwidth", values: ["30 GB", "60 GB", "100 GB", "Unlimited"] },
+          ],
+        },
       },
     },
     create: {
@@ -147,9 +163,25 @@ const I18N_SERVICES = {
       hosting: {
         eyebrow: "Alojamiento e Infraestructura",
         title: "Alojamiento que escala con el sistema.",
-        desc: "Planes anuales para requerimientos estándar, con soluciones personalizadas para mayor tráfico, almacenamiento, seguridad o infraestructura.",
-        plans: ["Hosting Starter", "Hosting Marketing", "Hosting Elite", "Hosting Enterprise"],
-        note: "Se puede diseñar infraestructura personalizada según tus requerimientos técnicos.",
+        desc: "Planes disponibles para los requerimientos estándar del negocio, con soluciones personalizadas para mayor tráfico, almacenamiento, seguridad, correo o infraestructura.",
+        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+        terms: "Se aplican términos y condiciones",
+        table: {
+          headers: {
+            feature: "Característica",
+            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+          },
+          rows: [
+            { feature: "Correo Corporativo / Dominio", values: ["2", "5", "15", "50"] },
+            { feature: "Espacio en Disco", values: ["25 GB", "40 GB", "100 GB", "250 GB"] },
+            { feature: "Dominio", values: ["1 Dominio Gratis", "1 Dominio Gratis", "1 Dominio Gratis", "2 Dominios"] },
+            { feature: "Mantenimiento", values: ["Gratis", "Gratis", "Gratis", "Gratis"] },
+            { feature: "Almacenamiento / Correo", values: ["1 GB", "1 GB", "15 GB", "15 GB"] },
+            { feature: "Certificado SSL", values: ["Incluido", "Incluido", "Incluido", "Incluido"] },
+            { feature: "Plan de Respaldo", values: ["Mensual", "Mensual", "Semanal", "Diario"] },
+            { feature: "Ancho de Banda", values: ["30 GB", "60 GB", "100 GB", "Ilimitado"] },
+          ],
+        },
       },
     },
     create: {
@@ -263,9 +295,25 @@ const I18N_SERVICES = {
       hosting: {
         eyebrow: "الاستضافة والبنية التحتية",
         title: "استضافة تتوسع مع نمو النظام.",
-        desc: "خطط استضافة سنوية للمتطلبات القياسية مع حلول مخصصة لحركة المرور العالية والتخزين والأمان والبريد الإلكتروني.",
-        plans: ["استضافة المبتدئين", "استضافة التسويق", "استضافة النخبة", "استضافة الشركات"],
-        note: "يمكن تخصيص البنية التحتية بالكامل لتناسب متطلباتك الفنية.",
+        desc: "خطط متاحة لمتطلبات الأعمال القياسية مع حلول مخصصة لحركة المرور العالية والتخزين والأمان والبريد الإلكتروني أو احتياجات البنية التحتية.",
+        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+        terms: "تطبق الشروط والأحكام",
+        table: {
+          headers: {
+            feature: "الميزة",
+            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+          },
+          rows: [
+            { feature: "بريد الأعمال / النطاق", values: ["2", "5", "15", "50"] },
+            { feature: "مساحة القرص", values: ["25 جيجابايت", "40 جيجابايت", "100 جيجابايت", "250 جيجابايت"] },
+            { feature: "النطاق", values: ["1 نطاق مجاني", "1 نطاق مجاني", "1 نطاق مجاني", "2 نطاق"] },
+            { feature: "الصيانة", values: ["مجاني", "مجاني", "مجاني", "مجاني"] },
+            { feature: "التخزين / البريد", values: ["1 جيجابايت", "1 جيجابايت", "15 جيجابايت", "15 جيجابايت"] },
+            { feature: "شهادة SSL", values: ["مشمول", "مشمول", "مشمول", "مشمول"] },
+            { feature: "خطة النسخ الاحتياطي", values: ["شهري", "شهري", "أسبوعي", "يومي"] },
+            { feature: "نطاق التردد", values: ["30 جيجابايت", "60 جيجابايت", "100 جيجابايت", "غير محدود"] },
+          ],
+        },
       },
     },
     create: {
@@ -379,9 +427,25 @@ const I18N_SERVICES = {
       hosting: {
         eyebrow: "හොස්ටිං සහ යටිතල පහසුකම්",
         title: "පද්ධතිය සමඟ පරිමාණය වන හොස්ටිං.",
-        desc: "සම්මත ව්‍යාපාරික අවශ්‍යතා සඳහා වාර්ෂික හොස්ටිං සැලසුම් ලබා ගත හැකි අතර, වැඩි තදබදය, ගබඩා කිරීම, ආරක්ෂාව සඳහා අභිරුචි විසඳුම් ඇත.",
-        plans: ["Starter Hosting", "Marketing Hosting", "Elite Hosting", "Enterprise Hosting"],
-        note: "ඔබගේ තාක්ෂණික අවශ්‍යතා අනුව අභිරුචි යටිතල පහසුකම් සකස් කළ හැක.",
+        desc: "සම්මත ව්‍යාපාරික අවශ්‍යතා සඳහා සැලසුම් ලබා ගත හැකි අතර, වැඩි තදබදය, ගබඩා කිරීම, ආරක්ෂාව, විද්‍යුත් තැපෑල හෝ යටිතල පහසුකම් සඳහා අභිරුචි විසඳුම් ඇත.",
+        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+        terms: "නියමයන් සහ කොන්දේසි අදාළ වේ",
+        table: {
+          headers: {
+            feature: "විශේෂාංගය",
+            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+          },
+          rows: [
+            { feature: "ව්‍යාපාරික තැපැල් / වසම", values: ["2", "5", "15", "50"] },
+            { feature: "තැටි ඉඩ", values: ["25 GB", "40 GB", "100 GB", "250 GB"] },
+            { feature: "වසම", values: ["නොමිලේ 1 වසමක්", "නොමිලේ 1 වසමක්", "නොමිලේ 1 වසමක්", "වසම් 2ක්"] },
+            { feature: "නඩත්තුව", values: ["නොමිලේ", "නොමිලේ", "නොමිලේ", "නොමිලේ"] },
+            { feature: "ආචයනය / තැපැල්", values: ["1 GB", "1 GB", "15 GB", "15 GB"] },
+            { feature: "SSL සහතිකය", values: ["ඇතුළත්", "ඇතුළත්", "ඇතුළත්", "ඇතුළත්"] },
+            { feature: "උපස්ථ සැලැස්ම", values: ["මාසික", "මාසික", "සතිපතා", "දිනපතා"] },
+            { feature: "Bandwidth", values: ["30 GB", "60 GB", "100 GB", "අසීමිත"] },
+          ],
+        },
       },
     },
     create: {
@@ -494,10 +558,26 @@ const I18N_SERVICES = {
       ],
       hosting: {
         eyebrow: "ஹோஸ்டிங் & உள்கட்டமைப்பு",
-        title: "அமைப்போடு விரிவடையும் ஹோஸ்டிங்.",
-        desc: "நிலையான வணிகத் தேவைகளுக்கு வருடாந்திர ஹோஸ்டிங் திட்டங்கள் கிடைக்கின்றன, அதிக ட்ராஃபிக், சேமிப்பு, பாதுகாப்புக்கான தனிப்பயன் தீர்வுகள் உள்ளன.",
-        plans: ["Starter Hosting", "Marketing Hosting", "Elite Hosting", "Enterprise Hosting"],
-        note: "உங்கள் தொழில்நுட்பத் தேவைகளுக்கு ஏற்ப தனிப்பயன் உள்கட்டமைப்பை உருவாக்கலாம்.",
+        title: "கணினியுடன் அளவிடக்கூடிய ஹோஸ்டிங்.",
+        desc: "நிலையான வணிகத் தேவைகளுக்கான திட்டங்கள் கிடைக்கின்றன, அதிக ட்ராஃபிக், சேமிப்பு, பாதுகாப்பு, மின்னஞ்சல் அல்லது உள்கட்டமைப்புத் தேவைகளுக்கு தனிப்பயனாக்கப்பட்ட தீர்வுகள் உள்ளன.",
+        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+        terms: "விதிமுறைகள் மற்றும் நிபந்தனைகள் பொருந்தும்",
+        table: {
+          headers: {
+            feature: "அம்சம்",
+            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+          },
+          rows: [
+            { feature: "வணிக மின்னஞ்சல் / டொமைன்", values: ["2", "5", "15", "50"] },
+            { feature: "வட்டு இடம்", values: ["25 GB", "40 GB", "100 GB", "250 GB"] },
+            { feature: "டொமைன்", values: ["1 இலவச டொமைன்", "1 இலவச டொமைன்", "1 இலவச டொமைன்", "2 டொமைன்கள்"] },
+            { feature: "பராமரிப்பு", values: ["இலவசம்", "இலவசம்", "இலவசம்", "இலவசம்"] },
+            { feature: "சேமிப்பகம் / அஞ்சல்", values: ["1 GB", "1 GB", "15 GB", "15 GB"] },
+            { feature: "SSL சான்றிதழ்", values: ["உள்ளடங்கியது", "உள்ளடங்கியது", "உள்ளடங்கியது", "உள்ளடங்கியது"] },
+            { feature: "காப்புப்பிரதி திட்டம்", values: ["மாதாந்திர", "மாதாந்திர", "வாராந்திர", "தினசரி"] },
+            { feature: "அலைவரிசை", values: ["30 GB", "60 GB", "100 GB", "வரம்பற்றது"] },
+          ],
+        },
       },
     },
     create: {
@@ -961,11 +1041,18 @@ export default function ServicesSection() {
 
           let title = c.title;
           let desc = c.description || c.desc || '';
+          let engagement = c.engagement || 'MONTHLY ENGAGEMENT';
           if (currentLang !== 'en' && activeLocaleData.combos?.cards) {
             const locMatch = activeLocaleData.combos.cards.find(lc => lc.id === c.id || lc.title?.toLowerCase() === c.title?.toLowerCase());
             if (locMatch) {
               title = locMatch.title || title;
               desc = locMatch.desc || desc;
+              if (locMatch.items && locMatch.items.length > 0) {
+                items = locMatch.items;
+              }
+              if (locMatch.engagement) {
+                engagement = locMatch.engagement;
+              }
             }
           }
 
@@ -974,7 +1061,7 @@ export default function ServicesSection() {
             title,
             desc,
             items,
-            engagement: c.engagement || 'MONTHLY ENGAGEMENT',
+            engagement,
             featured: Boolean(c.featured)
           };
         });
@@ -1141,11 +1228,6 @@ export default function ServicesSection() {
                       <h3>{currentTab.hosting.title}</h3>
                       <p>{currentTab.hosting.desc}</p>
                     </div>
-                    {currentTab.hosting.note && (
-                      <div className="hosting-note-wrap">
-                        <span className="host-note-badge">{currentTab.hosting.note}</span>
-                      </div>
-                    )}
                   </div>
 
                   {/* Hosting Comparison Table */}
@@ -1153,115 +1235,47 @@ export default function ServicesSection() {
                     <table className="hosting-table">
                       <thead>
                         <tr>
-                          <th>Feature</th>
-                          <th>
-                            <div
-                              className="host-header-plan"
-                              onClick={(e) => openCalModal("Starter Hosting", e)}
-                              style={{ cursor: "pointer" }}
-                              title="Discuss Starter Hosting"
-                            >
-                              <span className="host-header-name">Starter Hosting</span>
-                              <span className="host-plan-term">Annual</span>
-                            </div>
-                          </th>
-                          <th>
-                            <div
-                              className="host-header-plan"
-                              onClick={(e) => openCalModal("Marketing Hosting", e)}
-                              style={{ cursor: "pointer" }}
-                              title="Discuss Marketing Hosting"
-                            >
-                              <span className="host-header-name">Marketing Hosting</span>
-                              <span className="host-plan-term">Annual</span>
-                            </div>
-                          </th>
-                          <th>
-                            <div
-                              className="host-header-plan"
-                              onClick={(e) => openCalModal("Elite Hosting", e)}
-                              style={{ cursor: "pointer" }}
-                              title="Discuss Elite Hosting"
-                            >
-                              <span className="host-header-name">Elite Hosting</span>
-                              <span className="host-plan-term">Annual</span>
-                            </div>
-                          </th>
-                          <th>
-                            <div
-                              className="host-header-plan"
-                              onClick={(e) => openCalModal("Enterprise Hosting", e)}
-                              style={{ cursor: "pointer" }}
-                              title="Discuss Enterprise Hosting"
-                            >
-                              <span className="host-header-name">Enterprise Hosting</span>
-                              <span className="host-plan-term">Annual</span>
-                            </div>
-                          </th>
+                          <th>{currentTab.hosting.table?.headers?.feature || "Feature"}</th>
+                          {(currentTab.hosting.table?.headers?.plans || currentTab.hosting.plans || ["Starter", "Marketing", "Elite", "Enterprise"]).map((planName, pIdx) => (
+                            <th key={pIdx}>
+                              <div
+                                className="host-header-plan"
+                                onClick={(e) => openCalModal(`${planName} Hosting`, e)}
+                                style={{ cursor: "pointer" }}
+                                title={`Discuss ${planName}`}
+                              >
+                                <span className="host-header-name">{planName}</span>
+                              </div>
+                            </th>
+                          ))}
                         </tr>
                       </thead>
-                    <tbody>
-                      <tr>
-                        <td className="feat-col">Business Mail /Domain</td>
-                        <td>2</td>
-                        <td>5</td>
-                        <td>15</td>
-                        <td>50</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Disk Space</td>
-                        <td>25 GB</td>
-                        <td>40 GB</td>
-                        <td>100 GB</td>
-                        <td>250 GB</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Domain</td>
-                        <td>1 Free Domain</td>
-                        <td>1 Free Domain</td>
-                        <td>1 Free Domain</td>
-                        <td>2 Domains</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Maintenance</td>
-                        <td>Free</td>
-                        <td>Free</td>
-                        <td>Free</td>
-                        <td>Free</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Storage / Mail</td>
-                        <td>1 GB</td>
-                        <td>1 GB</td>
-                        <td>15 GB</td>
-                        <td>15 GB</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">SSL Certificate</td>
-                        <td>Included</td>
-                        <td>Included</td>
-                        <td>Included</td>
-                        <td>Included</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Backup Plan</td>
-                        <td>Monthly</td>
-                        <td>Monthly</td>
-                        <td>Weekly</td>
-                        <td>Daily</td>
-                      </tr>
-                      <tr>
-                        <td className="feat-col">Bandwidth</td>
-                        <td>30 GB</td>
-                        <td>60 GB</td>
-                        <td>100 GB</td>
-                        <td>Unlimited</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      <tbody>
+                        {(currentTab.hosting.table?.rows || [
+                          { feature: "Business Mail / Domain", values: ["2", "5", "15", "50"] },
+                          { feature: "Disk Space", values: ["25 GB", "40 GB", "100 GB", "250 GB"] },
+                          { feature: "Domain", values: ["1 Free Domain", "1 Free Domain", "1 Free Domain", "2 Domains"] },
+                          { feature: "Maintenance", values: ["Free", "Free", "Free", "Free"] },
+                          { feature: "Storage / Mail", values: ["1 GB", "1 GB", "15 GB", "15 GB"] },
+                          { feature: "SSL Certificate", values: ["Included", "Included", "Included", "Included"] },
+                          { feature: "Backup Plan", values: ["Monthly", "Monthly", "Weekly", "Daily"] },
+                          { feature: "Bandwidth", values: ["30 GB", "60 GB", "100 GB", "Unlimited"] },
+                        ]).map((row, rIdx) => (
+                          <tr key={rIdx}>
+                            <td className="feat-col">{row.feature}</td>
+                            {row.values.map((val, vIdx) => (
+                              <td key={vIdx}>{val}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                <p className="hosting-terms">
+                  {currentTab.hosting?.terms || "Terms and conditions apply"}
+                </p>
                 </div>
-              </div>
-            </>
+              </>
             )}
           </motion.div>
         </AnimatePresence>
@@ -1272,7 +1286,7 @@ export default function ServicesSection() {
             <p className="section-eyebrow eyebrow" style={{ margin: "0 auto 12px", textAlign: "center" }} data-i18n="packages.combos.eyebrow">
               {activeLocaleData.combos.eyebrow}
             </p>
-            <h2 id="combo-title" style={{ textAlign: "center", margin: "0 auto" }} data-i18n="packages.combos.title">
+            <h2 id="combo-title" className="section-title" style={{ textAlign: "center", margin: "0 auto" }} data-i18n="packages.combos.title">
               {activeLocaleData.combos.title}
             </h2>
             <p
@@ -1287,19 +1301,21 @@ export default function ServicesSection() {
             >
               {activeLocaleData.combos.desc}
             </p>
-            <p
-              className="right-note"
-              style={{
-                fontSize: "14px",
-                color: "var(--muted)",
-                maxWidth: "680px",
-                margin: "12px auto 0",
-                textAlign: "center",
-              }}
-              data-i18n="packages.combos.note"
-            >
-              {activeLocaleData.combos.note}
-            </p>
+            {activeLocaleData.combos.note && (
+              <p
+                className="right-note"
+                style={{
+                  fontSize: "14px",
+                  color: "var(--muted)",
+                  maxWidth: "680px",
+                  margin: "12px auto 0",
+                  textAlign: "center",
+                }}
+                data-i18n="packages.combos.note"
+              >
+                {activeLocaleData.combos.note}
+              </p>
+            )}
           </div>
 
           <div className="combo-grid">

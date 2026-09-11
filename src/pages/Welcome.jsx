@@ -487,13 +487,13 @@ export default function Welcome() {
             Brands that trust us
           </p>
         </div>
-        <div className="brands-marquee scroll-reveal">
+        <div className="brands-marquee scroll-reveal" data-lenis-prevent>
           <div
             className="brands-track"
             dangerouslySetInnerHTML={{ __html: renderBrandCardsHTML(brandsRows.row1) }}
           />
         </div>
-        <div className="brands-marquee scroll-reveal">
+        <div className="brands-marquee scroll-reveal" data-lenis-prevent>
           <div
             className="brands-track"
             dangerouslySetInnerHTML={{ __html: renderBrandCardsHTML(brandsRows.row2) }}
