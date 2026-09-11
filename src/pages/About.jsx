@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import CurvedRoadmap from "../components/about/CurvedRoadmap";
+import WavyTimeline from "../components/about/WavyTimeline";
+import SpotlightCard from "../components/SpotlightCard";
+import AnimatedList from "../components/AnimatedList";
 import FooterOffices from "../components/FooterOffices";
 import FooterSocials, { getPrimaryContactInfo } from "../components/FooterSocials";
 
@@ -307,7 +309,11 @@ export default function About() {
               separate vendors you have to stitch together yourself.
             </p>
             <ol className="about-flow">
-              <li className="about-flow-step scroll-reveal stagger-1">
+              <SpotlightCard
+                as="li"
+                className="about-flow-step scroll-reveal stagger-1"
+                spotlightColor="rgba(255, 90, 0, 0.22)"
+              >
                 <span className="about-flow-index" aria-hidden="true">
                   01
                 </span>
@@ -323,8 +329,12 @@ export default function About() {
                 >
                   Brand, content and ads that bring the right people to you.
                 </p>
-              </li>
-              <li className="about-flow-step scroll-reveal stagger-2">
+              </SpotlightCard>
+              <SpotlightCard
+                as="li"
+                className="about-flow-step scroll-reveal stagger-2"
+                spotlightColor="rgba(255, 90, 0, 0.22)"
+              >
                 <span className="about-flow-index" aria-hidden="true">
                   02
                 </span>
@@ -341,8 +351,12 @@ export default function About() {
                   Websites, landing pages and enquiry flows that turn interest
                   into leads.
                 </p>
-              </li>
-              <li className="about-flow-step scroll-reveal stagger-3">
+              </SpotlightCard>
+              <SpotlightCard
+                as="li"
+                className="about-flow-step scroll-reveal stagger-3"
+                spotlightColor="rgba(255, 90, 0, 0.22)"
+              >
                 <span className="about-flow-index" aria-hidden="true">
                   03
                 </span>
@@ -359,8 +373,12 @@ export default function About() {
                   POS, ERP and automation that fulfil and manage every order
                   behind the scenes.
                 </p>
-              </li>
-              <li className="about-flow-step scroll-reveal stagger-4">
+              </SpotlightCard>
+              <SpotlightCard
+                as="li"
+                className="about-flow-step scroll-reveal stagger-4"
+                spotlightColor="rgba(255, 90, 0, 0.22)"
+              >
                 <span className="about-flow-index" aria-hidden="true">
                   04
                 </span>
@@ -377,7 +395,7 @@ export default function About() {
                   Reporting and follow-ups that turn a single sale into repeat
                   revenue.
                 </p>
-              </li>
+              </SpotlightCard>
             </ol>
           </div>
         </section>
@@ -395,78 +413,85 @@ export default function About() {
               Why businesses choose Cambridge Marketing
             </h2>
             <div className="about-why">
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item1Title"
-                >
-                  One team, end to end
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item1Body">
-                  Strategy, creative, websites, automation and reporting under a
-                  single partner.
-                </p>
-              </div>
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item2Title"
-                >
-                  Technology-backed marketing
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item2Body">
-                  Built from a company with software, digital systems and
-                  infrastructure experience.
-                </p>
-              </div>
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item3Title"
-                >
-                  Strategy before output
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item3Body">
-                  Every post, page, campaign and system supports a clear
-                  business objective.
-                </p>
-              </div>
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item4Title"
-                >
-                  Connected operations
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item4Body">
-                  Marketing does not stop at attention; it supports leads,
-                  workflows, POS/ERP and customer journeys.
-                </p>
-              </div>
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item5Title"
-                >
-                  Transparent reporting
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item5Body">
-                  Clear monthly insights show what is working, what needs
-                  improvement and where budget is going.
-                </p>
-              </div>
-              <div className="about-why-item scroll-reveal">
-                <h3
-                  className="about-why-title"
-                  data-i18n="about.why.item6Title"
-                >
-                  Global growth mindset
-                </h3>
-                <p className="about-why-body" data-i18n="about.why.item6Body">
-                  Designed for businesses expanding across markets, languages
-                  and digital channels.
-                </p>
-              </div>
+              <AnimatedList
+                className="about-why-animated-list"
+                showGradients={false}
+                displayScrollbar={false}
+                enableArrowNavigation={true}
+              >
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item1Title"
+                  >
+                    One team, end to end
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item1Body">
+                    Strategy, creative, websites, automation and reporting under a
+                    single partner.
+                  </p>
+                </div>
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item2Title"
+                  >
+                    Technology-backed marketing
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item2Body">
+                    Built from a company with software, digital systems and
+                    infrastructure experience.
+                  </p>
+                </div>
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item3Title"
+                  >
+                    Strategy before output
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item3Body">
+                    Every post, page, campaign and system supports a clear
+                    business objective.
+                  </p>
+                </div>
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item4Title"
+                  >
+                    Connected operations
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item4Body">
+                    Marketing does not stop at attention; it supports leads,
+                    workflows, POS/ERP and customer journeys.
+                  </p>
+                </div>
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item5Title"
+                  >
+                    Transparent reporting
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item5Body">
+                    Clear monthly insights show what is working, what needs
+                    improvement and where budget is going.
+                  </p>
+                </div>
+                <div className="about-why-item scroll-reveal">
+                  <h3
+                    className="about-why-title"
+                    data-i18n="about.why.item6Title"
+                  >
+                    Global growth mindset
+                  </h3>
+                  <p className="about-why-body" data-i18n="about.why.item6Body">
+                    Designed for businesses expanding across markets, languages
+                    and digital channels.
+                  </p>
+                </div>
+              </AnimatedList>
             </div>
           </div>
         </section>
@@ -484,52 +509,59 @@ export default function About() {
               How we work
             </h2>
             <div className="about-process-list">
-              <div className="diff-item scroll-reveal">
-                <div className="diff-number">01</div>
-                <div className="diff-content">
-                  <h3 data-i18n="about.process.step1Title">Consultation</h3>
-                  <p data-i18n="about.process.step1Body">
-                    We understand business goals, current marketing, systems,
-                    audience and growth barriers.
-                  </p>
+              <AnimatedList
+                className="about-process-animated-list"
+                showGradients={false}
+                displayScrollbar={false}
+                enableArrowNavigation={true}
+              >
+                <div className="diff-item scroll-reveal">
+                  <div className="diff-number">01</div>
+                  <div className="diff-content">
+                    <h3 data-i18n="about.process.step1Title">Consultation</h3>
+                    <p data-i18n="about.process.step1Body">
+                      We understand business goals, current marketing, systems,
+                      audience and growth barriers.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="diff-item scroll-reveal">
-                <div className="diff-number">02</div>
-                <div className="diff-content">
-                  <h3 data-i18n="about.process.step2Title">
-                    Strategy & Team Planning
-                  </h3>
-                  <p data-i18n="about.process.step2Body">
-                    We define priorities, channels, creative direction,
-                    workflows and the right execution team.
-                  </p>
+                <div className="diff-item scroll-reveal">
+                  <div className="diff-number">02</div>
+                  <div className="diff-content">
+                    <h3 data-i18n="about.process.step2Title">
+                      Strategy & Team Planning
+                    </h3>
+                    <p data-i18n="about.process.step2Body">
+                      We define priorities, channels, creative direction,
+                      workflows and the right execution team.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="diff-item scroll-reveal">
-                <div className="diff-number">03</div>
-                <div className="diff-content">
-                  <h3 data-i18n="about.process.step3Title">
-                    Design, Build & Launch
-                  </h3>
-                  <p data-i18n="about.process.step3Body">
-                    We create assets, campaigns, websites, automation flows and
-                    operational integrations.
-                  </p>
+                <div className="diff-item scroll-reveal">
+                  <div className="diff-number">03</div>
+                  <div className="diff-content">
+                    <h3 data-i18n="about.process.step3Title">
+                      Design, Build & Launch
+                    </h3>
+                    <p data-i18n="about.process.step3Body">
+                      We create assets, campaigns, websites, automation flows and
+                      operational integrations.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="diff-item scroll-reveal">
-                <div className="diff-number">04</div>
-                <div className="diff-content">
-                  <h3 data-i18n="about.process.step4Title">
-                    Reporting & Improvement
-                  </h3>
-                  <p data-i18n="about.process.step4Body">
-                    We track performance, report clearly and improve campaigns,
-                    content and systems monthly.
-                  </p>
+                <div className="diff-item scroll-reveal">
+                  <div className="diff-number">04</div>
+                  <div className="diff-content">
+                    <h3 data-i18n="about.process.step4Title">
+                      Reporting & Improvement
+                    </h3>
+                    <p data-i18n="about.process.step4Body">
+                      We track performance, report clearly and improve campaigns,
+                      content and systems monthly.
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </AnimatedList>
             </div>
           </div>
         </section>
@@ -547,81 +579,88 @@ export default function About() {
               What we stand for
             </h2>
             <div className="about-values">
-              <div className="about-value scroll-reveal">
-                <div
-                  className="about-value-title"
-                  data-i18n="about.values.item1Title"
-                >
-                  Innovation
+              <AnimatedList
+                className="about-values-animated-list"
+                showGradients={false}
+                displayScrollbar={false}
+                enableArrowNavigation={true}
+              >
+                <div className="about-value scroll-reveal">
+                  <div
+                    className="about-value-title"
+                    data-i18n="about.values.item1Title"
+                  >
+                    Innovation
+                  </div>
+                  <div
+                    className="about-value-body"
+                    data-i18n="about.values.item1Body"
+                  >
+                    We explore new technologies, creative formats and smarter
+                    systems to create stronger outcomes.
+                  </div>
                 </div>
-                <div
-                  className="about-value-body"
-                  data-i18n="about.values.item1Body"
-                >
-                  We explore new technologies, creative formats and smarter
-                  systems to create stronger outcomes.
+                <div className="about-value scroll-reveal">
+                  <div
+                    className="about-value-title"
+                    data-i18n="about.values.item2Title"
+                  >
+                    Reliability
+                  </div>
+                  <div
+                    className="about-value-body"
+                    data-i18n="about.values.item2Body"
+                  >
+                    We build consistent, scalable and sustainable marketing
+                    systems clients can depend on.
+                  </div>
                 </div>
-              </div>
-              <div className="about-value scroll-reveal">
-                <div
-                  className="about-value-title"
-                  data-i18n="about.values.item2Title"
-                >
-                  Reliability
+                <div className="about-value scroll-reveal">
+                  <div
+                    className="about-value-title"
+                    data-i18n="about.values.item3Title"
+                  >
+                    Customer Success
+                  </div>
+                  <div
+                    className="about-value-body"
+                    data-i18n="about.values.item3Body"
+                  >
+                    Client growth, clarity and confidence remain central to every
+                    campaign and system.
+                  </div>
                 </div>
-                <div
-                  className="about-value-body"
-                  data-i18n="about.values.item2Body"
-                >
-                  We build consistent, scalable and sustainable marketing
-                  systems clients can depend on.
+                <div className="about-value scroll-reveal">
+                  <div
+                    className="about-value-title"
+                    data-i18n="about.values.item4Title"
+                  >
+                    Integrity
+                  </div>
+                  <div
+                    className="about-value-body"
+                    data-i18n="about.values.item4Body"
+                  >
+                    We communicate transparently, report honestly and maintain
+                    quality across every deliverable.
+                  </div>
                 </div>
-              </div>
-              <div className="about-value scroll-reveal">
-                <div
-                  className="about-value-title"
-                  data-i18n="about.values.item3Title"
-                >
-                  Customer Success
+                <div className="about-value scroll-reveal">
+                  <div
+                    className="about-value-title"
+                    data-i18n="about.values.item5Title"
+                  >
+                    Collaboration
+                  </div>
+                  <div
+                    className="about-value-body"
+                    data-i18n="about.values.item5Body"
+                  >
+                    We work closely with clients to understand goals, context,
+                    operations and market direction.
+                  </div>
                 </div>
-                <div
-                  className="about-value-body"
-                  data-i18n="about.values.item3Body"
-                >
-                  Client growth, clarity and confidence remain central to every
-                  campaign and system.
-                </div>
-              </div>
-              <div className="about-value scroll-reveal">
-                <div
-                  className="about-value-title"
-                  data-i18n="about.values.item4Title"
-                >
-                  Integrity
-                </div>
-                <div
-                  className="about-value-body"
-                  data-i18n="about.values.item4Body"
-                >
-                  We communicate transparently, report honestly and maintain
-                  quality across every deliverable.
-                </div>
-              </div>
-              <div className="about-value scroll-reveal">
-                <div
-                  className="about-value-title"
-                  data-i18n="about.values.item5Title"
-                >
-                  Collaboration
-                </div>
-                <div
-                  className="about-value-body"
-                  data-i18n="about.values.item5Body"
-                >
-                  We work closely with clients to understand goals, context,
-                  operations and market direction.
-                </div>
-              </div>
+              </AnimatedList>
             </div>
           </div>
         </section>
@@ -649,7 +688,7 @@ export default function About() {
               local marketing vendor, it is to become a trusted growth systems
               partner for ambitious companies across regions.
             </p>
-            <CurvedRoadmap />
+            <WavyTimeline />
           </div>
         </section>
 

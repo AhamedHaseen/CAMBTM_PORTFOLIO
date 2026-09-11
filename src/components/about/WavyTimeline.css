@@ -1,0 +1,253 @@
+/* ==========================================================================
+   WAVY PATH TIMELINE COMPONENT (NO BACKGROUND CONTAINER, PURE VERTICAL FLOW)
+   ========================================================================== */
+
+.wavy-timeline-container {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 32px auto 0;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Wrapper Without Background */
+.wavy-timeline-wrapper {
+  position: relative;
+  width: 100%;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 20px 0 40px;
+  overflow: visible;
+}
+
+/* SVG Track Layer - Centered in Viewport */
+.wavy-track-svg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 860px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wavy-track-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Multi-Lane Running Track Effect (Parallel Thin Lines) */
+.track-lane {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-linecap: round;
+  transition: stroke 0.3s ease;
+}
+
+[data-theme="light"] .track-lane {
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+.track-lane-center {
+  fill: none;
+  stroke-dasharray: 6 6;
+  stroke-linecap: round;
+}
+
+.track-lane-outer {
+  stroke: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .track-lane-outer {
+  stroke: rgba(0, 0, 0, 0.06);
+}
+
+/* Timeline Vertical List */
+.wavy-timeline-list {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  padding: 10px 0;
+}
+
+.wavy-timeline-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 120px;
+}
+
+/* Alternating Sides */
+.wavy-timeline-row.align-right {
+  justify-content: flex-end;
+}
+
+.wavy-timeline-row.align-left {
+  justify-content: flex-start;
+}
+
+/* Milestone Content Cards (Seamless No-Box Ambient Feel) */
+.wavy-milestone-card {
+  width: 42%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 22px 26px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+[data-theme="light"] .wavy-milestone-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.wavy-milestone-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35), 0 0 24px var(--node-glow);
+  border-color: var(--node-color);
+}
+
+[data-theme="light"] .wavy-milestone-card:hover {
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08), 0 0 20px var(--node-glow);
+}
+
+/* Pill-shaped badge containing Year - Title filled with its respective accent color */
+.wavy-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 9999px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  background: var(--node-color);
+  box-shadow: 0 4px 14px var(--node-glow);
+  margin-bottom: 12px;
+  white-space: normal;
+}
+
+/* Short clean description text underneath */
+.wavy-card-desc {
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Node Marker Pulse Animation & Outer Ring */
+.wavy-node-outer {
+  fill: var(--bg-body, #0a0a0c);
+  transition: fill 0.3s ease;
+}
+
+[data-theme="light"] .wavy-node-outer {
+  fill: #ffffff;
+}
+
+.wavy-node-pulse {
+  animation: pulse-ring 2.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-ring {
+  0% {
+    r: 10px;
+    opacity: 0.8;
+  }
+  50% {
+    r: 22px;
+    opacity: 0;
+  }
+  100% {
+    r: 10px;
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   COLOR SCHEME PALETTES (Amber, Orange, Coral, Pink)
+   ========================================================================== */
+
+.theme-amber {
+  --node-color: #F59E0B;
+  --node-glow: rgba(245, 158, 11, 0.4);
+}
+
+.theme-orange {
+  --node-color: #FF5A00;
+  --node-glow: rgba(255, 90, 0, 0.45);
+}
+
+.theme-coral {
+  --node-color: #FF4D6D;
+  --node-glow: rgba(255, 77, 109, 0.4);
+}
+
+.theme-pink {
+  --node-color: #EC4899;
+  --node-glow: rgba(236, 72, 153, 0.4);
+}
+
+/* ==========================================================================
+   RESPONSIVE VERTICAL LAYOUT (Mobile & Tablet)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .wavy-track-svg-wrapper {
+    left: 36px;
+    transform: none;
+    max-width: 140px;
+  }
+
+  .wavy-timeline-row.align-left,
+  .wavy-timeline-row.align-right {
+    justify-content: flex-end;
+    padding-left: 65px;
+  }
+
+  .wavy-milestone-card {
+    width: 100%;
+    padding: 18px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .wavy-track-svg-wrapper {
+    left: 18px;
+    max-width: 80px;
+  }
+
+  .wavy-timeline-row.align-left,
+  .wavy-timeline-row.align-right {
+    padding-left: 40px;
+  }
+
+  .wavy-timeline-list {
+    gap: 40px;
+  }
+
+  .wavy-pill-badge {
+    padding: 6px 14px;
+    font-size: 0.82rem;
+  }
+}
