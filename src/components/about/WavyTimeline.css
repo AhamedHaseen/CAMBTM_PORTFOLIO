@@ -88,10 +88,12 @@
     r: 10px;
     opacity: 0.8;
   }
+
   50% {
     r: 22px;
     opacity: 0;
   }
+
   100% {
     r: 10px;
     opacity: 0;
@@ -210,13 +212,11 @@
     left: 20px;
     width: 6px;
     transform: translateX(-50%);
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255, 90, 0, 0.4) 0px,
-      rgba(255, 90, 0, 0.4) 6px,
-      transparent 6px,
-      transparent 12px
-    );
+    background: repeating-linear-gradient(to bottom,
+        rgba(255, 90, 0, 0.4) 0px,
+        rgba(255, 90, 0, 0.4) 6px,
+        transparent 6px,
+        transparent 12px);
     border-left: 1px solid rgba(255, 255, 255, 0.12);
     border-right: 1px solid rgba(255, 255, 255, 0.12);
     z-index: 1;
@@ -225,13 +225,11 @@
   [data-theme="light"] .wavy-timeline-list::before {
     border-left: 1px solid rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(0, 0, 0, 0.15);
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255, 90, 0, 0.4) 0px,
-      rgba(255, 90, 0, 0.4) 6px,
-      transparent 6px,
-      transparent 12px
-    );
+    background: repeating-linear-gradient(to bottom,
+        rgba(255, 90, 0, 0.4) 0px,
+        rgba(255, 90, 0, 0.4) 6px,
+        transparent 6px,
+        transparent 12px);
   }
 
   .wavy-timeline-row {
@@ -297,10 +295,12 @@
       transform: scale(0.8);
       opacity: 0.7;
     }
+
     50% {
       transform: scale(1.4);
       opacity: 0;
     }
+
     100% {
       transform: scale(0.8);
       opacity: 0;

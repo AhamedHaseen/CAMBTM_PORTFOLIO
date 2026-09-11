@@ -42,6 +42,7 @@ a {
     opacity: 0;
     transform: translateY(30px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -53,6 +54,7 @@ a {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -64,6 +66,7 @@ a {
     opacity: 0;
     transform: translateX(30px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -75,6 +78,7 @@ a {
     opacity: 0;
     transform: scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -86,6 +90,7 @@ a {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -97,6 +102,7 @@ a {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -104,20 +110,24 @@ a {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -127,6 +137,7 @@ a {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -136,9 +147,11 @@ a {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -148,6 +161,7 @@ a {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -157,6 +171,7 @@ a {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -202,24 +217,31 @@ a {
 .delay-100 {
   animation-delay: 0.1s;
 }
+
 .delay-200 {
   animation-delay: 0.2s;
 }
+
 .delay-300 {
   animation-delay: 0.3s;
 }
+
 .delay-400 {
   animation-delay: 0.4s;
 }
+
 .delay-500 {
   animation-delay: 0.5s;
 }
+
 .delay-600 {
   animation-delay: 0.6s;
 }
+
 .delay-700 {
   animation-delay: 0.7s;
 }
+
 .delay-800 {
   animation-delay: 0.8s;
 }
@@ -278,28 +300,35 @@ a {
 }
 
 /* Stagger children */
-.stagger-children > *:nth-child(1) {
+.stagger-children>*:nth-child(1) {
   transition-delay: 0.05s;
 }
-.stagger-children > *:nth-child(2) {
+
+.stagger-children>*:nth-child(2) {
   transition-delay: 0.1s;
 }
-.stagger-children > *:nth-child(3) {
+
+.stagger-children>*:nth-child(3) {
   transition-delay: 0.15s;
 }
-.stagger-children > *:nth-child(4) {
+
+.stagger-children>*:nth-child(4) {
   transition-delay: 0.2s;
 }
-.stagger-children > *:nth-child(5) {
+
+.stagger-children>*:nth-child(5) {
   transition-delay: 0.25s;
 }
-.stagger-children > *:nth-child(6) {
+
+.stagger-children>*:nth-child(6) {
   transition-delay: 0.3s;
 }
-.stagger-children > *:nth-child(7) {
+
+.stagger-children>*:nth-child(7) {
   transition-delay: 0.35s;
 }
-.stagger-children > *:nth-child(8) {
+
+.stagger-children>*:nth-child(8) {
   transition-delay: 0.4s;
 }
 
@@ -458,38 +487,30 @@ a {
 
 /* ========== MASK IMAGE GRADIENTS ========== */
 .mask-gradient-x {
-  mask-image: linear-gradient(
-    90deg,
-    transparent 2%,
-    black 7% 93%,
-    transparent 98%
-  );
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 2%,
-    black 7% 93%,
-    transparent 98%
-  );
+  mask-image: linear-gradient(90deg,
+      transparent 2%,
+      black 7% 93%,
+      transparent 98%);
+  -webkit-mask-image: linear-gradient(90deg,
+      transparent 2%,
+      black 7% 93%,
+      transparent 98%);
 }
 
 .mask-gradient-y {
   mask-image: linear-gradient(0deg, transparent, black 2% 95%, transparent);
-  -webkit-mask-image: linear-gradient(
-    0deg,
-    transparent,
-    black 2% 95%,
-    transparent
-  );
+  -webkit-mask-image: linear-gradient(0deg,
+      transparent,
+      black 2% 95%,
+      transparent);
 }
 
 /* ========== SHIMMER LOADING ========== */
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(237, 237, 237, 0) 0%,
-    rgba(237, 237, 237, 0.12) 50%,
-    rgba(237, 237, 237, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(237, 237, 237, 0) 0%,
+      rgba(237, 237, 237, 0.12) 50%,
+      rgba(237, 237, 237, 0) 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
@@ -536,11 +557,9 @@ a {
 }
 
 .text-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--mood-white) 0%,
-    var(--mood-mid) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--mood-white) 0%,
+      var(--mood-mid) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -642,20 +661,16 @@ a {
 
 /* ========== PROGRESSIVE BLUR ========== */
 .blur-edge {
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 10%,
-    black 90%,
-    transparent
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 10%,
-    black 90%,
-    transparent
-  );
+  mask-image: linear-gradient(to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent);
+  -webkit-mask-image: linear-gradient(to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent);
 }
 
 /* ========== 3D CARD EFFECT ========== */
@@ -679,10 +694,12 @@ a {
 }
 
 @keyframes morph {
+
   0%,
   100% {
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
+
   50% {
     border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
   }
@@ -749,12 +766,10 @@ a {
 
 /* ========== SKELETON LOADING ========== */
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(237, 237, 237, 0.05) 25%,
-    rgba(237, 237, 237, 0.12) 50%,
-    rgba(237, 237, 237, 0.05) 75%
-  );
+  background: linear-gradient(90deg,
+      rgba(237, 237, 237, 0.05) 25%,
+      rgba(237, 237, 237, 0.12) 50%,
+      rgba(237, 237, 237, 0.05) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 4px;
