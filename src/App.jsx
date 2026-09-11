@@ -47,11 +47,8 @@ function App() {
       document.body.appendChild(script);
     };
 
-    const baseUrl = import.meta.env.BASE_URL || "/";
-    const cleanBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-
-    loadScript(`${cleanBase}js/main.js`, "cambm-main-script");
-    loadScript(`${cleanBase}js/cal-widget.js`, "cambm-cal-widget");
+    loadScript("/js/main.js", "cambm-main-script");
+    loadScript("/js/cal-widget.js", "cambm-cal-widget");
 
     if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
       window.CAMBMTheme.initControls();
@@ -86,7 +83,7 @@ function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <Router basename={import.meta.env.BASE_URL}>
+        <Router>
           <Routes>
             {/* Public Website Routes */}
             <Route path="/" element={<Welcome />} />
