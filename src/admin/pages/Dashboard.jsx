@@ -36,7 +36,7 @@ const DEFAULT_COMBOS = [
     id: 'video',
     title: 'Videography Combo',
     description: 'For brands that need recurring content, social execution and a monthly video pipeline.',
-    engagement: 'MONTHLY ENGAGEMENT',
+    engagement: 'MONTHLY PLAN',
     featured: false,
     items: [
       '12 Static Creatives',
@@ -50,14 +50,13 @@ const DEFAULT_COMBOS = [
     id: 'web',
     title: 'Website Combo',
     description: 'For businesses that need ongoing marketing supported by a professionally built website.',
-    engagement: '6-MONTH ENGAGEMENT',
+    engagement: '6-MONTH PLAN',
     featured: true,
     items: [
+      'Free Custom Website & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom Website Included',
-      'Hosting Included',
       'Monthly Maintenance & Support',
       'Monthly Reporting'
     ]
@@ -66,14 +65,13 @@ const DEFAULT_COMBOS = [
     id: 'pos',
     title: 'POS Combo',
     description: 'For retail, restaurant and service businesses that need marketing and a POS system together.',
-    engagement: 'ANNUAL ENGAGEMENT',
+    engagement: 'ANNUAL PLAN',
     featured: false,
     items: [
+      'Free Custom Cloud POS & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom POS Included',
-      'Hosting Included',
       'Monthly Maintenance & Support',
       'Monthly Reporting'
     ]
@@ -130,7 +128,7 @@ export default function Dashboard() {
           setCombosData(d.combos);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     apiRequest('/api/contacts?all=true')
       .then(res => (res.headers.get('content-type')?.includes('application/json') ? res.json() : {}))
@@ -139,7 +137,7 @@ export default function Dashboard() {
           setContactsData(d.contacts);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const handleAddIncluded = async (e) => {
@@ -156,7 +154,7 @@ export default function Dashboard() {
         method: 'PUT',
         body: JSON.stringify({ items: updatedItems })
       });
-    } catch {}
+    } catch { }
 
     setCombosData(prev => {
       const base = prev && prev.length > 0 ? prev : DEFAULT_COMBOS;
@@ -165,7 +163,7 @@ export default function Dashboard() {
         localStorage.setItem('cambm_admin_combos', JSON.stringify(updated));
         localStorage.setItem('cambm_combos', JSON.stringify(updated));
         window.dispatchEvent(new CustomEvent('cambm_combos_updated'));
-      } catch {}
+      } catch { }
       return updated;
     });
     toast.success(`Added "${trimmed}" to ${addFeaturePkg.title}`);
@@ -183,7 +181,7 @@ export default function Dashboard() {
         method: 'PUT',
         body: JSON.stringify({ items: updatedItems })
       });
-    } catch {}
+    } catch { }
 
     toast.info(`Removed item from ${pkgToUpdate.title}`);
     setCombosData(prev => {
@@ -193,7 +191,7 @@ export default function Dashboard() {
         localStorage.setItem('cambm_admin_combos', JSON.stringify(updated));
         localStorage.setItem('cambm_combos', JSON.stringify(updated));
         window.dispatchEvent(new CustomEvent('cambm_combos_updated'));
-      } catch {}
+      } catch { }
       return updated;
     });
     if (addFeaturePkg && addFeaturePkg.id === pkgToUpdate.id) {

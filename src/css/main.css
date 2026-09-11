@@ -160,6 +160,7 @@ button,
 
 /* Prevent auto-zoom in mobile Safari */
 @media screen and (max-width: 768px) {
+
   input,
   select,
   textarea {
@@ -310,13 +311,18 @@ html.lenis body {
   box-shadow: 0 10px 40px rgba(255, 90, 0, 0.22);
 }
 
-/* Strategy Call Button Prominence */
+/* Strategy Call Button in CTA Section (Not Bold) */
+.cta .btn,
+.cta .btn-primary,
+.cta .js-open-cal,
+.cta-inner .btn,
+.cta-inner .btn-primary,
 .cta-actions .btn,
 .cta-actions .btn-primary,
 .cta-actions .js-open-cal {
-  font-size: 1.06rem !important;
-  font-weight: 700 !important;
-  padding: 13px 30px !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  padding: 11px 26px !important;
   letter-spacing: 0.01em !important;
 }
 
@@ -6535,6 +6541,7 @@ html[lang="ta"] .btn {
 
 /* Prevent Sticky Hover on Touch Devices & Guarantee Fluid Vertical Page Scrolling */
 @media (hover: none) and (pointer: coarse) {
+
   .btn:hover,
   .btn-primary:hover,
   .btn-secondary:hover,
@@ -6582,6 +6589,7 @@ html[lang="ta"] .btn {
 
 /* Mobile Screen Padding & Touch Margins (< 768px) */
 @media (max-width: 767px) {
+
   .section,
   .about-section,
   .hero,
@@ -6660,6 +6668,7 @@ html[lang="ta"] .btn {
 
 /* Small Screens (< 380px e.g. iPhone SE, Galaxy Fold) */
 @media (max-width: 380px) {
+
   .hero-title,
   .about-hero-title {
     font-size: 1.85rem !important;

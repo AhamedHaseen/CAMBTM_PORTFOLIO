@@ -32,12 +32,12 @@ const I18N_SERVICES = {
         eyebrow: "Hosting & Infrastructure",
         title: "Hosting that scales with the system.",
         desc: "Plans are available for standard business requirements, with customised solutions for higher traffic, storage, security, email or infrastructure needs.",
-        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
-        terms: "Terms and conditions apply",
+        plans: ["Starter", "Prestige", "Elite", "Enterprise"],
+        terms: "Terms and conditions apply*",
         table: {
           headers: {
             feature: "Feature",
-            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+            plans: ["Starter", "Prestige", "Elite", "Enterprise"],
           },
           rows: [
             { feature: "Business Mail / Domain", values: ["2", "5", "15", "50"] },
@@ -99,7 +99,7 @@ const I18N_SERVICES = {
             "1 Video Shoot",
             "Monthly Reporting",
           ],
-          engagement: "MONTHLY ENGAGEMENT",
+          engagement: "MONTHLY PLAN",
         },
         {
           id: "web",
@@ -107,30 +107,28 @@ const I18N_SERVICES = {
           title: "Website Combo",
           desc: "For businesses that need ongoing marketing supported by a professionally built and maintained website.",
           items: [
+            "Free Custom Website & Free Hosting",
             "12 Static Creatives",
             "Social Media Management for Meta & TikTok",
             "Basic Campaign Management",
-            "Custom Website Included",
-            "Hosting Included",
             "Monthly Maintenance & Technical Support",
             "Monthly Reporting",
           ],
-          engagement: "6-MONTH ENGAGEMENT",
+          engagement: "6-MONTH PLAN",
         },
         {
           id: "pos",
           title: "POS Combo",
           desc: "For retail, restaurant and service businesses that need marketing and an operational POS system together.",
           items: [
+            "Free Custom Cloud POS & Free Hosting",
             "12 Static Creatives",
             "Social Media Management for Meta & TikTok",
             "Basic Campaign Management",
-            "Custom POS Included",
-            "Hosting Included",
             "Monthly Maintenance & Technical Support",
             "Monthly Reporting",
           ],
-          engagement: "ANNUAL ENGAGEMENT",
+          engagement: "ANNUAL PLAN",
         },
       ],
     },
@@ -164,12 +162,12 @@ const I18N_SERVICES = {
         eyebrow: "Alojamiento e Infraestructura",
         title: "Alojamiento que escala con el sistema.",
         desc: "Planes disponibles para los requerimientos estándar del negocio, con soluciones personalizadas para mayor tráfico, almacenamiento, seguridad, correo o infraestructura.",
-        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
-        terms: "Se aplican términos y condiciones",
+        plans: ["Starter", "Prestige", "Elite", "Enterprise"],
+        terms: "Se aplican términos y condiciones*",
         table: {
           headers: {
             feature: "Característica",
-            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+            plans: ["Starter", "Prestige", "Elite", "Enterprise"],
           },
           rows: [
             { feature: "Correo Corporativo / Dominio", values: ["2", "5", "15", "50"] },
@@ -231,7 +229,7 @@ const I18N_SERVICES = {
             "1 Sesión de Rodaje de Video",
             "Reportes Mensuales",
           ],
-          engagement: "COMPROMISO MENSUAL",
+          engagement: "PLAN MENSUAL",
         },
         {
           id: "web",
@@ -239,30 +237,28 @@ const I18N_SERVICES = {
           title: "Combo de Sitio Web",
           desc: "Para empresas que necesitan marketing continuo respaldado por un sitio web profesional y mantenido.",
           items: [
+            "Sitio web personalizado gratis y alojamiento gratis",
             "12 Diseños Estáticos",
             "Gestión de Redes para Meta y TikTok",
             "Gestión Básica de Campañas",
-            "Sitio Web Personalizado Incluido",
-            "Alojamiento Web Incluido",
             "Mantenimiento Mensual y Soporte Técnico",
             "Reportes Mensuales",
           ],
-          engagement: "COMPROMISO DE 6 MESES",
+          engagement: "PLAN DE 6 MESES",
         },
         {
           id: "pos",
           title: "Combo de POS",
           desc: "Para comercios minoristas, restaurantes y servicios que necesitan marketing y un sistema POS operativo juntos.",
           items: [
+            "Sistema POS en la nube personalizado gratis y alojamiento gratis",
             "12 Diseños Estáticos",
             "Gestión de Redes para Meta y TikTok",
             "Gestión Básica de Campañas",
-            "Sistema POS Personalizado Incluido",
-            "Alojamiento Web Incluido",
             "Mantenimiento Mensual y Soporte Técnico",
             "Reportes Mensuales",
           ],
-          engagement: "COMPROMISO ANUAL",
+          engagement: "PLAN ANUAL",
         },
       ],
     },
@@ -296,12 +292,12 @@ const I18N_SERVICES = {
         eyebrow: "الاستضافة والبنية التحتية",
         title: "استضافة تتوسع مع نمو النظام.",
         desc: "خطط متاحة لمتطلبات الأعمال القياسية مع حلول مخصصة لحركة المرور العالية والتخزين والأمان والبريد الإلكتروني أو احتياجات البنية التحتية.",
-        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
-        terms: "تطبق الشروط والأحكام",
+        plans: ["Starter", "Prestige", "Elite", "Enterprise"],
+        terms: "تطبق الشروط والأحكام*",
         table: {
           headers: {
             feature: "الميزة",
-            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+            plans: ["Starter", "Prestige", "Elite", "Enterprise"],
           },
           rows: [
             { feature: "بريد الأعمال / النطاق", values: ["2", "5", "15", "50"] },
@@ -363,7 +359,7 @@ const I18N_SERVICES = {
             "جلسة تصوير فيديو كاملة",
             "تقارير أداء شهرية",
           ],
-          engagement: "تعاقد شهري",
+          engagement: "خطة شهرية",
         },
         {
           id: "web",
@@ -371,30 +367,28 @@ const I18N_SERVICES = {
           title: "باقة الموقع الإلكتروني",
           desc: "للشركات التي تحتاج تسويقاً مستمراً مدعوماً بموقع إلكتروني احترافي يخضع للصيانة الدورية.",
           items: [
+            "موقع إلكتروني مخصص مجاني واستضافة مجانية",
             "12 تصميماً إبداعياً ثابتاً",
             "إدارة وسائل التواصل لـ Meta و TikTok",
             "إدارة الحملات الأساسية",
-            "موقع إلكتروني مخصص مشمول",
-            "استضافة سريعة مشمولة",
             "صيانة ودعم فني شهري",
             "تقارير أداء شهرية",
           ],
-          engagement: "تعاقد لمدة 6 أشهر",
+          engagement: "خطة 6 أشهر",
         },
         {
           id: "pos",
           title: "باقة نظام نقاط البيع (POS)",
           desc: "لمحلات التجزئة والمطاعم ومقدمي الخدمات الذين يحتاجون التسويق ونظام نقاط بيع متطور معاً.",
           items: [
+            "نظام POS سحابي مخصص مجاني واستضافة مجانية",
             "12 تصميماً إبداعياً ثابتاً",
             "إدارة وسائل التواصل لـ Meta و TikTok",
             "إدارة الحملات الأساسية",
-            "نظام POS مخصص مشمول",
-            "استضافة سحابية مشمولة",
             "صيانة ودعم فني شهري",
             "تقارير أداء شهرية",
           ],
-          engagement: "تعاقد سنوي",
+          engagement: "خطة سنوية",
         },
       ],
     },
@@ -428,12 +422,12 @@ const I18N_SERVICES = {
         eyebrow: "හොස්ටිං සහ යටිතල පහසුකම්",
         title: "පද්ධතිය සමඟ පරිමාණය වන හොස්ටිං.",
         desc: "සම්මත ව්‍යාපාරික අවශ්‍යතා සඳහා සැලසුම් ලබා ගත හැකි අතර, වැඩි තදබදය, ගබඩා කිරීම, ආරක්ෂාව, විද්‍යුත් තැපෑල හෝ යටිතල පහසුකම් සඳහා අභිරුචි විසඳුම් ඇත.",
-        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
-        terms: "නියමයන් සහ කොන්දේසි අදාළ වේ",
+        plans: ["Starter", "Prestige", "Elite", "Enterprise"],
+        terms: "නියමයන් සහ කොන්දේසි අදාළ වේ*",
         table: {
           headers: {
             feature: "විශේෂාංගය",
-            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+            plans: ["Starter", "Prestige", "Elite", "Enterprise"],
           },
           rows: [
             { feature: "ව්‍යාපාරික තැපැල් / වසම", values: ["2", "5", "15", "50"] },
@@ -495,7 +489,7 @@ const I18N_SERVICES = {
             "වීඩියෝ රූගත කිරීම් 1ක්",
             "මාසික වාර්තාකරණය",
           ],
-          engagement: "මාසික ගිවිසුම",
+          engagement: "මාසික සැලැස්ම",
         },
         {
           id: "web",
@@ -503,30 +497,28 @@ const I18N_SERVICES = {
           title: "වෙබ් අඩවි පැකේජය",
           desc: "වෘත්තීයමය වශයෙන් ගොඩනඟන ලද සහ නඩත්තු කරන ලද වෙබ් අඩවියක් මඟින් අඛණ්ඩ අලෙවිකරණයක් අවශ්‍ය ව්‍යාපාර සඳහා.",
           items: [
+            "නොමිලේ අභිරුචි වෙබ් අඩවියක් සහ නොමිලේ හොස්ටිං",
             "ස්ථිතික නිර්මාණ 12ක්",
             "Meta සහ TikTok සඳහා සමාජ මාධ්‍ය කළමනාකරණය",
             "මූලික ප්‍රචාරණ කළමනාකරණය",
-            "අභිරුචි වෙබ් අඩවිය ඇතුළත් වේ",
-            "හොස්ටිං ඇතුළත් වේ",
             "මාසික නඩත්තුව සහ තාක්ෂණික සහාය",
             "මාසික වාර්තාකරණය",
           ],
-          engagement: "මාස 6ක ගිවිසුම",
+          engagement: "මාස 6ක සැලැස්ම",
         },
         {
           id: "pos",
           title: "POS පද්ධති පැකේජය",
           desc: "අලෙවිකරණය සහ ක්‍රියාකාරී POS පද්ධතියක් එකට අවශ්‍ය සිල්ලර, ආපනශාලා සහ සේවා ව්‍යාපාර සඳහා.",
           items: [
+            "නොමිලේ Cloud POS පද්ධතියක් සහ නොමිලේ හොස්ටිං",
             "ස්ථිතික නිර්මාණ 12ක්",
             "Meta සහ TikTok සඳහා සමාජ මාධ්‍ය කළමනාකරණය",
             "මූලික ප්‍රචාරණ කළමනාකරණය",
-            "අභිරුචි POS පද්ධතිය ඇතුළත් වේ",
-            "හොස්ටිං ඇතුළත් වේ",
             "මාසික නඩත්තුව සහ තාක්ෂණික සහාය",
             "මාසික වාර්තාකරණය",
           ],
-          engagement: "වාර්ෂික ගිවිසුම",
+          engagement: "වාර්ෂික සැලැස්ම",
         },
       ],
     },
@@ -560,12 +552,12 @@ const I18N_SERVICES = {
         eyebrow: "ஹோஸ்டிங் & உள்கட்டமைப்பு",
         title: "கணினியுடன் அளவிடக்கூடிய ஹோஸ்டிங்.",
         desc: "நிலையான வணிகத் தேவைகளுக்கான திட்டங்கள் கிடைக்கின்றன, அதிக ட்ராஃபிக், சேமிப்பு, பாதுகாப்பு, மின்னஞ்சல் அல்லது உள்கட்டமைப்புத் தேவைகளுக்கு தனிப்பயனாக்கப்பட்ட தீர்வுகள் உள்ளன.",
-        plans: ["Starter", "Marketing", "Elite", "Enterprise"],
-        terms: "விதிமுறைகள் மற்றும் நிபந்தனைகள் பொருந்தும்",
+        plans: ["Starter", "Prestige", "Elite", "Enterprise"],
+        terms: "விதிமுறைகள் மற்றும் நிபந்தனைகள் பொருந்தும்*",
         table: {
           headers: {
             feature: "அம்சம்",
-            plans: ["Starter", "Marketing", "Elite", "Enterprise"],
+            plans: ["Starter", "Prestige", "Elite", "Enterprise"],
           },
           rows: [
             { feature: "வணிக மின்னஞ்சல் / டொமைன்", values: ["2", "5", "15", "50"] },
@@ -627,7 +619,7 @@ const I18N_SERVICES = {
             "1 வீடியோ படப்பிடிப்பு",
             "மாதாந்திர அறிக்கை",
           ],
-          engagement: "மாதாந்திர ஒப்பந்தம்",
+          engagement: "மாதாந்திர திட்டம்",
         },
         {
           id: "web",
@@ -635,30 +627,28 @@ const I18N_SERVICES = {
           title: "இணையதள காம்போ",
           desc: "தொழில்முறை ரீதியாக உருவாக்கப்பட்ட மற்றும் பராமரிக்கப்படும் வலைத்தளத்தின் மூலம் தொடர்ச்சியான சந்தைப்படுத்தல் தேவைப்படும் வணிகங்களுக்கு.",
           items: [
+            "இலவச தனிப்பயன் இணையதளம் மற்றும் இலவச ஹோஸ்டிங்",
             "12 நிலையான கிரியேட்டிவ்கள்",
             "Meta & TikTok க்கான சமூக ஊடக மேலாண்மை",
             "அடிப்படை பிரச்சார மேலாண்மை",
-            "தனிப்பயன் வலைத்தளம் சேர்க்கப்பட்டுள்ளது",
-            "ஹோஸ்டிங் சேர்க்கப்பட்டுள்ளது",
             "மாதாந்திர பராமரிப்பு & தொழில்நுட்ப ஆதரவு",
             "மாதாந்திர அறிக்கை",
           ],
-          engagement: "6 மாத ஒப்பந்தம்",
+          engagement: "6 மாத திட்டம்",
         },
         {
           id: "pos",
           title: "POS காம்போ",
           desc: "சந்தைப்படுத்தல் மற்றும் செயல்பாட்டு POS அமைப்பை ஒன்றாக விரும்பும் சில்லறை, உணவகம் மற்றும் சேவை வணிகங்களுக்கு.",
           items: [
+            "இலவச தனிப்பயன் கிளவுட் POS மற்றும் இலவச ஹோஸ்டிங்",
             "12 நிலையான கிரியேட்டிவ்கள்",
             "Meta & TikTok க்கான சமூக ஊடக மேலாண்மை",
             "அடிப்படை பிரச்சார மேலாண்மை",
-            "தனிப்பயன் POS சேர்க்கப்பட்டுள்ளது",
-            "ஹோஸ்டிங் சேர்க்கப்பட்டுள்ளது",
             "மாதாந்திர பராமரிப்பு & தொழில்நுட்ப ஆதரவு",
             "மாதாந்திர அறிக்கை",
           ],
-          engagement: "வருடாந்திர ஒப்பந்தம்",
+          engagement: "வருடாந்திர திட்டம்",
         },
       ],
     },
@@ -951,7 +941,7 @@ export default function ServicesSection() {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-    } catch (e) {}
+    } catch (e) { }
     return [];
   });
 
@@ -968,11 +958,11 @@ export default function ServicesSection() {
               try {
                 localStorage.setItem("cambm_combos", JSON.stringify(data.combos));
                 localStorage.setItem("cambm_admin_combos", JSON.stringify(data.combos));
-              } catch (e) {}
+              } catch (e) { }
               return;
             }
           }
-        } catch (e) {}
+        } catch (e) { }
       }
     };
     tryFetch();
@@ -988,7 +978,7 @@ export default function ServicesSection() {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) setDynamicCombos(parsed);
         }
-      } catch (e) {}
+      } catch (e) { }
       loadCombos();
     };
 
@@ -1041,7 +1031,7 @@ export default function ServicesSection() {
 
           let title = c.title;
           let desc = c.description || c.desc || '';
-          let engagement = c.engagement || 'MONTHLY ENGAGEMENT';
+          let engagement = c.engagement || 'MONTHLY PLAN';
           if (currentLang !== 'en' && activeLocaleData.combos?.cards) {
             const locMatch = activeLocaleData.combos.cards.find(lc => lc.id === c.id || lc.title?.toLowerCase() === c.title?.toLowerCase());
             if (locMatch) {
@@ -1053,6 +1043,17 @@ export default function ServicesSection() {
               if (locMatch.engagement) {
                 engagement = locMatch.engagement;
               }
+            }
+          } else {
+            if (engagement.includes('ENGAGEMENT')) {
+              engagement = engagement.replace(/ENGAGEMENT/gi, 'PLAN');
+            }
+            if (c.id === 'web' || title?.toLowerCase().includes('website')) {
+              const filtered = items.filter(it => !it.toLowerCase().includes('custom website') && !it.toLowerCase().includes('hosting included') && !it.toLowerCase().includes('free custom website'));
+              items = ['Free Custom Website & Free Hosting', ...filtered];
+            } else if (c.id === 'pos' || title?.toLowerCase().includes('pos')) {
+              const filtered = items.filter(it => !it.toLowerCase().includes('custom pos') && !it.toLowerCase().includes('hosting included') && !it.toLowerCase().includes('free custom cloud pos'));
+              items = ['Free Custom Cloud POS & Free Hosting', ...filtered];
             }
           }
 
@@ -1192,7 +1193,7 @@ export default function ServicesSection() {
               >
                 {currentTab.services.map((item, idx) => (
                   <motion.div
-                    key={item.id || item.num}
+                    key={item.id || item.num || item.name}
                     className="service-row"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -1205,7 +1206,6 @@ export default function ServicesSection() {
                     style={{ cursor: "pointer" }}
                     title={`Discuss ${item.name}`}
                   >
-                    <div className="num">{item.num}</div>
                     <div>
                       <strong>{item.name}</strong>
                       <span>{item.desc}</span>
@@ -1236,7 +1236,7 @@ export default function ServicesSection() {
                       <thead>
                         <tr>
                           <th>{currentTab.hosting.table?.headers?.feature || "Feature"}</th>
-                          {(currentTab.hosting.table?.headers?.plans || currentTab.hosting.plans || ["Starter", "Marketing", "Elite", "Enterprise"]).map((planName, pIdx) => (
+                          {(currentTab.hosting.table?.headers?.plans || currentTab.hosting.plans || ["Starter", "Prestige", "Elite", "Enterprise"]).map((planName, pIdx) => (
                             <th key={pIdx}>
                               <div
                                 className="host-header-plan"
@@ -1271,9 +1271,9 @@ export default function ServicesSection() {
                       </tbody>
                     </table>
                   </div>
-                <p className="hosting-terms">
-                  {currentTab.hosting?.terms || "Terms and conditions apply"}
-                </p>
+                  <p className="hosting-terms">
+                    {currentTab.hosting?.terms || "Terms and conditions apply*"}
+                  </p>
                 </div>
               </>
             )}
@@ -1327,9 +1327,42 @@ export default function ServicesSection() {
                 <h3>{card.title}</h3>
                 <p className="best">{card.desc}</p>
                 <ul className="combo-items">
-                  {card.items.map((feat, idx) => (
-                    <li key={idx}>{feat}</li>
-                  ))}
+                  {card.items.map((feat, idx) => {
+                    const isSocialMediaItem =
+                      typeof feat === "string" &&
+                      (feat.toLowerCase().includes("social media") ||
+                        feat.toLowerCase().includes("meta") ||
+                        feat.toLowerCase().includes("tiktok") ||
+                        feat.toLowerCase().includes("redes") ||
+                        feat.toLowerCase().includes("تواصل") ||
+                        feat.toLowerCase().includes("සමාජ මාධ්‍ය") ||
+                        feat.toLowerCase().includes("சமூக ஊடக"));
+
+                    return (
+                      <li key={idx} className={isSocialMediaItem ? "has-social-icons" : ""}>
+                        <div className="combo-item-text">{feat}</div>
+                        {isSocialMediaItem && (
+                          <div className="combo-social-badges" aria-label="Facebook, Instagram, TikTok">
+                            <span className="combo-social-icon icon-fb" title="Facebook">
+                              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                              </svg>
+                            </span>
+                            <span className="combo-social-icon icon-insta" title="Instagram">
+                              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.98-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                              </svg>
+                            </span>
+                            <span className="combo-social-icon icon-tiktok" title="TikTok">
+                              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.89 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.33 0 .64.06.93.16V9.45a6.34 6.34 0 0 0-.93-.07 6.35 6.35 0 0 0-6.34 6.35 6.35 6.35 0 0 0 6.34 6.34 6.35 6.35 0 0 0 6.35-6.34V8.71a8.2 8.2 0 0 0 4.75 1.5V6.76c-.35 0-.69-.03-1-.07z" />
+                              </svg>
+                            </span>
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
                 <div className="combo-footer">
                   <span className="engagement">{card.engagement}</span>

@@ -25,7 +25,7 @@ const DEFAULT_COMBOS = [
     id: 'video',
     title: 'Videography Combo',
     description: 'For brands that need recurring content, social execution and a consistent monthly video pipeline.',
-    engagement: 'MONTHLY ENGAGEMENT',
+    engagement: 'MONTHLY PLAN',
     items: [
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
@@ -41,13 +41,12 @@ const DEFAULT_COMBOS = [
     id: 'web',
     title: 'Website Combo',
     description: 'For businesses that need ongoing marketing supported by a professionally built and maintained website.',
-    engagement: '6-MONTH ENGAGEMENT',
+    engagement: '6-MONTH PLAN',
     items: [
+      'Free Custom Website & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom Website Included',
-      'Hosting Included',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
     ],
@@ -59,13 +58,12 @@ const DEFAULT_COMBOS = [
     id: 'pos',
     title: 'POS Combo',
     description: 'For retail, restaurant and service businesses that need marketing and an operational POS system together.',
-    engagement: 'ANNUAL ENGAGEMENT',
+    engagement: 'ANNUAL PLAN',
     items: [
+      'Free Custom Cloud POS & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom POS Included',
-      'Hosting Included',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
     ],
@@ -76,11 +74,11 @@ const DEFAULT_COMBOS = [
 ];
 
 const ENGAGEMENT_OPTIONS = [
-  'MONTHLY ENGAGEMENT',
-  '3-MONTH ENGAGEMENT',
-  '6-MONTH ENGAGEMENT',
-  'ANNUAL ENGAGEMENT',
-  'CUSTOM ENGAGEMENT'
+  'MONTHLY PLAN',
+  '3-MONTH PLAN',
+  '6-MONTH PLAN',
+  'ANNUAL PLAN',
+  'CUSTOM PLAN'
 ];
 
 export default function ComboPackagesManager() {
@@ -115,7 +113,7 @@ export default function ComboPackagesManager() {
       localStorage.setItem('cambm_admin_combos', JSON.stringify(list));
       localStorage.setItem('cambm_combos', JSON.stringify(list));
       window.dispatchEvent(new CustomEvent('cambm_combos_updated'));
-    } catch {}
+    } catch { }
   };
 
   const fetchCombos = async (showLoading = false) => {
@@ -166,7 +164,7 @@ export default function ComboPackagesManager() {
       id: '',
       title: '',
       description: '',
-      engagement: 'MONTHLY ENGAGEMENT',
+      engagement: 'MONTHLY PLAN',
       itemsText: '12 Static Creatives\nSocial Media Management\nBasic Campaign Management\nMonthly Reporting',
       featured: false,
       display_order: combos.length + 1,
@@ -193,7 +191,7 @@ export default function ComboPackagesManager() {
       id: item.id || '',
       title: item.title || '',
       description: item.description || item.desc || '',
-      engagement: item.engagement || 'MONTHLY ENGAGEMENT',
+      engagement: item.engagement || 'MONTHLY PLAN',
       itemsText: itemsArr.join('\n'),
       featured: Boolean(item.featured),
       display_order: item.display_order || 1,
@@ -292,7 +290,7 @@ export default function ComboPackagesManager() {
       await apiRequest(`/api/combos/${deleteItem.id}`, {
         method: 'DELETE'
       });
-    } catch {}
+    } catch { }
 
     setCombos(prev => {
       const updated = prev.filter(c => c.id !== deleteItem.id);
@@ -311,7 +309,7 @@ export default function ComboPackagesManager() {
         method: 'PUT',
         body: JSON.stringify({ status: nextStatus })
       });
-    } catch {}
+    } catch { }
 
     setCombos(prev => {
       const updated = prev.map(c => c.id === item.id ? { ...c, status: nextStatus } : c);
@@ -331,7 +329,7 @@ export default function ComboPackagesManager() {
         method: 'PUT',
         body: JSON.stringify({ display_order: targetOrder })
       });
-    } catch {}
+    } catch { }
 
     setCombos(prev => {
       const updated = prev.map(c => c.id === item.id ? { ...c, display_order: targetOrder } : c);

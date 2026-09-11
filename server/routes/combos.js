@@ -16,7 +16,7 @@ const INITIAL_COMBOS = [
     id: 'video',
     title: 'Videography Combo',
     description: 'For brands that need recurring content, social execution and a consistent monthly video pipeline.',
-    engagement: 'MONTHLY ENGAGEMENT',
+    engagement: 'MONTHLY PLAN',
     items: [
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
@@ -32,13 +32,12 @@ const INITIAL_COMBOS = [
     id: 'web',
     title: 'Website Combo',
     description: 'For businesses that need ongoing marketing supported by a professionally built and maintained website.',
-    engagement: '6-MONTH ENGAGEMENT',
+    engagement: '6-MONTH PLAN',
     items: [
+      'Free Custom Website & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom Website Included',
-      'Hosting Included',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
     ],
@@ -50,13 +49,12 @@ const INITIAL_COMBOS = [
     id: 'pos',
     title: 'POS Combo',
     description: 'For retail, restaurant and service businesses that need marketing and an operational POS system together.',
-    engagement: 'ANNUAL ENGAGEMENT',
+    engagement: 'ANNUAL PLAN',
     items: [
+      'Free Custom Cloud POS & Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
-      'Custom POS Included',
-      'Hosting Included',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
     ],
@@ -123,7 +121,7 @@ router.post('/', async (req, res) => {
       id,
       title,
       description = '',
-      engagement = 'MONTHLY ENGAGEMENT',
+      engagement = 'MONTHLY PLAN',
       items = [],
       featured = false,
       display_order = inMemoryCombos.length + 1,
@@ -142,7 +140,7 @@ router.post('/', async (req, res) => {
       id: newId,
       title: title.trim(),
       description: (description || '').trim(),
-      engagement: (engagement || 'MONTHLY ENGAGEMENT').trim(),
+      engagement: (engagement || 'MONTHLY PLAN').trim(),
       items: Array.isArray(items) ? items.filter(Boolean) : [],
       featured: Boolean(featured),
       display_order: Number(display_order) || (inMemoryCombos.length + 1),
@@ -154,15 +152,15 @@ router.post('/', async (req, res) => {
         const { data, error } = await supabase.from('combo_packages').insert([newCombo]).select().single();
         if (!error && data) {
           inMemoryCombos.push(data);
-          recordAudit(req, 'CREATE_COMBO_PACKAGE', `Created combo package: ${title}`).catch(() => {});
+          recordAudit(req, 'CREATE_COMBO_PACKAGE', `Created combo package: ${title}`).catch(() => { });
           return res.status(201).json({ success: true, combo: data });
         }
-      } catch {}
+      } catch { }
     }
 
     inMemoryCombos.push(newCombo);
     saveCombosToFile(inMemoryCombos);
-    recordAudit(req, 'CREATE_COMBO_PACKAGE', `Created combo package: ${title}`).catch(() => {});
+    recordAudit(req, 'CREATE_COMBO_PACKAGE', `Created combo package: ${title}`).catch(() => { });
     return res.status(201).json({ success: true, combo: newCombo });
   } catch (err) {
     console.error('Error creating combo package:', err);
@@ -184,17 +182,17 @@ router.put('/:id', async (req, res) => {
           const idx = inMemoryCombos.findIndex(c => c.id === id);
           if (idx !== -1) inMemoryCombos[idx] = data;
           saveCombosToFile(inMemoryCombos);
-          recordAudit(req, 'UPDATE_COMBO_PACKAGE', `Updated combo package: ${id}`).catch(() => {});
+          recordAudit(req, 'UPDATE_COMBO_PACKAGE', `Updated combo package: ${id}`).catch(() => { });
           return res.json({ success: true, combo: data });
         }
-      } catch {}
+      } catch { }
     }
 
     const idx = inMemoryCombos.findIndex(c => c.id === id);
     if (idx !== -1) {
       inMemoryCombos[idx] = { ...inMemoryCombos[idx], ...updates };
       saveCombosToFile(inMemoryCombos);
-      recordAudit(req, 'UPDATE_COMBO_PACKAGE', `Updated combo package: ${id}`).catch(() => {});
+      recordAudit(req, 'UPDATE_COMBO_PACKAGE', `Updated combo package: ${id}`).catch(() => { });
       return res.json({ success: true, combo: inMemoryCombos[idx] });
     }
 
@@ -213,12 +211,12 @@ router.delete('/:id', async (req, res) => {
     if (supabase) {
       try {
         await supabase.from('combo_packages').delete().eq('id', id);
-      } catch {}
+      } catch { }
     }
 
     inMemoryCombos = inMemoryCombos.filter(c => c.id !== id);
     saveCombosToFile(inMemoryCombos);
-    recordAudit(req, 'DELETE_COMBO_PACKAGE', `Deleted combo package: ${id}`).catch(() => {});
+    recordAudit(req, 'DELETE_COMBO_PACKAGE', `Deleted combo package: ${id}`).catch(() => { });
     return res.json({ success: true, message: 'Combo package deleted successfully' });
   } catch (err) {
     console.error('Error deleting combo package:', err);
