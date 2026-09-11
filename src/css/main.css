@@ -6139,14 +6139,10 @@ main {
 .mobile-theme-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 48px;
-  padding: 4px 0 12px;
+  justify-content: flex-start;
+  min-height: 44px;
+  padding: 4px 0 10px;
   border-bottom: 1px solid rgba(237, 237, 237, 0.1);
-  color: var(--text-muted);
-  font-family: "Inter Tight", sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
 }
 
 .mobile-theme-row .theme-toggle {

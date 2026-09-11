@@ -335,7 +335,6 @@ export default function Welcome() {
 
           <div className="mobile-nav-actions">
             <div className="mobile-theme-row">
-              <span data-i18n="theme.appearance">Appearance</span>
               <button
                 type="button"
                 className="theme-toggle"

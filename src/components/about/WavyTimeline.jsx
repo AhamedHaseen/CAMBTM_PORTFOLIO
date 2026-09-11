@@ -4,55 +4,39 @@ import "./WavyTimeline.css";
 const TIMELINE_MILESTONES = [
   {
     id: "tech-foundation",
-    yearTitle: "2014+ — Technology Foundation",
-    yearTitleKey: "about.global.node1Label",
+    year: "2014+",
     desc: "Technology, POS, and enterprise systems foundation built from deep engineering origins.",
-    descKey: "about.global.node1Detail",
-    badgeTheme: "theme-amber",
     color: "#F59E0B",
-    glow: "rgba(245, 158, 11, 0.4)",
     nodePos: { cx: 480, cy: 110 },
     align: "align-right",
   },
   {
     id: "marketing-launch",
-    yearTitle: "2025 — Marketing Segment Founded",
-    yearTitleKey: "about.global.node2Label",
-    desc: "Full-service marketing, paid media strategy, and unified creative systems launch.",
-    descKey: "about.global.node2Detail",
-    badgeTheme: "theme-orange",
+    year: "2025",
+    desc: "Marketing segment founded.",
     color: "#FF5A00",
-    glow: "rgba(255, 90, 0, 0.45)",
     nodePos: { cx: 320, cy: 340 },
     align: "align-left",
   },
   {
     id: "regional-reach",
-    yearTitle: "Now — Regional Reach",
-    yearTitleKey: "about.global.node3Label",
+    year: "Now",
     desc: "Active expansion across Saudi Arabia, Middle East, Sri Lanka, and Indian markets.",
-    descKey: "about.global.node3Detail",
-    badgeTheme: "theme-coral",
     color: "#FF4D6D",
-    glow: "rgba(255, 77, 109, 0.4)",
     nodePos: { cx: 480, cy: 570 },
     align: "align-right",
   },
   {
     id: "global-horizon",
-    yearTitle: "Next — Global Horizon",
-    yearTitleKey: "about.global.node4Label",
+    year: "Next",
     desc: "Scaling into European hubs and delivering connected growth systems worldwide.",
-    descKey: "about.global.node4Detail",
-    badgeTheme: "theme-pink",
     color: "#EC4899",
-    glow: "rgba(236, 72, 153, 0.4)",
     nodePos: { cx: 320, cy: 800 },
     align: "align-left",
   },
 ];
 
-// Generates continuous parallel S-curve wavy paths
+// Generates continuous parallel S-curve wavy paths for desktop
 const generateWavyPath = (offset = 0) => {
   const o = offset;
   return `M ${400 + o} 20
@@ -70,7 +54,7 @@ export default function WavyTimeline() {
   return (
     <div className="wavy-timeline-container scroll-reveal">
       <div className="wavy-timeline-wrapper">
-        {/* SVG Multi-Lane Running Track Continuous S-Curve */}
+        {/* Desktop Centered S-Curve Multi-Lane SVG Track */}
         <div className="wavy-track-svg-wrapper">
           <svg
             className="wavy-track-svg"
@@ -105,9 +89,9 @@ export default function WavyTimeline() {
             <path d={generateWavyPath(16)} className="track-lane" strokeWidth="1.2" />
             <path d={generateWavyPath(24)} className="track-lane track-lane-outer" strokeWidth="1" />
 
-            {/* Circular Node Markers at Peaks */}
+            {/* Circular Node Markers at Peaks (Desktop) */}
             {TIMELINE_MILESTONES.map((m) => (
-              <g key={m.id}>
+              <g key={m.id} className="wavy-desktop-node-group">
                 {/* Node-to-Card Alignment Guide */}
                 <line
                   x1={m.nodePos.cx}
@@ -153,18 +137,28 @@ export default function WavyTimeline() {
           </svg>
         </div>
 
-        {/* Milestone Content Cards (Alternating Sides) */}
+        {/* Milestone Content Cards */}
         <div className="wavy-timeline-list">
           {TIMELINE_MILESTONES.map((item) => (
-            <div key={item.id} className={`wavy-timeline-row ${item.align} ${item.badgeTheme}`}>
+            <div key={item.id} className={`wavy-timeline-row ${item.align}`}>
+              {/* Mobile Track Node Anchor */}
+              <div className="wavy-mobile-node-anchor">
+                <span className="wavy-mobile-pulse-ring" style={{ borderColor: item.color }}></span>
+                <span className="wavy-mobile-node-outer" style={{ borderColor: item.color }}>
+                  <span className="wavy-mobile-node-core" style={{ backgroundColor: item.color }}></span>
+                </span>
+                <span className="wavy-mobile-connector-line" style={{ backgroundColor: item.color }}></span>
+              </div>
+
               <div className="wavy-milestone-card">
-                {/* Pill-shaped badge containing Year - Title filled with accent color */}
-                <div className="wavy-pill-badge" data-i18n={item.yearTitleKey}>
-                  {item.yearTitle}
+                <div className="wavy-card-header">
+                  <h3 className="wavy-card-year">
+                    {item.year}
+                  </h3>
                 </div>
 
                 {/* Short clean description text underneath */}
-                <p className="wavy-card-desc" data-i18n={item.descKey}>
+                <p className="wavy-card-desc">
                   {item.desc}
                 </p>
               </div>
