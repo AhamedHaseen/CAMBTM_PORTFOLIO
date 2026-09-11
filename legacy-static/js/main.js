@@ -579,6 +579,11 @@ function makeLoopSlider(container, axis, direction = 1, speed = DEFAULT_AUTO_SCR
     if (touchResumeTimer) clearTimeout(touchResumeTimer);
     touchResumeTimer = setTimeout(() => { dragging = false; touchResumeTimer = null; }, 600);
   }, { passive: true });
+  container.addEventListener('touchcancel', () => {
+    if (touchResumeTimer) clearTimeout(touchResumeTimer);
+    dragging = false;
+    touchResumeTimer = null;
+  }, { passive: true });
 
   // Auto-scroll: creep along at `speed` px/SECOND in `direction`, unless
   // paused (hover) or being manually dragged/touched. Reuses the same

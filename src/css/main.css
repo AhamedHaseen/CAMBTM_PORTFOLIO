@@ -771,7 +771,7 @@ html.lenis body {
   color: var(--text-dark);
   position: relative;
   overflow: hidden;
-  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 .brands-inner {
@@ -799,9 +799,9 @@ html.lenis body {
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  overscroll-behavior: contain;
   overscroll-behavior-x: contain;
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: auto;
+  touch-action: pan-y;
   transform: translateZ(0);
   will-change: scroll-position;
   contain: paint;
@@ -846,6 +846,7 @@ html.lenis body {
   gap: 24px;
   padding: 0 12px;
   width: max-content;
+  touch-action: pan-y;
 }
 
 .brand-card {
@@ -857,6 +858,7 @@ html.lenis body {
   background: transparent;
   box-shadow: none;
   transition: transform 0.3s ease;
+  touch-action: pan-y;
 }
 
 .brand-card:hover {
@@ -868,6 +870,7 @@ html.lenis body {
   height: 100px;
   object-fit: cover;
   display: block;
+  touch-action: pan-y;
   -webkit-filter: invert(0);
   filter: invert(0);
   transition:
@@ -6530,7 +6533,7 @@ html[lang="ta"] .btn {
    MOBILE TOUCH SCREEN & FLUID SCALING (FOR ALL SMARTPHONES)
    ========================================================================== */
 
-/* Prevent Sticky Hover on Touch Devices */
+/* Prevent Sticky Hover on Touch Devices & Guarantee Fluid Vertical Page Scrolling */
 @media (hover: none) and (pointer: coarse) {
   .btn:hover,
   .btn-primary:hover,
@@ -6540,6 +6543,17 @@ html[lang="ta"] .btn {
   .wavy-milestone-card:hover {
     transform: none !important;
     box-shadow: none !important;
+  }
+
+  .brands,
+  .brands-marquee,
+  .brands-track,
+  .brand-card,
+  .brand-card img {
+    touch-action: pan-y !important;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
 }
 
