@@ -864,12 +864,14 @@ html.lenis body {
   overflow: hidden;
   background: transparent;
   box-shadow: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   touch-action: pan-y pan-x;
 }
 
-.brand-card:hover {
-  transform: translateY(-4px);
+.brand-card:hover,
+.brand-card:active,
+.brand-card:focus-within {
+  transform: translateY(-5px);
 }
 
 .brand-card img {
@@ -6547,10 +6549,14 @@ html[lang="ta"] .btn {
   .btn-primary:hover,
   .btn-secondary:hover,
   .footer-social:hover,
-  .brand-card:hover,
   .wavy-milestone-card:hover {
     transform: none !important;
     box-shadow: none !important;
+  }
+
+  .brand-card:hover,
+  .brand-card:active {
+    transform: translateY(-5px) !important;
   }
 
   .brands,

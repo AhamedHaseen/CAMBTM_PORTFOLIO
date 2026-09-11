@@ -90,7 +90,7 @@ const I18N_SERVICES = {
       cards: [
         {
           id: "video",
-          title: "Videography Combo",
+          title: "Videography Package",
           desc: "For brands that need recurring content, social execution and a consistent monthly video pipeline.",
           items: [
             "12 Static Creatives",
@@ -104,10 +104,11 @@ const I18N_SERVICES = {
         {
           id: "web",
           featured: true,
-          title: "Website Combo",
+          title: "Website Package",
           desc: "For businesses that need ongoing marketing supported by a professionally built and maintained website.",
           items: [
-            "Free Custom Website & Free Hosting",
+            "Free Custom Website",
+            "Free Hosting",
             "12 Static Creatives",
             "Social Media Management for Meta & TikTok",
             "Basic Campaign Management",
@@ -118,10 +119,11 @@ const I18N_SERVICES = {
         },
         {
           id: "pos",
-          title: "POS Combo",
+          title: "POS Package",
           desc: "For retail, restaurant and service businesses that need marketing and an operational POS system together.",
           items: [
-            "Free Custom Cloud POS & Free Hosting",
+            "Custom Cloud POS Software",
+            "Free Hosting",
             "12 Static Creatives",
             "Social Media Management for Meta & TikTok",
             "Basic Campaign Management",
@@ -220,7 +222,7 @@ const I18N_SERVICES = {
       cards: [
         {
           id: "video",
-          title: "Combo de Videografía",
+          title: "Paquete de Videografía",
           desc: "Para marcas que necesitan contenido recurrente, gestión social y una producción mensual constante de video.",
           items: [
             "12 Diseños Estáticos",
@@ -234,10 +236,11 @@ const I18N_SERVICES = {
         {
           id: "web",
           featured: true,
-          title: "Combo de Sitio Web",
+          title: "Paquete de Sitio Web",
           desc: "Para empresas que necesitan marketing continuo respaldado por un sitio web profesional y mantenido.",
           items: [
-            "Sitio web personalizado gratis y alojamiento gratis",
+            "Sitio Web Personalizado Gratis",
+            "Alojamiento Gratis",
             "12 Diseños Estáticos",
             "Gestión de Redes para Meta y TikTok",
             "Gestión Básica de Campañas",
@@ -248,10 +251,11 @@ const I18N_SERVICES = {
         },
         {
           id: "pos",
-          title: "Combo de POS",
+          title: "Paquete de POS",
           desc: "Para comercios minoristas, restaurantes y servicios que necesitan marketing y un sistema POS operativo juntos.",
           items: [
-            "Sistema POS en la nube personalizado gratis y alojamiento gratis",
+            "Software POS en la Nube Personalizado",
+            "Alojamiento Gratis",
             "12 Diseños Estáticos",
             "Gestión de Redes para Meta y TikTok",
             "Gestión Básica de Campañas",
@@ -367,7 +371,8 @@ const I18N_SERVICES = {
           title: "باقة الموقع الإلكتروني",
           desc: "للشركات التي تحتاج تسويقاً مستمراً مدعوماً بموقع إلكتروني احترافي يخضع للصيانة الدورية.",
           items: [
-            "موقع إلكتروني مخصص مجاني واستضافة مجانية",
+            "موقع إلكتروني مخصص مجاني",
+            "استضافة مجانية",
             "12 تصميماً إبداعياً ثابتاً",
             "إدارة وسائل التواصل لـ Meta و TikTok",
             "إدارة الحملات الأساسية",
@@ -381,7 +386,8 @@ const I18N_SERVICES = {
           title: "باقة نظام نقاط البيع (POS)",
           desc: "لمحلات التجزئة والمطاعم ومقدمي الخدمات الذين يحتاجون التسويق ونظام نقاط بيع متطور معاً.",
           items: [
-            "نظام POS سحابي مخصص مجاني واستضافة مجانية",
+            "برنامج POS سحابي مخصص",
+            "استضافة مجانية",
             "12 تصميماً إبداعياً ثابتاً",
             "إدارة وسائل التواصل لـ Meta و TikTok",
             "إدارة الحملات الأساسية",
@@ -497,7 +503,8 @@ const I18N_SERVICES = {
           title: "වෙබ් අඩවි පැකේජය",
           desc: "වෘත්තීයමය වශයෙන් ගොඩනඟන ලද සහ නඩත්තු කරන ලද වෙබ් අඩවියක් මඟින් අඛණ්ඩ අලෙවිකරණයක් අවශ්‍ය ව්‍යාපාර සඳහා.",
           items: [
-            "නොමිලේ අභිරුචි වෙබ් අඩවියක් සහ නොමිලේ හොස්ටිං",
+            "නොමිලේ අභිරුචි වෙබ් අඩවියක්",
+            "නොමිලේ හොස්ටිං",
             "ස්ථිතික නිර්මාණ 12ක්",
             "Meta සහ TikTok සඳහා සමාජ මාධ්‍ය කළමනාකරණය",
             "මූලික ප්‍රචාරණ කළමනාකරණය",
@@ -511,7 +518,8 @@ const I18N_SERVICES = {
           title: "POS පද්ධති පැකේජය",
           desc: "අලෙවිකරණය සහ ක්‍රියාකාරී POS පද්ධතියක් එකට අවශ්‍ය සිල්ලර, ආපනශාලා සහ සේවා ව්‍යාපාර සඳහා.",
           items: [
-            "නොමිලේ Cloud POS පද්ධතියක් සහ නොමිලේ හොස්ටිං",
+            "අභිරුචි Cloud POS මෘදුකාංගය",
+            "නොමිලේ හොස්ටිං",
             "ස්ථිතික නිර්මාණ 12ක්",
             "Meta සහ TikTok සඳහා සමාජ මාධ්‍ය කළමනාකරණය",
             "මූලික ප්‍රචාරණ කළමනාකරණය",
@@ -610,7 +618,7 @@ const I18N_SERVICES = {
       cards: [
         {
           id: "video",
-          title: "வீடியோகிராபி காம்போ",
+          title: "வீடியோகிராபி பேக்கேஜ்",
           desc: "தொடர்ச்சியான உள்ளடக்கம், சமூக ஊடக செயல்பாடுகள் மற்றும் நிலையான மாதாந்திர வீடியோ தயாரிப்பு தேவைப்படும் பிராண்டுகளுக்கு.",
           items: [
             "12 நிலையான கிரியேட்டிவ்கள்",
@@ -624,10 +632,11 @@ const I18N_SERVICES = {
         {
           id: "web",
           featured: true,
-          title: "இணையதள காம்போ",
+          title: "இணையதள பேக்கேஜ்",
           desc: "தொழில்முறை ரீதியாக உருவாக்கப்பட்ட மற்றும் பராமரிக்கப்படும் வலைத்தளத்தின் மூலம் தொடர்ச்சியான சந்தைப்படுத்தல் தேவைப்படும் வணிகங்களுக்கு.",
           items: [
-            "இலவச தனிப்பயன் இணையதளம் மற்றும் இலவச ஹோஸ்டிங்",
+            "இலவச தனிப்பயன் இணையதளம்",
+            "இலவச ஹோஸ்டிங்",
             "12 நிலையான கிரியேட்டிவ்கள்",
             "Meta & TikTok க்கான சமூக ஊடக மேலாண்மை",
             "அடிப்படை பிரச்சார மேலாண்மை",
@@ -638,10 +647,11 @@ const I18N_SERVICES = {
         },
         {
           id: "pos",
-          title: "POS காம்போ",
+          title: "POS பேக்கேஜ்",
           desc: "சந்தைப்படுத்தல் மற்றும் செயல்பாட்டு POS அமைப்பை ஒன்றாக விரும்பும் சில்லறை, உணவகம் மற்றும் சேவை வணிகங்களுக்கு.",
           items: [
-            "இலவச தனிப்பயன் கிளவுட் POS மற்றும் இலவச ஹோஸ்டிங்",
+            "தனிப்பயன் கிளவுட் POS மென்பொருள்",
+            "இலவச ஹோஸ்டிங்",
             "12 நிலையான கிரியேட்டிவ்கள்",
             "Meta & TikTok க்கான சமூக ஊடக மேலாண்மை",
             "அடிப்படை பிரச்சார மேலாண்மை",
@@ -1049,11 +1059,15 @@ export default function ServicesSection() {
               engagement = engagement.replace(/ENGAGEMENT/gi, 'PLAN');
             }
             if (c.id === 'web' || title?.toLowerCase().includes('website')) {
-              const filtered = items.filter(it => !it.toLowerCase().includes('custom website') && !it.toLowerCase().includes('hosting included') && !it.toLowerCase().includes('free custom website'));
-              items = ['Free Custom Website & Free Hosting', ...filtered];
+              title = title.replace(/combo/gi, 'Package');
+              const filtered = items.filter(it => !it.toLowerCase().includes('custom website') && !it.toLowerCase().includes('hosting') && !it.toLowerCase().includes('free custom website'));
+              items = ['Free Custom Website', 'Free Hosting', ...filtered];
             } else if (c.id === 'pos' || title?.toLowerCase().includes('pos')) {
-              const filtered = items.filter(it => !it.toLowerCase().includes('custom pos') && !it.toLowerCase().includes('hosting included') && !it.toLowerCase().includes('free custom cloud pos'));
-              items = ['Free Custom Cloud POS & Free Hosting', ...filtered];
+              title = title.replace(/combo/gi, 'Package');
+              const filtered = items.filter(it => !it.toLowerCase().includes('custom pos') && !it.toLowerCase().includes('hosting') && !it.toLowerCase().includes('cloud pos') && !it.toLowerCase().includes('free custom cloud pos'));
+              items = ['Custom Cloud POS Software', 'Free Hosting', ...filtered];
+            } else if (c.id === 'video' || title?.toLowerCase().includes('videography')) {
+              title = title.replace(/combo/gi, 'Package');
             }
           }
 

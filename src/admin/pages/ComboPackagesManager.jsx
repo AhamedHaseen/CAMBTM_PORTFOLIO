@@ -23,7 +23,7 @@ import ConfirmModal from '../components/ConfirmModal';
 const DEFAULT_COMBOS = [
   {
     id: 'video',
-    title: 'Videography Combo',
+    title: 'Videography Package',
     description: 'For brands that need recurring content, social execution and a consistent monthly video pipeline.',
     engagement: 'MONTHLY PLAN',
     items: [
@@ -39,11 +39,12 @@ const DEFAULT_COMBOS = [
   },
   {
     id: 'web',
-    title: 'Website Combo',
+    title: 'Website Package',
     description: 'For businesses that need ongoing marketing supported by a professionally built and maintained website.',
     engagement: '6-MONTH PLAN',
     items: [
-      'Free Custom Website & Free Hosting',
+      'Free Custom Website',
+      'Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
@@ -56,11 +57,12 @@ const DEFAULT_COMBOS = [
   },
   {
     id: 'pos',
-    title: 'POS Combo',
+    title: 'POS Package',
     description: 'For retail, restaurant and service businesses that need marketing and an operational POS system together.',
     engagement: 'ANNUAL PLAN',
     items: [
-      'Free Custom Cloud POS & Free Hosting',
+      'Custom Cloud POS Software',
+      'Free Hosting',
       '12 Static Creatives',
       'Social Media Management for Meta & TikTok',
       'Basic Campaign Management',
@@ -829,7 +831,7 @@ export default function ComboPackagesManager() {
                     <input
                       type="text"
                       className="adm-search-input"
-                      placeholder="e.g. Videography Combo"
+                      placeholder="e.g. Videography Package"
                       value={form.title}
                       onChange={e => setForm({ ...form, title: e.target.value })}
                       style={{ width: '100%', boxSizing: 'border-box' }}
