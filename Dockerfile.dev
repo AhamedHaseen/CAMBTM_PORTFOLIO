@@ -1,0 +1,26 @@
+# ==========================================
+# Development Dockerfile with Live Reloading
+# ==========================================
+FROM node:20-bookworm-slim
+
+WORKDIR /app
+
+# Install native compilation dependencies for SQLite
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install all dependencies and compile sqlite3 for container glibc
+COPY package*.json ./
+RUN npm install && npm rebuild sqlite3 --build-from-source
+
+# Copy application files
+COPY . .
+
+# Expose Vite dev server (5173) and Backend API (5000)
+EXPOSE 5173 5000
+
+# Start concurrently running backend and frontend dev servers
+CMD ["npm", "run", "dev:all", "--", "--host", "0.0.0.0"]

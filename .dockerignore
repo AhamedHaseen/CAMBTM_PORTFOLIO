@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+dist
+.git
+.gitignore
+.github
+.claude
+.gemini
+.oxlintrc.json
+scratch
+legacy-static
+CAMBM-UNEE.zip
+*.log
+.DS_Store
+Thumbs.db
+.env.local

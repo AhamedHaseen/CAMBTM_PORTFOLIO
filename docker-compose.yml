@@ -1,0 +1,45 @@
+services:
+  # Main CAMBM Application (Full Stack: React Frontend + Node/Express API)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cambm-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-5000}:5000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+    volumes:
+      # Persistent storage for SQLite database & uploaded media assets
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+
+  # Optional Local PostgreSQL Database
+  # Run with: docker compose --profile with-postgres up -d
+  postgres:
+    image: postgres:16-alpine
+    container_name: cambm-postgres
+    restart: unless-stopped
+    profiles:
+      - with-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cambm_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - cambm_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-cambm_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cambm_pg_data:
