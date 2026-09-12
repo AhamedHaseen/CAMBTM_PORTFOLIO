@@ -69,18 +69,43 @@
   stroke: rgba(0, 0, 0, 0.06);
 }
 
-/* Desktop Node Pulse */
-.wavy-node-outer {
-  fill: var(--bg-body, #0a0a0c);
-}
-
-[data-theme="light"] .wavy-node-outer {
-  fill: #ffffff;
+/* Desktop Node Circles (#f8f9fa in Dark Mode / #003049 in Light Mode) */
+.wavy-node-guide {
+  stroke: #f8f9fa;
+  stroke-opacity: 0.7;
 }
 
 .wavy-node-pulse {
+  stroke: #f8f9fa;
   animation: pulse-ring 2.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
   transform-origin: center;
+}
+
+.wavy-node-outer {
+  stroke: #f8f9fa;
+  fill: var(--bg-body, #0a0a0c);
+}
+
+.wavy-node-inner {
+  fill: #f8f9fa;
+}
+
+[data-theme="light"] .wavy-node-guide {
+  stroke: #003049;
+  stroke-opacity: 0.7;
+}
+
+[data-theme="light"] .wavy-node-pulse {
+  stroke: #003049;
+}
+
+[data-theme="light"] .wavy-node-outer {
+  stroke: #003049;
+  fill: #ffffff;
+}
+
+[data-theme="light"] .wavy-node-inner {
+  fill: #003049;
 }
 
 @keyframes pulse-ring {
@@ -260,8 +285,7 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border-width: 2px;
-    border-style: solid;
+    border: 2px solid #f8f9fa;
     background: var(--bg-body, #0a0a0c);
     display: flex;
     align-items: center;
@@ -269,6 +293,7 @@
   }
 
   [data-theme="light"] .wavy-mobile-node-outer {
+    border-color: #003049 !important;
     background: #ffffff;
   }
 
@@ -276,7 +301,12 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
+    background-color: #f8f9fa;
     display: block;
+  }
+
+  [data-theme="light"] .wavy-mobile-node-core {
+    background-color: #003049 !important;
   }
 
   .wavy-mobile-pulse-ring {
@@ -284,10 +314,13 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border-width: 1.5px;
-    border-style: solid;
+    border: 1.5px solid #f8f9fa;
     opacity: 0.6;
     animation: mobile-pulse 2.5s infinite;
+  }
+
+  [data-theme="light"] .wavy-mobile-pulse-ring {
+    border-color: #003049 !important;
   }
 
   @keyframes mobile-pulse {
@@ -313,7 +346,12 @@
     top: 50%;
     width: 22px;
     height: 1.5px;
+    background-color: #f8f9fa;
     opacity: 0.7;
+  }
+
+  [data-theme="light"] .wavy-mobile-connector-line {
+    background-color: #003049 !important;
   }
 
   /* Milestone Card 100% Width on Mobile */

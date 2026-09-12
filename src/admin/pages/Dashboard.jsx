@@ -40,7 +40,7 @@ const DEFAULT_COMBOS = [
     featured: false,
     items: [
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       '1 Video Shoot',
       'Monthly Reporting'
@@ -56,7 +56,7 @@ const DEFAULT_COMBOS = [
       'Free Custom Website',
       'Free Hosting',
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       'Monthly Maintenance & Support',
       'Monthly Reporting'
@@ -69,10 +69,10 @@ const DEFAULT_COMBOS = [
     engagement: 'ANNUAL PLAN',
     featured: false,
     items: [
-      'Custom Cloud POS Software',
+      'Free Custom Cloud POS Software',
       'Free Hosting',
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       'Monthly Maintenance & Support',
       'Monthly Reporting'

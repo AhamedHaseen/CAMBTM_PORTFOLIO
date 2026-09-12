@@ -28,7 +28,7 @@ const DEFAULT_COMBOS = [
     engagement: 'MONTHLY PLAN',
     items: [
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       '1 Video Shoot',
       'Monthly Reporting'
@@ -46,7 +46,7 @@ const DEFAULT_COMBOS = [
       'Free Custom Website',
       'Free Hosting',
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
@@ -61,10 +61,10 @@ const DEFAULT_COMBOS = [
     description: 'For retail, restaurant and service businesses that need marketing and an operational POS system together.',
     engagement: 'ANNUAL PLAN',
     items: [
-      'Custom Cloud POS Software',
+      'Free Custom Cloud POS Software',
       'Free Hosting',
       '12 Static Creatives',
-      'Social Media Management for Meta & TikTok',
+      'Social Media Management',
       'Basic Campaign Management',
       'Monthly Maintenance & Technical Support',
       'Monthly Reporting'
@@ -936,7 +936,7 @@ export default function ComboPackagesManager() {
                   </label>
                   <textarea
                     rows="5"
-                    placeholder="12 Static Creatives&#10;Social Media Management for Meta & TikTok&#10;Basic Campaign Management&#10;1 Video Shoot&#10;Monthly Reporting"
+                    placeholder="12 Static Creatives&#10;Social Media Management&#10;Basic Campaign Management&#10;1 Video Shoot&#10;Monthly Reporting"
                     value={form.itemsText}
                     onChange={e => setForm({ ...form, itemsText: e.target.value })}
                     style={{

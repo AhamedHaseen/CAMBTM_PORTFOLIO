@@ -3762,7 +3762,11 @@ html.bento-preloading .hero {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--accent);
+  background: #f8f9fa;
+}
+
+[data-theme="light"] .about-node::before {
+  background: #003049;
 }
 
 .about-node-label {

@@ -47,7 +47,9 @@ function getSqlite() {
     const dbPath = path.join(dataDir, 'cambm_local.db');
     sqliteDb = new sqlite3.Database(dbPath);
     sqliteDb.run('PRAGMA foreign_keys = ON');
-    activeEngine = 'sqlite';
+    if (!pgPool) {
+      activeEngine = 'sqlite';
+    }
     console.log(`📁 Local SQLite database initialized at: ${dbPath}`);
   }
   return sqliteDb;
@@ -124,6 +126,8 @@ function runSqliteQuery(sql, params = []) {
 }
 
 export function getEngine() {
+  if (pgPool) return 'postgresql';
+  if (sqliteDb) return 'sqlite';
   return activeEngine;
 }
 

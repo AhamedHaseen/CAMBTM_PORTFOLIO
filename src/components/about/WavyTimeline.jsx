@@ -98,10 +98,9 @@ export default function WavyTimeline() {
                   y1={m.nodePos.cy}
                   x2={m.align === "align-right" ? m.nodePos.cx + 42 : m.nodePos.cx - 42}
                   y2={m.nodePos.cy}
-                  stroke={m.color}
+                  className="wavy-node-guide"
                   strokeWidth="1.5"
                   strokeDasharray="3 3"
-                  strokeOpacity="0.7"
                 />
 
                 {/* Animated Pulse Ring */}
@@ -110,7 +109,6 @@ export default function WavyTimeline() {
                   cy={m.nodePos.cy}
                   r="14"
                   fill="none"
-                  stroke={m.color}
                   strokeWidth="2"
                   className="wavy-node-pulse"
                 />
@@ -121,7 +119,6 @@ export default function WavyTimeline() {
                   cy={m.nodePos.cy}
                   r="12"
                   className="wavy-node-outer"
-                  stroke={m.color}
                   strokeWidth="2.5"
                 />
 
@@ -130,7 +127,7 @@ export default function WavyTimeline() {
                   cx={m.nodePos.cx}
                   cy={m.nodePos.cy}
                   r="5.5"
-                  fill={m.color}
+                  className="wavy-node-inner"
                 />
               </g>
             ))}
@@ -143,11 +140,11 @@ export default function WavyTimeline() {
             <div key={item.id} className={`wavy-timeline-row ${item.align}`}>
               {/* Mobile Track Node Anchor */}
               <div className="wavy-mobile-node-anchor">
-                <span className="wavy-mobile-pulse-ring" style={{ borderColor: item.color }}></span>
-                <span className="wavy-mobile-node-outer" style={{ borderColor: item.color }}>
-                  <span className="wavy-mobile-node-core" style={{ backgroundColor: item.color }}></span>
+                <span className="wavy-mobile-pulse-ring"></span>
+                <span className="wavy-mobile-node-outer">
+                  <span className="wavy-mobile-node-core"></span>
                 </span>
-                <span className="wavy-mobile-connector-line" style={{ backgroundColor: item.color }}></span>
+                <span className="wavy-mobile-connector-line"></span>
               </div>
 
               <div className="wavy-milestone-card">

@@ -167,7 +167,15 @@ export default function Welcome() {
     let hashScrollTimer;
 
     const hashTarget = window.location.hash.slice(1);
-    const isSupportedHash = ["why-CAMBM", "packages"].includes(hashTarget);
+    const isSupportedHash = [
+      "why-CAMBM",
+      "packages",
+      "services",
+      "our-services",
+      "combo-packages",
+      "combos",
+      "hero",
+    ].includes(hashTarget);
 
     if (isSupportedHash && isRefresh) {
       window.history.replaceState(null, "", "/");
@@ -176,14 +184,16 @@ export default function Welcome() {
       let attempts = 0;
       hashScrollTimer = window.setInterval(() => {
         attempts++;
-        const target = document.getElementById(hashTarget);
+        const target =
+          document.getElementById(hashTarget) ||
+          (hashTarget === "services" ? document.getElementById("packages") : null);
         if (target) {
           window.clearInterval(hashScrollTimer);
           window.requestAnimationFrame(() => {
             const targetY = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - 80);
             window.scrollTo({ top: targetY, behavior: "smooth" });
           });
-        } else if (attempts > 20) {
+        } else if (attempts > 30) {
           window.clearInterval(hashScrollTimer);
         }
       }, 50);
