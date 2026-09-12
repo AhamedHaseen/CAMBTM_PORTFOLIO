@@ -4,35 +4,43 @@ import "./WavyTimeline.css";
 const TIMELINE_MILESTONES = [
   {
     id: "tech-foundation",
-    year: "2014+",
-    desc: "Technology, POS, and enterprise systems foundation built from deep engineering origins.",
+    year: "2014",
+    desc: "Technology foundation",
     color: "#F59E0B",
     nodePos: { cx: 480, cy: 110 },
     align: "align-right",
+    i18nYear: "about.global.node1Label",
+    i18nDesc: "about.global.node1Detail",
   },
   {
     id: "marketing-launch",
     year: "2025",
-    desc: "Marketing segment founded.",
+    desc: "Marketing segment founded",
     color: "#FF5A00",
     nodePos: { cx: 320, cy: 340 },
     align: "align-left",
+    i18nYear: "about.global.node2Label",
+    i18nDesc: "about.global.node2Detail",
   },
   {
     id: "regional-reach",
     year: "Now",
-    desc: "Active expansion across Saudi Arabia, Middle East, Sri Lanka, and Indian markets.",
+    desc: "Saudi, Middle East, Sri Lanka, India",
     color: "#FF4D6D",
     nodePos: { cx: 480, cy: 570 },
     align: "align-right",
+    i18nYear: "about.global.node3Label",
+    i18nDesc: "about.global.node3Detail",
   },
   {
     id: "global-horizon",
     year: "Next",
-    desc: "Scaling into European hubs and delivering connected growth systems worldwide.",
+    desc: "Europe and worldwide",
     color: "#EC4899",
     nodePos: { cx: 320, cy: 800 },
     align: "align-left",
+    i18nYear: "about.global.node4Label",
+    i18nDesc: "about.global.node4Detail",
   },
 ];
 
@@ -149,13 +157,13 @@ export default function WavyTimeline() {
 
               <div className="wavy-milestone-card">
                 <div className="wavy-card-header">
-                  <h3 className="wavy-card-year">
+                  <h3 className="wavy-card-year" data-i18n={item.i18nYear}>
                     {item.year}
                   </h3>
                 </div>
 
                 {/* Short clean description text underneath */}
-                <p className="wavy-card-desc">
+                <p className="wavy-card-desc" data-i18n={item.i18nDesc}>
                   {item.desc}
                 </p>
               </div>
