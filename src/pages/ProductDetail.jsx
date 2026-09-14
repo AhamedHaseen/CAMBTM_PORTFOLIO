@@ -137,7 +137,7 @@ export default function ProductDetail() {
 
   return (
     <div className="cambm-products-page">
-      {/* Header (Exact 1:1 Match to Cambridge Marketing) */}
+      {/* Header (Exact 1:1 Copy from Home Page) */}
       <header className="header" id="header">
         <div className="header-inner">
           <a
@@ -168,18 +168,9 @@ export default function ProductDetail() {
             <a href="/#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
-            <Link
-              to="/products"
-              className="nav-link"
-              data-i18n="nav.ourProducts"
-              onClick={() => {
-                try {
-                  sessionStorage.removeItem("cambm_last_product_slug");
-                } catch (e) {}
-              }}
-            >
+            <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
               Our Products
-            </Link>
+            </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
             </a>
@@ -221,8 +212,8 @@ export default function ProductDetail() {
                 <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
               </svg>
             </button>
-            <Link
-              to="/custom-plan"
+            <a
+              href="/custom-plan"
               className={`header-cart-btn js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
               aria-label="View Custom Services Cart"
               title="View Custom Services Cart"
@@ -233,7 +224,7 @@ export default function ProductDetail() {
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
               </svg>
               {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-            </Link>
+            </a>
             <button
               type="button"
               className="btn btn-primary js-open-cal"
@@ -245,8 +236,8 @@ export default function ProductDetail() {
               Book a strategy call
             </button>
           </div>
-          <Link
-            to="/custom-plan"
+          <a
+            href="/custom-plan"
             className={`header-cart-btn mobile-header-cart js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
             aria-label="View Custom Services Cart"
             title="View Custom Services Cart"
@@ -257,7 +248,7 @@ export default function ProductDetail() {
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
             {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-          </Link>
+          </a>
           <button
             className="nav-toggle"
             id="navToggle"
@@ -271,7 +262,7 @@ export default function ProductDetail() {
           </button>
         </div>
 
-        {/* Mobile Nav Drawer */}
+        {/* Mobile nav panel */}
         <nav className="mobile-nav" id="mobileNav">
           <a href="/#hero" className="mobile-nav-link" data-i18n="nav.home">
             Home
@@ -282,21 +273,16 @@ export default function ProductDetail() {
           <a href="/#combo-packages" className="mobile-nav-link" data-i18n="nav.packages">
             Packages
           </a>
-          <a href="/#why-CAMBM" className="mobile-nav-link" data-i18n="nav.whyCambm">
+          <a
+            href="/#why-CAMBM"
+            className="mobile-nav-link"
+            data-i18n="nav.whyCambm"
+          >
             Why CAMBM
           </a>
-          <Link
-            to="/products"
-            className="mobile-nav-link"
-            data-i18n="nav.ourProducts"
-            onClick={() => {
-              try {
-                sessionStorage.removeItem("cambm_last_product_slug");
-              } catch (e) {}
-            }}
-          >
+          <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
             Our Products
-          </Link>
+          </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About
           </a>
@@ -353,6 +339,8 @@ export default function ProductDetail() {
           </div>
         </nav>
       </header>
+      {/* Dims the page behind the open mobile nav; clicking it closes the menu */}
+      <div className="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
 
       {/* Main Detail Content */}
       <main id="main-content">

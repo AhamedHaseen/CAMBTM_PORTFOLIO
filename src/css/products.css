@@ -9,71 +9,71 @@
   --cambt-color-brand-electric: #ff5a00;
   --cambt-color-brand-deep-navy: #0a0a0c;
   --cambt-color-brand-system-navy: #141418;
-  
+
   --cambt-color-bg-canvas: #0e0e11;
   --cambt-color-bg-muted: #16161c;
   --cambt-color-bg-surface: #1c1c24;
   --cambt-color-bg-raised: #24242e;
   --cambt-color-bg-inverse: #ffffff;
-  
+
   --cambt-color-bg-tint: #141419;
   --cambt-color-bg-tint-soft: #181822;
-  
+
   --cambt-color-text-primary: #f4f4f7;
   --cambt-color-text-secondary: #a2a2b3;
   --cambt-color-text-body: #c5c5d6;
   --cambt-color-text-lead: #dadae8;
   --cambt-color-text-inverse: #0a0a0c;
-  
+
   --cambt-color-border-subtle: rgba(255, 255, 255, 0.08);
   --cambt-color-border-strong: rgba(255, 255, 255, 0.16);
   --cambt-color-border-lit: rgba(255, 90, 0, 0.45);
-  
+
   --cambt-color-focus: #ff5a00;
   --cambt-color-success: #10b981;
   --cambt-color-warning: #f59e0b;
   --cambt-color-danger: #ef4444;
   --cambt-color-accent-text: #ff7b29;
   --cambt-color-heading-accent: #ff7b29;
-  
+
   --cambt-line-grid: rgba(255, 255, 255, 0.04);
   --cambt-shadow-panel: 0 20px 50px rgba(0, 0, 0, 0.5);
-  
+
   --cambt-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --cambt-font-accent: 'Instrument Serif', Georgia, serif;
   --cambt-font-mono: 'Cascadia Code', 'SFMono-Regular', Consolas, ui-monospace, monospace;
-  
+
   --cambt-radius-sm: 0.375rem;
   --cambt-radius-md: 0.625rem;
   --cambt-radius-lg: 1rem;
   --cambt-radius-full: 9999px;
-  
+
   --cambt-width-wide: 86rem;
   --cambt-width-reading: 44rem;
   --cambt-gutter: clamp(1.25rem, 4vw, 3.5rem);
-  
+
   --cambt-type-display: clamp(2.5rem, 5.5vw, 4.25rem);
   --cambt-type-h2: clamp(2rem, 3.8vw, 3.25rem);
   --cambt-type-h3: clamp(1.25rem, 2vw, 1.65rem);
   --cambt-type-lead: clamp(1.05rem, 1.4vw, 1.2rem);
-  
+
   --cambt-font-size-xs: 0.75rem;
   --cambt-font-size-sm: 0.875rem;
   --cambt-font-size-md: 1rem;
   --cambt-font-size-lg: 1.125rem;
   --cambt-font-size-xl: 1.25rem;
-  
+
   --cambt-weight-display: 600;
   --cambt-weight-heading: 600;
   --cambt-weight-subhead: 600;
-  
+
   --cambt-tracking-display: -0.025em;
   --cambt-tracking-heading: -0.02em;
   --cambt-tracking-label: 0.12em;
-  
+
   --cambt-leading-display: 1.05;
   --cambt-leading-section: 1.15;
-  
+
   --cambt-motion-base: 260ms;
   --cambt-motion-shift: 420ms;
   --cambt-motion-tint: 300ms;
@@ -88,29 +88,29 @@
   --cambt-color-brand-electric: #ff5a00;
   --cambt-color-brand-deep-navy: #f8fafc;
   --cambt-color-brand-system-navy: #edf2f7;
-  
+
   --cambt-color-bg-canvas: #ffffff;
   --cambt-color-bg-muted: #f8fafc;
   --cambt-color-bg-surface: #ffffff;
   --cambt-color-bg-raised: #f1f5f9;
   --cambt-color-bg-inverse: #0a0a0c;
-  
+
   --cambt-color-bg-tint: #fafafa;
   --cambt-color-bg-tint-soft: #f4f6f8;
-  
+
   --cambt-color-text-primary: #0f172a;
   --cambt-color-text-secondary: #475569;
   --cambt-color-text-body: #334155;
   --cambt-color-text-lead: #1e293b;
   --cambt-color-text-inverse: #ffffff;
-  
+
   --cambt-color-border-subtle: rgba(15, 23, 42, 0.08);
   --cambt-color-border-strong: rgba(15, 23, 42, 0.16);
   --cambt-color-border-lit: rgba(255, 90, 0, 0.4);
-  
+
   --cambt-color-accent-text: #b23d10;
   --cambt-color-heading-accent: #ff5a00;
-  
+
   --cambt-line-grid: rgba(15, 23, 42, 0.04);
   --cambt-shadow-panel: 0 18px 44px rgba(15, 23, 42, 0.08);
 }
@@ -249,7 +249,7 @@
   border: 1px solid var(--cambt-color-brand-blue);
   cursor: pointer;
   transition: background-color var(--cambt-motion-tint) var(--cambt-ease-standard),
-              transform 0.2s ease;
+    transform 0.2s ease;
 }
 
 .cambt-btn-primary:hover {
@@ -425,9 +425,17 @@
 }
 
 @keyframes cambt-wall-drift {
-  0% { transform: translateZ(0); }
-  50% { transform: translateZ(14px); }
-  100% { transform: translateZ(0); }
+  0% {
+    transform: translateZ(0);
+  }
+
+  50% {
+    transform: translateZ(14px);
+  }
+
+  100% {
+    transform: translateZ(0);
+  }
 }
 
 .cambt-wall-tile {
@@ -469,6 +477,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+
   .cambt-wall-cell:hover,
   .cambt-wall-cell:focus-within {
     --mark-pulse: 1.8s;
@@ -525,17 +534,39 @@
 }
 
 @keyframes cambt-mark-pulse {
-  0% { fill: var(--cambt-color-brand-blue); }
-  10% { fill: var(--cambt-color-brand-electric); }
-  28% { fill: var(--cambt-color-brand-blue); }
-  100% { fill: var(--cambt-color-brand-blue); }
+  0% {
+    fill: var(--cambt-color-brand-blue);
+  }
+
+  10% {
+    fill: var(--cambt-color-brand-electric);
+  }
+
+  28% {
+    fill: var(--cambt-color-brand-blue);
+  }
+
+  100% {
+    fill: var(--cambt-color-brand-blue);
+  }
 }
 
 @keyframes cambt-mark-pulse-empty {
-  0% { fill: color-mix(in srgb, currentColor 14%, transparent); }
-  10% { fill: color-mix(in srgb, var(--cambt-color-brand-blue) 38%, transparent); }
-  28% { fill: color-mix(in srgb, currentColor 14%, transparent); }
-  100% { fill: color-mix(in srgb, currentColor 14%, transparent); }
+  0% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  10% {
+    fill: color-mix(in srgb, var(--cambt-color-brand-blue) 38%, transparent);
+  }
+
+  28% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  100% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
 }
 
 /* --- Diptych Adaptation Argument --- */
@@ -574,7 +605,7 @@
 .cambt-panel-fitted {
   border-color: var(--cambt-color-border-lit);
   background: linear-gradient(to bottom, rgba(255, 90, 0, 0.05), transparent 60%),
-              var(--cambt-color-bg-surface);
+    var(--cambt-color-bg-surface);
 }
 
 .cambt-panel-head h3 {
@@ -737,7 +768,7 @@
   background: color-mix(in srgb, var(--cambt-color-text-secondary) 50%, transparent);
   rotate: var(--angle, 0deg);
   transition: rotate var(--cambt-motion-shift) var(--cambt-ease-glide),
-              background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+    background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
   transform-origin: center;
 }
 
@@ -819,8 +850,8 @@
   border-radius: var(--cambt-radius-md);
   background: var(--cambt-color-bg-surface);
   transition: border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
-              transform var(--cambt-motion-shift) var(--cambt-ease-glide),
-              box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
+    transform var(--cambt-motion-shift) var(--cambt-ease-glide),
+    box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
 }
 
 .cambt-product-card:hover {
@@ -935,7 +966,7 @@
   background: var(--cambt-color-bg-surface);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
   transition: border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
-              box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
+    box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
 }
 
 .cambt-screen-plate:hover {

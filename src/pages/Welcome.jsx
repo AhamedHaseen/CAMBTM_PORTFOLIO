@@ -158,7 +158,7 @@ export default function Welcome() {
           }, 80);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const [cartCount, setCartCount] = useState(() => {
@@ -168,7 +168,7 @@ export default function Welcome() {
         const parsed = JSON.parse(saved);
         return Object.keys(parsed).length;
       }
-    } catch (e) {}
+    } catch (e) { }
     return 0;
   });
 
@@ -185,7 +185,7 @@ export default function Welcome() {
           } else {
             setCartCount(0);
           }
-        } catch (err) {}
+        } catch (err) { }
       }
     };
 
@@ -273,7 +273,7 @@ export default function Welcome() {
           >
             <img
               className="theme-logo"
-              src="images/cambridge-logo.png"
+              src="/images/cambridge-logo.png"
               alt="Cambridge Marketing"
               width="133"
               height="40"
