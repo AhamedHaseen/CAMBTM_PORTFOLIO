@@ -726,10 +726,170 @@ const openCalModal = (packageName = "", e = null) => {
   }
 };
 
+const getServiceUnit = (name = "", category = "", lang = "en") => {
+  const n = (name || "").toLowerCase();
+  if (n.includes("website") || n.includes("sitio web") || n.includes("موقع") || n.includes("වෙබ්") || n.includes("வலைத்தள")) {
+    return lang === "es" ? "Sitio(s)" : lang === "ar" ? "موقع" : lang === "si" ? "වෙබ් අඩවි" : lang === "ta" ? "இணையதளம்" : "Site(s)";
+  }
+  if (n.includes("video production") || n.includes("shoot") || n.includes("fotografía") || n.includes("photography") || n.includes("تصوير") || n.includes("ඡායාරූප") || n.includes("புகைப்பட")) {
+    return lang === "es" ? "Sesión(es)" : lang === "ar" ? "جلسة تصوير" : lang === "si" ? "රූගත කිරීම්" : lang === "ta" ? "படப்பிடிப்பு" : "Shoot(s)";
+  }
+  if (n.includes("video editing") || n.includes("edición") || n.includes("مونتاج") || n.includes("සංස්කරණ") || n.includes("எடிட்டிங்")) {
+    return lang === "es" ? "Edición(es)" : lang === "ar" ? "مونتاج" : lang === "si" ? "සංස්කරණ" : lang === "ta" ? "எடிட்டிங்" : "Edit(s)";
+  }
+  if (n.includes("advertising") || n.includes("marketing") || n.includes("ads") || n.includes("seo") || n.includes("publicidad") || n.includes("إعلانات") || n.includes("ප්‍රචාරණ") || n.includes("விளம்பரம்")) {
+    return lang === "es" ? "Campaña(s)" : lang === "ar" ? "حملة" : lang === "si" ? "ප්‍රචාරණ" : lang === "ta" ? "பிரச்சாரம்" : "Campaign(s)";
+  }
+  if (n.includes("pos") || n.includes("erp") || n.includes("crm") || n.includes("software") || n.includes("app") || n.includes("automation")) {
+    return lang === "es" ? "Sistema(s)" : lang === "ar" ? "نظام" : lang === "si" ? "පද්ධති" : lang === "ta" ? "அமைப்பு" : "System(s)";
+  }
+  return lang === "es" ? "Servicio(s)" : lang === "ar" ? "خدمة" : lang === "si" ? "සේවා" : lang === "ta" ? "சேவை" : "Service(s)";
+};
+
+const ADD_TO_CART_LABELS = {
+  en: "+ Add to Cart",
+  es: "+ Añadir al Carrito",
+  ar: "+ أضف إلى السلة",
+  si: "+ කරත්තයට එක් කරන්න",
+  ta: "+ கார்ட்டில் சேர்க்க",
+};
+
+const ADDED_LABELS = {
+  en: "Added ✓",
+  es: "Añadido ✓",
+  ar: "تمت الإضافة ✓",
+  si: "එක් කරන ලදී ✓",
+  ta: "சேர்க்கப்பட்டது ✓",
+};
+
+const VIEW_PLAN_LABELS = {
+  en: "View Custom Plan",
+  es: "Ver Plan Personalizado",
+  ar: "عرض الخطة المخصصة",
+  si: "අභිරුචි සැලැස්ම බලන්න",
+  ta: "திட்டத்தை பார்க்க",
+};
+
 export default function ServicesSection() {
   const [activeTab, setActiveTab] = useState("build");
   const [currentLang, setCurrentLang] = useState(getSavedLang);
   const [dynamicServices, setDynamicServices] = useState(null);
+
+  // Custom Plan Cart State
+  const [selectedServices, setSelectedServices] = useState(() => {
+    try {
+      const saved = localStorage.getItem("cambm_custom_plan");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed === "object" && parsed !== null) return parsed;
+      }
+    } catch (e) {}
+    return {};
+  });
+
+  // Sync with global cart events
+  useEffect(() => {
+    const handleCartSync = (e) => {
+      if (e?.detail?.items) {
+        setSelectedServices(e.detail.items);
+      } else {
+        try {
+          const saved = localStorage.getItem("cambm_custom_plan");
+          if (saved) {
+            setSelectedServices(JSON.parse(saved));
+          } else {
+            setSelectedServices({});
+          }
+        } catch (err) {}
+      }
+    };
+    window.addEventListener("cambm:cart-updated", handleCartSync);
+    window.addEventListener("storage", handleCartSync);
+    return () => {
+      window.removeEventListener("cambm:cart-updated", handleCartSync);
+      window.removeEventListener("storage", handleCartSync);
+    };
+  }, []);
+
+  const updateCartStorage = useCallback((newCart) => {
+    setSelectedServices(newCart);
+    try {
+      localStorage.setItem("cambm_custom_plan", JSON.stringify(newCart));
+    } catch (e) {}
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("cambm:cart-updated", {
+          detail: {
+            count: Object.keys(newCart).length,
+            items: newCart,
+          },
+        })
+      );
+    }
+  }, []);
+
+  const getServiceKey = useCallback((item, category) => {
+    const rawKey = item.id || item.num || (item.name || "").toLowerCase().replace(/[^a-z0-9]/gi, "_");
+    return `${category}_${rawKey}`;
+  }, []);
+
+  // Toast Notification state
+  const [toastMessage, setToastMessage] = useState(null);
+  const toastTimeoutRef = React.useRef(null);
+
+  const showToast = useCallback((msg) => {
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    setToastMessage(msg);
+    toastTimeoutRef.current = setTimeout(() => {
+      setToastMessage(null);
+    }, 2800);
+  }, []);
+
+  const toggleService = useCallback((item, category) => {
+    const key = getServiceKey(item, category);
+    const next = { ...selectedServices };
+    if (next[key]) {
+      delete next[key];
+    } else {
+      const unit = getServiceUnit(item.name, category, currentLang);
+      const serviceName = item.name || "Service";
+      next[key] = {
+        key,
+        id: item.id || item.num,
+        category,
+        name: serviceName,
+        desc: item.desc || item.description,
+        quantity: 1,
+        unit,
+      };
+
+      const TOAST_TEMPLATES = {
+        en: `Added "${serviceName}" to custom plan`,
+        es: `Se añadió "${serviceName}" al plan personalizado`,
+        ar: `تمت إضافة "${serviceName}" إلى خطتك`,
+        si: `"${serviceName}" සැලැස්මට එක් කරන ලදී`,
+        ta: `"${serviceName}" கார்ட்டில் சேர்க்கப்பட்டது`,
+      };
+      showToast(TOAST_TEMPLATES[currentLang] || TOAST_TEMPLATES.en);
+    }
+    updateCartStorage(next);
+  }, [getServiceKey, selectedServices, currentLang, updateCartStorage, showToast]);
+
+  const updateServiceQty = useCallback((key, delta) => {
+    const next = { ...selectedServices };
+    if (!next[key]) return;
+    const newQty = (next[key].quantity || 1) + delta;
+    if (newQty <= 0) {
+      delete next[key];
+    } else {
+      next[key] = { ...next[key], quantity: newQty };
+    }
+    updateCartStorage(next);
+  }, [selectedServices, updateCartStorage]);
+
+  const selectedCount = useMemo(() => {
+    return Object.keys(selectedServices).length;
+  }, [selectedServices]);
 
   // Sync language with global i18n switcher
   useEffect(() => {
@@ -1207,27 +1367,45 @@ export default function ServicesSection() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.06 }}
               >
-                {currentTab.services.map((item, idx) => (
-                  <motion.div
-                    key={item.id || item.num || item.name}
-                    className="service-row"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.25,
-                      delay: Math.min(idx * 0.02, 0.16),
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    onClick={(e) => openCalModal(`${item.name} (${currentTab.title})`, e)}
-                    style={{ cursor: "pointer" }}
-                    title={`Discuss ${item.name}`}
-                  >
-                    <div>
-                      <strong>{item.name}</strong>
-                      <span>{item.desc}</span>
-                    </div>
-                  </motion.div>
-                ))}
+                {currentTab.services.map((item, idx) => {
+                  const itemKey = getServiceKey(item, activeTab);
+                  const selectedItem = selectedServices[itemKey];
+                  const isSelected = Boolean(selectedItem);
+                  const unit = selectedItem?.unit || getServiceUnit(item.name, activeTab, currentLang);
+                  const addLabel = ADD_TO_CART_LABELS[currentLang] || ADD_TO_CART_LABELS.en;
+
+                  return (
+                    <motion.div
+                      key={item.id || item.num || item.name}
+                      className={`service-row ${isSelected ? "is-selected" : ""}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.25,
+                        delay: Math.min(idx * 0.02, 0.16),
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                    >
+                      <div className="service-row-content">
+                        <strong>{item.name}</strong>
+                        <span>{item.desc}</span>
+                      </div>
+                      <div className="service-row-actions">
+                        <button
+                          type="button"
+                          className={`srv-select-btn ${isSelected ? "is-added" : ""}`}
+                          onClick={() => toggleService(item, activeTab)}
+                          aria-pressed={isSelected}
+                          title={isSelected ? "Click to remove from custom plan" : "Click to add to custom plan"}
+                        >
+                          {isSelected
+                            ? (ADDED_LABELS[currentLang] || ADDED_LABELS.en)
+                            : addLabel}
+                        </button>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             </div>
 
@@ -1397,6 +1575,25 @@ export default function ServicesSection() {
           </div>
         </section>
       </div>
+
+      {/* Instant Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            className="srv-cart-toast"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+          >
+            <span className="srv-cart-toast-icon">✓</span>
+            <span className="srv-cart-toast-text">{toastMessage}</span>
+            <a href="/custom-plan" className="srv-cart-toast-link">
+              {VIEW_PLAN_LABELS[currentLang] || "View Plan"} →
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

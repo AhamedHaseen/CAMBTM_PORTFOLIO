@@ -1,0 +1,466 @@
+{
+  "note": "Final, de-branded interface captures (WebP, quality 92, max 1440px wide). Listed in display order per product. format: wide = full-window admin capture, panel = smaller composite shown at native size, portrait = phone view shown in a horizontal gallery.",
+  "products": [
+    {
+      "slug": "hostel-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Add a room",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 29894
+        },
+        {
+          "file": "02.webp",
+          "caption": "Add a tenant",
+          "format": "wide",
+          "width": 1440,
+          "height": 1260,
+          "bytes": 64702
+        },
+        {
+          "file": "03.webp",
+          "caption": "All invoices",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 59762
+        },
+        {
+          "file": "04.webp",
+          "caption": "Utility bills",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 41768
+        },
+        {
+          "file": "05.webp",
+          "caption": "Log a complaint",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 31354
+        },
+        {
+          "file": "06.webp",
+          "caption": "Lease monitor",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 102040
+        },
+        {
+          "file": "07.webp",
+          "caption": "Staff and roles",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 44416
+        },
+        {
+          "file": "08.webp",
+          "caption": "Yearly account",
+          "format": "wide",
+          "width": 1440,
+          "height": 960,
+          "bytes": 39446
+        }
+      ]
+    },
+    {
+      "slug": "property-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Dashboard",
+          "format": "wide",
+          "width": 1440,
+          "height": 753,
+          "bytes": 52246
+        },
+        {
+          "file": "02.webp",
+          "caption": "Properties",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 242710
+        },
+        {
+          "file": "03.webp",
+          "caption": "Property detail",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 133518
+        },
+        {
+          "file": "04.webp",
+          "caption": "Tenants",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 98132
+        },
+        {
+          "file": "05.webp",
+          "caption": "Invoices",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 48916
+        },
+        {
+          "file": "06.webp",
+          "caption": "Units",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 65334
+        }
+      ]
+    },
+    {
+      "slug": "learning-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Assignment submission",
+          "format": "panel",
+          "width": 984,
+          "height": 600,
+          "bytes": 15374
+        },
+        {
+          "file": "02.webp",
+          "caption": "Course discussion",
+          "format": "panel",
+          "width": 984,
+          "height": 600,
+          "bytes": 9860
+        },
+        {
+          "file": "03.webp",
+          "caption": "Certificate",
+          "format": "panel",
+          "width": 1440,
+          "height": 647,
+          "bytes": 54446
+        }
+      ]
+    },
+    {
+      "slug": "customer-relationship-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Dashboard: income against expenses",
+          "format": "panel",
+          "width": 970,
+          "height": 600,
+          "bytes": 42462
+        },
+        {
+          "file": "02.webp",
+          "caption": "Project progress",
+          "format": "panel",
+          "width": 1054,
+          "height": 600,
+          "bytes": 36648
+        },
+        {
+          "file": "03.webp",
+          "caption": "Tasks",
+          "format": "panel",
+          "width": 970,
+          "height": 600,
+          "bytes": 38760
+        },
+        {
+          "file": "04.webp",
+          "caption": "Clients",
+          "format": "panel",
+          "width": 970,
+          "height": 600,
+          "bytes": 41926
+        }
+      ]
+    },
+    {
+      "slug": "travel-booking",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Pricing, person types and availability",
+          "format": "wide",
+          "width": 1440,
+          "height": 1192,
+          "bytes": 47424
+        },
+        {
+          "file": "02.webp",
+          "caption": "Menu builder",
+          "format": "wide",
+          "width": 1440,
+          "height": 861,
+          "bytes": 41508
+        },
+        {
+          "file": "03.webp",
+          "caption": "Page and template builder",
+          "format": "wide",
+          "width": 1440,
+          "height": 795,
+          "bytes": 43232
+        },
+        {
+          "file": "04.webp",
+          "caption": "Theme options",
+          "format": "wide",
+          "width": 1363,
+          "height": 723,
+          "bytes": 83444
+        }
+      ]
+    },
+    {
+      "slug": "gym-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Dashboard: income against expenses",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 62196
+        },
+        {
+          "file": "02.webp",
+          "caption": "Trainers",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 62036
+        },
+        {
+          "file": "03.webp",
+          "caption": "Classes",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 53506
+        },
+        {
+          "file": "04.webp",
+          "caption": "Invoice detail",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 53986
+        },
+        {
+          "file": "05.webp",
+          "caption": "Expenses",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 51938
+        },
+        {
+          "file": "06.webp",
+          "caption": "Attendance",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 69728
+        }
+      ]
+    },
+    {
+      "slug": "parking-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Dashboard: slots and income flow",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 49200
+        },
+        {
+          "file": "02.webp",
+          "caption": "Parking",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 67158
+        },
+        {
+          "file": "03.webp",
+          "caption": "Parking zones",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 46918
+        },
+        {
+          "file": "04.webp",
+          "caption": "Parking detail",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 44090
+        },
+        {
+          "file": "05.webp",
+          "caption": "Parking slots",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 47264
+        },
+        {
+          "file": "06.webp",
+          "caption": "Roles and permissions",
+          "format": "wide",
+          "width": 1440,
+          "height": 810,
+          "bytes": 47410
+        }
+      ]
+    },
+    {
+      "slug": "school-management",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Students, added singly or in bulk",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 32122
+        },
+        {
+          "file": "02.webp",
+          "caption": "Staff and roles",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 16962
+        },
+        {
+          "file": "03.webp",
+          "caption": "Attendance",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 39448
+        },
+        {
+          "file": "04.webp",
+          "caption": "Timetable",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 43766
+        },
+        {
+          "file": "05.webp",
+          "caption": "Exams and marks",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 22434
+        },
+        {
+          "file": "06.webp",
+          "caption": "Fees",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 28250
+        },
+        {
+          "file": "07.webp",
+          "caption": "Announcements",
+          "format": "panel",
+          "width": 800,
+          "height": 600,
+          "bytes": 27416
+        },
+        {
+          "file": "08.webp",
+          "caption": "What a parent and a student see",
+          "format": "panel",
+          "width": 800,
+          "height": 700,
+          "bytes": 44674
+        }
+      ]
+    },
+    {
+      "slug": "cambcard",
+      "screens": [
+        {
+          "file": "01.webp",
+          "caption": "Fitness and personal training",
+          "format": "portrait",
+          "width": 576,
+          "height": 1461,
+          "bytes": 94766
+        },
+        {
+          "file": "02.webp",
+          "caption": "Clinics and practitioners",
+          "format": "portrait",
+          "width": 576,
+          "height": 1505,
+          "bytes": 99876
+        },
+        {
+          "file": "03.webp",
+          "caption": "Events and hospitality",
+          "format": "portrait",
+          "width": 576,
+          "height": 1452,
+          "bytes": 143132
+        },
+        {
+          "file": "04.webp",
+          "caption": "Salons and studios",
+          "format": "portrait",
+          "width": 576,
+          "height": 1450,
+          "bytes": 96742
+        },
+        {
+          "file": "05.webp",
+          "caption": "Legal and professional services",
+          "format": "portrait",
+          "width": 576,
+          "height": 1449,
+          "bytes": 111144
+        },
+        {
+          "file": "06.webp",
+          "caption": "Technology and development",
+          "format": "portrait",
+          "width": 576,
+          "height": 1449,
+          "bytes": 127290
+        },
+        {
+          "file": "07.webp",
+          "caption": "Design and creative",
+          "format": "portrait",
+          "width": 576,
+          "height": 1489,
+          "bytes": 87606
+        }
+      ]
+    }
+  ]
+}

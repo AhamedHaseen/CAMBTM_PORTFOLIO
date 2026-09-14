@@ -1,0 +1,59 @@
+/*
+ * The field of orienting lines.
+ *
+ * The grid dimensions are duplicated here from the component on purpose: the component needs them
+ * to derive each line's centre without reading layout, and CSS needs them to lay the grid out. They
+ * are two statements of one fact, so they are commented in both places.
+ *
+ * Every line rests pointing right and is rotated by a custom property the component writes. With no
+ * property set, which is the no-JavaScript, coarse-pointer and reduced-motion case, the field is a
+ * regular ruled grid: still deliberate, still on-brand, just not following anything.
+ */
+
+.field {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr); /* COLUMNS in fitted-field.tsx */
+  grid-template-rows: repeat(6, 1fr); /* ROWS in fitted-field.tsx */
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  pointer-events: none;
+}
+
+.line {
+  display: block;
+  width: clamp(0.9rem, 2.2vw, 1.6rem);
+  height: 1px;
+  /*
+   * Mixed from the text colour rather than taken from a border token, so it holds its weight in
+   * both themes. The border tokens are tuned for edges against a surface and are too faint here,
+   * where the marks are the only thing in the column.
+   */
+  background: color-mix(in srgb, var(--cambt-color-text-secondary) 60%, transparent);
+  rotate: var(--angle, 0deg);
+  /*
+   * Colour resolves faster than geometry, per the movement contract in tokens.css. The rotation
+   * gets the longer, symmetric curve so the field feels weighted rather than twitchy, and it lags
+   * the pointer just enough to read as a physical response.
+   */
+  transition:
+    rotate var(--cambt-motion-shift) var(--cambt-ease-glide),
+    background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+/*
+ * A soft brand wash toward the centre, so the field reads as lit from the middle rather than as a
+ * flat texture. Lines near the centre carry the accent; the outer ones stay structural.
+ */
+.line:nth-child(9n + 4),
+.line:nth-child(9n + 5),
+.line:nth-child(9n + 6) {
+  background: var(--cambt-color-brand-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    transition: none;
+    rotate: 0deg;
+  }
+}

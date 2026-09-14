@@ -51,8 +51,8 @@ export default function PortfolioUnderConstruction({ page = "portfolio" }) {
             >
               Why CAMBM
             </a>
-            <a href="/our-projects" className="nav-link" data-i18n="nav.ourProjects">
-              Our Projects
+            <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
+              Our Products
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -136,8 +136,8 @@ export default function PortfolioUnderConstruction({ page = "portfolio" }) {
           >
             Why CAMBM
           </a>
-          <a href="/our-projects" className="mobile-nav-link" data-i18n="nav.ourProjects">
-            Our Projects
+          <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
+            Our Products
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

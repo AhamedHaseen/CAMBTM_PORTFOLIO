@@ -1,0 +1,44 @@
+/*
+ * A heading with parts picked out.
+ *
+ * The accent uses the same `--cambt-color-heading-accent` the serif emphasis on every page hero
+ * uses, so a marked section heading and a marked page heading are visibly the same idea rather than
+ * two different highlight systems.
+ *
+ * The counter tone is a step back rather than a second bright colour. Two competing accents in one
+ * sentence read as decoration; one accent against something quieter reads as an argument, which is
+ * what these headings are making.
+ */
+
+.heading {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-type-h2);
+  font-weight: var(--cambt-weight-heading);
+  letter-spacing: var(--cambt-tracking-display);
+  line-height: var(--cambt-leading-section);
+  /* Parts are inline spans, so the heading wraps and selects exactly as plain text would. */
+  text-wrap: balance;
+}
+
+.plain {
+  color: inherit;
+}
+
+.accent {
+  color: var(--cambt-color-heading-accent);
+}
+
+/*
+ * Held back and struck. The strike is what makes the contrast land at a glance: the reader sees the
+ * rejected half crossed out before they have finished the sentence. It is drawn in the danger tone
+ * at a hairline so it marks the words without obscuring them.
+ */
+.counter {
+  color: var(--cambt-color-text-secondary);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--cambt-color-danger) 70%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0;
+}

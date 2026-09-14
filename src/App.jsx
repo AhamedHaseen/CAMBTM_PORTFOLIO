@@ -9,6 +9,9 @@ import Welcome from "./pages/Welcome";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
 import OurProjects from "./pages/OurProjects";
+import CustomPlan from "./pages/CustomPlan";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 
 // Admin Context & Styles
 import "./admin/admin.css";
@@ -99,15 +102,15 @@ function App() {
               path="/portfolio.html"
               element={<Navigate to="/portfolio" replace />}
             />
-            <Route path="/our-projects" element={<OurProjects />} />
+            <Route path="/our-projects" element={<Navigate to="/products" replace />} />
             <Route
               path="/our-projects.html"
-              element={<Navigate to="/our-projects" replace />}
+              element={<Navigate to="/products" replace />}
             />
-            <Route path="/projects" element={<OurProjects />} />
+            <Route path="/projects" element={<Navigate to="/products" replace />} />
             <Route
               path="/projects.html"
-              element={<Navigate to="/our-projects" replace />}
+              element={<Navigate to="/products" replace />}
             />
             <Route
               path="/portfolio-under-construction.html"
@@ -119,6 +122,11 @@ function App() {
             />
             <Route path="/packages" element={<Navigate to="/#packages" replace />} />
             <Route path="/services" element={<Navigate to="/#packages" replace />} />
+            <Route path="/custom-plan" element={<CustomPlan />} />
+            <Route path="/cart" element={<CustomPlan />} />
+            <Route path="/plan-summary" element={<CustomPlan />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
 
             {/* Admin / Studio Authentication */}
             <Route path="/admin/login" element={<Login />} />

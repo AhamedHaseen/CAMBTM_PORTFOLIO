@@ -1,0 +1,220 @@
+/*
+ * The systems grid.
+ *
+ * Three columns at desk width, two at tablet, one on a phone. Each card is a capture over a short
+ * block of text, which makes the grid scannable by picture first: a reader looking for the gym one
+ * recognises a gym dashboard faster than they read the word "gym".
+ *
+ * The whole card is clickable through an overlay on the link, so the target is the full 44px-plus
+ * area rather than the words alone.
+ */
+
+.index {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- Filter ---------------------------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter {
+  min-height: var(--cambt-action-min-height);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background: transparent;
+  color: var(--cambt-color-text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--cambt-font-size-sm);
+  transition:
+    color var(--cambt-motion-tint) var(--cambt-ease-standard),
+    border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+    background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.filter:hover {
+  border-color: var(--cambt-color-border-strong);
+  color: var(--cambt-color-text-primary);
+}
+
+.filter[aria-pressed="true"] {
+  border-color: var(--cambt-color-border-lit);
+  background: var(--cambt-color-bg-tint);
+  color: var(--cambt-color-text-primary);
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--cambt-color-focus);
+  outline-offset: 3px;
+}
+
+.count {
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Grid ------------------------------------------------------------------------------------ */
+
+.grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 44rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.system {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background: var(--cambt-color-bg-surface);
+  transition:
+    border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+    transform var(--cambt-motion-shift) var(--cambt-ease-glide);
+}
+
+.system:hover {
+  border-color: var(--cambt-color-border-lit);
+  transform: translateY(-2px);
+}
+
+/* --- Mark ------------------------------------------------------------------------------------- */
+
+/*
+ * The plate holds a drawn schematic, not a photograph, so it needs no fixed crop and no tint layer.
+ * A ruled ground and generous padding let the mark read as a diagram on a technical drawing rather
+ * than as an illustration pasted onto a card.
+ */
+.plate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-block-end: 1px solid var(--cambt-color-border-subtle);
+  background-color: var(--cambt-color-bg-muted);
+  /* The faint grid the marks are drawn on. Same language as the technical fields elsewhere. */
+  background-image:
+    linear-gradient(to right, var(--cambt-line-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cambt-line-grid) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: center;
+}
+
+.system:hover .plate {
+  background-color: var(--cambt-color-bg-tint);
+}
+
+/*
+ * Hovering a card starts the wave walking through its mark. One inherited custom property is the
+ * whole switch; the animation itself lives in system-mark.module.css, next to the tiles it moves.
+ *
+ * Guarded here rather than there, so a stillness preference means the property is never set at all
+ * and the duration stays at its 0s default.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .system:hover .plate,
+  .system:focus-within .plate {
+    --mark-pulse: 1.8s;
+  }
+}
+
+/* --- Body ------------------------------------------------------------------------------------- */
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.screens {
+  flex: none;
+  color: var(--cambt-color-accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.body h3 {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-xl);
+  font-weight: var(--cambt-weight-subhead);
+  letter-spacing: var(--cambt-tracking-heading);
+  line-height: 1.25;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*
+ * The card-sized target: an empty pseudo-element stretched over the card from inside the anchor.
+ * It enlarges the hit area to the whole card without adding a second link, which is what a wrapping
+ * anchor or an overlaid one would do. Being a pseudo-element it is not in the accessibility tree at
+ * all, so there is nothing extra to announce and nothing to hide from a screen reader.
+ */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--cambt-color-focus);
+  outline-offset: 3px;
+}
+
+.positioning {
+  margin: 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .system,
+  .system:hover {
+    transform: none;
+  }
+}

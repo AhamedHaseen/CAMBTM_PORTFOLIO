@@ -1,0 +1,218 @@
+/*
+ * A system's screens, stacked.
+ *
+ * Two problems this file solves.
+ *
+ * **Seating a light screenshot on a navy page.** Every capture is of a light interface and the
+ * default theme is deep navy, so each one dropped in raw reads as a hole punched in the page.
+ * `.tint` is a theme-keyed veil: navy in the dark theme, near-neutral in the light one. It is held
+ * weak deliberately. Its job is to seat the image, not to restyle it, and a client being sold this
+ * software has to be looking at what they will actually get. It lifts on hover so a closer look is
+ * always one gesture away.
+ *
+ * **Three shapes in one column.** `wide` runs the full column, `panel` is centred at its own size
+ * and never upscaled, `portrait` goes to a gallery. Holding them to a single treatment is what
+ * makes a mixed set look careless.
+ */
+
+.screens {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/*
+ * Never wider than the pixels behind it.
+ *
+ * `--native` is the delivered capture's own width, written per frame by the component. A screenshot
+ * shown larger than that is asking the browser to invent detail, and the result reads as a bad
+ * photograph of a screen rather than as a screen. Everything is centred, so a smaller capture sits
+ * as a considered detail instead of a short row.
+ *
+ * This is the second half of the sharpness fix; the first is serving our own WebP untouched rather
+ * than letting Next upscale and re-encode it.
+ */
+.frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.frame .plate,
+.frame .caption {
+  width: min(100%, var(--native, 100%));
+}
+
+.plate {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background: var(--cambt-color-bg-surface);
+  box-shadow: 0 18px 44px -30px rgb(6 26 43 / 0.75);
+  transition:
+    border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+    box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
+}
+
+.plate:hover {
+  border-color: var(--cambt-color-border-lit);
+  box-shadow: 0 22px 52px -28px rgb(18 104 196 / 0.55);
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(9 41 67 / 0.08) 0%, rgb(6 26 43 / 0.26) 100%),
+    linear-gradient(122deg, rgb(46 145 255 / 0.09), transparent 55%);
+  transition: opacity var(--cambt-motion-shift) var(--cambt-ease-standard);
+}
+
+.plate:hover .tint {
+  opacity: 0.25;
+}
+
+.caption {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+}
+
+.captionIndex {
+  color: var(--cambt-color-accent-text);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+/* --- Portrait gallery -------------------------------------------------------------------------- */
+
+.gallery {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  border-radius: var(--cambt-radius-sm);
+}
+
+.gallery:focus-visible {
+  outline: 2px solid var(--cambt-color-focus);
+  outline-offset: 4px;
+}
+
+.rail {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  margin: 0;
+  /* Room for the last card to snap to the start edge rather than stopping short of it. */
+  padding: 0 30% 0 0;
+  list-style: none;
+}
+
+.slide {
+  flex: 0 0 min(18rem, 68vw);
+  scroll-snap-align: start;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+/*
+ * Card previews are full-length phone screens. Cropped to a portrait window they show the head of
+ * the card, which is the part that carries the design, and the fixed ratio keeps the rail even.
+ */
+.cardPlate {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-surface);
+  box-shadow: 0 16px 36px -26px rgb(6 26 43 / 0.7);
+}
+
+.cardPlate .shot {
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.cardCaption {
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+}
+
+/* --- Light theme -------------------------------------------------------------------------------- */
+
+:global([data-theme="light"]) .tint {
+  background:
+    linear-gradient(to bottom, rgb(18 104 196 / 0.03) 0%, rgb(16 24 32 / 0.05) 100%),
+    linear-gradient(122deg, rgb(18 104 196 / 0.04), transparent 60%);
+}
+
+:global([data-theme="light"]) .plate,
+:global([data-theme="light"]) .cardPlate {
+  box-shadow: 0 16px 38px -30px rgb(16 24 32 / 0.4);
+}
+
+/* --- Motion ------------------------------------------------------------------------------------- */
+
+/*
+ * Each frame settles as it enters the reading band, on its own view timeline. It only ever clears a
+ * small rise from an already-visible state, so an unsupported browser or a reduced-motion
+ * preference gets the finished screen immediately.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .frame {
+      animation: screen-settle linear both;
+      animation-range: entry 5% cover 24%;
+      animation-timeline: view(block);
+    }
+  }
+}
+
+@keyframes screen-settle {
+  from {
+    opacity: 0.55;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .gallery {
+    scroll-snap-type: none;
+  }
+
+  .plate,
+  .plate:hover,
+  .tint {
+    transition: none;
+  }
+}

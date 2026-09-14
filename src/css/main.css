@@ -262,16 +262,8 @@ html.lenis body {
   color: var(--text);
 }
 
-.nav-link.active::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--text);
-  border-radius: 50%;
+.nav-link.active {
+  color: var(--text);
 }
 
 .header-actions {

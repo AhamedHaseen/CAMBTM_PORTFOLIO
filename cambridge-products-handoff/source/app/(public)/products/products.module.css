@@ -1,0 +1,89 @@
+/*
+ * Page-level composition for the systems index.
+ *
+ * The three set pieces each own their own stylesheet: system-stack, adaptation-argument,
+ * system-index and fitted-field. What is left here is how they sit on the page, which is all this
+ * file should ever hold.
+ */
+
+/*
+ * The hero figure needs a little headroom on narrow screens, where it sits under the heading rather
+ * than beside it. At desk width the shell's hero grid already provides it.
+ */
+.heroStack {
+  padding-block-start: clamp(1.5rem, 4vw, 3rem);
+}
+
+@media (min-width: 64rem) {
+  .heroStack {
+    padding-block-start: 0;
+  }
+}
+
+/* --- Customisation section -------------------------------------------------------------------- */
+
+.customisation {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 60rem) {
+  .customisation {
+    grid-template-columns: 1fr 0.85fr;
+  }
+}
+
+.customisationHeading {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-type-h2);
+  font-weight: var(--cambt-weight-heading);
+  letter-spacing: var(--cambt-tracking-display);
+  line-height: var(--cambt-leading-section);
+}
+
+.customisationBody {
+  max-width: 40rem;
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-lg);
+  line-height: 1.65;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.points li {
+  position: relative;
+  padding: 0.85rem 0 0.85rem 2.5rem;
+  border-block-start: 1px solid var(--cambt-color-border-subtle);
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.55;
+}
+
+/* A short lead-in rule per point, matching the hairline vocabulary the rest of the site uses. */
+.points li::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 1.5em;
+  inset-inline-start: 0;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--cambt-color-brand-blue);
+}
+
+/*
+ * The field is decoration and must never be the reason a phone scrolls sideways, so it is clipped
+ * to its column rather than allowed to set its own width.
+ */
+.fieldHolder {
+  overflow: hidden;
+}

@@ -153,6 +153,40 @@ const ALL_SAAS_PROJECTS = [
 ];
 
 export default function OurProjects() {
+  const [cartCount, setCartCount] = React.useState(() => {
+    try {
+      const saved = localStorage.getItem("cambm_custom_plan");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return Object.keys(parsed).length;
+      }
+    } catch (e) {}
+    return 0;
+  });
+
+  useEffect(() => {
+    const updateCount = (e) => {
+      if (e?.detail?.count !== undefined) {
+        setCartCount(e.detail.count);
+      } else {
+        try {
+          const saved = localStorage.getItem("cambm_custom_plan");
+          if (saved) {
+            setCartCount(Object.keys(JSON.parse(saved)).length);
+          } else {
+            setCartCount(0);
+          }
+        } catch (err) {}
+      }
+    };
+    window.addEventListener("cambm:cart-updated", updateCount);
+    window.addEventListener("storage", updateCount);
+    return () => {
+      window.removeEventListener("cambm:cart-updated", updateCount);
+      window.removeEventListener("storage", updateCount);
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     const revealEvent = new CustomEvent("cambm:revealed");
@@ -214,11 +248,11 @@ export default function OurProjects() {
               Why CAMBM
             </a>
             <a
-              href="/our-projects"
+              href="/products"
               className="nav-link"
-              data-i18n="nav.ourProjects"
+              data-i18n="nav.ourProducts"
             >
-              Our Projects
+              Our Products
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -262,6 +296,19 @@ export default function OurProjects() {
                 <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
               </svg>
             </button>
+            <a
+              href="/custom-plan"
+              className={`header-cart-btn js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
+              aria-label="View Custom Services Cart"
+              title="View Custom Services Cart"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
+            </a>
             <button
               type="button"
               className="btn btn-primary js-open-cal"
@@ -273,6 +320,19 @@ export default function OurProjects() {
               Book a strategy call
             </button>
           </div>
+          <a
+            href="/custom-plan"
+            className={`header-cart-btn mobile-header-cart js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
+            aria-label="View Custom Services Cart"
+            title="View Custom Services Cart"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
+          </a>
 
           <button
             className="nav-toggle"
@@ -311,11 +371,11 @@ export default function OurProjects() {
             Why CAMBM
           </a>
           <a
-            href="/our-projects"
+            href="/products"
             className="mobile-nav-link"
-            data-i18n="nav.ourProjects"
+            data-i18n="nav.ourProducts"
           >
-            Our Projects
+            Our Products
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

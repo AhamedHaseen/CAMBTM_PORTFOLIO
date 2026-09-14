@@ -61,9 +61,9 @@ const INITIAL_SERVICES = [
 ];
 
 const CATEGORIES = [
-  { id: 'build', label: 'BUILD', subtitle: 'Technology & Infrastructure', icon: Code2, color: '#FF5A00' },
-  { id: 'create', label: 'CREATE', subtitle: 'Content & Production', icon: Palette, color: '#3B82F6' },
-  { id: 'grow', label: 'GROW', subtitle: 'Marketing & Distribution', icon: TrendingUp, color: '#10B981' }
+  { id: 'build', label: 'BUILD', icon: Code2, color: '#FF5A00' },
+  { id: 'create', label: 'CREATE', icon: Palette, color: '#3B82F6' },
+  { id: 'grow', label: 'GROW', icon: TrendingUp, color: '#10B981' }
 ];
 
 export default function ServicesManager() {

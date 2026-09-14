@@ -1,0 +1,102 @@
+/* Pointer-responsive surface.
+
+   Everything decorative here is painted by two absolutely positioned spans and a transform on
+   the host. No layout property is ever animated, so a hovered card cannot reflow the grid it
+   sits in — which is the failure mode that made the previous card treatments feel cheap. */
+
+.surface {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform var(--cambt-motion-shift) var(--cambt-ease-glide),
+    border-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+/* The spotlight itself. A single soft radial in the brand blue, centred on the pointer and
+   faded in by --spot-active so it does not snap on at the edge of the card. */
+.spot {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    18rem 18rem at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(46 145 255 / 0.16),
+    rgb(46 145 255 / 0.05) 38%,
+    transparent 68%
+  );
+  opacity: var(--spot-active, 0);
+  transition: opacity var(--cambt-motion-tint) var(--cambt-ease-standard);
+  pointer-events: none;
+}
+
+/* Content must sit above the spotlight. Children are not wrapped, so this reaches them
+   directly rather than through an extra element. */
+.surface > *:not(.spot):not(.glare) {
+  position: relative;
+  z-index: 1;
+}
+
+.tilts {
+  transform: perspective(60rem) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+}
+
+/* Diagonal sheen. Travels once when the pointer enters and then rests off-surface, rather
+   than looping — a repeating shine on a business card reads as an advert. */
+.glare {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glare::after {
+  position: absolute;
+  top: -60%;
+  left: -70%;
+  width: 45%;
+  height: 220%;
+  /*
+     Tokenised rather than literal white. On navy a white sweep reads as a highlight; on the light
+     theme's near-white cards it is invisible, so the tokens carry a blue tint there instead and the
+     sheen stays legible in both. */
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--cambt-sheen-edge) 45%,
+    var(--cambt-sheen-core) 50%,
+    transparent
+  );
+  transform: rotate(18deg) translateX(0);
+  content: "";
+}
+
+.glares:hover .glare::after {
+  animation: spotlight-sheen 820ms var(--cambt-ease-glide) 1;
+}
+
+@keyframes spotlight-sheen {
+  from {
+    transform: rotate(18deg) translateX(0);
+  }
+  to {
+    transform: rotate(18deg) translateX(360%);
+  }
+}
+
+/* A visitor who asked for stillness gets a plain panel: no lean, no sheen, no travelling
+   highlight. The spotlight opacity is driven from script, which never sets it in that case. */
+@media (prefers-reduced-motion: reduce) {
+  .surface,
+  .tilts {
+    transform: none;
+    transition: none;
+  }
+
+  .glares:hover .glare::after {
+    animation: none;
+  }
+}

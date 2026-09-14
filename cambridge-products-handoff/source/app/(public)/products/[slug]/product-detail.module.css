@@ -1,0 +1,313 @@
+/* Product detail. The product's own catalogue lives here and nowhere else. */
+
+.heroPending {
+  margin: 0.85rem 0 0;
+  color: var(--cambt-color-danger);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  line-height: 1.55;
+}
+
+.solves {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--cambt-color-border-subtle);
+  gap: 0;
+  list-style: none;
+}
+
+.solves li {
+  position: relative;
+  padding: 1.5rem 0 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+}
+
+.solves li::before {
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 0;
+  width: 2px;
+  background: var(--cambt-color-brand-blue);
+  content: "";
+  transform-origin: top center;
+}
+
+.solves h3,
+.services h3 {
+  margin: 0 0 0.5rem;
+  color: var(--cambt-color-text-primary);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.solves p,
+.services p {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.65;
+}
+
+/*
+ * The module catalogue.
+ *
+ * A ruled list rather than a definition list, because the recovered sources named plenty of modules
+ * without describing them and a `dt` with no `dd` is not valid markup. A name on its own is an
+ * honest entry here; inventing a sentence to fill the gap would not be.
+ *
+ * Two columns once there is room. These run to a dozen or more entries per system and a single
+ * column of short rows wastes most of the page on a system that has a lot to show.
+ */
+.modules {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--cambt-color-border-subtle);
+  gap: 0;
+  list-style: none;
+}
+
+@media (min-width: 54rem) {
+  .modules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.modules > li {
+  display: grid;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  gap: 0.35rem;
+}
+
+.modules h3 {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-lg);
+  font-weight: var(--cambt-weight-subhead);
+  letter-spacing: -0.02em;
+}
+
+.modules p {
+  max-width: 56ch;
+  margin: 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.65;
+}
+
+/*
+ * What it replaces, and where we fit it.
+ *
+ * Both are short declarative lines rather than prose, so they are set as marked rows: the reader is
+ * scanning for recognition ("that is my Tuesday") rather than reading an argument.
+ */
+.replaces,
+.adapts {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  list-style: none;
+}
+
+@media (min-width: 54rem) {
+  .replaces,
+  .adapts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.replaces li,
+.adapts li {
+  position: relative;
+  padding: 1rem 0 1rem 2.25rem;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.55;
+}
+
+/* A struck mark for what goes away, a lead-in rule for what gets fitted. */
+.replaces li::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 1.65em;
+  inset-inline-start: 0;
+  width: 1.25rem;
+  height: 1px;
+  background: var(--cambt-color-danger);
+}
+
+.adapts li::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 1.65em;
+  inset-inline-start: 0;
+  width: 1.25rem;
+  height: 1px;
+  background: var(--cambt-color-brand-blue);
+}
+
+.suits {
+  max-width: 34rem;
+  margin: 1rem 0 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.65;
+}
+
+.contextGrid {
+  display: grid;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.chips li {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--cambt-color-border-strong);
+  border-radius: var(--cambt-radius-sm);
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-sm);
+  font-weight: 650;
+}
+
+.inlinePending {
+  margin: 0;
+  color: var(--cambt-color-danger);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  line-height: 1.55;
+}
+
+/* Related services: canonical references back to the engagement pages. */
+.services {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+  list-style: none;
+}
+
+.services li {
+  padding: clamp(1.35rem, 2.5vw, 1.85rem);
+  border: 1px solid rgb(18 104 196 / 0.18);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-tint-soft);
+  transition:
+    border-color 280ms var(--cambt-ease-standard),
+    transform 380ms var(--cambt-ease-emphasized);
+}
+
+.services li:hover {
+  border-color: rgb(18 104 196 / 0.4);
+  transform: translateY(-2px);
+}
+
+/*
+ * 44px minimum interactive target, per the design contract. Found site-wide by
+ * `scripts/audit-site.mjs` during the Stage 7 connect pass: this rendered well under it at every
+ * breakpoint in both themes.
+ */
+.serviceLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: color 220ms var(--cambt-ease-standard);
+}
+
+.serviceLink::after {
+  display: inline-block;
+  margin-left: 0.45rem;
+  color: var(--cambt-color-brand-electric);
+  content: "\2192";
+  transition: translate 260ms var(--cambt-ease-emphasized);
+}
+
+.services li:hover .serviceLink {
+  color: var(--cambt-color-brand-electric);
+}
+
+.services li:hover .serviceLink::after {
+  translate: 0.3rem 0;
+}
+
+@media (min-width: 48rem) {
+  .contextGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .services {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes productDetailIn {
+      from {
+        filter: blur(6px);
+        transform: translate3d(0, 2rem, 0);
+      }
+      to {
+        filter: blur(0);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes productRuleDraw {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .solves li,
+    .modules > div,
+    .services li {
+      animation: productDetailIn linear both;
+      animation-range: entry 0% cover 28%;
+      animation-timeline: view(block);
+    }
+
+    .solves li::before {
+      animation: productRuleDraw linear both;
+      animation-range: entry 4% cover 30%;
+      animation-timeline: view(block);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solves li,
+  .modules > div,
+  .services li {
+    filter: none;
+    transform: none;
+    animation: none;
+    transition-duration: 1ms;
+  }
+
+  .solves li::before {
+    animation: none;
+  }
+}

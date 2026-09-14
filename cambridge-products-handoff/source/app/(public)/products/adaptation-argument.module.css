@@ -1,0 +1,250 @@
+/*
+ * The adaptation argument.
+ *
+ * Two panels of the same shape, so the eye compares them rather than reading them in turn. The
+ * left one is held back: lower contrast, a struck rule through each field that does not fit, and a
+ * tally that lands on a number the reader can feel. The right one is at full strength.
+ *
+ * The difference between the two panels is carried by colour and weight, never by size or position,
+ * because a comparison where one side is physically larger is an argument about layout rather than
+ * about the thing being compared.
+ */
+
+.argument {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.intro {
+  max-width: var(--cambt-width-reading);
+}
+
+.label {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--cambt-color-brand-electric);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: var(--cambt-tracking-label);
+  text-transform: uppercase;
+}
+
+.heading {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-type-h2);
+  font-weight: var(--cambt-weight-heading);
+  letter-spacing: var(--cambt-tracking-display);
+  line-height: var(--cambt-leading-section);
+}
+
+.body {
+  max-width: 42rem;
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-lg);
+  line-height: 1.65;
+}
+
+/* --- The diptych ---------------------------------------------------------------------------- */
+
+.diptych {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+@media (min-width: 54rem) {
+  .diptych {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+}
+
+/* The system that was built for someone else: present, legible, and visibly not at home. */
+.generic {
+  background: var(--cambt-color-bg-muted);
+}
+
+/*
+ * The fitted one carries the brand edge and a faint lit ground, which is the same vocabulary the
+ * rest of the site uses for the state it wants you to choose.
+ */
+.fitted {
+  border-color: var(--cambt-color-border-lit);
+  background:
+    linear-gradient(to bottom, rgb(46 145 255 / 0.06), transparent 60%),
+    var(--cambt-color-bg-surface);
+}
+
+.panelHead h3 {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-type-h3);
+  font-weight: var(--cambt-weight-subhead);
+  letter-spacing: var(--cambt-tracking-heading);
+  line-height: 1.2;
+}
+
+.panelHead p {
+  margin: 0.6rem 0 0;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.55;
+}
+
+/* --- Field rows ----------------------------------------------------------------------------- */
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.field {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-block-start: 1px solid var(--cambt-color-border-subtle);
+  font-size: var(--cambt-font-size-sm);
+}
+
+.fieldName {
+  color: var(--cambt-color-text-body);
+}
+
+/*
+ * A field the business never fills in is struck through. This is the one place the section says
+ * something without words, so it is worth spending a rule on.
+ */
+.field[data-verdict="unused"] .fieldName {
+  color: var(--cambt-color-text-secondary);
+  text-decoration: line-through;
+  text-decoration-color: var(--cambt-color-danger);
+  text-decoration-thickness: 1px;
+}
+
+.field[data-verdict="forced"] .fieldName {
+  color: var(--cambt-color-text-secondary);
+}
+
+.verdict {
+  flex: none;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.field[data-verdict="unused"] .verdict {
+  color: var(--cambt-color-danger);
+}
+
+.field[data-verdict="kept"] .verdict {
+  color: var(--cambt-color-success);
+}
+
+/* --- The tally ------------------------------------------------------------------------------ */
+
+.tally {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  margin: auto 0 0;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid var(--cambt-color-border-strong);
+}
+
+.tallyFigure {
+  color: var(--cambt-color-text-primary);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--cambt-weight-display);
+  letter-spacing: var(--cambt-tracking-display);
+  line-height: 1;
+}
+
+.generic .tallyFigure {
+  color: var(--cambt-color-danger);
+}
+
+.fitted .tallyFigure {
+  color: var(--cambt-color-success);
+}
+
+.tallyLabel {
+  max-width: 16ch;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.4;
+}
+
+/* --- Motion --------------------------------------------------------------------------------- */
+
+/*
+ * Rows arrive in sequence as the panel crosses the reading band, so the left list assembles its
+ * case one field at a time rather than landing complete. Driven by the element's own view timeline:
+ * no observer, no listener, and scrolling back up runs it in reverse.
+ *
+ * Opacity never leaves 1. An unsupported browser or a reduced-motion preference gets the finished,
+ * fully readable comparison, which is the only state that matters.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .field {
+      animation: adaptation-row linear both;
+      animation-range: entry calc(2% + (var(--row, 0) * 3%)) cover calc(22% + (var(--row, 0) * 3%));
+      animation-timeline: view(block);
+    }
+
+    .tallyFigure {
+      animation: adaptation-tally linear both;
+      animation-range: entry 20% cover 40%;
+      animation-timeline: view(block);
+    }
+  }
+}
+
+@keyframes adaptation-row {
+  from {
+    transform: translateX(-0.5rem);
+    filter: blur(2px);
+  }
+  to {
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes adaptation-tally {
+  from {
+    transform: translateY(0.4rem);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field,
+  .tallyFigure {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+}

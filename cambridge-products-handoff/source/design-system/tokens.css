@@ -1,0 +1,359 @@
+@theme {
+  --color-deep-navy: #061a2b;
+  --color-system-navy: #092943;
+  --color-cambridge-blue: #1268c4;
+  --color-electric-blue: #2e91ff;
+  --color-logo-violet: #443286;
+  --color-soft-background: #f4f7fa;
+  --color-surface: #ffffff;
+  --color-dark-text: #101820;
+  --color-muted-text: #66717e;
+  --breakpoint-xs: 30rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 90rem;
+}
+
+/*
+ * CAMBT visual system.
+ *
+ * Public themes use a balanced navy and cool-paper ladder. Brand pigments stay fixed;
+ * accent-text is the separate, contrast-tested foreground for each theme.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Brand evidence: logo #443286; legacy interaction blue #0b70e1. */
+  --cambt-color-brand-deep-navy: #061a2b;
+  --cambt-color-brand-system-navy: #092943;
+  --cambt-color-brand-blue: #1268c4;
+  --cambt-color-brand-electric: #2e91ff;
+  --cambt-color-brand-logo-violet: #443286;
+
+  /* Ground ladder. Four steps, each derived from the brand navy, darkest at the page base so
+     content reads as lit from within rather than printed on a slab. */
+  --cambt-color-bg-canvas: #102a40;
+  --cambt-color-bg-muted: #16344b;
+  --cambt-color-bg-surface: #1b3b53;
+  --cambt-color-bg-raised: #23465f;
+  --cambt-color-bg-inverse: #f4f7fa;
+
+  /* Section grounds. Retained names, dark values: the deeper tint carries a section, the softer
+     one carries a nested surface or a hover state. */
+  --cambt-color-bg-tint: #16344b;
+  --cambt-color-bg-tint-soft: #1b3b53;
+
+  /* Text. Cool white rather than pure white, so large display type does not glare on navy. */
+  --cambt-color-text-primary: #eaf2fb;
+  --cambt-color-text-secondary: #b1c3d3;
+  --cambt-color-text-body: #bed0df;
+  --cambt-color-text-lead: #b6c7d9;
+  --cambt-color-text-inverse: #061a2b;
+
+  /* Borders are light at low alpha rather than solid greys, so they read as edges catching light
+     instead of drawn lines. */
+  --cambt-color-border-subtle: rgb(255 255 255 / 0.09);
+  --cambt-color-border-strong: rgb(255 255 255 / 0.18);
+  --cambt-color-border-lit: rgb(46 145 255 / 0.42);
+
+  --cambt-color-focus: #2e91ff;
+  --cambt-color-success: #35c48c;
+  --cambt-color-warning: #e0a944;
+  --cambt-color-danger: #ff8f8f;
+  --cambt-color-info: #2e91ff;
+
+  --cambt-color-brand-blue-hover: #0c5aa9;
+  --cambt-color-accent-text: #80bcff;
+  --cambt-color-heading-accent: #80bcff;
+  --cambt-motion-stagger: 65ms;
+  --cambt-motion-depth: 1.25rem;
+
+  /* Illumination.
+     Glow is expressed as colour stops rather than as ready-made shadows, so each surface can
+     compose its own falloff without every element inheriting one heavy blur. */
+  --cambt-glow-core: rgb(46 145 255 / 0.55);
+  --cambt-glow-mid: rgb(46 145 255 / 0.22);
+  --cambt-glow-faint: rgb(46 145 255 / 0.08);
+  --cambt-glow-edge: rgb(46 145 255 / 0.35);
+
+  /* The travelling sheen on a hovered surface. On navy it is a highlight, so it is white. */
+  --cambt-sheen-core: rgb(255 255 255 / 0.16);
+  --cambt-sheen-edge: rgb(255 255 255 / 0.1);
+
+  /*
+   * Tinted glass, for controls only.
+   *
+   * The site forbade glassmorphism outright until 2026-09-10, when the owner asked for a blue
+   * translucent control bar and for the rule to be relaxed site-wide. It is defined here as four
+   * tokens rather than as a one-off panel so that every glass surface the site ever grows is
+   * literally the same object, which is the condition the relaxation was granted on. See the
+   * amended forbidden list in `apps/web/DESIGN.md`.
+   *
+   * The bound that keeps it from becoming glassmorphism in the pejorative sense: this belongs on
+   * something you operate, never on something you read. Content on frosted glass is a legibility
+   * problem wearing a style.
+   */
+  --cambt-glass-bg: rgb(46 145 255 / 0.1);
+  --cambt-glass-border: rgb(46 145 255 / 0.28);
+  /* The lit top edge that tells the eye the surface has thickness. */
+  --cambt-glass-highlight: rgb(255 255 255 / 0.12);
+  /* The fill behind the active item of a glass control. */
+  --cambt-glass-active: rgb(46 145 255 / 0.24);
+
+  /* Technical line language: grid, rule and tick colours used by the backdrop utilities. */
+  --cambt-line-grid: rgb(120 170 230 / 0.07);
+  --cambt-line-grid-strong: rgb(120 170 230 / 0.13);
+  --cambt-line-tick: rgb(46 145 255 / 0.3);
+
+  /*
+   * Inter is loaded and self-hosted by `next/font` in the root layout, which sets
+   * `--cambt-font-inter`. It is named first here because the previous stack led with "Aptos" — a
+   * face that resolves on almost no visitor's machine, so the site was silently rendering in
+   * whatever system UI font the browser chose. The rest of the stack stays as the fallback for the
+   * moment before the file lands, and `next/font` matches its metrics so nothing shifts.
+   */
+  --cambt-font-sans:
+    var(--cambt-font-inter), "Segoe UI Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * The accent face, for the emphasised word inside a heading and nothing else. A serif italic
+   * against tightly tracked sans is what stops a large display line reading as a slab of weight.
+   */
+  --cambt-font-accent: var(--cambt-font-accent-face), Georgia, "Times New Roman", serif;
+  --cambt-font-mono: "Cascadia Code", "SFMono-Regular", Consolas, ui-monospace, monospace;
+  --cambt-font-size-xs: 0.75rem;
+  --cambt-font-size-sm: 0.875rem;
+  --cambt-font-size-md: 1rem;
+  --cambt-font-size-lg: 1.125rem;
+  --cambt-font-size-xl: 1.25rem;
+  --cambt-font-size-2xl: clamp(1.5rem, 2vw, 1.875rem);
+  --cambt-font-size-3xl: clamp(2rem, 4vw, 3.5rem);
+  --cambt-font-size-display: clamp(2.75rem, 7vw, 6.5rem);
+  --cambt-leading-tight: 1.02;
+  --cambt-leading-heading: 1.12;
+  --cambt-leading-body: 1.65;
+
+  /* One heading contract, shared by the homepage and the inner pages. */
+  /* Lighter weight wants slightly less negative tracking, or the letters start to collide. */
+  --cambt-tracking-display: -0.035em;
+  --cambt-tracking-heading: -0.028em;
+  --cambt-tracking-label: 0.14em;
+
+  --cambt-type-display: clamp(3.6rem, 7.1vw, 6rem);
+  --cambt-type-h2: clamp(2.65rem, 5.1vw, 4.8rem);
+  --cambt-type-h3: clamp(1.5rem, 2.3vw, 2rem);
+  --cambt-type-lead: clamp(1.05rem, 1.5vw, 1.25rem);
+  /*
+   * Display type is set light, not heavy.
+   *
+   * These were 720 and 710. At clamp(3.6rem, 7.1vw, 6rem) — 58px to 96px — that much weight reads
+   * as shouting rather than as authority, and it was the main reason the page felt like a template
+   * rather than a considered piece of typography. Large sizes carry themselves; the confidence
+   * comes from the size and the tracking, so the weight can come down and let the counters open up.
+   *
+   * Smaller headings still need mass to hold their own against body copy, which is what
+   * `--cambt-weight-subhead` is for. One contract, three rungs, rather than one heavy setting
+   * applied at every size.
+   */
+  --cambt-weight-display: 500;
+  --cambt-weight-heading: 520;
+  --cambt-weight-subhead: 620;
+  --cambt-weight-action: 600;
+  /* Light display type needs a fraction more room than heavy display type did. */
+  --cambt-leading-display: 0.98;
+  --cambt-leading-section: 1.02;
+
+  --cambt-space-0: 0;
+  --cambt-space-1: 0.25rem;
+  --cambt-space-2: 0.5rem;
+  --cambt-space-3: 0.75rem;
+  --cambt-space-4: 1rem;
+  --cambt-space-5: 1.25rem;
+  --cambt-space-6: 1.5rem;
+  --cambt-space-8: 2rem;
+  --cambt-space-10: 2.5rem;
+  --cambt-space-12: 3rem;
+  --cambt-space-16: 4rem;
+  --cambt-space-20: 5rem;
+  --cambt-space-24: 6rem;
+  --cambt-space-32: 8rem;
+
+  --cambt-section-compact: clamp(3rem, 5vw, 4.5rem);
+  --cambt-section-standard: clamp(4.5rem, 7vw, 7rem);
+  --cambt-section-spacious: clamp(5.5rem, 9vw, 8.5rem);
+  --cambt-section-hero: clamp(3rem, 6vw, 5.5rem);
+
+  --cambt-width-reading: 44rem;
+  --cambt-width-content: 72rem;
+  --cambt-width-wide: 86rem;
+  --cambt-gutter: clamp(1.25rem, 4vw, 4rem);
+  --cambt-grid-columns: 12;
+  --cambt-grid-gap: clamp(1rem, 2vw, 2rem);
+
+  /* Radii step up from the previous near-square system, but stop well short of the pill-shaped
+     SaaS look: panels are softened, actions stay tight, technical elements stay square. */
+  --cambt-radius-sm: 0.25rem;
+  --cambt-radius-md: 0.5rem;
+  --cambt-radius-lg: 0.75rem;
+  --cambt-radius-xl: 1rem;
+  --cambt-radius-panel: 1.125rem;
+  /*
+   * The showcase radius. Large enough to read as a distinct plate sitting on the page rather than a
+   * band the page happens to change colour for, which is the difference between a section and a
+   * surface.
+   */
+  --cambt-radius-showcase: clamp(1.25rem, 2.2vw, 2rem);
+  --cambt-radius-pill: 999px;
+
+  --cambt-action-radius: var(--cambt-radius-md);
+  --cambt-action-min-height: 3.25rem;
+  --cambt-action-padding-block: 0.85rem;
+  --cambt-action-padding-inline: 1.4rem;
+  --cambt-border-width: 1px;
+
+  /* Elevation on a dark ground comes from light, not from darkness: a lifted surface catches a
+     brighter top edge and casts a deep, low-opacity shadow. */
+  --cambt-shadow-nav: 0 18px 44px rgb(2 8 16 / 0.55);
+  --cambt-shadow-overlay: 0 32px 80px rgb(2 8 16 / 0.7);
+  --cambt-shadow-panel: 0 20px 50px rgb(2 8 16 / 0.45);
+
+  --cambt-motion-fast: 140ms;
+  --cambt-motion-base: 260ms;
+  --cambt-motion-slow: 480ms;
+  --cambt-motion-entrance: 680ms;
+  --cambt-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --cambt-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --cambt-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /*
+   * The movement contract.
+   *
+   * One rule underpins it: colour changes faster than geometry. A hover that moves and recolours in
+   * the same 260ms reads as a single blunt flick; giving the transform a longer, softer curve makes
+   * the same interaction feel weighted rather than snappy. `--cambt-ease-glide` is a symmetric
+   * in-out curve for movement, deliberately unlike the decelerating `--cambt-ease-standard` used
+   * for things that arrive and stop.
+   */
+  --cambt-ease-glide: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --cambt-motion-tint: 300ms;
+  --cambt-motion-shift: 420ms;
+  --cambt-motion-reveal: 820ms;
+
+  --cambt-z-base: 0;
+  --cambt-z-sticky: 20;
+  --cambt-z-dropdown: 40;
+  --cambt-z-drawer: 60;
+  --cambt-z-modal: 80;
+  --cambt-z-toast: 100;
+
+  --cambt-focus-width: 3px;
+  --cambt-focus-offset: 3px;
+  --cambt-focus-ring: 0 0 0 var(--cambt-focus-width) rgb(46 145 255 / 0.45);
+
+  /* Navigation surface. The header interpolates between these two as it scrolls, driven by a
+     single --nav-progress custom property, so the colours live with the theme rather than being
+     hardcoded in the motion values where only one theme could ever be right. */
+  --cambt-nav-bg-top: rgb(16 42 64 / 0.94);
+  --cambt-nav-bg-scrolled: rgb(16 42 64 / 0.98);
+  --cambt-nav-border-top: rgb(255 255 255 / 0.08);
+  --cambt-nav-border-scrolled: rgb(46 145 255 / 0.26);
+
+  /* Translucent fills for actions and chips, which cannot be a flat colour on either ground. */
+  --cambt-surface-veil: rgb(255 255 255 / 0.05);
+  --cambt-surface-veil-strong: rgb(255 255 255 / 0.1);
+
+  /* The footer keeps the brand navy in both themes: a dark footer under a light page is a
+     deliberate anchor, and it keeps the white ink on it correct either way. */
+  --cambt-footer-bg: #071c2e;
+
+  /* The technology rail keeps a light plate in both themes, for the same reason the footer keeps
+     navy in both: third-party logo marks need one safe, unchanging backing rather than being
+     greyed onto navy in dark mode. All three values are invariant together — a background that
+     stays light with a border or text colour that follows the theme would put light-on-light or
+     dark-border-on-light-ground text in dark mode. Defined once here, never redefined in
+     [data-theme="light"], which is what keeps it constant across both. */
+  --cambt-marquee-bg: #f6f8fa;
+  --cambt-marquee-text: #536679;
+  --cambt-marquee-border: #dce4ec;
+}
+
+/*
+ * The public theme toggle and Studio opt into light surfaces through data-theme="light".
+ */
+[data-theme="light"] {
+  --cambt-color-accent-text: #0c5aa9;
+  --cambt-color-heading-accent: #1268c4;
+  color-scheme: light;
+  --cambt-color-bg-canvas: #edf1f4;
+  --cambt-color-bg-muted: #eaf0f6;
+  --cambt-color-bg-surface: #f6f8fa;
+  --cambt-color-bg-raised: #f6f8fa;
+  --cambt-color-bg-tint: #eef5ff;
+  --cambt-color-bg-tint-soft: #f7faff;
+  --cambt-color-text-primary: #101820;
+  --cambt-color-text-secondary: #536373;
+  --cambt-color-text-body: #536679;
+  --cambt-color-text-lead: #42566a;
+  --cambt-color-text-inverse: #ffffff;
+  --cambt-color-border-subtle: #dce4ec;
+  --cambt-color-border-strong: #b9c6d3;
+  --cambt-color-brand-blue-hover: #0c5aa9;
+  --cambt-color-success: #177d55;
+  --cambt-color-warning: #9a6412;
+  --cambt-color-danger: #b53b3b;
+  --cambt-shadow-nav: 0 12px 34px rgb(28 39 74 / 0.085);
+  --cambt-shadow-overlay: 0 24px 64px rgb(6 26 43 / 0.14);
+  --cambt-shadow-panel: 0 18px 44px rgb(6 26 43 / 0.1);
+
+  /* The technical layer has to be re-lit for a light ground: on navy it is light drawn on dark,
+     here it is ink drawn on paper. Without these the grids, glow and node field vanish. */
+  --cambt-color-border-lit: rgb(18 104 196 / 0.45);
+  --cambt-glow-core: rgb(18 104 196 / 0.3);
+  --cambt-glow-mid: rgb(18 104 196 / 0.12);
+  --cambt-glow-faint: rgb(18 104 196 / 0.05);
+  --cambt-glow-edge: rgb(18 104 196 / 0.22);
+
+  /*
+   * White on white is invisible, so on paper the sheen is not a highlight but a shadow passing
+   * over the card: the brand blue at low opacity, a little stronger than the dark values because a
+   * light surface has less contrast to spend and the sweep has to stay readable.
+   */
+  --cambt-sheen-core: rgb(18 104 196 / 0.2);
+  --cambt-sheen-edge: rgb(18 104 196 / 0.11);
+
+  /*
+   * Glass on paper. The tint has to carry more of the work here: on navy the blur alone separates
+   * the control from its ground, while on a near-white page a barely-tinted panel simply vanishes.
+   * The highlight inverts from a white top edge to a white face, because on light the surface reads
+   * as frosted rather than as lit.
+   */
+  --cambt-glass-bg: rgb(18 104 196 / 0.07);
+  --cambt-glass-border: rgb(18 104 196 / 0.2);
+  --cambt-glass-highlight: rgb(255 255 255 / 0.6);
+  --cambt-glass-active: rgb(18 104 196 / 0.14);
+
+  --cambt-line-grid: rgb(18 104 196 / 0.08);
+  --cambt-line-grid-strong: rgb(18 104 196 / 0.14);
+  --cambt-line-tick: rgb(18 104 196 / 0.35);
+
+  --cambt-nav-bg-top: rgb(237 241 244 / 0.94);
+  --cambt-nav-bg-scrolled: rgb(237 241 244 / 0.98);
+  --cambt-nav-border-top: rgb(9 41 67 / 0.08);
+  --cambt-nav-border-scrolled: rgb(18 104 196 / 0.22);
+  --cambt-surface-veil: rgb(9 41 67 / 0.04);
+  --cambt-surface-veil-strong: rgb(9 41 67 / 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cambt-motion-fast: 1ms;
+    --cambt-motion-base: 1ms;
+    --cambt-motion-slow: 1ms;
+    --cambt-motion-entrance: 1ms;
+    --cambt-motion-tint: 1ms;
+    --cambt-motion-shift: 1ms;
+    --cambt-motion-reveal: 1ms;
+  }
+}

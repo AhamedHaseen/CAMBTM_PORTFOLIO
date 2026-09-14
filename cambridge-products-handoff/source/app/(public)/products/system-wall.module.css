@@ -1,0 +1,261 @@
+/*
+ * The hero machine: nine systems racked behind glass, on a desk.
+ *
+ * Depth here is real CSS 3D, not a drawing of depth. The desk holds the perspective and each tile
+ * sits at its own `translateZ`, so the wall has thickness the reader can actually see the tiles
+ * moving through. The machine that holds them is fixed: it used to lean toward the pointer and the
+ * owner asked on 2026-09-10 for it to stand still, so the only transforms left are inside the
+ * screen. Every one of them is composited and none animates a layout property, so nothing in here
+ * can touch the page around it.
+ *
+ * One inherited custom property drives the movement, written by the component:
+ *
+ *   --wall-drift          idle drift duration. Absent or 0s means still.
+ *
+ * Duration is the switch rather than an animation name, the same trick `--mark-pulse` uses and for
+ * the same reason: CSS Modules hashes keyframe names, so a name crossing a module boundary would
+ * never resolve, where a duration is a plain inherited value.
+ */
+
+.desk {
+  /*
+   * Shallow on purpose. Nothing rotates any more, so this exists only to give the tiles' depth
+   * drift somewhere to happen; a tighter value would splay the outer tiles toward the corners.
+   */
+  perspective: 1100px;
+  perspective-origin: 50% 42%;
+  padding-block-start: clamp(0.5rem, 2vw, 1.25rem);
+}
+
+.machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+/* --- The machine ------------------------------------------------------------------------------- */
+
+.bezel {
+  position: relative;
+  width: 100%;
+  padding: clamp(0.6rem, 1.6vw, 1rem);
+  padding-block-end: clamp(1.4rem, 3vw, 2rem);
+  border: 1px solid var(--cambt-color-border-strong);
+  border-radius: var(--cambt-radius-md);
+  background-color: var(--cambt-color-bg-surface);
+  box-shadow: var(--cambt-shadow-panel);
+  transform-style: preserve-3d;
+}
+
+/*
+ * The chin, and the one place the brand accent appears on the machine itself: a power lamp. It is a
+ * two-pixel rule rather than a dot because the site has no dots anywhere else.
+ */
+.bezel::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-end: clamp(0.6rem, 1.4vw, 0.9rem);
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--cambt-color-brand-electric);
+  transform: translateX(-50%);
+}
+
+.glass {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(0.5rem, 1.4vw, 0.85rem);
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background-color: var(--cambt-color-bg-canvas);
+  /* The same graticule the marks and the argument panels are drawn on. */
+  background-image:
+    linear-gradient(to right, var(--cambt-line-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cambt-line-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  transform-style: preserve-3d;
+}
+
+/*
+ * A single soft sheen across the glass. Not a gloss effect and not glassmorphism: one low-contrast
+ * diagonal that catches the top-left corner, which is what tells the eye there is a surface in
+ * front of the tiles rather than behind them.
+ */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    142deg,
+    rgb(255 255 255 / 0.05) 0%,
+    transparent 38%,
+    transparent 100%
+  );
+}
+
+.neck {
+  width: clamp(2.5rem, 6vw, 3.75rem);
+  height: clamp(1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--cambt-color-border-strong);
+  border-block-start: none;
+  background-color: var(--cambt-color-bg-muted);
+}
+
+.foot {
+  width: clamp(7rem, 20vw, 11rem);
+  height: 3px;
+  border-radius: 2px;
+  background-color: var(--cambt-color-border-strong);
+}
+
+/* --- The wall ---------------------------------------------------------------------------------- */
+
+/*
+ * Three by three, because there are nine systems. The wall is sized to the set rather than the set
+ * padded or cropped to fit the wall, so adding a tenth system is a content change and this file
+ * does not need touching: `auto-fit` would reflow it, but a fixed three keeps the square the
+ * machine is shaped around.
+ */
+.wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.3rem, 0.9vw, 0.55rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+
+.cell {
+  transform-style: preserve-3d;
+  /*
+   * The idle drift: each tile rises and settles on its own beat, derived from where it sits in the
+   * wall. Nothing translates in X or Y, so no tile can ever drift out from under its own link.
+   */
+  animation: wall-drift var(--wall-drift, 0s) var(--cambt-ease-glide) infinite;
+  animation-delay: calc(var(--cell-index, 0) * -700ms);
+}
+
+/*
+ * 0% and 100% are identical to the resting depth, so a zero-duration animation resolves straight to
+ * the state the tile should already be in and switching the drift off can never leave one lifted.
+ */
+@keyframes wall-drift {
+  0% {
+    transform: translateZ(0);
+  }
+  50% {
+    transform: translateZ(14px);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  /* Comfortably past the 44px minimum at every width the hero is used at. */
+  min-height: clamp(3.5rem, 8vw, 5.5rem);
+  padding: clamp(0.45rem, 1.2vw, 0.7rem) 0.35rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background-color: var(--cambt-color-bg-muted);
+  color: var(--cambt-color-text-secondary);
+  text-decoration: none;
+  transition:
+    background-color var(--cambt-motion-base) var(--cambt-ease-standard),
+    border-color var(--cambt-motion-base) var(--cambt-ease-standard),
+    color var(--cambt-motion-base) var(--cambt-ease-standard);
+}
+
+.plate {
+  display: block;
+  width: 100%;
+  /* Wider than tall, matching the marks' own 160x120 box so none of them is letterboxed. */
+  aspect-ratio: 4 / 3;
+}
+
+.label {
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: var(--cambt-tracking-label);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/*
+ * Hover and keyboard focus produce the same state, deliberately. A reader tabbing the wall should
+ * get the tile they are on lit exactly as a reader pointing at it does, not a focus ring around an
+ * otherwise unchanged tile.
+ */
+.tile:hover,
+.tile:focus-visible {
+  border-color: var(--cambt-color-border-lit);
+  background-color: var(--cambt-color-bg-raised);
+  color: var(--cambt-color-text-primary);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--cambt-color-brand-electric);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+   * The tile comes forward off the wall, and the mark inside it runs the same fill pulse the index
+   * cards use. `--mark-pulse` is inherited, so this one declaration reaches the SVG in the other
+   * stylesheet without either module importing the other.
+   */
+  .cell:hover,
+  .cell:focus-within {
+    --mark-pulse: 1.8s;
+
+    /* Overrides the drift while lifted, and hands it back on the way out. */
+    animation: none;
+    transform: translateZ(26px);
+    transition: transform var(--cambt-motion-base) var(--cambt-ease-emphasized);
+  }
+}
+
+/* --- Narrow ------------------------------------------------------------------------------------ */
+
+/*
+ * On a phone there is no hover to lift a tile and the machine is the width of the screen, so the
+ * perspective is dropped rather than reduced: a shallow 3D scene at that size reads as a rendering
+ * artefact. The wall stays three across and the tiles stay links.
+ */
+@media (max-width: 30rem) {
+  .desk {
+    perspective: none;
+  }
+
+  .label {
+    font-size: 0.625rem;
+  }
+}
+
+/* --- Stillness --------------------------------------------------------------------------------- */
+
+/*
+ * The component never starts its observer under this preference, so `--wall-drift` is never written
+ * and the figure is already still. These rules drop the transitions that would otherwise carry a
+ * hover, since the easing tokens are not collapsed the way the duration tokens are.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .machine,
+  .cell,
+  .tile {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}

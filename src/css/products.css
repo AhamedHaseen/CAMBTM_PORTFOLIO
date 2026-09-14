@@ -1,0 +1,1260 @@
+/* ==========================================================================
+   CAMBRIDGE MARKETING (CAMBM) — PRODUCTS SECTION STYLES
+   ========================================================================== */
+
+:root {
+  /* CAMBM Product Theme Tokens (Dark Mode Default) */
+  --cambt-color-brand-blue: #ff5a00;
+  --cambt-color-brand-blue-hover: #f1966a;
+  --cambt-color-brand-electric: #ff5a00;
+  --cambt-color-brand-deep-navy: #0a0a0c;
+  --cambt-color-brand-system-navy: #141418;
+  
+  --cambt-color-bg-canvas: #0e0e11;
+  --cambt-color-bg-muted: #16161c;
+  --cambt-color-bg-surface: #1c1c24;
+  --cambt-color-bg-raised: #24242e;
+  --cambt-color-bg-inverse: #ffffff;
+  
+  --cambt-color-bg-tint: #141419;
+  --cambt-color-bg-tint-soft: #181822;
+  
+  --cambt-color-text-primary: #f4f4f7;
+  --cambt-color-text-secondary: #a2a2b3;
+  --cambt-color-text-body: #c5c5d6;
+  --cambt-color-text-lead: #dadae8;
+  --cambt-color-text-inverse: #0a0a0c;
+  
+  --cambt-color-border-subtle: rgba(255, 255, 255, 0.08);
+  --cambt-color-border-strong: rgba(255, 255, 255, 0.16);
+  --cambt-color-border-lit: rgba(255, 90, 0, 0.45);
+  
+  --cambt-color-focus: #ff5a00;
+  --cambt-color-success: #10b981;
+  --cambt-color-warning: #f59e0b;
+  --cambt-color-danger: #ef4444;
+  --cambt-color-accent-text: #ff7b29;
+  --cambt-color-heading-accent: #ff7b29;
+  
+  --cambt-line-grid: rgba(255, 255, 255, 0.04);
+  --cambt-shadow-panel: 0 20px 50px rgba(0, 0, 0, 0.5);
+  
+  --cambt-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --cambt-font-accent: 'Instrument Serif', Georgia, serif;
+  --cambt-font-mono: 'Cascadia Code', 'SFMono-Regular', Consolas, ui-monospace, monospace;
+  
+  --cambt-radius-sm: 0.375rem;
+  --cambt-radius-md: 0.625rem;
+  --cambt-radius-lg: 1rem;
+  --cambt-radius-full: 9999px;
+  
+  --cambt-width-wide: 86rem;
+  --cambt-width-reading: 44rem;
+  --cambt-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  
+  --cambt-type-display: clamp(2.5rem, 5.5vw, 4.25rem);
+  --cambt-type-h2: clamp(2rem, 3.8vw, 3.25rem);
+  --cambt-type-h3: clamp(1.25rem, 2vw, 1.65rem);
+  --cambt-type-lead: clamp(1.05rem, 1.4vw, 1.2rem);
+  
+  --cambt-font-size-xs: 0.75rem;
+  --cambt-font-size-sm: 0.875rem;
+  --cambt-font-size-md: 1rem;
+  --cambt-font-size-lg: 1.125rem;
+  --cambt-font-size-xl: 1.25rem;
+  
+  --cambt-weight-display: 600;
+  --cambt-weight-heading: 600;
+  --cambt-weight-subhead: 600;
+  
+  --cambt-tracking-display: -0.025em;
+  --cambt-tracking-heading: -0.02em;
+  --cambt-tracking-label: 0.12em;
+  
+  --cambt-leading-display: 1.05;
+  --cambt-leading-section: 1.15;
+  
+  --cambt-motion-base: 260ms;
+  --cambt-motion-shift: 420ms;
+  --cambt-motion-tint: 300ms;
+  --cambt-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --cambt-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --cambt-ease-glide: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+[data-theme="light"] {
+  --cambt-color-brand-blue: #ff5a00;
+  --cambt-color-brand-blue-hover: #b23d10;
+  --cambt-color-brand-electric: #ff5a00;
+  --cambt-color-brand-deep-navy: #f8fafc;
+  --cambt-color-brand-system-navy: #edf2f7;
+  
+  --cambt-color-bg-canvas: #ffffff;
+  --cambt-color-bg-muted: #f8fafc;
+  --cambt-color-bg-surface: #ffffff;
+  --cambt-color-bg-raised: #f1f5f9;
+  --cambt-color-bg-inverse: #0a0a0c;
+  
+  --cambt-color-bg-tint: #fafafa;
+  --cambt-color-bg-tint-soft: #f4f6f8;
+  
+  --cambt-color-text-primary: #0f172a;
+  --cambt-color-text-secondary: #475569;
+  --cambt-color-text-body: #334155;
+  --cambt-color-text-lead: #1e293b;
+  --cambt-color-text-inverse: #ffffff;
+  
+  --cambt-color-border-subtle: rgba(15, 23, 42, 0.08);
+  --cambt-color-border-strong: rgba(15, 23, 42, 0.16);
+  --cambt-color-border-lit: rgba(255, 90, 0, 0.4);
+  
+  --cambt-color-accent-text: #b23d10;
+  --cambt-color-heading-accent: #ff5a00;
+  
+  --cambt-line-grid: rgba(15, 23, 42, 0.04);
+  --cambt-shadow-panel: 0 18px 44px rgba(15, 23, 42, 0.08);
+}
+
+/* Base Page Container */
+.cambm-products-page {
+  background-color: var(--cambt-color-bg-canvas);
+  color: var(--cambt-color-text-primary);
+  min-height: 100vh;
+  padding-top: var(--header-height, 64px);
+  overflow-x: hidden;
+}
+
+/* Breadcrumb Component */
+.cambt-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  font-family: var(--cambt-font-sans);
+  font-size: var(--cambt-font-size-sm);
+  color: var(--cambt-color-text-secondary);
+}
+
+.cambt-breadcrumb ol {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cambt-breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cambt-breadcrumb a {
+  color: var(--cambt-color-text-secondary);
+  text-decoration: none;
+  transition: color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-breadcrumb a:hover {
+  color: var(--cambt-color-brand-blue);
+}
+
+.cambt-breadcrumb-sep {
+  opacity: 0.4;
+  user-select: none;
+}
+
+.cambt-breadcrumb-current {
+  color: var(--cambt-color-text-primary);
+  font-weight: 500;
+}
+
+/* Hero Section */
+.cambt-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--cambt-color-bg-tint);
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 7vw, 6.5rem);
+}
+
+.cambt-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--cambt-width-wide);
+  margin: 0 auto;
+  padding: 0 var(--cambt-gutter);
+}
+
+.cambt-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
+  .cambt-hero-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.cambt-hero-content h1 {
+  margin: 0 0 1.5rem;
+  font-size: var(--cambt-type-display);
+  font-weight: var(--cambt-weight-display);
+  letter-spacing: var(--cambt-tracking-display);
+  line-height: var(--cambt-leading-display);
+  color: var(--cambt-color-text-primary);
+}
+
+.cambt-hero-content h1 em {
+  font-family: var(--cambt-font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--cambt-color-brand-blue);
+  padding: 0 0.15em;
+}
+
+.cambt-hero-lead {
+  max-width: 36rem;
+  margin: 0 0 2rem;
+  color: var(--cambt-color-text-lead);
+  font-size: var(--cambt-type-lead);
+  line-height: 1.65;
+}
+
+.cambt-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cambt-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.65rem;
+  border-radius: var(--cambt-radius-sm);
+  background-color: var(--cambt-color-brand-blue);
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: var(--cambt-font-size-sm);
+  text-decoration: none;
+  border: 1px solid var(--cambt-color-brand-blue);
+  cursor: pointer;
+  transition: background-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+              transform 0.2s ease;
+}
+
+.cambt-btn-primary:hover {
+  background-color: var(--cambt-color-brand-blue-hover);
+  transform: translateY(-1px);
+}
+
+.cambt-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.65rem;
+  border-radius: var(--cambt-radius-sm);
+  background-color: transparent;
+  color: var(--cambt-color-text-primary);
+  font-weight: 600;
+  font-size: var(--cambt-font-size-sm);
+  text-decoration: none;
+  border: 1px solid var(--cambt-color-border-strong);
+  cursor: pointer;
+  transition: all var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-btn-secondary:hover {
+  border-color: var(--cambt-color-brand-blue);
+  color: var(--cambt-color-brand-blue);
+  background-color: var(--cambt-color-bg-surface);
+}
+
+/* Mono Label / Kicker */
+.cambt-label {
+  display: block;
+  margin: 0 0 1rem;
+  color: var(--cambt-color-brand-electric);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  font-weight: 700;
+  letter-spacing: var(--cambt-tracking-label);
+  text-transform: uppercase;
+}
+
+/* General Section Band Styles */
+.cambt-section {
+  padding: clamp(4rem, 7vw, 7rem) 0;
+  position: relative;
+}
+
+.cambt-section-white {
+  background-color: var(--cambt-color-bg-surface);
+}
+
+.cambt-section-pale {
+  background-color: var(--cambt-color-bg-tint-soft);
+}
+
+.cambt-section-muted {
+  background-color: var(--cambt-color-bg-muted);
+}
+
+.cambt-inner {
+  max-width: var(--cambt-width-wide);
+  margin: 0 auto;
+  padding: 0 var(--cambt-gutter);
+}
+
+.cambt-section-head {
+  max-width: var(--cambt-width-reading);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.cambt-section-head h2 {
+  margin: 0;
+  font-size: var(--cambt-type-h2);
+  font-weight: var(--cambt-weight-heading);
+  letter-spacing: var(--cambt-tracking-heading);
+  line-height: var(--cambt-leading-section);
+  color: var(--cambt-color-text-primary);
+}
+
+.cambt-section-head h2::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  margin-top: 1.25rem;
+  background: var(--cambt-color-brand-blue);
+}
+
+.cambt-section-head p {
+  margin: 1.25rem 0 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-lg);
+  line-height: 1.65;
+}
+
+/* --- System Wall 3D Monitor --- */
+.cambt-desk {
+  perspective: 1100px;
+  perspective-origin: 50% 42%;
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.cambt-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.cambt-bezel {
+  position: relative;
+  width: 100%;
+  padding: clamp(0.6rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.4rem, 3vw, 2rem);
+  border: 1px solid var(--cambt-color-border-strong);
+  border-radius: var(--cambt-radius-md);
+  background-color: var(--cambt-color-bg-surface);
+  box-shadow: var(--cambt-shadow-panel);
+  transform-style: preserve-3d;
+}
+
+.cambt-bezel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.6rem, 1.4vw, 0.9rem);
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--cambt-color-brand-electric);
+  transform: translateX(-50%);
+}
+
+.cambt-glass {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(0.5rem, 1.4vw, 0.85rem);
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background-color: var(--cambt-color-bg-canvas);
+  background-image:
+    linear-gradient(to right, var(--cambt-line-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cambt-line-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  transform-style: preserve-3d;
+}
+
+.cambt-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(142deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+}
+
+.cambt-wall-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.35rem, 1vw, 0.6rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+
+.cambt-wall-cell {
+  transform-style: preserve-3d;
+  animation: cambt-wall-drift var(--wall-drift, 0s) var(--cambt-ease-glide) infinite;
+  animation-delay: calc(var(--cell-index, 0) * -700ms);
+}
+
+@keyframes cambt-wall-drift {
+  0% { transform: translateZ(0); }
+  50% { transform: translateZ(14px); }
+  100% { transform: translateZ(0); }
+}
+
+.cambt-wall-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: clamp(3.5rem, 8vw, 5.5rem);
+  padding: clamp(0.45rem, 1.2vw, 0.7rem) 0.35rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-sm);
+  background-color: var(--cambt-color-bg-muted);
+  color: var(--cambt-color-text-secondary);
+  text-decoration: none;
+  transition: all var(--cambt-motion-base) var(--cambt-ease-standard);
+}
+
+.cambt-wall-plate {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.cambt-wall-label {
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: var(--cambt-tracking-label);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cambt-wall-tile:hover,
+.cambt-wall-tile:focus-visible {
+  border-color: var(--cambt-color-border-lit);
+  background-color: var(--cambt-color-bg-raised);
+  color: var(--cambt-color-text-primary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cambt-wall-cell:hover,
+  .cambt-wall-cell:focus-within {
+    --mark-pulse: 1.8s;
+    animation: none;
+    transform: translateZ(26px);
+    transition: transform var(--cambt-motion-base) var(--cambt-ease-emphasized);
+  }
+}
+
+.cambt-neck {
+  width: clamp(2.5rem, 6vw, 3.75rem);
+  height: clamp(1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--cambt-color-border-strong);
+  border-top: none;
+  background-color: var(--cambt-color-bg-muted);
+}
+
+.cambt-foot {
+  width: clamp(7rem, 20vw, 11rem);
+  height: 3px;
+  border-radius: 2px;
+  background-color: var(--cambt-color-border-strong);
+}
+
+/* --- System Mark Vectors --- */
+.cambt-mark-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--cambt-color-text-secondary);
+  overflow: visible;
+  transition: color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-mark-svg * {
+  vector-effect: non-scaling-stroke;
+}
+
+.cambt-mark-filled,
+.cambt-mark-empty {
+  animation: cambt-mark-pulse var(--mark-pulse, 0s) var(--cambt-ease-glide) infinite;
+  animation-delay: calc(var(--fill-index, 0) * 90ms);
+  stroke: none;
+  transition: fill var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-mark-filled {
+  fill: var(--cambt-color-brand-blue);
+}
+
+.cambt-mark-empty {
+  fill: color-mix(in srgb, currentColor 14%, transparent);
+  animation-name: cambt-mark-pulse-empty;
+}
+
+@keyframes cambt-mark-pulse {
+  0% { fill: var(--cambt-color-brand-blue); }
+  10% { fill: var(--cambt-color-brand-electric); }
+  28% { fill: var(--cambt-color-brand-blue); }
+  100% { fill: var(--cambt-color-brand-blue); }
+}
+
+@keyframes cambt-mark-pulse-empty {
+  0% { fill: color-mix(in srgb, currentColor 14%, transparent); }
+  10% { fill: color-mix(in srgb, var(--cambt-color-brand-blue) 38%, transparent); }
+  28% { fill: color-mix(in srgb, currentColor 14%, transparent); }
+  100% { fill: color-mix(in srgb, currentColor 14%, transparent); }
+}
+
+/* --- Diptych Adaptation Argument --- */
+.cambt-argument {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.cambt-diptych {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+@media (min-width: 54rem) {
+  .cambt-diptych {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: stretch;
+  }
+}
+
+.cambt-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+}
+
+.cambt-panel-generic {
+  background: var(--cambt-color-bg-muted);
+}
+
+.cambt-panel-fitted {
+  border-color: var(--cambt-color-border-lit);
+  background: linear-gradient(to bottom, rgba(255, 90, 0, 0.05), transparent 60%),
+              var(--cambt-color-bg-surface);
+}
+
+.cambt-panel-head h3 {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-type-h3);
+  font-weight: var(--cambt-weight-subhead);
+  letter-spacing: var(--cambt-tracking-heading);
+}
+
+.cambt-panel-head p {
+  margin: 0.5rem 0 0;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+}
+
+.cambt-fields-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cambt-field-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--cambt-color-border-subtle);
+  font-size: var(--cambt-font-size-sm);
+}
+
+.cambt-field-name {
+  color: var(--cambt-color-text-body);
+}
+
+.cambt-field-item[data-verdict="unused"] .cambt-field-name {
+  color: var(--cambt-color-text-secondary);
+  text-decoration: line-through;
+  text-decoration-color: var(--cambt-color-danger);
+  text-decoration-thickness: 1.5px;
+}
+
+.cambt-verdict-tag {
+  flex: none;
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--cambt-radius-sm);
+}
+
+.cambt-field-item[data-verdict="unused"] .cambt-verdict-tag {
+  color: var(--cambt-color-danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.cambt-field-item[data-verdict="forced"] .cambt-verdict-tag {
+  color: var(--cambt-color-warning);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.cambt-field-item[data-verdict="kept"] .cambt-verdict-tag {
+  color: var(--cambt-color-success);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.cambt-tally {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cambt-color-border-strong);
+}
+
+.cambt-tally-figure {
+  color: var(--cambt-color-text-primary);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cambt-tally-figure.danger {
+  color: var(--cambt-color-danger);
+}
+
+.cambt-tally-figure.success {
+  color: var(--cambt-color-success);
+}
+
+.cambt-tally-label {
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+}
+
+/* --- Fitted Field (Pointer Interactive) --- */
+.cambt-fitted-field-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 60rem) {
+  .cambt-fitted-field-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cambt-fitted-points {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cambt-fitted-points li {
+  position: relative;
+  padding-left: 1.75rem;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.55;
+}
+
+.cambt-fitted-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 0.85rem;
+  height: 2px;
+  background-color: var(--cambt-color-brand-blue);
+}
+
+.cambt-fitted-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  pointer-events: none;
+  background: var(--cambt-color-bg-muted);
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  padding: 1.5rem;
+}
+
+.cambt-fitted-line {
+  display: block;
+  width: clamp(0.85rem, 2vw, 1.5rem);
+  height: 2px;
+  background: color-mix(in srgb, var(--cambt-color-text-secondary) 50%, transparent);
+  rotate: var(--angle, 0deg);
+  transition: rotate var(--cambt-motion-shift) var(--cambt-ease-glide),
+              background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+  transform-origin: center;
+}
+
+.cambt-fitted-line:nth-child(9n + 4),
+.cambt-fitted-line:nth-child(9n + 5),
+.cambt-fitted-line:nth-child(9n + 6) {
+  background: var(--cambt-color-brand-blue);
+}
+
+/* --- System Index & Filterable Cards --- */
+.cambt-index-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cambt-filter-btn {
+  min-height: 2.5rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-full);
+  background: var(--cambt-color-bg-surface);
+  color: var(--cambt-color-text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--cambt-font-size-sm);
+  font-weight: 500;
+  transition: all var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-filter-btn:hover {
+  border-color: var(--cambt-color-brand-blue);
+  color: var(--cambt-color-text-primary);
+}
+
+.cambt-filter-btn[aria-pressed="true"] {
+  border-color: var(--cambt-color-brand-blue);
+  background: var(--cambt-color-brand-blue);
+  color: #ffffff;
+}
+
+.cambt-index-count {
+  margin: 0 0 1.5rem;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cambt-index-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 44rem) {
+  .cambt-index-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .cambt-index-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cambt-product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-surface);
+  transition: border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+              transform var(--cambt-motion-shift) var(--cambt-ease-glide),
+              box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
+}
+
+.cambt-product-card:hover {
+  border-color: var(--cambt-color-border-lit);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cambt-card-plate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  background-color: var(--cambt-color-bg-muted);
+  background-image:
+    linear-gradient(to right, var(--cambt-line-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cambt-line-grid) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: center;
+  transition: background-color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.cambt-product-card:hover .cambt-card-plate {
+  background-color: var(--cambt-color-bg-tint);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cambt-product-card:hover .cambt-card-plate {
+    --mark-pulse: 1.8s;
+  }
+}
+
+.cambt-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+.cambt-card-meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cambt-card-screens {
+  color: var(--cambt-color-accent-text);
+  font-weight: 600;
+}
+
+.cambt-card-title {
+  margin: 0;
+  font-size: var(--cambt-font-size-xl);
+  font-weight: var(--cambt-weight-subhead);
+  letter-spacing: var(--cambt-tracking-heading);
+}
+
+.cambt-card-link {
+  color: var(--cambt-color-text-primary);
+  text-decoration: none;
+}
+
+.cambt-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cambt-card-pos {
+  margin: 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.55;
+}
+
+/* --- Detail Page Sections --- */
+.cambt-screen-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.cambt-screen-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.cambt-screen-frame .cambt-screen-plate,
+.cambt-screen-frame .cambt-screen-caption {
+  width: min(100%, var(--native, 100%));
+}
+
+.cambt-screen-plate {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-surface);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+  transition: border-color var(--cambt-motion-tint) var(--cambt-ease-standard),
+              box-shadow var(--cambt-motion-shift) var(--cambt-ease-glide);
+}
+
+.cambt-screen-plate:hover {
+  border-color: var(--cambt-color-border-lit);
+  box-shadow: 0 22px 52px rgba(255, 90, 0, 0.2);
+}
+
+.cambt-screen-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.cambt-screen-caption {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+}
+
+.cambt-caption-num {
+  color: var(--cambt-color-brand-blue);
+  font-family: var(--cambt-font-mono);
+  font-size: var(--cambt-font-size-xs);
+  font-weight: 700;
+}
+
+/* CAMBCARD Portrait Gallery */
+.cambt-portrait-gallery {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1.5rem;
+}
+
+.cambt-portrait-rail {
+  display: flex;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin: 0;
+  padding: 0 20% 0 0;
+  list-style: none;
+}
+
+.cambt-portrait-slide {
+  flex: 0 0 min(19rem, 72vw);
+  scroll-snap-align: start;
+}
+
+.cambt-portrait-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.cambt-portrait-plate {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-lg);
+  background: var(--cambt-color-bg-surface);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.cambt-portrait-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Solves / Problem Section */
+.cambt-solves-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 50rem) {
+  .cambt-solves-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cambt-solves-item {
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-surface);
+}
+
+.cambt-solves-item h3 {
+  margin: 0 0 0.75rem;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-lg);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.cambt-solves-item p {
+  margin: 0;
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.6;
+}
+
+/* Modules Grid */
+.cambt-modules-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 54rem) {
+  .cambt-modules-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+  }
+}
+
+.cambt-module-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  gap: 0.35rem;
+}
+
+.cambt-module-item h3 {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-md);
+  font-weight: 600;
+}
+
+.cambt-module-item p {
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.5;
+}
+
+/* Replaces & Adapts Ruled Lists */
+.cambt-ruled-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 54rem) {
+  .cambt-ruled-list {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+  }
+}
+
+.cambt-ruled-item {
+  position: relative;
+  padding: 1rem 0 1rem 2.25rem;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  color: var(--cambt-color-text-body);
+  font-size: var(--cambt-font-size-md);
+  line-height: 1.55;
+}
+
+.cambt-ruled-item.danger::before {
+  content: "";
+  position: absolute;
+  top: 1.6em;
+  left: 0;
+  width: 1.25rem;
+  height: 2px;
+  background: var(--cambt-color-danger);
+}
+
+.cambt-ruled-item.accent::before {
+  content: "";
+  position: absolute;
+  top: 1.6em;
+  left: 0;
+  width: 1.25rem;
+  height: 2px;
+  background: var(--cambt-color-brand-blue);
+}
+
+/* Context & Chips */
+.cambt-context-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 50rem) {
+  .cambt-context-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cambt-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cambt-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--cambt-radius-full);
+  background: var(--cambt-color-bg-surface);
+  border: 1px solid var(--cambt-color-border-subtle);
+  color: var(--cambt-color-text-primary);
+  font-size: var(--cambt-font-size-sm);
+  font-weight: 500;
+}
+
+/* Related Services */
+.cambt-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .cambt-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cambt-service-card {
+  padding: 1.5rem;
+  border: 1px solid var(--cambt-color-border-subtle);
+  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-muted);
+}
+
+.cambt-service-card h3 {
+  margin: 0 0 0.5rem;
+}
+
+.cambt-service-card h3 a {
+  color: var(--cambt-color-text-primary);
+  text-decoration: none;
+  font-size: var(--cambt-font-size-lg);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.cambt-service-card h3 a:hover {
+  color: var(--cambt-color-brand-blue);
+}
+
+.cambt-service-card p {
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-size: var(--cambt-font-size-sm);
+  line-height: 1.6;
+}
+
+/* Closing CTA Band */
+.cambt-cta-band {
+  background: var(--cambt-color-brand-blue);
+  color: #ffffff;
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cambt-cta-band h2 {
+  font-size: var(--cambt-type-h2);
+  font-weight: 700;
+  letter-spacing: var(--cambt-tracking-heading);
+  margin: 0 0 1rem;
+  color: #ffffff;
+}
+
+.cambt-cta-band p {
+  max-width: 38rem;
+  margin: 0 0 2rem;
+  font-size: var(--cambt-font-size-lg);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.cambt-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--cambt-radius-sm);
+  background-color: #ffffff;
+  color: var(--cambt-color-brand-blue) !important;
+  font-weight: 700;
+  font-size: var(--cambt-font-size-md);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cambt-btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}

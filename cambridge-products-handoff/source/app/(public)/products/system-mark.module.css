@@ -1,0 +1,140 @@
+/*
+ * The system marks, and the pulse that walks through them.
+ *
+ * Everything structural is `currentColor`, so a mark takes the text colour of whatever it sits in
+ * and needs no second version for the light theme. Only two extra tones exist: `filled` for the
+ * live state a mark is describing (a let room, a taught period, a taken bay) and `empty` for the
+ * same thing unoccupied.
+ *
+ * Strokes are declared non-scaling, so a mark drawn at 160x120 keeps a true hairline whatever size
+ * it is rendered at. Without that, scaling the viewBox up to fill a card would thicken every line
+ * and the family would stop matching the 1px rules used everywhere else on the site.
+ */
+
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--cambt-color-text-secondary);
+  overflow: visible;
+  transition: color var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+.mark * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- The pulse ---------------------------------------------------------------------------------- */
+
+/*
+ * A wave of colour walking the drawing, one tile at a time.
+ *
+ * The drawing itself never moves. Only the fill changes, tile by tile, in the order each tile sits
+ * in the picture. That is the whole gesture: a mark that fades or wipes in reads as something still
+ * loading, where a fill travelling through a static diagram reads as a system running.
+ *
+ * ## How a parent turns it on
+ *
+ * By setting one inherited custom property:
+ *
+ *     .plate:hover { --mark-pulse: 1.8s; }
+ *
+ * The switch is the *duration*, not the animation name, and that is deliberate. CSS Modules hashes
+ * `@keyframes` names, so a name arriving through a custom property from another stylesheet would
+ * never resolve to the hashed one. A duration is a plain value, and custom properties inherit, so a
+ * card or a hero cell can drive this without importing anything.
+ *
+ * ## Why the off state is safe
+ *
+ * A zero-duration animation resolves immediately to its final frame, so 100% is written to be
+ * identical to the resting fill. Whether the animation is absent, zero-length or removed halfway
+ * through, the tile lands on the colour it should already be.
+ *
+ * And because removing the animation returns the tile to its base fill, the `transition` below
+ * carries it back rather than snapping. A tile can never be left frozen mid-pulse, which is the
+ * failure the previous wipe had to run a JavaScript timer to avoid.
+ *
+ * ## The one convention this breaks
+ *
+ * Everywhere else the site staggers with `animation-range` on a `view()` timeline rather than with
+ * `animation-delay`. That is right for content arriving on scroll and impossible here: a hover loop
+ * has no scroll range to work against. This is the exception, and it is the only one.
+ */
+
+.filled,
+.empty {
+  animation: mark-pulse var(--mark-pulse, 0s) var(--cambt-ease-glide) infinite;
+  /* Position in the drawing, not position in the source. Set per tile by the component. */
+  animation-delay: calc(var(--fill-index, 0) * 90ms);
+  stroke: none;
+  transition: fill var(--cambt-motion-tint) var(--cambt-ease-standard);
+}
+
+/* The live state: what the system is actually holding right now. */
+.filled {
+  fill: var(--cambt-color-brand-blue);
+}
+
+/* The same slot, empty. Present in the structure, not in use. */
+.empty {
+  fill: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.accentStroke {
+  stroke: var(--cambt-color-brand-blue);
+}
+
+/*
+ * A filled tile brightens to the electric blue and settles back. The rest of the cycle is the
+ * resting colour, which is what leaves a gap between passes rather than a continuous shimmer.
+ */
+@keyframes mark-pulse {
+  0% {
+    fill: var(--cambt-color-brand-blue);
+  }
+  10% {
+    fill: var(--cambt-color-brand-electric);
+  }
+  28% {
+    fill: var(--cambt-color-brand-blue);
+  }
+  100% {
+    fill: var(--cambt-color-brand-blue);
+  }
+}
+
+/*
+ * An empty tile takes the same wave at a fraction of the strength: enough to show the wave passing
+ * through the whole structure, not enough to claim the slot is in use.
+ */
+.empty {
+  animation-name: mark-pulse-empty;
+}
+
+@keyframes mark-pulse-empty {
+  0% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  10% {
+    fill: color-mix(in srgb, var(--cambt-color-brand-blue) 38%, transparent);
+  }
+  28% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  100% {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+  }
+}
+
+/*
+ * Nothing to undo: a parent only sets `--mark-pulse` inside a no-preference guard, so under a
+ * stillness preference the duration stays 0s and the marks are simply static. The transition is
+ * dropped too, since the token it uses is collapsed to 1ms but the easing tokens are not.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .filled,
+  .empty {
+    animation: none;
+    transition: none;
+  }
+}
