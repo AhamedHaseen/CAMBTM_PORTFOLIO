@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import Welcome from "./pages/Welcome";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
+import OurProjects from "./pages/OurProjects";
 
 // Admin Context & Styles
 import "./admin/admin.css";
@@ -97,6 +98,16 @@ function App() {
             <Route
               path="/portfolio.html"
               element={<Navigate to="/portfolio" replace />}
+            />
+            <Route path="/our-projects" element={<OurProjects />} />
+            <Route
+              path="/our-projects.html"
+              element={<Navigate to="/our-projects" replace />}
+            />
+            <Route path="/projects" element={<OurProjects />} />
+            <Route
+              path="/projects.html"
+              element={<Navigate to="/our-projects" replace />}
             />
             <Route
               path="/portfolio-under-construction.html"

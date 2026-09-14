@@ -49,6 +49,9 @@ export default function About() {
             <a href="/#combo-packages" className="nav-link" data-i18n="nav.packages">
               Packages
             </a>
+            <a href="/our-projects" className="nav-link" data-i18n="nav.ourProjects">
+              Our Projects
+            </a>
             <a
               href="/#why-CAMBM"
               data-scroll-target="why-CAMBM"
@@ -131,6 +134,9 @@ export default function About() {
           </a>
           <a href="/#combo-packages" className="mobile-nav-link" data-i18n="nav.packages">
             Packages
+          </a>
+          <a href="/our-projects" className="mobile-nav-link" data-i18n="nav.ourProjects">
+            Our Projects
           </a>
           <a
             href="/#why-CAMBM"
