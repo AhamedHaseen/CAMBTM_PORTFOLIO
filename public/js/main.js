@@ -213,51 +213,96 @@ function smoothScrollTo(targetY, duration = 600) {
 
 if (backToTop) backToTop.addEventListener("click", () => smoothScrollTo(0));
 
-// ===== MOBILE NAV TOGGLE =====
-const navToggle = document.getElementById("navToggle");
-const mobileNav = document.getElementById("mobileNav");
-const mobileNavBackdrop = document.getElementById("mobileNavBackdrop");
+// ===== MOBILE NAV TOGGLE (SPA-safe dynamic lookups + global delegation) =====
+function getMobileNavElements() {
+  return {
+    toggle: document.getElementById("navToggle") || document.querySelector(".nav-toggle"),
+    nav: document.getElementById("mobileNav") || document.querySelector(".mobile-nav"),
+    backdrop: document.getElementById("mobileNavBackdrop") || document.querySelector(".mobile-nav-backdrop"),
+  };
+}
 
 function closeMobileNav() {
-  if (navToggle) navToggle.classList.remove("open");
-  if (mobileNav) mobileNav.classList.remove("open");
-  if (mobileNavBackdrop) mobileNavBackdrop.classList.remove("open");
-  if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+  const { toggle, nav, backdrop } = getMobileNavElements();
+  if (toggle) {
+    toggle.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+  if (nav) {
+    nav.classList.remove("open");
+  }
+  if (backdrop) {
+    backdrop.classList.remove("open");
+  }
   document.body.style.overflow = "";
 }
 
 function openMobileNav() {
-  if (navToggle) navToggle.classList.add("open");
-  if (mobileNav) mobileNav.classList.add("open");
-  if (mobileNavBackdrop) mobileNavBackdrop.classList.add("open");
-  if (navToggle) navToggle.setAttribute("aria-expanded", "true");
+  const { toggle, nav, backdrop } = getMobileNavElements();
+  if (toggle) {
+    toggle.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+  }
+  if (nav) {
+    nav.classList.add("open");
+  }
+  if (backdrop) {
+    backdrop.classList.add("open");
+  }
   document.body.style.overflow = "hidden"; // prevent background scroll while menu is open
 }
 
-if (navToggle && mobileNav) {
-  navToggle.addEventListener("click", () => {
-    if (mobileNav.classList.contains("open")) {
-      closeMobileNav();
-    } else {
-      openMobileNav();
-    }
-  });
+function toggleMobileNav() {
+  const { nav } = getMobileNavElements();
+  if (nav && nav.classList.contains("open")) {
+    closeMobileNav();
+  } else {
+    openMobileNav();
+  }
 }
 
-if (mobileNavBackdrop) {
-  mobileNavBackdrop.addEventListener("click", closeMobileNav);
-}
+// Global click delegation so newly mounted React headers / navbars always work instantly
+document.addEventListener("click", (e) => {
+  const toggleBtn = e.target && e.target.closest && e.target.closest("#navToggle, .nav-toggle");
+  if (toggleBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMobileNav();
+    return;
+  }
 
-document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-  link.addEventListener("click", closeMobileNav);
+  const backdrop = e.target && (e.target.id === "mobileNavBackdrop" || (e.target.classList && e.target.classList.contains("mobile-nav-backdrop")));
+  if (backdrop) {
+    e.preventDefault();
+    closeMobileNav();
+    return;
+  }
+
+  const navLink = e.target && e.target.closest && e.target.closest(".mobile-nav-link");
+  if (navLink) {
+    closeMobileNav();
+  }
 });
 
-// If the viewport grows past the mobile breakpoint (e.g. rotating a tablet,
-// or resizing a desktop window back up), make sure the menu doesn't stay
-// stuck open with the background-scroll lock still applied.
-window.addEventListener("resize", () => {
-  if (window.innerWidth >= 1024 && mobileNav.classList.contains("open")) {
+// Close mobile nav on Esc key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
     closeMobileNav();
+  }
+});
+
+// Expose globally for components
+window.closeMobileNav = closeMobileNav;
+window.openMobileNav = openMobileNav;
+window.toggleMobileNav = toggleMobileNav;
+
+// If the viewport grows past the mobile breakpoint, make sure the menu doesn't stay stuck open
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 1024) {
+    const { nav } = getMobileNavElements();
+    if (nav && nav.classList.contains("open")) {
+      closeMobileNav();
+    }
   }
 });
 
