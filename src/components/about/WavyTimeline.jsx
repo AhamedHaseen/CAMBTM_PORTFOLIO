@@ -6,7 +6,7 @@ const TIMELINE_MILESTONES = [
     id: "tech-foundation",
     year: "2014",
     desc: "Technology foundation",
-    color: "#F59E0B",
+    color: "#FF5A00",
     nodePos: { cx: 480, cy: 110 },
     align: "align-right",
     i18nYear: "about.global.node1Label",
@@ -26,7 +26,7 @@ const TIMELINE_MILESTONES = [
     id: "regional-reach",
     year: "Now",
     desc: "Saudi, Middle East, Sri Lanka, India",
-    color: "#FF4D6D",
+    color: "#FF5A00",
     nodePos: { cx: 480, cy: 570 },
     align: "align-right",
     i18nYear: "about.global.node3Label",
@@ -36,7 +36,7 @@ const TIMELINE_MILESTONES = [
     id: "global-horizon",
     year: "Next",
     desc: "Europe and worldwide",
-    color: "#EC4899",
+    color: "#FF5A00",
     nodePos: { cx: 320, cy: 800 },
     align: "align-left",
     i18nYear: "about.global.node4Label",
@@ -71,26 +71,17 @@ export default function WavyTimeline() {
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid meet"
           >
-            <defs>
-              <linearGradient id="wavyTrackGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.8" />
-                <stop offset="35%" stopColor="#FF5A00" stopOpacity="0.8" />
-                <stop offset="68%" stopColor="#FF4D6D" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#EC4899" stopOpacity="0.8" />
-              </linearGradient>
-            </defs>
-
             {/* Parallel Multi-Lane Thin Lines */}
             <path d={generateWavyPath(-24)} className="track-lane track-lane-outer" strokeWidth="1" />
             <path d={generateWavyPath(-16)} className="track-lane" strokeWidth="1.2" />
             <path d={generateWavyPath(-8)} className="track-lane" strokeWidth="1.2" />
 
-            {/* Center Dynamic Dashed Road Guide */}
+            {/* Center Dashed Road Guide with Single Unified Color */}
             <path
               d={generateWavyPath(0)}
               className="track-lane-center"
               strokeWidth="2.4"
-              stroke="url(#wavyTrackGradient)"
+              stroke="#FF5A00"
             />
 
             <path d={generateWavyPath(8)} className="track-lane" strokeWidth="1.2" />

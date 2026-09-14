@@ -57,8 +57,10 @@
 
 .track-lane-center {
   fill: none;
+  stroke: #FF5A00;
   stroke-dasharray: 6 6;
   stroke-linecap: round;
+  opacity: 0.85;
 }
 
 .track-lane-outer {
