@@ -21,6 +21,50 @@ const DEFAULT_OFFICES = [
   }
 ];
 
+function OfficeFlag({ code }) {
+  const normalized = (code || '').toUpperCase().trim();
+
+  if (normalized === 'LK' || normalized === 'SRI LANKA') {
+    return (
+      <img
+        src="/images/flags/sri-lanka.svg"
+        alt="Sri Lanka Flag"
+        width="44"
+        height="26"
+        style={{
+          borderRadius: '5px',
+          display: 'block',
+          objectFit: 'cover',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.35)'
+        }}
+        loading="lazy"
+      />
+    );
+  }
+
+  if (normalized === 'SA' || normalized === 'SAUDI ARABIA') {
+    return (
+      <img
+        src="/images/flags/saudi-arabia.svg"
+        alt="Saudi Arabia Flag"
+        width="44"
+        height="28"
+        style={{
+          borderRadius: '5px',
+          display: 'block',
+          objectFit: 'cover',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.35)'
+        }}
+        loading="lazy"
+      />
+    );
+  }
+
+  return <span>{code || 'LK'}</span>;
+}
+
 export default function FooterOffices() {
   const [offices, setOffices] = useState(() => {
     try {
@@ -91,7 +135,7 @@ export default function FooterOffices() {
       {visibleOffices.map((office) => (
         <article key={office.id || office.location_name} className="footer-office">
           <span className="footer-office-code" aria-hidden="true">
-            {office.country_code || 'LK'}
+            <OfficeFlag code={office.country_code} />
           </span>
           <h3>
             {office.location_name}

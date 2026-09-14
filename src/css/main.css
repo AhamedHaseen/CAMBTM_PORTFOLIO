@@ -2261,6 +2261,9 @@ html.lenis body {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-office h3 {
