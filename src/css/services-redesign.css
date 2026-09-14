@@ -1306,7 +1306,8 @@ html[lang="si"] .hosting h3 {
     display: inline-flex !important;
     width: 36px;
     height: 36px;
-    margin-right: 6px;
+    margin-left: auto !important;
+    margin-right: 8px !important;
   }
 }
 
