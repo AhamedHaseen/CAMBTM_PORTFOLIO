@@ -748,10 +748,10 @@ function makeLoopSlider(
     { passive: true },
   );
 
-  // Pause horizontal marquee on hover; for vertical bento columns (axis === "y"),
-  // keep auto-scrolling smoothly above and below.
+  // Pause on hover: when the mouse hovers over any image, video, or slider,
+  // it immediately stops in place. When the mouse leaves, it resumes scrolling.
   container.addEventListener("mouseenter", () => {
-    if (!isTouchDevice && axis !== "y") paused = true;
+    if (!isTouchDevice) paused = true;
   });
   container.addEventListener("mouseleave", () => {
     if (!isTouchDevice) paused = false;
