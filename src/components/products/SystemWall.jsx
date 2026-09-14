@@ -49,6 +49,11 @@ export default function SystemWall({ systems }) {
                     aria-label={system.name}
                     className="cambt-wall-tile"
                     to={`/products/${system.slug}`}
+                    onClick={() => {
+                      try {
+                        sessionStorage.setItem("cambm_last_product_slug", system.slug);
+                      } catch (e) {}
+                    }}
                   >
                     <span className="cambt-wall-plate">
                       <SystemMark slug={system.slug} />

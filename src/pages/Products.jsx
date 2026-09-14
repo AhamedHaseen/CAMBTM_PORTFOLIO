@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FooterOffices from "../components/FooterOffices";
 import FooterSocials from "../components/FooterSocials";
 import SystemWall from "../components/products/SystemWall";
@@ -13,9 +13,60 @@ import "../css/products.css";
 
 export default function Products() {
   const [cartCount, setCartCount] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    let targetSlug = "";
+    if (location.hash) {
+      targetSlug = location.hash.replace(/^#/, "");
+    }
+    if (!targetSlug) {
+      try {
+        const saved = sessionStorage.getItem("cambm_last_product_slug");
+        if (saved) targetSlug = saved;
+      } catch (e) {}
+    }
+
+    if (targetSlug) {
+      try {
+        sessionStorage.removeItem("cambm_last_product_slug");
+      } catch (e) {}
+
+      const scrollToTarget = () => {
+        const cleanSlug = targetSlug.replace(/^product-/, "");
+        const el =
+          document.getElementById(targetSlug) ||
+          document.getElementById(`product-${cleanSlug}`) ||
+          document.getElementById(cleanSlug) ||
+          document.getElementById("catalogue") ||
+          document.getElementById("what-we-can-deploy") ||
+          document.getElementById("index");
+
+        if (el) {
+          if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+            window.__cambmLenis.scrollTo(el, { offset: -90, duration: 1.2 });
+          } else {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          }
+        }
+      };
+
+      const hashTimer = setTimeout(scrollToTarget, 100);
+      return () => clearTimeout(hashTimer);
+    } else {
+      // Always start immediately from the very first top section (hero)
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+        window.__cambmLenis.scrollTo(0, { immediate: true });
+      }
+    }
 
     // Update cart badge from localStorage
     try {
@@ -46,7 +97,7 @@ export default function Products() {
     return () => {
       window.removeEventListener("cambm:cart-updated", handleCartUpdated);
     };
-  }, []);
+  }, [location.hash, location.pathname, location.state]);
 
   const wallSystems = useMemo(() => {
     return products.map((p) => ({
@@ -103,7 +154,16 @@ export default function Products() {
             <a href="/#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
-            <Link to="/products" className="nav-link" data-i18n="nav.ourProducts">
+            <Link
+              to="/products"
+              className="nav-link"
+              data-i18n="nav.ourProducts"
+              onClick={() => {
+                try {
+                  sessionStorage.removeItem("cambm_last_product_slug");
+                } catch (e) {}
+              }}
+            >
               Our Products
             </Link>
             <a href="/about" className="nav-link" data-i18n="nav.about">
@@ -211,7 +271,16 @@ export default function Products() {
           <a href="/#why-CAMBM" className="mobile-nav-link" data-i18n="nav.whyCambm">
             Why CAMBM
           </a>
-          <Link to="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
+          <Link
+            to="/products"
+            className="mobile-nav-link"
+            data-i18n="nav.ourProducts"
+            onClick={() => {
+              try {
+                sessionStorage.removeItem("cambm_last_product_slug");
+              } catch (e) {}
+            }}
+          >
             Our Products
           </Link>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
@@ -386,6 +455,142 @@ export default function Products() {
           </div>
         </div>
       </footer>
+
+      {/* First-visit locale picker popup (modal) */}
+      <div className="locale-popup-backdrop" id="localePopupBackdrop">
+        <div
+          className="locale-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Select your region"
+        >
+          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
+            Choose your language
+          </h3>
+          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
+            We'll tailor the language to you.
+          </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupLanguage"
+            data-i18n="locale.languageLabel"
+          >
+            Language
+          </label>
+          <select className="locale-select" id="localePopupLanguage"></select>
+          <button
+            type="button"
+            className="btn btn-primary locale-popup-confirm"
+            id="localePopupConfirm"
+            data-i18n="locale.confirm"
+          >
+            Continue
+          </button>
+          <p className="locale-popup-note" data-i18n="locale.changeNote">
+            You can change this anytime from the menu.
+          </p>
+        </div>
+      </div>
+
+      {/* Enterprise contact-form popup */}
+      <div className="contact-popup-backdrop" id="contactPopupBackdrop">
+        <div
+          className="contact-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Contact us"
+        >
+          <button
+            className="contact-popup-close"
+            id="contactPopupClose"
+            aria-label="Close"
+          >
+            &#10005;
+          </button>
+          <h3 className="contact-popup-title" data-i18n="contact.title">
+            Contact Enterprise Sales
+          </h3>
+          <p className="contact-popup-desc" data-i18n="contact.desc">
+            Tell us about your business and we'll get back to you shortly.
+          </p>
+          <form id="contactForm" className="contact-form">
+            <label htmlFor="contactName" data-i18n="contact.nameLabel">
+              Full name
+            </label>
+            <input
+              id="contactName"
+              type="text"
+              name="name"
+              required
+              minLength="2"
+              maxLength="100"
+              pattern="[\p{L}\p{M}\s.'\-]{2,100}"
+              title="Please enter a name using letters only (no numbers or symbols)"
+            />
+            <label htmlFor="contactEmail" data-i18n="contact.emailLabel">
+              Email
+            </label>
+            <input
+              id="contactEmail"
+              type="email"
+              name="email"
+              required
+              maxLength="150"
+            />
+            <label htmlFor="contactCompany" data-i18n="contact.companyLabel">
+              Company
+            </label>
+            <input
+              id="contactCompany"
+              type="text"
+              name="company"
+              minLength="2"
+              maxLength="100"
+            />
+            <label htmlFor="contactPhone" data-i18n="contact.phoneLabel">
+              Phone (optional)
+            </label>
+            <input
+              id="contactPhone"
+              type="tel"
+              name="phone"
+              pattern="\+[0-9][0-9\s\-]{6,18}"
+              placeholder="+94 77 123 4567"
+              title="Include your country code, e.g. +94 77 123 4567"
+            />
+            <label htmlFor="contactMessage" data-i18n="contact.messageLabel">
+              Message
+            </label>
+            <textarea
+              id="contactMessage"
+              name="message"
+              rows="4"
+              required
+              minLength="10"
+              maxLength="2000"
+            ></textarea>
+            <input
+              type="hidden"
+              name="_subject"
+              value="Enterprise inquiry - Cambridge Marketing"
+            />
+            <button
+              type="submit"
+              className="btn btn-primary contact-form-submit"
+              data-i18n="contact.send"
+            >
+              Send message
+            </button>
+            <p
+              className="contact-form-status"
+              id="contactFormStatus"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

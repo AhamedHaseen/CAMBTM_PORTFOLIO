@@ -14,7 +14,83 @@ export default function ProductDetail() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    let prevY = 0;
+    try {
+      const saved = sessionStorage.getItem("cambm_detail_refresh_" + slug);
+      if (saved) prevY = parseInt(saved, 10);
+    } catch (e) { }
+
+    const startY = Math.max(
+      prevY,
+      window.scrollY || document.documentElement.scrollTop || 0
+    );
+
+    let animId = null;
+    let timer = null;
+
+    if (startY > 100) {
+      window.scrollTo({ top: startY, left: 0, behavior: "instant" });
+      if (document.documentElement) document.documentElement.scrollTop = startY;
+      if (document.body) document.body.scrollTop = startY;
+      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+        window.__cambmLenis.scrollTo(startY, { immediate: true });
+      }
+
+      timer = setTimeout(() => {
+        if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+          window.__cambmLenis.scrollTo(0, {
+            duration: 1.8,
+            easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+          });
+        } else {
+          const duration = 1600;
+          const startTime = performance.now();
+          const scrollUpStep = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease =
+              progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            const currentY = startY * (1 - ease);
+
+            window.scrollTo(0, currentY);
+            if (document.documentElement) document.documentElement.scrollTop = currentY;
+            if (document.body) document.body.scrollTop = currentY;
+
+            if (progress < 1) {
+              animId = requestAnimationFrame(scrollUpStep);
+            } else {
+              window.scrollTo(0, 0);
+              if (document.documentElement) document.documentElement.scrollTop = 0;
+              if (document.body) document.body.scrollTop = 0;
+            }
+          };
+          animId = requestAnimationFrame(scrollUpStep);
+        }
+      }, 200);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+        window.__cambmLenis.scrollTo(0, { immediate: true });
+      }
+    }
+
+    const recordPos = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      try {
+        sessionStorage.setItem("cambm_detail_refresh_" + slug, y.toString());
+      } catch (e) { }
+    };
+
+    window.addEventListener("scroll", recordPos, { passive: true });
+    window.addEventListener("beforeunload", recordPos);
 
     try {
       const saved = localStorage.getItem("cambm_custom_plan");
@@ -41,6 +117,10 @@ export default function ProductDetail() {
     document.dispatchEvent(revealEvent);
 
     return () => {
+      if (timer) clearTimeout(timer);
+      if (animId) cancelAnimationFrame(animId);
+      window.removeEventListener("scroll", recordPos);
+      window.removeEventListener("beforeunload", recordPos);
       window.removeEventListener("cambm:cart-updated", handleCartUpdated);
     };
   }, [slug]);
@@ -88,7 +168,16 @@ export default function ProductDetail() {
             <a href="/#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
-            <Link to="/products" className="nav-link" data-i18n="nav.ourProducts">
+            <Link
+              to="/products"
+              className="nav-link"
+              data-i18n="nav.ourProducts"
+              onClick={() => {
+                try {
+                  sessionStorage.removeItem("cambm_last_product_slug");
+                } catch (e) {}
+              }}
+            >
               Our Products
             </Link>
             <a href="/about" className="nav-link" data-i18n="nav.about">
@@ -196,7 +285,16 @@ export default function ProductDetail() {
           <a href="/#why-CAMBM" className="mobile-nav-link" data-i18n="nav.whyCambm">
             Why CAMBM
           </a>
-          <Link to="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
+          <Link
+            to="/products"
+            className="mobile-nav-link"
+            data-i18n="nav.ourProducts"
+            onClick={() => {
+              try {
+                sessionStorage.removeItem("cambm_last_product_slug");
+              } catch (e) {}
+            }}
+          >
             Our Products
           </Link>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
@@ -268,7 +366,7 @@ export default function ProductDetail() {
                 </li>
                 <li className="cambt-breadcrumb-sep">/</li>
                 <li>
-                  <Link to="/products">{pageContent.detail.breadcrumbIndex}</Link>
+                  <Link to={`/products#product-${slug}`}>{pageContent.detail.breadcrumbIndex}</Link>
                 </li>
                 <li className="cambt-breadcrumb-sep">/</li>
                 <li className="cambt-breadcrumb-current">{product.name}</li>
@@ -507,6 +605,142 @@ export default function ProductDetail() {
           </div>
         </div>
       </footer>
+
+      {/* First-visit locale picker popup (modal) */}
+      <div className="locale-popup-backdrop" id="localePopupBackdrop">
+        <div
+          className="locale-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Select your region"
+        >
+          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
+            Choose your language
+          </h3>
+          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
+            We'll tailor the language to you.
+          </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupLanguage"
+            data-i18n="locale.languageLabel"
+          >
+            Language
+          </label>
+          <select className="locale-select" id="localePopupLanguage"></select>
+          <button
+            type="button"
+            className="btn btn-primary locale-popup-confirm"
+            id="localePopupConfirm"
+            data-i18n="locale.confirm"
+          >
+            Continue
+          </button>
+          <p className="locale-popup-note" data-i18n="locale.changeNote">
+            You can change this anytime from the menu.
+          </p>
+        </div>
+      </div>
+
+      {/* Enterprise contact-form popup */}
+      <div className="contact-popup-backdrop" id="contactPopupBackdrop">
+        <div
+          className="contact-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Contact us"
+        >
+          <button
+            className="contact-popup-close"
+            id="contactPopupClose"
+            aria-label="Close"
+          >
+            &#10005;
+          </button>
+          <h3 className="contact-popup-title" data-i18n="contact.title">
+            Contact Enterprise Sales
+          </h3>
+          <p className="contact-popup-desc" data-i18n="contact.desc">
+            Tell us about your business and we'll get back to you shortly.
+          </p>
+          <form id="contactForm" className="contact-form">
+            <label htmlFor="contactName" data-i18n="contact.nameLabel">
+              Full name
+            </label>
+            <input
+              id="contactName"
+              type="text"
+              name="name"
+              required
+              minLength="2"
+              maxLength="100"
+              pattern="[\p{L}\p{M}\s.'\-]{2,100}"
+              title="Please enter a name using letters only (no numbers or symbols)"
+            />
+            <label htmlFor="contactEmail" data-i18n="contact.emailLabel">
+              Email
+            </label>
+            <input
+              id="contactEmail"
+              type="email"
+              name="email"
+              required
+              maxLength="150"
+            />
+            <label htmlFor="contactCompany" data-i18n="contact.companyLabel">
+              Company
+            </label>
+            <input
+              id="contactCompany"
+              type="text"
+              name="company"
+              minLength="2"
+              maxLength="100"
+            />
+            <label htmlFor="contactPhone" data-i18n="contact.phoneLabel">
+              Phone (optional)
+            </label>
+            <input
+              id="contactPhone"
+              type="tel"
+              name="phone"
+              pattern="\+[0-9][0-9\s\-]{6,18}"
+              placeholder="+94 77 123 4567"
+              title="Include your country code, e.g. +94 77 123 4567"
+            />
+            <label htmlFor="contactMessage" data-i18n="contact.messageLabel">
+              Message
+            </label>
+            <textarea
+              id="contactMessage"
+              name="message"
+              rows="4"
+              required
+              minLength="10"
+              maxLength="2000"
+            ></textarea>
+            <input
+              type="hidden"
+              name="_subject"
+              value="Enterprise inquiry - Cambridge Marketing"
+            />
+            <button
+              type="submit"
+              className="btn btn-primary contact-form-submit"
+              data-i18n="contact.send"
+            >
+              Send message
+            </button>
+            <p
+              className="contact-form-status"
+              id="contactFormStatus"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

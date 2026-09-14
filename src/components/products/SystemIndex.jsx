@@ -41,7 +41,12 @@ export default function SystemIndex({ industries, labels, systems }) {
 
       <ul className="cambt-index-grid">
         {visible.map((system) => (
-          <li className="cambt-product-card" key={system.slug}>
+          <li
+            className="cambt-product-card"
+            id={`product-${system.slug}`}
+            data-slug={system.slug}
+            key={system.slug}
+          >
             <div className="cambt-card-plate">
               <SystemMark slug={system.slug} />
             </div>
@@ -54,7 +59,15 @@ export default function SystemIndex({ industries, labels, systems }) {
                 </span>
               </p>
               <h3 className="cambt-card-title">
-                <Link className="cambt-card-link" to={`/products/${system.slug}`}>
+                <Link
+                  className="cambt-card-link"
+                  to={`/products/${system.slug}`}
+                  onClick={() => {
+                    try {
+                      sessionStorage.setItem("cambm_last_product_slug", system.slug);
+                    } catch (e) {}
+                  }}
+                >
                   {system.name}
                 </Link>
               </h3>
