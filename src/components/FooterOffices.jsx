@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 const DEFAULT_OFFICES = [
   {
-    id: 2,
-    country_code: 'SA',
-    location_name: 'Cambridge Marketing - Saudi Arabia',
-    phone: '+966 50 123 4567',
-    address: 'City Centre, Mishrifah, Jeddah, Saudi Arabia',
+    id: 1,
+    country_code: 'LK',
+    location_name: 'Sri Lanka',
+    phone: '+94 76 649 0522',
+    address: '328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120',
     email: 'marketing@cambt.com',
     status: 'active'
   },
   {
-    id: 1,
-    country_code: 'LK',
-    location_name: 'Cambridge Marketing - Sri Lanka',
-    phone: '+94 76 649 0522',
-    address: '328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120',
+    id: 2,
+    country_code: 'SA',
+    location_name: 'Saudi Arabia',
+    phone: '+966 50 123 4567',
+    address: 'City Centre, Mishrifah, Jeddah, Saudi Arabia',
     email: 'marketing@cambt.com',
     status: 'active'
   }
