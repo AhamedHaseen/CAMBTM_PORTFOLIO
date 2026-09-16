@@ -1109,9 +1109,11 @@
     width: 40px;
     height: 40px;
   }
+
   .cambt-slider-nav-left {
     left: 4px;
   }
+
   .cambt-slider-nav-right {
     right: 4px;
   }
