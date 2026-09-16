@@ -18,6 +18,9 @@ export default function FittedField({ copy }) {
     const box = container.getBoundingClientRect();
     if (!box.width || !box.height) return;
 
+    const targetX = seen.current ? pointer.current.x : box.left + box.width / 2;
+    const targetY = seen.current ? pointer.current.y : box.top + box.height / 2;
+
     const lines = container.children;
     for (let index = 0; index < lines.length; index += 1) {
       const column = index % COLUMNS;
@@ -26,7 +29,7 @@ export default function FittedField({ copy }) {
       const centreY = box.top + ((row + 0.5) / ROWS) * box.height;
 
       const angle =
-        (Math.atan2(pointer.current.y - centreY, pointer.current.x - centreX) * 180) / Math.PI;
+        (Math.atan2(targetY - centreY, targetX - centreX) * 180) / Math.PI;
       lines[index].style.setProperty("--angle", `${angle.toFixed(1)}deg`);
     }
   }, []);
@@ -35,30 +38,48 @@ export default function FittedField({ copy }) {
     const container = ref.current;
     if (!container) return;
 
-    const responsive = window.matchMedia("(hover: hover) and (pointer: fine)");
     const stillness = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!responsive.matches || stillness.matches) return;
+    if (stillness.matches) return;
 
     const schedule = () => {
       if (!frame.current) frame.current = window.requestAnimationFrame(apply);
     };
 
-    const onMove = (event) => {
-      pointer.current = { x: event.clientX, y: event.clientY };
+    // Calculate initial needle angles towards grid center on load
+    schedule();
+
+    const updateCoords = (clientX, clientY) => {
+      pointer.current = { x: clientX, y: clientY };
       seen.current = true;
       schedule();
     };
 
-    const onReflow = () => {
-      if (seen.current) schedule();
+    const onPointerMove = (event) => {
+      updateCoords(event.clientX, event.clientY);
     };
 
-    window.addEventListener("pointermove", onMove, { passive: true });
+    const onTouchStartMove = (event) => {
+      if (event.touches && event.touches[0]) {
+        updateCoords(event.touches[0].clientX, event.touches[0].clientY);
+      }
+    };
+
+    const onReflow = () => {
+      schedule();
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerdown", onPointerMove, { passive: true });
+    window.addEventListener("touchstart", onTouchStartMove, { passive: true });
+    window.addEventListener("touchmove", onTouchStartMove, { passive: true });
     window.addEventListener("scroll", onReflow, { passive: true });
     window.addEventListener("resize", onReflow, { passive: true });
 
     return () => {
-      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onPointerMove);
+      window.removeEventListener("touchstart", onTouchStartMove);
+      window.removeEventListener("touchmove", onTouchStartMove);
       window.removeEventListener("scroll", onReflow);
       window.removeEventListener("resize", onReflow);
       if (frame.current) window.cancelAnimationFrame(frame.current);
