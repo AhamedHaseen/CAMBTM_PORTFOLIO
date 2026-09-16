@@ -94,12 +94,12 @@ const renderBentoCardsHTML = (items) => {
 
     if (isVid) {
       return `<div class="${cardClass}">` +
-        `<video class="bento-video" src="${mediaUrl}" ${posterUrl ? `poster="${posterUrl}"` : ''} aria-label="${name}" loop muted playsinline preload="none" disablepictureinpicture></video>` +
+        `<video class="bento-video" src="${mediaUrl}" ${posterUrl ? `poster="${posterUrl}"` : ''} aria-label="${name}" loop muted playsinline preload="none" disablepictureinpicture onerror="this.style.opacity='0'"></video>` +
         `<div class="bento-overlay"></div>` +
         `</div>`;
     }
     return `<div class="${cardClass}">` +
-      `<img src="${mediaUrl}" alt="${name}" class="bento-img" loading="lazy" decoding="async" />` +
+      `<img src="${mediaUrl}" alt="${name}" class="bento-img" loading="lazy" decoding="async" onerror="this.style.opacity='0'" />` +
       `<div class="bento-overlay"></div>` +
       `</div>`;
   }).join('');
@@ -117,25 +117,44 @@ const renderBrandCardsHTML = (items) => {
 };
 
 export default function Welcome() {
-  const [bentoColumns, setBentoColumns] = useState(DEFAULT_BENTO_COLUMNS);
+  const [bentoColumns, setBentoColumns] = useState(() => {
+    try {
+      const cached = localStorage.getItem('cambm_hero_bento');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && typeof parsed === 'object' && (parsed.col1 || parsed.col2 || parsed.col3)) {
+          return {
+            col1: Array.isArray(parsed.col1) ? parsed.col1 : [],
+            col2: Array.isArray(parsed.col2) ? parsed.col2 : [],
+            col3: Array.isArray(parsed.col3) ? parsed.col3 : []
+          };
+        }
+      }
+    } catch (e) { }
+    return DEFAULT_BENTO_COLUMNS;
+  });
   const [bentoReady, setBentoReady] = useState(true);
   const [brandsRows, setBrandsRows] = useState({ row1: DEFAULT_BRANDS_ROW1, row2: DEFAULT_BRANDS_ROW2 });
 
   useEffect(() => {
-    // Fetch dynamic Hero Bento media from Supabase / API
-    fetch('/api/hero-bento')
+    // Fetch dynamic Hero Bento media from Supabase / API with cache-busting
+    fetch(`/api/hero-bento?t=${Date.now()}`)
       .then(r => r.headers.get('content-type')?.includes('application/json') ? r.json() : {})
       .then(data => {
         if (data.success && data.itemsByColumn) {
-          setBentoColumns({
+          const freshCols = {
             col1: Array.isArray(data.itemsByColumn.col1) ? data.itemsByColumn.col1 : [],
             col2: Array.isArray(data.itemsByColumn.col2) ? data.itemsByColumn.col2 : [],
             col3: Array.isArray(data.itemsByColumn.col3) ? data.itemsByColumn.col3 : []
-          });
+          };
+          setBentoColumns(freshCols);
+          try {
+            localStorage.setItem('cambm_hero_bento', JSON.stringify(freshCols));
+          } catch (e) { }
           setBentoReady(true);
           setTimeout(() => {
             window.dispatchEvent(new CustomEvent('cambm:bento-updated'));
-          }, 80);
+          }, 60);
         }
       })
       .catch(() => {
@@ -143,7 +162,7 @@ export default function Welcome() {
       });
 
     // Fetch dynamic Brands from Supabase / API
-    fetch('/api/brands')
+    fetch(`/api/brands?t=${Date.now()}`)
       .then(r => r.headers.get('content-type')?.includes('application/json') ? r.json() : {})
       .then(data => {
         if (data.success && Array.isArray(data.brands)) {
@@ -155,7 +174,7 @@ export default function Welcome() {
           });
           setTimeout(() => {
             window.dispatchEvent(new CustomEvent('cambm:brands-updated'));
-          }, 80);
+          }, 60);
         }
       })
       .catch(() => { });
@@ -534,6 +553,7 @@ export default function Welcome() {
             <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col1.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
+                data-raw-html={renderBentoCardsHTML(bentoColumns.col1)}
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col1) }}
               />
             </div>
@@ -542,6 +562,7 @@ export default function Welcome() {
             <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col2.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
+                data-raw-html={renderBentoCardsHTML(bentoColumns.col2)}
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col2) }}
               />
             </div>
@@ -550,6 +571,7 @@ export default function Welcome() {
             <div className="bento-column" data-lenis-prevent style={{ display: bentoColumns.col3.length === 0 ? 'none' : undefined }}>
               <div
                 className="bento-track"
+                data-raw-html={renderBentoCardsHTML(bentoColumns.col3)}
                 dangerouslySetInnerHTML={{ __html: renderBentoCardsHTML(bentoColumns.col3) }}
               />
             </div>
@@ -567,12 +589,14 @@ export default function Welcome() {
         <div className="brands-marquee scroll-reveal" data-lenis-prevent-wheel>
           <div
             className="brands-track"
+            data-raw-html={renderBrandCardsHTML(brandsRows.row1)}
             dangerouslySetInnerHTML={{ __html: renderBrandCardsHTML(brandsRows.row1) }}
           />
         </div>
         <div className="brands-marquee scroll-reveal" data-lenis-prevent-wheel>
           <div
             className="brands-track"
+            data-raw-html={renderBrandCardsHTML(brandsRows.row2)}
             dangerouslySetInnerHTML={{ __html: renderBrandCardsHTML(brandsRows.row2) }}
           />
         </div>

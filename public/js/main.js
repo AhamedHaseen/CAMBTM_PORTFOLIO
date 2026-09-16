@@ -648,12 +648,17 @@ function makeLoopSlider(
   const track = container.firstElementChild;
   if (!track) return;
 
+  if (container.__loopSlider) {
+    container.__loopSlider.build(true);
+    return container.__loopSlider;
+  }
+
   const sizeProp = axis === "y" ? "scrollHeight" : "scrollWidth";
   const posProp = axis === "y" ? "scrollTop" : "scrollLeft";
   const clientProp = axis === "y" ? "clientHeight" : "clientWidth";
 
   // Snapshot ONE original set of cards before we clone anything.
-  let originalHTML = track.innerHTML;
+  let originalHTML = track.dataset.rawHtml !== undefined ? track.dataset.rawHtml : track.innerHTML;
   let setSize = 0; // length of one original set (px)
   let recentering = false;
   let dragging = false; // true while a manual drag/touch interaction is in progress
@@ -676,9 +681,12 @@ function makeLoopSlider(
     if (setSize && !force) return;
     unobserveBentoVideos(container);
 
-    if (force && track.dataset.freshSet) {
+    // Always prioritize the clean data-raw-html from React / DB
+    if (track.dataset.rawHtml !== undefined) {
+      originalHTML = track.dataset.rawHtml;
+    } else if (force && track.dataset.freshSet) {
       originalHTML = track.dataset.freshSet;
-    } else if (force) {
+    } else if (!originalHTML || force) {
       const cards = track.querySelectorAll(".bento-card, .brand-card");
       if (cards.length === 0) {
         track.innerHTML = "";
@@ -709,36 +717,12 @@ function makeLoopSlider(
     observeBentoVideos(container);
   }
 
-  window.addEventListener("cambm:bento-updated", () => {
-    if (!container.classList.contains("bento-column")) return;
-    const cards = track.querySelectorAll(".bento-card");
-    if (cards.length === 0) {
-      unobserveBentoVideos(container);
-      track.innerHTML = "";
-      track.removeAttribute("data-fresh-set");
-      setSize = 0;
-      return;
-    }
-    track.dataset.freshSet = Array.from(cards).map(c => c.outerHTML).join("");
-    build(true);
-  });
-
-  window.addEventListener("cambm:brands-updated", () => {
-    if (!container.classList.contains("brands-marquee")) return;
-    const cards = track.querySelectorAll(".brand-card");
-    if (cards.length === 0) {
-      track.innerHTML = "";
-      track.removeAttribute("data-fresh-set");
-      setSize = 0;
-      return;
-    }
-    track.dataset.freshSet = Array.from(cards).map(c => c.outerHTML).join("");
-    build(true);
-  });
+  const sliderApi = { build };
+  container.__loopSlider = sliderApi;
 
   if (document.readyState === "complete") build();
-  else window.addEventListener("load", build);
-  setTimeout(build, 300);
+  else window.addEventListener("load", () => build());
+  setTimeout(() => build(), 300);
   // Only rebuild on a genuine width change (rotation, real window resize).
   // Mobile browsers fire 'resize' on window whenever the address bar
   // auto-hides/shows while scrolling - that only changes height, but
@@ -960,33 +944,51 @@ function makeLoopSlider(
   }
 }
 
-// Columns auto-scroll DOWN, UP, DOWN (direction: +1 = down, -1 = up).
-const bentoCols = document.querySelectorAll(".bento-column");
-bentoCols.forEach((col, i) => {
-  makeLoopSlider(col, "y", i === 1 ? -1 : 1);
-});
+// ===== LOOP SLIDERS (Hero Bento Columns + Brand Marquees) =====
+function initLoopSliders() {
+  // Columns auto-scroll DOWN, UP, DOWN (direction: +1 = down, -1 = up).
+  const bentoCols = document.querySelectorAll(".bento-column");
+  bentoCols.forEach((col, i) => {
+    makeLoopSlider(col, "y", i === 1 ? -1 : 1);
+  });
 
-// Bento container level wheel capture to ensure zero page-scroll and fast smooth bento-only scrolling
-const heroBentoEl = document.querySelector(".hero-bento");
-if (heroBentoEl) {
-  heroBentoEl.addEventListener(
-    "wheel",
-    (e) => {
-      const col = e.target.closest(".bento-column") || bentoCols[0];
-      if (col) {
-        e.preventDefault();
-        e.stopPropagation();
-        col.scrollTop += e.deltaY * 1.35;
-      }
-    },
-    { passive: false }
-  );
+  // Two brand-logo rows, scrolling opposite ways: row 1 right-to-left
+  // (+1 = increasing scrollLeft), row 2 left-to-right (-1).
+  document.querySelectorAll(".brands-marquee").forEach((marquee, i) => {
+    makeLoopSlider(marquee, "x", i === 0 ? 1 : -1);
+  });
+
+  // Bento container level wheel capture to ensure zero page-scroll and fast smooth bento-only scrolling
+  const heroBentoEl = document.querySelector(".hero-bento");
+  if (heroBentoEl && !heroBentoEl.__wheelBound) {
+    heroBentoEl.__wheelBound = true;
+    heroBentoEl.addEventListener(
+      "wheel",
+      (e) => {
+        const currentBentoCols = document.querySelectorAll(".bento-column");
+        const col = e.target.closest(".bento-column") || currentBentoCols[0];
+        if (col) {
+          e.preventDefault();
+          e.stopPropagation();
+          col.scrollTop += e.deltaY * 1.35;
+        }
+      },
+      { passive: false }
+    );
+  }
 }
 
-// Two brand-logo rows, scrolling opposite ways: row 1 right-to-left
-// (+1 = increasing scrollLeft), row 2 left-to-right (-1).
-document.querySelectorAll(".brands-marquee").forEach((marquee, i) => {
-  makeLoopSlider(marquee, "x", i === 0 ? 1 : -1);
+window.initLoopSliders = initLoopSliders;
+initLoopSliders();
+
+window.addEventListener("cambm:bento-updated", () => {
+  initLoopSliders();
+});
+window.addEventListener("cambm:brands-updated", () => {
+  initLoopSliders();
+});
+window.addEventListener("cambm:revealed", () => {
+  initLoopSliders();
 });
 
 // (Parallax is now handled in the combined, rAF-throttled scroll listener above.)

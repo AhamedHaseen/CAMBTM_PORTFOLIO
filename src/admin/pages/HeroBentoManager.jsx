@@ -163,6 +163,7 @@ export default function HeroBentoManager() {
 
       const data = await res.json();
       if (res.ok && data.success) {
+        try { localStorage.removeItem('cambm_hero_bento'); } catch (e) { }
         toast.success(editingItem ? 'Hero Bento item updated' : 'Hero Bento item added');
         setModalOpen(false);
         fetchItems(false);
@@ -201,6 +202,7 @@ export default function HeroBentoManager() {
       const res = await apiRequest(`/api/hero-bento/${item.id}/toggle`, { method: 'PATCH' });
       const data = await res.json();
       if (res.ok && data.success) {
+        try { localStorage.removeItem('cambm_hero_bento'); } catch (e) { }
         toast.success(`"${item.name}" is now ${targetStatus === 'published' ? 'Live on Homepage' : 'Hidden'}`);
         fetchItems(false);
       } else {
@@ -224,6 +226,7 @@ export default function HeroBentoManager() {
       const res = await apiRequest(`/api/hero-bento/${itemToDelete.id}`, { method: 'DELETE' });
       const data = await res.json();
       if (res.ok && data.success) {
+        try { localStorage.removeItem('cambm_hero_bento'); } catch (e) { }
         toast.success(`Deleted "${itemToDelete.name}" from Hero Bento`);
         setDeleteModal(null);
         fetchItems(false);
@@ -277,6 +280,7 @@ export default function HeroBentoManager() {
           ]
         })
       });
+      try { localStorage.removeItem('cambm_hero_bento'); } catch (e) { }
       toast.success('Order updated');
       fetchItems(false);
     } catch (err) {
