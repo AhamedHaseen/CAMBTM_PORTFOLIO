@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "location_name": "Sri Lanka",
+    "phone": "+94 76 649 0522",
+    "address": "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
+    "email": "marketing@cambt.com",
+    "country_code": "LK",
+    "is_primary": true,
+    "display_order": 1,
+    "status": "active",
+    "social_links": {
+      "whatsapp": "https://wa.me/94766490522?text=Hi%20Cambridge%20Marketing!%20I%20found%20you%20through%20your%20website%20and%20I%27d%20like%20to%20grow%20my%20business%20with%20you.%20Can%20we%20talk%3F",
+      "instagram": "https://www.instagram.com/cambm.lk/",
+      "facebook": "https://web.facebook.com/profile.php?id=61590765272716",
+      "linkedin": "https://www.linkedin.com/company/cambridgemarketing/"
+    }
+  },
+  {
+    "id": 2,
+    "location_name": "Saudi Arabia",
+    "phone": "+966 50 123 4567",
+    "address": "City Centre, Mishrifah, Jeddah, Saudi Arabia",
+    "email": "marketing@cambt.com",
+    "country_code": "SA",
+    "is_primary": false,
+    "display_order": 2,
+    "status": "active",
+    "social_links": {
+      "whatsapp": "https://wa.me/966501234567?text=Hi%20Cambridge%20Marketing!",
+      "instagram": "https://www.instagram.com/cambm.lk/",
+      "facebook": "https://web.facebook.com/profile.php?id=61590765272716",
+      "linkedin": "https://www.linkedin.com/company/cambridgemarketing/"
+    }
+  }
+]

@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { supabase } from '../config/supabase.js';
 import { recordAudit } from '../middleware/audit.js';
+import { sendCustomScopeInquiryEmail } from '../utils/mailer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -227,6 +228,56 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     console.error('Error deleting contact:', err);
     return res.status(500).json({ success: false, error: err.message || 'Failed to delete contact' });
+  }
+});
+
+// ── POST /api/contacts/custom-scope (Receive pricing custom plan form & email notification) ──
+router.post('/custom-scope', async (req, res) => {
+  try {
+    const { name, email, phone, company, notes, services } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, error: 'Full name is required' });
+    }
+    if (!email || !email.trim()) {
+      return res.status(400).json({ success: false, error: 'Email address is required' });
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({ success: false, error: 'A valid email address with domain is required (e.g. name@company.com)' });
+    }
+
+    const sanitizedPhone = phone ? String(phone).replace(/[^0-9+\s\-()]/g, '').slice(0, 18).trim() : '';
+
+    const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '127.0.0.1';
+    const userAgent = req.headers['user-agent'] || 'Unknown';
+
+    // Dispatch email notification via Resend / nodemailer to ahamedhaseen2003@gmail.com
+    const emailResult = await sendCustomScopeInquiryEmail({
+      name: name.trim(),
+      email: email.trim(),
+      phone: sanitizedPhone,
+      company: company ? company.trim() : '',
+      notes: notes ? notes.trim() : '',
+      services: Array.isArray(services) ? services : [],
+      ip,
+      userAgent
+    });
+
+    recordAudit(req, 'CUSTOM_SCOPE_INQUIRY', `Inquiry from ${name} (${email}) for ${(services || []).length} services`).catch(() => {});
+
+    return res.status(200).json({
+      success: true,
+      message: 'Your custom package scope has been submitted and sent to our team!',
+      emailResult
+    });
+  } catch (err) {
+    console.error('Error handling custom scope submission:', err);
+    return res.status(500).json({
+      success: false,
+      error: err.message || 'Failed to submit custom scope inquiry'
+    });
   }
 });
 

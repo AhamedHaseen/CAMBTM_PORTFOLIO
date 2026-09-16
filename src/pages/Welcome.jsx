@@ -306,14 +306,14 @@ export default function Welcome() {
             <a href="#services" className="nav-link" data-i18n="nav.services">
               Services
             </a>
-            <a href="#combo-packages" className="nav-link" data-i18n="nav.packages">
-              Packages
-            </a>
             <a href="#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
             <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
               Our Products
+            </a>
+            <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
+              Pricing
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -356,19 +356,6 @@ export default function Welcome() {
                 <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
               </svg>
             </button>
-            <a
-              href="/custom-plan"
-              className={`header-cart-btn js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
-              aria-label="View Custom Services Cart"
-              title="View Custom Services Cart"
-            >
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-            </a>
             <button
               type="button"
               className="btn btn-primary js-open-cal"
@@ -380,19 +367,6 @@ export default function Welcome() {
               Book a strategy call
             </button>
           </div>
-          <a
-            href="/custom-plan"
-            className={`header-cart-btn mobile-header-cart js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
-            aria-label="View Custom Services Cart"
-            title="View Custom Services Cart"
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-          </a>
           <button
             className="nav-toggle"
             id="navToggle"
@@ -413,9 +387,6 @@ export default function Welcome() {
           <a href="#services" className="mobile-nav-link" data-i18n="nav.services">
             Services
           </a>
-          <a href="#combo-packages" className="mobile-nav-link" data-i18n="nav.packages">
-            Packages
-          </a>
           <a
             href="#why-CAMBM"
             className="mobile-nav-link"
@@ -425,6 +396,9 @@ export default function Welcome() {
           </a>
           <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
             Our Products
+          </a>
+          <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">
+            Pricing
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

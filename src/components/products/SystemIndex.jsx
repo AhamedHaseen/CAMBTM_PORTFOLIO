@@ -34,11 +34,6 @@ export default function SystemIndex({ industries, labels, systems }) {
         </div>
       )}
 
-      <p aria-live="polite" className="cambt-index-count">
-        {visible.length} {visible.length === 1 ? labels.singularLabel : labels.pluralLabel}
-        {active === labels.allLabel ? "" : ` ${labels.inLabel} ${active}`}
-      </p>
-
       <ul className="cambt-index-grid">
         {visible.map((system) => (
           <li
@@ -54,9 +49,6 @@ export default function SystemIndex({ industries, labels, systems }) {
             <div className="cambt-card-body">
               <p className="cambt-card-meta">
                 <span className="cambt-card-category">{system.category}</span>
-                <span className="cambt-card-screens">
-                  {system.screenCount} {labels.screensLabel}
-                </span>
               </p>
               <h3 className="cambt-card-title">
                 <Link

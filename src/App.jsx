@@ -12,6 +12,7 @@ import OurProjects from "./pages/OurProjects";
 import CustomPlan from "./pages/CustomPlan";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import OurPricing from "./pages/OurPricing";
 
 // Admin Context & Styles
 import "./admin/admin.css";
@@ -127,6 +128,19 @@ function App() {
             <Route path="/plan-summary" element={<CustomPlan />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/our-pricing" element={<OurPricing />} />
+            <Route
+              path="/our-pricing.html"
+              element={<Navigate to="/our-pricing" replace />}
+            />
+            <Route
+              path="/pricing"
+              element={<Navigate to="/our-pricing" replace />}
+            />
+            <Route
+              path="/pricing.html"
+              element={<Navigate to="/our-pricing" replace />}
+            />
 
             {/* Admin / Studio Authentication */}
             <Route path="/admin/login" element={<Login />} />

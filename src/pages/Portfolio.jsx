@@ -47,9 +47,6 @@ export default function Portfolio() {
             <a href="/#services" className="nav-link" data-i18n="nav.services">
               Services
             </a>
-            <a href="/#combo-packages" className="nav-link" data-i18n="nav.packages">
-              Packages
-            </a>
             <a
               href="/#why-CAMBM"
               data-scroll-target="why-CAMBM"
@@ -60,6 +57,9 @@ export default function Portfolio() {
             </a>
             <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
               Our Products
+            </a>
+            <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
+              Pricing
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -137,9 +137,6 @@ export default function Portfolio() {
           <a href="/#services" className="mobile-nav-link" data-i18n="nav.services">
             Services
           </a>
-          <a href="/#combo-packages" className="mobile-nav-link" data-i18n="nav.packages">
-            Packages
-          </a>
           <a
             href="/#why-CAMBM"
             data-scroll-target="why-CAMBM"
@@ -150,6 +147,9 @@ export default function Portfolio() {
           </a>
           <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
             Our Products
+          </a>
+          <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">
+            Pricing
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

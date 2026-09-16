@@ -167,12 +167,60 @@ export async function testSmtpConnection(testConfig, targetEmail) {
 }
 
 /**
- * Core send helper: Uses Active SMTP first, console mock fallback second.
+ * Send email via Resend API (https://resend.com)
+ */
+export async function sendViaResend({ to, subject, html, text, replyTo = null, from = null }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || !apiKey.trim()) {
+    throw new Error('RESEND_API_KEY is not defined in environment.');
+  }
+
+  const fromAddress = from || process.env.RESEND_FROM || 'Cambridge Marketing <onboarding@resend.dev>';
+  const recipients = Array.isArray(to) ? to : [to];
+
+  const payload = {
+    from: fromAddress,
+    to: recipients,
+    subject,
+    html,
+    text,
+    reply_to: replyTo || undefined
+  };
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey.trim()}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || `Resend Error: ${res.status}`);
+  }
+
+  console.log(`✉️ [Resend API] Email delivered to ${recipients.join(', ')} (ID: ${data.id})`);
+  return { success: true, provider: 'resend', id: data.id };
+}
+
+/**
+ * Core send helper: Uses Resend API first, Active SMTP second, console mock third.
  */
 export async function sendEmail({ to, subject, html, text, replyTo = null, from = null }) {
   const recipient = Array.isArray(to) ? to : [to];
 
-  // 1. Try Active SMTP Transporter first (Hostinger / configured SMTP)
+  // 1. Try Resend API first if configured
+  if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.trim()) {
+    try {
+      return await sendViaResend({ to: recipient, subject, html, text, replyTo, from });
+    } catch (err) {
+      console.error('⚠️ Resend dispatch failed, attempting fallback:', err.message);
+    }
+  }
+
+  // 2. Try Active SMTP Transporter second (Hostinger / configured SMTP)
   if (cachedTransporter || (activeSmtpConfig.host && activeSmtpConfig.user && activeSmtpConfig.pass)) {
     try {
       const transporter = cachedTransporter || createTransporterFromConfig(activeSmtpConfig);
@@ -198,7 +246,7 @@ export async function sendEmail({ to, subject, html, text, replyTo = null, from 
     }
   }
 
-  // 2. Fallback mock / development output
+  // 3. Fallback mock / development output
   console.log('\n======================================================');
   console.log('📧 [EMAIL DISPATCHED TO ADMIN / USER]');
   console.log(`To: ${recipient.join(', ')}`);
@@ -526,11 +574,323 @@ ${newPassword ? `New Temporary Password: ${newPassword}\nLogin: ${loginUrl}` : '
   });
 }
 
+/**
+ * Send Custom Package Scope Inquiry to company email (ahamedhaseen2003@gmail.com)
+ */
+export async function sendCustomScopeInquiryEmail({ name, email, phone, company, notes, services = [], ip, userAgent }) {
+  const targetEmail = process.env.ADMIN_EMAIL || 'ahamedhaseen2003@gmail.com';
+  
+  // Clean, concise timestamp
+  const now = new Date();
+  const submissionTime = now.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Colombo'
+  }) + ' (SLST)';
+
+  const subject = `🔍 Customer Investigation: ${name || 'New Client'} ${company ? `(${company})` : ''} - Pricing Scope`;
+
+  const servicesHtml = (services && services.length > 0)
+    ? services.map((s) => {
+        const cat = (s.category || 'Service').toUpperCase();
+        const badgeBg = cat === 'BUILD' ? 'rgba(56, 189, 248, 0.18)' : cat === 'CREATE' ? 'rgba(245, 158, 11, 0.18)' : 'rgba(255, 90, 0, 0.18)';
+        const badgeColor = cat === 'BUILD' ? '#38bdf8' : cat === 'CREATE' ? '#fbbf24' : '#FF5A00';
+
+        return `
+          <div style="background: #18202f; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding-bottom: 5px;">
+                  <span style="display: inline-block; padding: 3px 8px; font-size: 10px; font-weight: 700; color: ${badgeColor}; background: ${badgeBg}; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;">
+                    ${cat}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-size: 14px; font-weight: 600; color: #f8fafc; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere;">
+                  ${s.num ? `<span style="color: #94a3b8; font-weight: 500; margin-right: 6px;">${s.num} —</span>` : ''}${s.name || s.key}
+                </td>
+              </tr>
+            </table>
+          </div>
+        `;
+      }).join('')
+    : `
+      <div style="background: #18202f; border-radius: 8px; padding: 14px; text-align: center; color: #94a3b8; font-style: italic; font-size: 13px;">
+        No specific services selected.
+      </div>
+    `;
+
+  const servicesText = (services && services.length > 0)
+    ? services.map(s => `- [${(s.category || 'Service').toUpperCase()}] ${s.num ? `${s.num} - ` : ''}${s.name || s.key}`).join('\n')
+    : 'No specific services checked.';
+
+  const html = `
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+      <meta name="x-apple-disable-message-reformatting">
+      <title>Customer Investigation & Custom Scope</title>
+      <style type="text/css">
+        /* Reset Styles */
+        html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; background-color: #080c14; }
+        * { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; box-sizing: border-box; }
+        table, td { mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
+        table { border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important; }
+        img { -ms-interpolation-mode: bicubic; }
+        a { text-decoration: none; }
+
+        /* Mobile specific adjustments */
+        @media screen and (max-width: 600px) {
+          .email-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: auto !important;
+            border-radius: 0px !important;
+            border-left: none !important;
+            border-right: none !important;
+          }
+          .fluid-padding {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+          }
+          .header-title {
+            font-size: 18px !important;
+          }
+          .card-wrapper {
+            padding: 12px 12px !important;
+          }
+        }
+      </style>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #080c14; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #f1f5f9;">
+
+      <!-- Full-Width Background Wrapper Table -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #080c14; width: 100% !important; min-width: 100%;">
+        <tr>
+          <td align="center" style="padding: 16px 8px;">
+
+            <!-- Centered Main Email Card (Max width 580px, 100% fluid on mobile) -->
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="email-container" style="max-width: 580px; width: 100%; margin: 0 auto; background-color: #0f172a; border-radius: 12px; border: 1px solid rgba(255, 90, 0, 0.35); overflow: hidden;">
+              
+              <!-- Header -->
+              <tr>
+                <td style="background: linear-gradient(135deg, #FF5A00 0%, #d84500 100%); padding: 22px 20px; text-align: left;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td>
+                        <div style="display: inline-block; padding: 3px 8px; background: rgba(0, 0, 0, 0.28); color: #ffffff; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">
+                          CAMBRIDGE MARKETING &bull; PRICING INQUIRY
+                        </div>
+                        <h1 class="header-title" style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff; line-height: 1.25; letter-spacing: -0.3px;">
+                          📋 Customer Investigation & Custom Scope
+                        </h1>
+                        <p style="margin: 4px 0 0; font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">
+                          New custom plan inquiry submitted via website
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Content Area -->
+              <tr>
+                <td class="fluid-padding" style="padding: 18px 18px 12px;">
+
+                  <!-- Section 1: Customer Contact Details -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #141d2f; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; margin-bottom: 14px; overflow: hidden; width: 100%;">
+                    <tr>
+                      <td style="padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); background: rgba(255, 90, 0, 0.05);">
+                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #FF5A00;">
+                          👤 Customer Contact Information
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="card-wrapper" style="padding: 14px 14px 4px;">
+                        
+                        <!-- Customer Name -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px;">
+                          <tr>
+                            <td style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; padding-bottom: 2px;">
+                              Customer Name
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size: 15px; font-weight: 700; color: #ffffff; word-break: break-word; overflow-wrap: anywhere;">
+                              ${name || 'Not provided'}
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Customer Email -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px;">
+                          <tr>
+                            <td style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; padding-bottom: 2px;">
+                              Customer Email
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size: 14px; font-weight: 700; color: #FF5A00; word-break: break-word; overflow-wrap: anywhere;">
+                              <a href="mailto:${email}" style="color: #FF5A00; text-decoration: underline;">${email || 'Not provided'}</a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Phone / WhatsApp -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px;">
+                          <tr>
+                            <td style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; padding-bottom: 2px;">
+                              Phone / WhatsApp
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size: 14px; font-weight: 600; color: #ffffff; word-break: break-word; overflow-wrap: anywhere;">
+                              ${phone ? `<a href="tel:${phone}" style="color: #38bdf8; text-decoration: none;">${phone}</a>` : '<span style="color: #64748b;">Not provided</span>'}
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company / Brand -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px;">
+                          <tr>
+                            <td style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; padding-bottom: 2px;">
+                              Company / Organization
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size: 14px; font-weight: 600; color: #f1f5f9; word-break: break-word; overflow-wrap: anywhere;">
+                              ${company || '<span style="color: #64748b;">Not provided</span>'}
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Time of Submission -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="padding-bottom: 4px;">
+                          <tr>
+                            <td style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; padding-bottom: 2px;">
+                              Investigation Timestamp
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-size: 13px; font-weight: 500; color: #cbd5e1; word-break: break-word;">
+                              ${submissionTime}
+                            </td>
+                          </tr>
+                        </table>
+
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Section 2: Selected Services -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #141d2f; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; margin-bottom: 14px; overflow: hidden; width: 100%;">
+                    <tr>
+                      <td style="padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); background: rgba(255, 90, 0, 0.05);">
+                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #FF5A00;">
+                          ⚡ Selected Services for Custom Scope (${services.length})
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="card-wrapper" style="padding: 12px 14px 4px;">
+                        ${servicesHtml}
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Section 3: Notes / Customer Targets (If any) -->
+                  ${notes ? `
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #141d2f; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; margin-bottom: 14px; overflow: hidden; width: 100%;">
+                      <tr>
+                        <td style="padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); background: rgba(56, 189, 248, 0.05);">
+                          <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #38bdf8;">
+                            📝 Customer Scope Notes & Goals
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="card-wrapper" style="padding: 12px 14px;">
+                          <div style="background: #18202f; border-left: 3px solid #38bdf8; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.5; color: #e2e8f0; word-break: break-word; overflow-wrap: anywhere;">
+                            ${notes.replace(/\n/g, '<br/>')}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  ` : ''}
+
+                  <!-- Quick Reply Helper -->
+                  <div style="text-align: center; padding: 8px 0 16px;">
+                    <a href="mailto:${email}?subject=${encodeURIComponent(`Re: Cambridge Marketing Custom Scope Proposal — ${company || name || ''}`)}" style="display: inline-block; background: #FF5A00; color: #ffffff !important; padding: 11px 22px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; letter-spacing: 0.3px;">
+                      Direct Reply to ${name ? name.split(' ')[0] : 'Customer'} &rarr;
+                    </a>
+                  </div>
+
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background: #080c14; padding: 14px 16px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                  <p style="margin: 0; font-size: 11px; color: #64748b; line-height: 1.4; word-break: break-all;">
+                    Cambridge Marketing &bull; Delivered to <span style="color: #FF5A00;">${targetEmail}</span>
+                  </p>
+                </td>
+              </tr>
+
+            </table>
+
+          </td>
+        </tr>
+      </table>
+
+    </body>
+    </html>
+  `;
+
+  const text = `
+📋 CUSTOMER INVESTIGATION & PRICING SCOPE
+==========================================
+Customer Name: ${name || 'N/A'}
+Email: ${email || 'N/A'}
+Phone: ${phone || 'N/A'}
+Company: ${company || 'N/A'}
+Date & Time: ${submissionTime}
+
+SELECTED SERVICES (${services.length}):
+${servicesText}
+
+CUSTOMER NOTES:
+${notes || 'None provided'}
+==========================================
+Delivered to: ${targetEmail}
+  `.trim();
+
+  return await sendEmail({
+    to: targetEmail,
+    replyTo: email || undefined,
+    subject,
+    html,
+    text
+  });
+}
+
 export default {
   sendEmail,
+  sendViaResend,
   sendTwoFactorOtpEmail,
   sendForgotPasswordNotification,
   sendPasswordResetAlert,
+  sendCustomScopeInquiryEmail,
   getActiveSmtpConfig,
   updateActiveSmtpConfig,
   testSmtpConnection,

@@ -9,8 +9,8 @@ export const productsIndexContent = {
     title: "Systems that fit the business",
     emphasis: "fit",
     lead: "Working systems Cambridge Marketing builds, deploys and fits to how a business actually trades. Open any one of them and every screen you see is a capture of it running.",
-    primaryAction: { href: "/#services", label: "Request a Demo" },
-    secondaryAction: { href: "/#services", label: "Implementation services" },
+    primaryAction: { href: "/#services", label: "Book a strategy call" },
+    secondaryAction: { href: "#catalogue", label: "Explore systems" },
   },
   adaptation: {
     label: "How we are different",
@@ -38,15 +38,13 @@ export const productsIndexContent = {
       { field: "Aisle and shelf", verdict: "kept" },
       { field: "Basket size", verdict: "kept" },
       { field: "Weighed goods", verdict: "kept" },
-      { field: "Loyalty at the till", verdict: "kept" },
-      { field: "Stock counted by weight", verdict: "kept" },
-      { field: "Price per item", verdict: "kept" },
+      { field: "Price by weight", verdict: "kept" },
     ],
   },
   customisation: {
     label: "How they are delivered",
     headingParts: [
-      { text: "Every one of these is " },
+      { text: "Every system is " },
       { text: "fitted", tone: "accent" },
       { text: " before it is handed over" },
     ],
@@ -71,13 +69,13 @@ export const productsIndexContent = {
   contact: {
     heading: "See it against your own operation.",
     body: "Tell us how the business trades today and we will show the system working against that, rather than against a demo dataset.",
-    action: { href: "/custom-plan", label: "Request a Demo" },
+    action: { href: "/#services", label: "Book a strategy call" },
   },
   detail: {
     breadcrumbHome: "Home",
     breadcrumbIndex: "Products",
     demoLabel: "View demo",
-    requestDemoLabel: "Request a Demo",
+    requestDemoLabel: "Book a strategy call",
     documentationLabel: "Documentation",
     sections: {
       solves: {
@@ -124,7 +122,7 @@ export const productsIndexContent = {
     contact: {
       heading: "See it against your own numbers.",
       body: "Tell us how the business trades today and we will show the system working against that, rather than against a demo dataset.",
-      action: { href: "/custom-plan", label: "Request a Demo" },
+      action: { href: "/#services", label: "Book a strategy call" },
     },
   },
 };

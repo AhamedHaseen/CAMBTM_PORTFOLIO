@@ -59,7 +59,6 @@ export default function Products() {
       const hashTimer = setTimeout(scrollToTarget, 100);
       return () => clearTimeout(hashTimer);
     } else {
-      // Always start immediately from the very first top section (hero)
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       if (document.documentElement) document.documentElement.scrollTop = 0;
       if (document.body) document.body.scrollTop = 0;
@@ -68,7 +67,6 @@ export default function Products() {
       }
     }
 
-    // Update cart badge from localStorage
     try {
       const saved = localStorage.getItem("cambm_custom_plan");
       if (saved) {
@@ -83,7 +81,6 @@ export default function Products() {
 
     window.addEventListener("cambm:cart-updated", handleCartUpdated);
 
-    // Initialize global theme and i18n
     if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
       window.CAMBMTheme.initControls();
     }
@@ -148,14 +145,14 @@ export default function Products() {
             <a href="/#services" className="nav-link" data-i18n="nav.services">
               Services
             </a>
-            <a href="/#combo-packages" className="nav-link" data-i18n="nav.packages">
-              Packages
-            </a>
             <a href="/#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
             <a href="/products" className="nav-link active" data-i18n="nav.ourProducts">
               Our Products
+            </a>
+            <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
+              Pricing
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -198,19 +195,6 @@ export default function Products() {
                 <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
               </svg>
             </button>
-            <a
-              href="/custom-plan"
-              className={`header-cart-btn js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
-              aria-label="View Custom Services Cart"
-              title="View Custom Services Cart"
-            >
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-            </a>
             <button
               type="button"
               className="btn btn-primary js-open-cal"
@@ -222,19 +206,6 @@ export default function Products() {
               Book a strategy call
             </button>
           </div>
-          <a
-            href="/custom-plan"
-            className={`header-cart-btn mobile-header-cart js-open-plan-cart ${cartCount > 0 ? "has-items" : ""}`}
-            aria-label="View Custom Services Cart"
-            title="View Custom Services Cart"
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            {cartCount > 0 && <span className="header-cart-badge">{cartCount}</span>}
-          </a>
           <button
             className="nav-toggle"
             id="navToggle"
@@ -256,9 +227,6 @@ export default function Products() {
           <a href="/#services" className="mobile-nav-link" data-i18n="nav.services">
             Services
           </a>
-          <a href="/#combo-packages" className="mobile-nav-link" data-i18n="nav.packages">
-            Packages
-          </a>
           <a
             href="/#why-CAMBM"
             className="mobile-nav-link"
@@ -268,6 +236,9 @@ export default function Products() {
           </a>
           <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
             Our Products
+          </a>
+          <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">
+            Pricing
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About
@@ -325,7 +296,7 @@ export default function Products() {
           </div>
         </nav>
       </header>
-      {/* Dims the page behind the open mobile nav; clicking it closes the menu */}
+      {/* Dims the page behind the open mobile nav */}
       <div className="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
 
       {/* Main Products Content */}
@@ -353,16 +324,13 @@ export default function Products() {
                 <div className="cambt-hero-actions">
                   <button
                     type="button"
-                    className="cambt-btn-primary js-open-cal"
+                    className="cambt-btn-hero-discuss js-open-cal"
                     data-cal-link="cambridge.marketing"
                     data-cal-namespace="strategy-call"
                     data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
                   >
-                    {copy.hero.primaryAction.label}
+                    Book a strategy call <span>&rarr;</span>
                   </button>
-                  <a className="cambt-btn-secondary" href="/#services">
-                    {copy.hero.secondaryAction.label}
-                  </a>
                 </div>
               </div>
 
@@ -397,23 +365,6 @@ export default function Products() {
             <SystemIndex industries={industries} labels={copy.index} systems={indexSystems} />
           </div>
         </section>
-
-        {/* A5. Closing CTA */}
-        <section className="cambt-cta-band">
-          <div className="cambt-inner">
-            <h2>{copy.contact.heading}</h2>
-            <p>{copy.contact.body}</p>
-            <button
-              type="button"
-              className="cambt-btn-cta js-open-cal"
-              data-cal-link="cambridge.marketing"
-              data-cal-namespace="strategy-call"
-              data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
-            >
-              {copy.contact.action.label}
-            </button>
-          </div>
-        </section>
       </main>
 
       {/* Footer (Exact 1:1 Match to Cambridge Marketing) */}
@@ -443,142 +394,6 @@ export default function Products() {
           </div>
         </div>
       </footer>
-
-      {/* First-visit locale picker popup (modal) */}
-      <div className="locale-popup-backdrop" id="localePopupBackdrop">
-        <div
-          className="locale-popup"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Select your region"
-        >
-          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
-            Choose your language
-          </h3>
-          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
-            We'll tailor the language to you.
-          </p>
-
-          <label
-            className="locale-field-label"
-            htmlFor="localePopupLanguage"
-            data-i18n="locale.languageLabel"
-          >
-            Language
-          </label>
-          <select className="locale-select" id="localePopupLanguage"></select>
-          <button
-            type="button"
-            className="btn btn-primary locale-popup-confirm"
-            id="localePopupConfirm"
-            data-i18n="locale.confirm"
-          >
-            Continue
-          </button>
-          <p className="locale-popup-note" data-i18n="locale.changeNote">
-            You can change this anytime from the menu.
-          </p>
-        </div>
-      </div>
-
-      {/* Enterprise contact-form popup */}
-      <div className="contact-popup-backdrop" id="contactPopupBackdrop">
-        <div
-          className="contact-popup"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Contact us"
-        >
-          <button
-            className="contact-popup-close"
-            id="contactPopupClose"
-            aria-label="Close"
-          >
-            &#10005;
-          </button>
-          <h3 className="contact-popup-title" data-i18n="contact.title">
-            Contact Enterprise Sales
-          </h3>
-          <p className="contact-popup-desc" data-i18n="contact.desc">
-            Tell us about your business and we'll get back to you shortly.
-          </p>
-          <form id="contactForm" className="contact-form">
-            <label htmlFor="contactName" data-i18n="contact.nameLabel">
-              Full name
-            </label>
-            <input
-              id="contactName"
-              type="text"
-              name="name"
-              required
-              minLength="2"
-              maxLength="100"
-              pattern="[\p{L}\p{M}\s.'\-]{2,100}"
-              title="Please enter a name using letters only (no numbers or symbols)"
-            />
-            <label htmlFor="contactEmail" data-i18n="contact.emailLabel">
-              Email
-            </label>
-            <input
-              id="contactEmail"
-              type="email"
-              name="email"
-              required
-              maxLength="150"
-            />
-            <label htmlFor="contactCompany" data-i18n="contact.companyLabel">
-              Company
-            </label>
-            <input
-              id="contactCompany"
-              type="text"
-              name="company"
-              minLength="2"
-              maxLength="100"
-            />
-            <label htmlFor="contactPhone" data-i18n="contact.phoneLabel">
-              Phone (optional)
-            </label>
-            <input
-              id="contactPhone"
-              type="tel"
-              name="phone"
-              pattern="\+[0-9][0-9\s\-]{6,18}"
-              placeholder="+94 77 123 4567"
-              title="Include your country code, e.g. +94 77 123 4567"
-            />
-            <label htmlFor="contactMessage" data-i18n="contact.messageLabel">
-              Message
-            </label>
-            <textarea
-              id="contactMessage"
-              name="message"
-              rows="4"
-              required
-              minLength="10"
-              maxLength="2000"
-            ></textarea>
-            <input
-              type="hidden"
-              name="_subject"
-              value="Enterprise inquiry - Cambridge Marketing"
-            />
-            <button
-              type="submit"
-              className="btn btn-primary contact-form-submit"
-              data-i18n="contact.send"
-            >
-              Send message
-            </button>
-            <p
-              className="contact-form-status"
-              id="contactFormStatus"
-              role="status"
-              aria-live="polite"
-            ></p>
-          </form>
-        </div>
-      </div>
     </div>
   );
 }

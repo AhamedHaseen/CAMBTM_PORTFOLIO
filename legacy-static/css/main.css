@@ -153,12 +153,11 @@
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--text-muted);
-      transition: color 0.2s ease;
       position: relative;
     }
 
     .nav-link:hover {
-      color: var(--text);
+      color: var(--text-muted);
     }
 
     .nav-link.active::before {
@@ -305,7 +304,7 @@
     }
 
     .mobile-nav-link:hover {
-      color: var(--text);
+      color: var(--text-muted);
     }
 
     .mobile-nav-actions {
