@@ -11,25 +11,25 @@
     LK: {
       name: "Sri Lanka",
       flag: "🇱🇰",
-      languages: ["en", "si", "ar", "ta"],
+      languages: ["en", "si", "ta", "ar", "es"],
       currency: { code: "LKR", symbol: "LKR " },
     },
     SA: {
       name: "Saudi Arabia",
       flag: "🇸🇦",
-      languages: ["en", "ar"],
+      languages: ["en", "ar", "es", "si", "ta"],
       currency: { code: "SAR", symbol: "SAR " },
     },
     IN: {
       name: "India",
       flag: "🇮🇳",
-      languages: ["en", "ta"],
+      languages: ["en", "ta", "si", "ar", "es"],
       currency: { code: "INR", symbol: "₹" },
     },
     EU: {
       name: "European Union",
       flag: "🇪🇺",
-      languages: ["en", "es"],
+      languages: ["en", "es", "ar", "si", "ta"],
       currency: { code: "EUR", symbol: "€" },
     },
   };
@@ -3789,6 +3789,7 @@
         STORAGE_KEY,
         JSON.stringify({ country: country, language: language }),
       );
+      localStorage.setItem("cambm_lang", language);
     } catch (e) {
       /* storage may be unavailable (private mode etc.) - locale just won't persist */
     }
@@ -3947,6 +3948,13 @@
       applyCalConfig(language);
       if (persist) saveLocale(country, language);
     }
+
+    window.cambmSetLanguage = function (lang) {
+      setLocale(currentCountry, lang, true);
+    };
+    window.cambmSetLocale = function (country, lang) {
+      setLocale(country, lang, true);
+    };
 
     document.querySelectorAll(".locale-country-select").forEach(function (sel) {
       if (sel._i18nInit) return;

@@ -271,10 +271,6 @@ export default function Welcome() {
     <>
       <MotionPageLoader />
 
-      {/*  Custom Cursor  */}
-      <div className="cursor" id="cursor"></div>
-      <div className="cursor-ring" id="cursorRing"></div>
-
       {/*  Header  */}
       <motion.header
         className="header"

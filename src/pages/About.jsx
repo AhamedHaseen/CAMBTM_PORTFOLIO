@@ -51,10 +51,6 @@ export default function About() {
 
   return (
     <>
-      {/*  Custom Cursor  */}
-      <div className="cursor" id="cursor"></div>
-      <div className="cursor-ring" id="cursorRing"></div>
-
       {/*  Header  */}
       <header className="header" id="header">
         <div className="header-inner">

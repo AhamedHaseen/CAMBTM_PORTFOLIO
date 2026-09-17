@@ -8,10 +8,10 @@
 
   // ---- Countries: languages offered + currency symbol ----
   const COUNTRIES = {
-    LK: { name: 'Sri Lanka', flag: '🇱🇰', languages: ['en', 'si', 'ta'], currency: { code: 'LKR', symbol: 'LKR ' } },
-    SA: { name: 'Saudi Arabia', flag: '🇸🇦', languages: ['en', 'ar'], currency: { code: 'SAR', symbol: 'SAR ' } },
-    IN: { name: 'India', flag: '🇮🇳', languages: ['en', 'ta'], currency: { code: 'INR', symbol: '₹' } },
-    EU: { name: 'European Union', flag: '🇪🇺', languages: ['en', 'es'], currency: { code: 'EUR', symbol: '€' } }
+    LK: { name: 'Sri Lanka', flag: '🇱🇰', languages: ['en', 'si', 'ta', 'ar', 'es'], currency: { code: 'LKR', symbol: 'LKR ' } },
+    SA: { name: 'Saudi Arabia', flag: '🇸🇦', languages: ['en', 'ar', 'es', 'si', 'ta'], currency: { code: 'SAR', symbol: 'SAR ' } },
+    IN: { name: 'India', flag: '🇮🇳', languages: ['en', 'ta', 'si', 'ar', 'es'], currency: { code: 'INR', symbol: '₹' } },
+    EU: { name: 'European Union', flag: '🇪🇺', languages: ['en', 'es', 'ar', 'si', 'ta'], currency: { code: 'EUR', symbol: '€' } }
   };
 
   // ---- Package pricing, per country ----

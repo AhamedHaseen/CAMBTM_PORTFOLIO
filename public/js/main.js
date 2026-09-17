@@ -151,6 +151,10 @@ window.addEventListener(
   { passive: true },
 );
 
+window.addEventListener("cambm:revealed", () => {
+  requestAnimationFrame(onScrollFrame);
+}, { passive: true });
+
 // ===== LENIS SMOOTH SCROLL ENGINE =====
 let lenisInstance = null;
 if (
@@ -374,8 +378,8 @@ if (packagesSwitcher) {
 }
 
 // ===== CUSTOM CURSOR =====
-const cursor = document.getElementById("cursor");
-const cursorRing = document.getElementById("cursorRing");
+let cursor = document.getElementById("cursor") || document.getElementById("cursorDot");
+let cursorRing = document.getElementById("cursorRing");
 let cursorX = -100,
   cursorY = -100;
 let ringX = -100,
@@ -383,30 +387,61 @@ let ringX = -100,
 
 const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
-if (!isTouchDevice && cursor && cursorRing) {
+if (!isTouchDevice) {
   let cursorFrame = null;
 
+  function getCursorEls() {
+    if (!cursor || !document.body.contains(cursor)) {
+      cursor = document.getElementById("cursor") || document.getElementById("cursorDot");
+    }
+    if (!cursorRing || !document.body.contains(cursorRing)) {
+      cursorRing = document.getElementById("cursorRing");
+    }
+    return { cursor, cursorRing };
+  }
+
   function renderCursor() {
-    cursor.style.transform = `translate3d(${cursorX - 4}px, ${cursorY - 4}px, 0)`;
+    const { cursor: dotEl, cursorRing: ringEl } = getCursorEls();
+    if (dotEl) {
+      dotEl.style.transform = `translate3d(${cursorX - 4}px, ${cursorY - 4}px, 0)`;
+    }
     ringX += (cursorX - ringX) * 0.18;
     ringY += (cursorY - ringY) * 0.18;
-    cursorRing.style.transform = `translate3d(${ringX - 20}px, ${ringY - 20}px, 0)`;
+    if (ringEl) {
+      ringEl.style.transform = `translate3d(${ringX - 20}px, ${ringY - 20}px, 0)`;
+    }
 
     if (Math.abs(cursorX - ringX) > 0.1 || Math.abs(cursorY - ringY) > 0.1) {
       cursorFrame = requestAnimationFrame(renderCursor);
     } else {
       ringX = cursorX;
       ringY = cursorY;
-      cursorRing.style.transform = `translate3d(${ringX - 20}px, ${ringY - 20}px, 0)`;
+      if (ringEl) {
+        ringEl.style.transform = `translate3d(${ringX - 20}px, ${ringY - 20}px, 0)`;
+      }
       cursorFrame = null;
     }
   }
+
+  let isFirstMove = true;
 
   window.addEventListener(
     "pointermove",
     (e) => {
       cursorX = e.clientX;
       cursorY = e.clientY;
+      const { cursor: dotEl, cursorRing: ringEl } = getCursorEls();
+      if (dotEl && !dotEl.classList.contains("is-visible")) dotEl.classList.add("is-visible");
+      if (ringEl && !ringEl.classList.contains("is-visible")) ringEl.classList.add("is-visible");
+
+      if (isFirstMove) {
+        ringX = cursorX;
+        ringY = cursorY;
+        if (dotEl) dotEl.style.transform = `translate3d(${cursorX - 4}px, ${cursorY - 4}px, 0)`;
+        if (ringEl) ringEl.style.transform = `translate3d(${ringX - 20}px, ${ringY - 20}px, 0)`;
+        isFirstMove = false;
+      }
+
       if (cursorFrame === null) {
         cursorFrame = requestAnimationFrame(renderCursor);
       }
@@ -414,13 +449,20 @@ if (!isTouchDevice && cursor && cursorRing) {
     { passive: true }
   );
 
+  document.addEventListener("mouseleave", () => {
+    const { cursor: dotEl, cursorRing: ringEl } = getCursorEls();
+    if (dotEl) dotEl.classList.remove("is-visible");
+    if (ringEl) ringEl.classList.remove("is-visible");
+  });
+
   // Dynamic hover delegation for all current and future interactive elements
   document.addEventListener(
     "pointerover",
     (e) => {
-      const isInteractive = e.target.closest("a, button, [role='button'], .btn, .tab, .service-row, .feature-card, .service-card, .bento-card");
+      const isInteractive = e.target && e.target.closest && e.target.closest("a, button, [role='button'], .btn, .tab, .service-row, .feature-card, .service-card, .bento-card, select, .nav-link");
       if (isInteractive) {
-        cursorRing.classList.add("hover");
+        const { cursorRing: ringEl } = getCursorEls();
+        if (ringEl) ringEl.classList.add("hover");
       }
     },
     { passive: true }
@@ -429,16 +471,19 @@ if (!isTouchDevice && cursor && cursorRing) {
   document.addEventListener(
     "pointerout",
     (e) => {
-      const isInteractive = e.target.closest("a, button, [role='button'], .btn, .tab, .service-row, .feature-card, .service-card, .bento-card");
+      const isInteractive = e.target && e.target.closest && e.target.closest("a, button, [role='button'], .btn, .tab, .service-row, .feature-card, .service-card, .bento-card, select, .nav-link");
       if (isInteractive) {
-        cursorRing.classList.remove("hover");
+        const { cursorRing: ringEl } = getCursorEls();
+        if (ringEl) ringEl.classList.remove("hover");
       }
     },
     { passive: true }
   );
-} else if (cursor && cursorRing) {
-  cursor.style.display = "none";
-  cursorRing.style.display = "none";
+} else {
+  const dotEl = document.getElementById("cursor") || document.getElementById("cursorDot");
+  const ringEl = document.getElementById("cursorRing");
+  if (dotEl) dotEl.style.display = "none";
+  if (ringEl) ringEl.style.display = "none";
 }
 
 // ===== SCROLL REVEAL =====

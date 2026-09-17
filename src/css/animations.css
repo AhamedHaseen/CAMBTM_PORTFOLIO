@@ -589,6 +589,14 @@ a {
   pointer-events: none !important;
   z-index: 99999;
   will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cursor.is-visible,
+.cursor-ring.is-visible {
+  opacity: 1;
 }
 
 .cursor-ring {
@@ -602,7 +610,10 @@ a {
   pointer-events: none !important;
   z-index: 99998;
   will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  opacity: 0;
   transition:
+    opacity 0.25s ease,
     width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
     height 0.2s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.2s ease,

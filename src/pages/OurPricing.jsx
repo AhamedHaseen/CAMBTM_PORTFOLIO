@@ -208,8 +208,8 @@ export default function OurPricing() {
         <div className="header-inner">
           <a
             href="/"
-            className="logo"
-            id="logoLink"
+            className="logo js-logo-home"
+            data-i18n-attr="aria-label:nav.homeAriaLabel"
             aria-label="Cambridge Marketing - back to top"
           >
             <img

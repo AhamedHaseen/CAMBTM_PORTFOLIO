@@ -20,9 +20,6 @@ export default function Portfolio() {
 
   return (
     <>
-      <div className="cursor" id="cursor"></div>
-      <div className="cursor-ring" id="cursorRing"></div>
-
       <header className="header" id="header">
         <div className="header-inner">
           <a
