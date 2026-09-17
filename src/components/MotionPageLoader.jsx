@@ -81,14 +81,19 @@ export default function MotionPageLoader({ customAssets = [] }) {
         return new Promise((resolve) => {
           const img = new Image();
           img.src = getFullUrl(url);
-          if (img.complete) {
+          const handleComplete = () => {
             loadedCount++;
-            resolve();
-          } else {
-            img.onload = () => {
-              loadedCount++;
+            if (typeof img.decode === "function") {
+              img.decode().catch(() => {}).then(() => resolve());
+            } else {
               resolve();
-            };
+            }
+          };
+
+          if (img.complete && img.naturalWidth !== 0) {
+            handleComplete();
+          } else {
+            img.onload = () => handleComplete();
             img.onerror = () => {
               loadedCount++;
               resolve();

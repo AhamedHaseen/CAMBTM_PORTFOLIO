@@ -111,7 +111,7 @@ const renderBrandCardsHTML = (items) => {
     const logoUrl = getMediaUrl(b.logo_url);
     const name = (b.company_name || '').replace(/"/g, '&quot;');
     return `<div class="brand-card">` +
-      `<img src="${logoUrl}" alt="${name}" loading="eager" fetchpriority="high" decoding="async" />` +
+      `<img src="${logoUrl}" alt="${name}" loading="eager" fetchpriority="high" decoding="sync" />` +
       `</div>`;
   }).join('');
 };

@@ -855,6 +855,10 @@ html.lenis body {
   padding: 0 12px;
   width: max-content;
   touch-action: pan-y pan-x;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .brand-card {
@@ -867,12 +871,15 @@ html.lenis body {
   box-shadow: none;
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   touch-action: pan-y pan-x;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .brand-card:hover,
 .brand-card:active,
 .brand-card:focus-within {
-  transform: translateY(-5px);
+  transform: translateY(-5px) translateZ(0);
 }
 
 .brand-card img {
@@ -889,6 +896,9 @@ html.lenis body {
   pointer-events: none;
   -webkit-user-drag: none;
   user-select: none;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 [data-theme="dark"] .brand-card img {
