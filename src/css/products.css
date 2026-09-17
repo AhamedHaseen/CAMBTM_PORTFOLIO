@@ -523,24 +523,23 @@
   transform: scale(1.05);
 }
 
-/* Keep the colored parts steady */
-.cambt-mark-svg .f,
-.cambt-mark-svg .fs {
-  /* Retains signature brand orange */
-}
 
 /* Infinite smooth, subtle brand wave through empty boxes (.m) on hover in dark mode */
 @keyframes cambt-empty-box-wave {
-  0%, 100% {
+
+  0%,
+  100% {
     fill: var(--cambt-color-border-strong, #4a515a);
     opacity: 0.4;
     filter: none;
   }
+
   35% {
     fill: #ff5a00;
     opacity: 0.65;
     filter: drop-shadow(0 0 2px rgba(255, 90, 0, 0.3));
   }
+
   70% {
     fill: #4a515a;
     opacity: 0.5;
@@ -550,16 +549,20 @@
 
 /* Infinite smooth, subtle brand wave through empty boxes (.m) on hover in light mode */
 @keyframes cambt-empty-box-wave-light {
-  0%, 100% {
+
+  0%,
+  100% {
     fill: #c4c9cf;
     opacity: 0.55;
     filter: none;
   }
+
   35% {
     fill: #f4610d;
     opacity: 0.6;
     filter: drop-shadow(0 0 1.5px rgba(244, 97, 13, 0.25));
   }
+
   70% {
     fill: #c4c9cf;
     opacity: 0.6;
