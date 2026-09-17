@@ -54,8 +54,8 @@ export default function Packages() {
             <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
               Our Products
             </a>
-            <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
-              Pricing
+            <a href="/our-pricing" className="nav-link active" data-i18n="nav.ourPricing">
+              Packages
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -143,8 +143,8 @@ export default function Packages() {
           <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
             Our Products
           </a>
-          <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">
-            Pricing
+          <a href="/our-pricing" className="mobile-nav-link active" data-i18n="nav.ourPricing">
+            Packages
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

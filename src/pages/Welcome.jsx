@@ -324,7 +324,7 @@ export default function Welcome() {
               Our Products
             </a>
             <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
-              Pricing
+              Packages
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -409,7 +409,7 @@ export default function Welcome() {
             Our Products
           </a>
           <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">
-            Pricing
+            Packages
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About

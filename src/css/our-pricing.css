@@ -142,7 +142,7 @@
   width: 100%;
   background: #ffffff;
   border-bottom: 1px solid rgba(10, 10, 10, 0.08);
-  padding: 90px 0 110px;
+  padding: calc(var(--header-height, 64px) + 60px) 0 110px;
 }
 
 [data-theme="dark"] .pricing-packages-page-section,
@@ -153,11 +153,11 @@
 
 @media (max-width: 768px) {
   .pricing-page-main {
-    padding-top: 64px;
+    padding-top: 0;
   }
 
   .pricing-packages-page-section {
-    padding: 50px 0 65px;
+    padding: calc(var(--header-height, 64px) + 30px) 0 65px;
   }
 }
 
@@ -190,6 +190,11 @@
   letter-spacing: -0.01em !important;
   margin: 0 0 22px !important;
   color: var(--ink) !important;
+}
+
+html.modal-open-scroll-lock,
+body.modal-open-scroll-lock {
+  overflow: hidden !important;
 }
 
 [data-theme="dark"] .pricing-combos-title {
@@ -759,7 +764,7 @@
   flex-shrink: 0;
 }
 
-/* Strictly Right-Side '+' Icon Button (NO 'Add' Text, No Hover Zoom) */
+/* Strictly Right-Side '+' Icon Button */
 .pricing-custom-add-btn {
   width: 32px;
   height: 32px;
@@ -773,11 +778,18 @@
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 [data-theme="dark"] .pricing-custom-add-btn {
   border-color: rgba(255, 255, 255, 0.25);
   color: #ededed;
+}
+
+.pricing-custom-add-btn:hover {
+  border-color: #ff5a00;
+  color: #ff5a00;
+  background: rgba(255, 90, 0, 0.08);
 }
 
 .pricing-custom-add-btn.is-selected {
@@ -828,23 +840,43 @@
   color: #ff5a00;
 }
 
+.pricing-custom-summary-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .pricing-custom-reset-btn {
-  background: none;
-  border: none;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: var(--ink, #111);
   font-family: var(--font-sans, "Inter", sans-serif) !important;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--muted);
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  transition: all 0.2s ease;
   line-height: 1;
 }
 
+[data-theme="dark"] .pricing-custom-reset-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ededed;
+}
+
 .pricing-custom-reset-btn:hover {
+  background: rgba(255, 90, 0, 0.1);
+  border-color: #ff5a00;
   color: #ff5a00;
+  transform: translateY(-1px);
 }
 
 .pricing-custom-summary-title {
@@ -945,6 +977,39 @@
 
 .chip-del:hover {
   color: #ff5a00;
+}
+
+/* Reset button in the chips row, right next to selected services */
+.pricing-custom-chip-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 90, 0, 0.1);
+  border: 1px dashed rgba(255, 90, 0, 0.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: #ff5a00;
+  font-family: var(--font-sans, "Inter", sans-serif) !important;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+[data-theme="dark"] .pricing-custom-chip-reset-btn {
+  background: rgba(255, 90, 0, 0.16);
+  border-color: rgba(255, 90, 0, 0.5);
+  color: #ff7a33;
+}
+
+.pricing-custom-chip-reset-btn:hover {
+  background: #ff5a00;
+  border-style: solid;
+  border-color: #ff5a00;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 90, 0, 0.35);
 }
 
 /* ==========================================================================

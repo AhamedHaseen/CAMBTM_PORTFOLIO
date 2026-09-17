@@ -8,7 +8,7 @@ const I18N_PRICING_PAGE = {
   en: {
     heroTitle: "Pricing",
     heroCta: "Explore Packages",
-    customizeQuestion: "Want to customize your own package?",
+    customizeQuestion: "Wanna build your own package?",
     hideOptions: "Hide Options ↑",
     customizeBtn: "Customize →",
     scopeEyebrow: "CUSTOMIZE YOUR SCOPE",
@@ -23,7 +23,7 @@ const I18N_PRICING_PAGE = {
   es: {
     heroTitle: "Precios y Planes",
     heroCta: "Explorar Paquetes",
-    customizeQuestion: "¿Deseas personalizar tu propio paquete?",
+    customizeQuestion: "¿Quieres crear tu propio paquete?",
     hideOptions: "Ocultar Opciones ↑",
     customizeBtn: "Personalizar →",
     scopeEyebrow: "PERSONALIZA TU ALCANCE",
@@ -38,7 +38,7 @@ const I18N_PRICING_PAGE = {
   ar: {
     heroTitle: "الأسعار والباقات",
     heroCta: "استكشف الباقات",
-    customizeQuestion: "هل ترغب في تخصيص باقتك الخاصة؟",
+    customizeQuestion: "هل تريد بناء باقتك الخاصة؟",
     hideOptions: "إخفاء الخيارات ↑",
     customizeBtn: "تخصيص →",
     scopeEyebrow: "تخصيص نطاق عملك",
@@ -53,7 +53,7 @@ const I18N_PRICING_PAGE = {
   si: {
     heroTitle: "මිල ගණන් සහ පැකේජ",
     heroCta: "පැකේජ ගවේෂණය කරන්න",
-    customizeQuestion: "ඔබේම සේවාවන් සකසා ගැනීමට අවශ්‍යද?",
+    customizeQuestion: "ඔබේම පැකේජයක් සාදා ගැනීමට අවශ්‍යද?",
     hideOptions: "විකල්ප සඟවන්න ↑",
     customizeBtn: "අභිරුචිකරණය →",
     scopeEyebrow: "ඔබේ අවශ්‍යතාවයට අනුව සකසන්න",
@@ -68,7 +68,7 @@ const I18N_PRICING_PAGE = {
   ta: {
     heroTitle: "விலை மற்றும் தொகுப்புகள்",
     heroCta: "தொகுப்புகளை ஆராய்க",
-    customizeQuestion: "உங்கள் சொந்த சேவைகளை தனிப்பயனாக்க வேண்டுமா?",
+    customizeQuestion: "உங்கள் சொந்த தொகுப்பை உருவாக்க விரும்புகிறீர்களா?",
     hideOptions: "விருப்பங்களை மறைக்க ↑",
     customizeBtn: "தனிப்பயனாக்க →",
     scopeEyebrow: "உங்கள் திட்டத்தை தனிப்பயனாக்குங்கள்",
@@ -78,7 +78,7 @@ const I18N_PRICING_PAGE = {
     servicesSelectedSingular: "சேவை தேர்ந்தெடுக்கப்பட்டது",
     servicesSelectedPlural: "சேவைகள் தேர்ந்தெடுக்கப்பட்டன",
     reset: "மீட்டமை",
-    confirm: "உறுதிப்படுத்துக",
+    confirm: "உறுதிப்படுத்து",
   },
 };
 
@@ -277,21 +277,49 @@ export default function OurPricing() {
     return I18N_PRICING_PAGE[currentLang] || I18N_PRICING_PAGE.en;
   }, [currentLang]);
 
+  const getServiceKey = (svc, category) => {
+    if (svc.key) return svc.key;
+    const cat = category || svc.category || "build";
+    const identifier = svc.id || svc.num || svc.name;
+    return `${cat}-${identifier}`;
+  };
+
   const toggleService = (svc, category) => {
-    const serviceKey = `${category}-${svc.id || svc.num || svc.name}`;
+    const cat = category || svc.category || builderTab;
+    const serviceKey = getServiceKey(svc, cat);
     setSelectedServices((prev) => {
-      const exists = prev.some((item) => item.key === serviceKey);
+      const exists = prev.some(
+        (item) => item.key === serviceKey || (item.name === svc.name && item.category === cat)
+      );
       if (exists) {
-        return prev.filter((item) => item.key !== serviceKey);
+        return prev.filter(
+          (item) => item.key !== serviceKey && !(item.name === svc.name && item.category === cat)
+        );
       } else {
-        return [...prev, { key: serviceKey, name: svc.name, num: svc.num, category }];
+        return [
+          ...prev,
+          {
+            key: serviceKey,
+            id: svc.id || svc.num || svc.name,
+            num: svc.num,
+            name: svc.name,
+            category: cat,
+          },
+        ];
       }
     });
   };
 
   const isServiceSelected = (svc, category) => {
-    const serviceKey = `${category}-${svc.id || svc.num || svc.name}`;
-    return selectedServices.some((item) => item.key === serviceKey);
+    const cat = category || svc.category || builderTab;
+    const serviceKey = getServiceKey(svc, cat);
+    return selectedServices.some(
+      (item) => item.key === serviceKey || (item.name === svc.name && item.category === cat)
+    );
+  };
+
+  const removeService = (keyToRemove) => {
+    setSelectedServices((prev) => prev.filter((item) => item.key !== keyToRemove));
   };
 
   const handleToggleCustomize = (e) => {
@@ -482,7 +510,7 @@ export default function OurPricing() {
               Our Products
             </a>
             <a href="/our-pricing" className="nav-link active" data-i18n="nav.ourPricing">
-              Pricing
+              Packages
             </a>
             <a href="/about" className="nav-link" data-i18n="nav.about">
               About
@@ -558,7 +586,7 @@ export default function OurPricing() {
             Our Products
           </a>
           <a href="/our-pricing" className="mobile-nav-link active" data-i18n="nav.ourPricing">
-            Pricing
+            Packages
           </a>
           <a href="/about" className="mobile-nav-link" data-i18n="nav.about">
             About
@@ -603,25 +631,8 @@ export default function OurPricing() {
         </nav>
       </header>
 
-      {/* Main Content: Hero + Packages */}
+      {/* Main Content: Packages */}
       <main className="pricing-page-main">
-        {/* 01 Pricing Hero Section */}
-        <section className="pricing-hero" id="pricing-hero">
-          <div className="hero-bg"></div>
-          <div className="pricing-hero-inner">
-            <h1 className="pricing-hero-title">
-              <span>
-                {pricingPageContent.heroTitle}
-              </span>
-            </h1>
-            <div className="pricing-hero-actions">
-              <a href="#prebuilt-packages" className="btn btn-primary">
-                {pricingPageContent.heroCta}
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section className="pricing-packages-page-section" id="prebuilt-packages">
           <div className="pricing-container">
             {/* Centered Heading */}
@@ -801,7 +812,7 @@ export default function OurPricing() {
                           </div>
                         </div>
 
-                        {/* Right Side: + Mark */}
+                        {/* Right Side: + / ✓ Mark */}
                         <div className="pricing-custom-item-right">
                           <button
                             type="button"
@@ -860,17 +871,6 @@ export default function OurPricing() {
                               ? pricingPageContent.servicesSelectedSingular
                               : pricingPageContent.servicesSelectedPlural}
                           </span>
-                          <button
-                            type="button"
-                            className="pricing-custom-reset-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedServices([]);
-                            }}
-                            title="Reset all selected services"
-                          >
-                            {pricingPageContent.reset}
-                          </button>
                         </div>
                         <h4 className="pricing-custom-summary-title">
                           {pricingPageContent.scopeSummaryTitle}
@@ -894,14 +894,43 @@ export default function OurPricing() {
                             className="chip-del"
                             onClick={(e) => {
                               e.stopPropagation();
-                              toggleService(item, item.category);
+                              removeService(item.key);
                             }}
                             aria-label={`Remove ${item.name}`}
+                            title={`Remove ${item.name}`}
                           >
                             ×
                           </button>
                         </span>
                       ))}
+
+                      {/* Reset Button placed right next to selected services in the same line */}
+                      <button
+                        type="button"
+                        className="pricing-custom-chip-reset-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedServices([]);
+                        }}
+                        title="Reset all selected services"
+                      >
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          style={{ marginRight: "5px" }}
+                          aria-hidden="true"
+                        >
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                        {pricingPageContent.reset || "Reset"}
+                      </button>
                     </div>
                   </div>
                 )}
