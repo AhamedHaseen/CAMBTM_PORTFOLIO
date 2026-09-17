@@ -41,18 +41,7 @@ function Rooms() {
 }
 
 function Timetable() {
-  const blocks = [
-    [0, 0],
-    [1, 0],
-    [3, 0],
-    [0, 1],
-    [2, 1],
-    [4, 1],
-    [1, 2],
-    [2, 2],
-    [4, 3],
-    [0, 3],
-  ];
+  const scheduled = new Set(["0-0", "1-0", "3-0", "0-1", "2-1", "4-1", "1-2", "2-2", "0-3", "4-3"]);
   return (
     <>
       <path {...line} d="M12 26 H150" />
@@ -60,16 +49,21 @@ function Timetable() {
         <path {...line} d={`M${12 + c * 27.6} 14 V108`} key={`c${c}`} />
       ))}
       <path {...line} d="M150 14 V108" />
-      {blocks.map(([c, r]) => (
-        <rect
-          {...tile(r * 5 + c, true)}
-          height={16}
-          key={`${c}-${r}`}
-          width={21}
-          x={15 + c * 27.6}
-          y={31 + r * 19}
-        />
-      ))}
+      {Array.from({ length: 20 }, (_, i) => {
+        const c = i % 5;
+        const r = Math.floor(i / 5);
+        const isFilled = scheduled.has(`${c}-${r}`);
+        return (
+          <rect
+            {...tile(i, isFilled)}
+            height={16}
+            key={`${c}-${r}`}
+            width={21}
+            x={15 + c * 27.6}
+            y={31 + r * 19}
+          />
+        );
+      })}
     </>
   );
 }
@@ -77,15 +71,33 @@ function Timetable() {
 function Card() {
   return (
     <>
-      <rect {...line} height={104} rx={4} width={62} x={49} y={8} />
-      <path {...tile(0, true)} d="M49 12 A4 4 0 0 1 53 8 H107 A4 4 0 0 1 111 12 V30 H49 Z" />
-      <circle {...tile(1, true)} cx={80} cy={44} r={9} />
-      <path {...line} d="M62 62 H98" />
-      <path {...line} d="M62 70 H90" />
-      <rect {...line} height={26} width={26} x={67} y={80} />
-      <rect {...tile(2, true)} height={7} width={7} x={70} y={83} />
-      <rect {...tile(3, true)} height={7} width={7} x={83} y={83} />
-      <rect {...tile(4, true)} height={7} width={7} x={70} y={96} />
+      <rect {...line} height={104} rx={6} width={68} x={46} y={8} />
+      {/* Top Header Banner */}
+      <path {...tile(0, true)} d="M46 14 A6 6 0 0 1 52 8 H108 A6 6 0 0 1 114 14 V30 H46 Z" />
+      
+      {/* Profile Avatar Ring */}
+      <circle {...tile(1, true)} cx={80} cy={42} r={9} />
+      
+      {/* Contact Name & Title lines */}
+      <rect {...tile(2, false)} height={4} rx={2} width={36} x={62} y={56} />
+      <rect {...tile(3, false)} height={3} rx={1.5} width={24} x={68} y={64} />
+      
+      {/* Social / Action Pills */}
+      <rect {...tile(4, true)} height={6} rx={3} width={14} x={52} y={72} />
+      <rect {...tile(5, false)} height={6} rx={3} width={14} x={73} y={72} />
+      <rect {...tile(6, true)} height={6} rx={3} width={14} x={94} y={72} />
+
+      {/* Mini QR Code Matrix Box & Tiles */}
+      <rect {...line} height={24} rx={3} width={24} x={68} y={83} />
+      <rect {...tile(7, true)} height={5} width={5} x={71} y={86} />
+      <rect {...tile(8, false)} height={5} width={5} x={77.5} y={86} />
+      <rect {...tile(9, true)} height={5} width={5} x={84} y={86} />
+      <rect {...tile(10, false)} height={5} width={5} x={71} y={92.5} />
+      <rect {...tile(11, true)} height={5} width={5} x={77.5} y={92.5} />
+      <rect {...tile(12, true)} height={5} width={5} x={84} y={92.5} />
+      <rect {...tile(13, true)} height={5} width={5} x={71} y={99} />
+      <rect {...tile(14, false)} height={5} width={5} x={77.5} y={99} />
+      <rect {...tile(15, true)} height={5} width={5} x={84} y={99} />
     </>
   );
 }

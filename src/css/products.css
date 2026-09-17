@@ -993,33 +993,18 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: clamp(1.25rem, 2vw, 1.5rem);
-}
-
-.cambt-card-meta {
-  display: flex;
-  align-items: baseline;
-  margin: 0;
-  color: var(--cambt-color-brand-blue);
-  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
-  font-size: var(--cambt-font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.cambt-card-category {
-  color: var(--cambt-color-brand-blue);
+  justify-content: center;
+  gap: 0.4rem;
+  padding: clamp(1rem, 1.6vw, 1.25rem);
 }
 
 .cambt-card-title {
   margin: 0;
   font-family: var(--font-serif, 'Instrument Serif', Georgia, serif) !important;
-  font-size: clamp(1.5rem, 2vw, 1.95rem);
+  font-size: clamp(1.15rem, 1.4vw, 1.38rem);
   font-weight: 400 !important;
   letter-spacing: var(--cambt-tracking-heading);
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .cambt-card-link {

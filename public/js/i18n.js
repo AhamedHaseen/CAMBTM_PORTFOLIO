@@ -102,6 +102,7 @@
     "pricing.title": true,
     "testimonials.title": true,
     "cta.title": true,
+    "packages.title": true,
   };
 
   const TRANSLATIONS = { en: {}, ar: {}, si: {}, ta: {}, es: {} };
@@ -1673,7 +1674,7 @@
 
   Object.assign(TRANSLATIONS.en, {
     "packages.eyebrow": "Our Services",
-    "packages.title": "Choose what your business needs",
+    "packages.title": "Choose what your business <em class=\"highlight-needs\">needs</em>",
     "packages.combos.eyebrow": "Pre-built packages",
     "packages.combos.title": "Connected services. One clear engagement.",
     "packages.combos.desc": "Pre-built packages combine content, marketing, and technology into one managed solution.",
@@ -1876,7 +1877,7 @@
 
   Object.assign(TRANSLATIONS.es, {
     "packages.eyebrow": "Nuestros Servicios",
-    "packages.title": "Elige lo que tu empresa necesita",
+    "packages.title": "Elige lo que tu empresa <em class=\"highlight-needs\">necesita</em>",
     "packages.combos.eyebrow": "Paquetes Combinados",
     "packages.combos.title": "Servicios conectados. Una sola contratación clara.",
     "packages.combos.desc": "Para empresas que necesitan varias capacidades trabajando juntas, nuestros paquetes combinan contenido, marketing y tecnología en una sola gestión.",
@@ -2089,7 +2090,7 @@
 
   Object.assign(TRANSLATIONS.ar, {
     "packages.eyebrow": "خدماتنا",
-    "packages.title": "اختر ما يحتاجه عملك التجاري",
+    "packages.title": "اختر ما <em class=\"highlight-needs\">يحتاجه</em> عملك التجاري",
     "packages.combos.eyebrow": "باقات مدمجة",
     "packages.combos.title": "خدمات مترابطة. تعاقد واضح ومحدد.",
     "packages.combos.desc": "للشركات التي تحتاج قدرات متعددة تعمل معاً بتناغم، تجمع باقاتنا بين المحتوى والتسويق والتكنولوجيا في إدارة واحدة متكاملة.",
@@ -2284,7 +2285,7 @@
 
   Object.assign(TRANSLATIONS.si, {
     "packages.eyebrow": "අපගේ සේවාවන්",
-    "packages.title": "ඔබේ ව්‍යාපාරයට අවශ්‍ය දේ තෝරන්න",
+    "packages.title": "ඔබේ ව්‍යාපාරයට <em class=\"highlight-needs\">අවශ්‍ය දේ</em> තෝරන්න",
     "packages.combos.eyebrow": "සංයුක්ත පැකේජ",
     "packages.combos.title": "සම්බන්ධිත සේවාවන්. එක් පැහැදිලි ගිවිසුමක්.",
     "packages.combos.desc": "එකට ක්‍රියා කරන හැකියාවන් කිහිපයක් අවශ්‍ය ව්‍යාපාර සඳහා, අපගේ සංයුක්ත පැකේජ අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණයකට ඒකාබද්ධ කරයි.",
@@ -2490,7 +2491,7 @@
 
   Object.assign(TRANSLATIONS.ta, {
     "packages.eyebrow": "எங்கள் சேவைகள்",
-    "packages.title": "உங்கள் வணிகத்திற்கு தேவையானதை தேர்வு செய்யவும்",
+    "packages.title": "உங்கள் வணிகத்திற்கு <em class=\"highlight-needs\">தேவையானதை</em> தேர்வு செய்யவும்",
     "packages.combos.eyebrow": "கூட்டு தொகுப்புகள்",
     "packages.combos.title": "இணைக்கப்பட்ட சேவைகள். ஒரு தெளிவான ஒப்பந்தம்.",
     "packages.combos.desc": "பல திறன்கள் ஒன்றாகச் செயல்பட வேண்டிய வணிகங்களுக்கு, எங்கள் கூட்டு தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒற்றை நிர்வாகத்தில் இணைக்கின்றன.",

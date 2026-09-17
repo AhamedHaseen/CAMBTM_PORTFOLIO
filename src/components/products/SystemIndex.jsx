@@ -47,9 +47,6 @@ export default function SystemIndex({ industries, labels, systems }) {
             </div>
 
             <div className="cambt-card-body">
-              <p className="cambt-card-meta">
-                <span className="cambt-card-category">{system.category}</span>
-              </p>
               <h3 className="cambt-card-title">
                 <Link
                   className="cambt-card-link"
@@ -63,7 +60,6 @@ export default function SystemIndex({ industries, labels, systems }) {
                   {system.name}
                 </Link>
               </h3>
-              <p className="cambt-card-pos">{system.positioning}</p>
             </div>
           </li>
         ))}

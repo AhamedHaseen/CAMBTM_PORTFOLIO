@@ -57,6 +57,28 @@ export default function OurPricing() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+      window.__cambmLenis.scrollTo(0, { immediate: true });
+    }
+
+    const headerEl = document.getElementById("header");
+    if (headerEl) {
+      headerEl.classList.remove("scrolled");
+    }
+
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
+      window.CAMBMTheme.initControls();
+    }
+    if (window.initI18n) {
+      window.initI18n();
+    }
+    document.dispatchEvent(new CustomEvent("cambm:revealed"));
+  }, []);
+
+  useEffect(() => {
     if (window.__cambmLenis && typeof window.__cambmLenis.resize === "function") {
       window.__cambmLenis.resize();
     }

@@ -20,22 +20,9 @@ export default function Products() {
       window.history.scrollRestoration = "manual";
     }
 
-    let targetSlug = "";
-    if (location.hash) {
-      targetSlug = location.hash.replace(/^#/, "");
-    }
-    if (!targetSlug) {
-      try {
-        const saved = sessionStorage.getItem("cambm_last_product_slug");
-        if (saved) targetSlug = saved;
-      } catch (e) { }
-    }
+    const targetSlug = location.hash ? location.hash.replace("#", "") : "";
 
     if (targetSlug) {
-      try {
-        sessionStorage.removeItem("cambm_last_product_slug");
-      } catch (e) { }
-
       const scrollToTarget = () => {
         const cleanSlug = targetSlug.replace(/^product-/, "");
         const el =

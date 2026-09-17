@@ -268,7 +268,6 @@ export default function ProductDetail() {
 
             <div className="cambt-hero-grid">
               <div className="cambt-hero-content">
-                <span className="cambt-label">{product.category}</span>
                 <h1>{product.name}</h1>
               </div>
               <div>

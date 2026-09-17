@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import React, { useEffect } from "react";
 import Welcome from "./pages/Welcome";
@@ -13,6 +14,47 @@ import CustomPlan from "./pages/CustomPlan";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import OurPricing from "./pages/OurPricing";
+
+function ScrollHandler() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) return;
+
+    if (hash) {
+      const targetId = hash.replace(/^#/, "");
+      const timer = setTimeout(() => {
+        const el =
+          document.getElementById(targetId) ||
+          document.getElementById(`product-${targetId}`) ||
+          document.querySelector(`[data-slug="${targetId}"]`);
+        if (el) {
+          if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+            window.__cambmLenis.scrollTo(el, { offset: -80, duration: 1.2 });
+          } else {
+            const top = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 80;
+            window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+          }
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+        window.__cambmLenis.scrollTo(0, { immediate: true });
+      }
+
+      const headerEl = document.getElementById("header");
+      if (headerEl) {
+        headerEl.classList.remove("scrolled");
+      }
+    }
+  }, [pathname, hash]);
+
+  return null;
+}
 
 // Admin Context & Styles
 import "./admin/admin.css";
@@ -89,6 +131,7 @@ function App() {
     <AuthProvider>
       <ToastProvider>
         <Router>
+          <ScrollHandler />
           <Routes>
             {/* Public Website Routes */}
             <Route path="/" element={<Welcome />} />
