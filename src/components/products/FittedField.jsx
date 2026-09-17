@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
+import SpotlightCard from "../SpotlightCard";
 
 const COLUMNS = 9;
 const ROWS = 6;
@@ -87,36 +88,52 @@ export default function FittedField({ copy }) {
   }, [apply]);
 
   return (
-    <div className="cambt-fitted-field-wrap">
-      <div className="cambt-fitted-info">
-        <span className="cambt-label">{copy.label}</span>
-        <div className="cambt-section-head" style={{ marginBottom: "1.5rem" }}>
-          <h2>
-            {copy.headingParts.map((part, index) => {
-              if (part.tone === "accent") {
-                return (
-                  <span key={index} style={{ color: "var(--cambt-color-brand-blue)" }}>
-                    {part.text}
-                  </span>
-                );
-              }
-              return <span key={index}>{part.text}</span>;
-            })}
-          </h2>
-          <p>{copy.body}</p>
+    <div className="cambt-customisation-section">
+      <div className="cambt-fitted-field-wrap">
+        <div className="cambt-fitted-info">
+          <span className="cambt-label">{copy.label}</span>
+          <div className="cambt-section-head" style={{ marginBottom: 0 }}>
+            <h2>
+              {copy.headingParts.map((part, index) => {
+                if (part.tone === "accent") {
+                  return (
+                    <span key={index} style={{ color: "var(--cambt-color-brand-blue)" }}>
+                      {part.text}
+                    </span>
+                  );
+                }
+                return <span key={index}>{part.text}</span>;
+              })}
+            </h2>
+            <p>{copy.body}</p>
+          </div>
         </div>
-        <ul className="cambt-fitted-points">
-          {copy.points.map((pt, i) => (
-            <li key={i}>{pt}</li>
+
+        <div aria-hidden="true" className="cambt-fitted-grid" ref={ref}>
+          {Array.from({ length: CELLS }, (_, index) => (
+            <span className="cambt-fitted-line" key={index} />
           ))}
-        </ul>
+        </div>
       </div>
 
-      <div aria-hidden="true" className="cambt-fitted-grid" ref={ref}>
-        {Array.from({ length: CELLS }, (_, index) => (
-          <span className="cambt-fitted-line" key={index} />
+      {/* 4 Delivery Principles in the same line grid with interactive SpotlightCard */}
+      <div className="cambt-fitted-cards-grid">
+        {copy.points.map((pt, i) => (
+          <SpotlightCard
+            key={i}
+            spotlightColor="rgba(255, 90, 0, 0.18)"
+            className="cambt-fitted-spotlight-card"
+          >
+            <div className="cambt-fitted-card-header">
+              <span className="cambt-fitted-card-num">0{i + 1}</span>
+            </div>
+            <p className="cambt-fitted-card-text">{pt}</p>
+          </SpotlightCard>
         ))}
       </div>
     </div>
   );
 }
+
+
+

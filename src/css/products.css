@@ -2,42 +2,43 @@
    CAMBRIDGE MARKETING (CAMBM) — PRODUCTS SECTION STYLES
    ========================================================================== */
 
-:root {
-  /* CAMBM Product Theme Tokens (Dark Mode Default) */
-  --cambt-color-brand-blue: #ff5a00;
-  --cambt-color-brand-blue-hover: #f1966a;
-  --cambt-color-brand-electric: #ff5a00;
-  --cambt-color-brand-deep-navy: #0a0a0c;
-  --cambt-color-brand-system-navy: #141418;
+:root,
+[data-theme="dark"] {
+  /* CAMBM Product Theme Tokens (Dark Mode Default - Matched to System Mood Theme) */
+  --cambt-color-brand-blue: var(--accent, #ff5a00);
+  --cambt-color-brand-blue-hover: var(--accent-hover, #f1966a);
+  --cambt-color-brand-electric: var(--accent, #ff5a00);
+  --cambt-color-brand-deep-navy: var(--mood-black, #0a0a0a);
+  --cambt-color-brand-system-navy: var(--mood-charcoal, #2a2a2a);
 
-  --cambt-color-bg-canvas: #0e0e11;
-  --cambt-color-bg-muted: #16161c;
-  --cambt-color-bg-surface: #1c1c24;
-  --cambt-color-bg-raised: #24242e;
-  --cambt-color-bg-inverse: #ffffff;
+  --cambt-color-bg-canvas: var(--bg-page, #2a2a2a);
+  --cambt-color-bg-muted: var(--bg-section-alt, #464646);
+  --cambt-color-bg-surface: var(--bg-card, rgba(70, 70, 70, 0.58));
+  --cambt-color-bg-raised: var(--bg-elevated, #464646);
+  --cambt-color-bg-inverse: var(--mood-white, #ffffff);
 
-  --cambt-color-bg-tint: #141419;
-  --cambt-color-bg-tint-soft: #181822;
+  --cambt-color-bg-tint: var(--mood-charcoal, #2a2a2a);
+  --cambt-color-bg-tint-soft: var(--mood-graphite, #464646);
 
-  --cambt-color-text-primary: #f4f4f7;
-  --cambt-color-text-secondary: #a2a2b3;
-  --cambt-color-text-body: #c5c5d6;
-  --cambt-color-text-lead: #dadae8;
-  --cambt-color-text-inverse: #0a0a0c;
+  --cambt-color-text-primary: var(--text-primary, #ededed);
+  --cambt-color-text-secondary: var(--text-secondary, #dcdcdc);
+  --cambt-color-text-body: var(--text-secondary, #dcdcdc);
+  --cambt-color-text-lead: var(--text-primary, #ededed);
+  --cambt-color-text-inverse: var(--mood-black, #0a0a0a);
 
-  --cambt-color-border-subtle: rgba(255, 255, 255, 0.08);
-  --cambt-color-border-strong: rgba(255, 255, 255, 0.16);
+  --cambt-color-border-subtle: var(--border-subtle, rgba(237, 237, 237, 0.12));
+  --cambt-color-border-strong: var(--border-strong, rgba(237, 237, 237, 0.24));
   --cambt-color-border-lit: rgba(255, 90, 0, 0.45);
 
-  --cambt-color-focus: #ff5a00;
+  --cambt-color-focus: var(--accent, #ff5a00);
   --cambt-color-success: #10b981;
   --cambt-color-warning: #f59e0b;
   --cambt-color-danger: #ef4444;
-  --cambt-color-accent-text: #ff7b29;
-  --cambt-color-heading-accent: #ff7b29;
+  --cambt-color-accent-text: var(--accent-text, #f1966a);
+  --cambt-color-heading-accent: var(--accent, #ff5a00);
 
-  --cambt-line-grid: rgba(255, 255, 255, 0.04);
-  --cambt-shadow-panel: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --cambt-line-grid: rgba(237, 237, 237, 0.05);
+  --cambt-shadow-panel: var(--shadow-card, 0 20px 60px rgba(10, 10, 10, 0.3));
 
   --cambt-font-sans: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --cambt-font-accent: 'Instrument Serif', Georgia, serif;
@@ -83,36 +84,36 @@
 }
 
 [data-theme="light"] {
-  --cambt-color-brand-blue: #ff5a00;
-  --cambt-color-brand-blue-hover: #b23d10;
-  --cambt-color-brand-electric: #ff5a00;
-  --cambt-color-brand-deep-navy: #f8fafc;
-  --cambt-color-brand-system-navy: #edf2f7;
+  --cambt-color-brand-blue: var(--accent, #ff5a00);
+  --cambt-color-brand-blue-hover: var(--accent-deep, #b23d10);
+  --cambt-color-brand-electric: var(--accent, #ff5a00);
+  --cambt-color-brand-deep-navy: var(--mood-white, #ffffff);
+  --cambt-color-brand-system-navy: var(--mood-silver, #dcdcdc);
 
-  --cambt-color-bg-canvas: #ffffff;
-  --cambt-color-bg-muted: #f8fafc;
-  --cambt-color-bg-surface: #ffffff;
-  --cambt-color-bg-raised: #f1f5f9;
-  --cambt-color-bg-inverse: #0a0a0c;
+  --cambt-color-bg-canvas: var(--bg-page, #ededed);
+  --cambt-color-bg-muted: var(--bg-section-alt, #dcdcdc);
+  --cambt-color-bg-surface: var(--bg-card, rgba(255, 255, 255, 0.74));
+  --cambt-color-bg-raised: var(--bg-elevated, #ffffff);
+  --cambt-color-bg-inverse: var(--mood-black, #0a0a0a);
 
-  --cambt-color-bg-tint: #fafafa;
-  --cambt-color-bg-tint-soft: #f4f6f8;
+  --cambt-color-bg-tint: var(--mood-light, #ededed);
+  --cambt-color-bg-tint-soft: var(--mood-silver, #dcdcdc);
 
-  --cambt-color-text-primary: #0f172a;
-  --cambt-color-text-secondary: #475569;
-  --cambt-color-text-body: #334155;
-  --cambt-color-text-lead: #1e293b;
-  --cambt-color-text-inverse: #ffffff;
+  --cambt-color-text-primary: var(--text-primary, #0a0a0a);
+  --cambt-color-text-secondary: var(--text-secondary, #2a2a2a);
+  --cambt-color-text-body: var(--text-secondary, #2a2a2a);
+  --cambt-color-text-lead: var(--text-primary, #0a0a0a);
+  --cambt-color-text-inverse: var(--mood-white, #ffffff);
 
-  --cambt-color-border-subtle: rgba(15, 23, 42, 0.08);
-  --cambt-color-border-strong: rgba(15, 23, 42, 0.16);
+  --cambt-color-border-subtle: var(--border-subtle, rgba(10, 10, 10, 0.12));
+  --cambt-color-border-strong: var(--border-strong, rgba(10, 10, 10, 0.24));
   --cambt-color-border-lit: rgba(255, 90, 0, 0.4);
 
-  --cambt-color-accent-text: #b23d10;
-  --cambt-color-heading-accent: #ff5a00;
+  --cambt-color-accent-text: var(--accent-text, #b23d10);
+  --cambt-color-heading-accent: var(--accent, #ff5a00);
 
-  --cambt-line-grid: rgba(15, 23, 42, 0.04);
-  --cambt-shadow-panel: 0 18px 44px rgba(15, 23, 42, 0.08);
+  --cambt-line-grid: rgba(10, 10, 10, 0.05);
+  --cambt-shadow-panel: var(--shadow-card, 0 20px 55px rgba(10, 10, 10, 0.1));
 }
 
 /* Base Page Container */
@@ -622,139 +623,166 @@
 .cambt-diptych {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  align-items: stretch;
 }
 
-@media (min-width: 54rem) {
+@media (min-width: 56rem) {
   .cambt-diptych {
     grid-template-columns: repeat(2, 1fr);
-    align-items: stretch;
   }
 }
 
-.cambt-panel {
+/* --- Comparison Cards (Clean & Trending) --- */
+.cambt-compare-card {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  padding: clamp(1.75rem, 3.5vw, 2.25rem);
+  border-radius: 1rem;
   border: 1px solid var(--cambt-color-border-subtle);
-  border-radius: var(--cambt-radius-md);
+  background: var(--cambt-color-bg-surface);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.cambt-panel-generic {
-  background: var(--cambt-color-bg-muted);
+[data-theme="light"] .cambt-compare-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 
-.cambt-panel-fitted {
-  border-color: var(--cambt-color-border-lit);
-  background: linear-gradient(to bottom, rgba(255, 90, 0, 0.05), transparent 60%),
-    var(--cambt-color-bg-surface);
+.cambt-compare-card:hover {
+  transform: translateY(-2px);
 }
 
-.cambt-panel-head h3 {
-  margin: 0;
+.cambt-compare-generic:hover {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.cambt-compare-fitted:hover {
+  border-color: var(--cambt-color-brand-blue);
+}
+
+.cambt-compare-head {
+  margin-bottom: 1.25rem;
+}
+
+.cambt-compare-title {
+  margin: 0 0 0.4rem;
   color: var(--cambt-color-text-primary);
   font-family: var(--font-serif, 'Instrument Serif', serif) !important;
-  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
   font-weight: 400 !important;
-  letter-spacing: -0.015em;
   line-height: 1.2;
 }
 
-.cambt-panel-head p {
-  margin: 0.5rem 0 0;
+.cambt-compare-desc {
+  margin: 0;
   color: var(--cambt-color-text-secondary);
   font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
   font-size: var(--cambt-font-size-sm);
   line-height: 1.5;
-  font-weight: 400;
 }
 
-.cambt-fields-list {
+.cambt-compare-table {
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  border-top: 1px solid var(--cambt-color-border-subtle);
+  margin-bottom: 1.5rem;
 }
 
-.cambt-field-item {
+[data-theme="light"] .cambt-compare-table {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.cambt-compare-row {
   display: flex;
-  gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--cambt-color-border-subtle);
-  font-size: var(--cambt-font-size-sm);
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--cambt-color-border-subtle);
+  transition: background-color 0.15s ease;
 }
 
-.cambt-field-name {
-  color: var(--cambt-color-text-body);
+[data-theme="light"] .cambt-compare-row {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
 }
 
-.cambt-field-item[data-verdict="unused"] .cambt-field-name {
+.cambt-row-name {
+  color: var(--cambt-color-text-primary);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.cambt-compare-row[data-verdict="unused"] .cambt-row-name {
   color: var(--cambt-color-text-secondary);
   text-decoration: line-through;
-  text-decoration-color: var(--cambt-color-danger);
-  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(239, 68, 68, 0.6);
+  opacity: 0.75;
 }
 
-.cambt-verdict-tag {
-  flex: none;
+.cambt-row-badge {
   font-family: var(--cambt-font-mono);
-  font-size: var(--cambt-font-size-xs);
-  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--cambt-radius-sm);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
 }
 
-.cambt-field-item[data-verdict="unused"] .cambt-verdict-tag {
-  color: var(--cambt-color-danger);
-  background: rgba(239, 68, 68, 0.1);
+.cambt-row-badge.unused {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
 }
 
-.cambt-field-item[data-verdict="forced"] .cambt-verdict-tag {
-  color: var(--cambt-color-warning);
-  background: rgba(245, 158, 11, 0.1);
+.cambt-row-badge.forced {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
 }
 
-.cambt-field-item[data-verdict="kept"] .cambt-verdict-tag {
-  color: var(--cambt-color-success);
-  background: rgba(16, 185, 129, 0.1);
+.cambt-row-badge.kept {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
 }
 
-.cambt-tally {
-  display: flex;
-  gap: 0.9rem;
-  align-items: baseline;
+.cambt-compare-footer {
   margin-top: auto;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--cambt-color-border-strong);
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding-top: 0.5rem;
 }
 
-.cambt-tally-figure {
-  color: var(--cambt-color-text-primary);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
+.cambt-footer-num {
+  font-family: var(--font-serif, 'Instrument Serif', Georgia, serif) !important;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 400;
   line-height: 1;
 }
 
-.cambt-tally-figure.danger {
-  color: var(--cambt-color-danger);
+.cambt-footer-num.danger {
+  color: #ef4444;
 }
 
-.cambt-tally-figure.success {
-  color: var(--cambt-color-success);
+.cambt-footer-num.success {
+  color: var(--cambt-color-brand-blue, #ff5a00);
 }
 
-.cambt-tally-label {
+.cambt-footer-label {
   color: var(--cambt-color-text-secondary);
-  font-size: var(--cambt-font-size-sm);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
-/* --- Fitted Field (Pointer Interactive) --- */
+/* --- Fitted Field (Customisation Section) --- */
+.cambt-customisation-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
 .cambt-fitted-field-wrap {
   display: grid;
   grid-template-columns: 1fr;
@@ -764,35 +792,56 @@
 
 @media (min-width: 60rem) {
   .cambt-fitted-field-wrap {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
   }
 }
 
-.cambt-fitted-points {
+/* 4 Delivery Principle Boxes in the same line grid */
+.cambt-fitted-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: 100%;
+}
+
+@media (max-width: 64rem) {
+  .cambt-fitted-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 36rem) {
+  .cambt-fitted-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cambt-fitted-spotlight-card {
+  height: 100%;
+}
+
+.cambt-fitted-card-header {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.cambt-fitted-points li {
-  position: relative;
-  padding-left: 1.75rem;
-  color: var(--cambt-color-text-body);
-  font-size: var(--cambt-font-size-md);
+.cambt-fitted-card-num {
+  font-family: var(--font-serif, 'Instrument Serif', Georgia, serif) !important;
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: var(--cambt-color-brand-blue, #ff5a00);
+  line-height: 1;
+}
+
+.cambt-fitted-card-text {
+  margin: 0;
+  color: var(--cambt-color-text-primary);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
+  font-size: 0.95rem;
   line-height: 1.55;
-}
-
-.cambt-fitted-points li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.65em;
-  width: 0.85rem;
-  height: 2px;
-  background-color: var(--cambt-color-brand-blue);
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 .cambt-fitted-grid {
@@ -1083,11 +1132,11 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(14, 14, 17, 0.75);
+  border: 1px solid var(--cambt-color-border-strong);
+  background: var(--cambt-color-bg-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #ffffff;
+  color: var(--cambt-color-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;

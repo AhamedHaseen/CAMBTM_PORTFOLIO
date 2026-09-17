@@ -783,7 +783,7 @@ export default function ServicesSection() {
         const parsed = JSON.parse(saved);
         if (typeof parsed === "object" && parsed !== null) return parsed;
       }
-    } catch (e) {}
+    } catch (e) { }
     return {};
   });
 
@@ -800,7 +800,7 @@ export default function ServicesSection() {
           } else {
             setSelectedServices({});
           }
-        } catch (err) {}
+        } catch (err) { }
       }
     };
     window.addEventListener("cambm:cart-updated", handleCartSync);
@@ -815,7 +815,7 @@ export default function ServicesSection() {
     setSelectedServices(newCart);
     try {
       localStorage.setItem("cambm_custom_plan", JSON.stringify(newCart));
-    } catch (e) {}
+    } catch (e) { }
     if (typeof window !== "undefined") {
       window.dispatchEvent(
         new CustomEvent("cambm:cart-updated", {
@@ -1446,14 +1446,16 @@ export default function ServicesSection() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="hosting-terms">
-                    {currentTab.hosting?.terms || "*Terms and conditions apply"}
-                  </p>
                 </div>
               </>
             )}
           </motion.div>
         </AnimatePresence>
+
+        {/* Terms and conditions apply moved below/outside the card */}
+        <p className="hosting-terms-outside">
+          {activeLocaleData.build?.hosting?.terms || "*Terms and conditions apply"}
+        </p>
       </div>
 
     </section>

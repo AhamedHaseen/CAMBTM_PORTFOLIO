@@ -93,12 +93,12 @@ const overlayHiddenPromise = new Promise((resolve) => {
 // ===== HEADER SCROLL EFFECT + PARALLAX (combined, rAF-throttled) =====
 // Both effects need window.scrollY on every scroll frame. Running them in one
 // listener, gated behind requestAnimationFrame, avoids doing this work more
-// than once per rendered frame  -  the raw, unthrottled version was a source of
+// than once per rendered frame - the raw, unthrottled version was a source of
 // jank/stutter on lower-powered phones.
-const header = document.getElementById("header");
+let header = document.getElementById("header");
 const parallaxElements = document.querySelectorAll(".hero-bg, .cta-bg");
 const visibleParallaxElements = new Set();
-const backToTop = document.getElementById("backToTop");
+let backToTop = document.getElementById("backToTop");
 let ticking = false;
 
 if ("IntersectionObserver" in window) {
@@ -117,20 +117,24 @@ if ("IntersectionObserver" in window) {
 }
 
 function onScrollFrame() {
-  const currentScroll = window.pageYOffset;
-  if (currentScroll > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const activeHeader = document.getElementById("header") || header;
+  if (activeHeader) {
+    if (currentScroll > 50) {
+      activeHeader.classList.add("scrolled");
+    } else {
+      activeHeader.classList.remove("scrolled");
+    }
   }
   visibleParallaxElements.forEach((el) => {
     el.style.transform = `translateY(${currentScroll * 0.3}px)`;
   });
-  if (backToTop) {
+  const activeBackToTop = document.getElementById("backToTop") || backToTop;
+  if (activeBackToTop) {
     if (currentScroll > 600) {
-      backToTop.classList.add("visible");
+      activeBackToTop.classList.add("visible");
     } else {
-      backToTop.classList.remove("visible");
+      activeBackToTop.classList.remove("visible");
     }
   }
   ticking = false;

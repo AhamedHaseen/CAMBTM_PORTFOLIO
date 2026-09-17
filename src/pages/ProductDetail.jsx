@@ -14,83 +14,18 @@ export default function ProductDetail() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+    // Instantly reset scroll to absolute top so navigation and header are fixed properly
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+      window.__cambmLenis.scrollTo(0, { immediate: true });
     }
 
-    let prevY = 0;
-    try {
-      const saved = sessionStorage.getItem("cambm_detail_refresh_" + slug);
-      if (saved) prevY = parseInt(saved, 10);
-    } catch (e) { }
-
-    const startY = Math.max(
-      prevY,
-      window.scrollY || document.documentElement.scrollTop || 0
-    );
-
-    let animId = null;
-    let timer = null;
-
-    if (startY > 100) {
-      window.scrollTo({ top: startY, left: 0, behavior: "instant" });
-      if (document.documentElement) document.documentElement.scrollTop = startY;
-      if (document.body) document.body.scrollTop = startY;
-      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-        window.__cambmLenis.scrollTo(startY, { immediate: true });
-      }
-
-      timer = setTimeout(() => {
-        if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-          window.__cambmLenis.scrollTo(0, {
-            duration: 1.8,
-            easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
-          });
-        } else {
-          const duration = 1600;
-          const startTime = performance.now();
-          const scrollUpStep = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const ease =
-              progress < 0.5
-                ? 4 * progress * progress * progress
-                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-            const currentY = startY * (1 - ease);
-
-            window.scrollTo(0, currentY);
-            if (document.documentElement) document.documentElement.scrollTop = currentY;
-            if (document.body) document.body.scrollTop = currentY;
-
-            if (progress < 1) {
-              animId = requestAnimationFrame(scrollUpStep);
-            } else {
-              window.scrollTo(0, 0);
-              if (document.documentElement) document.documentElement.scrollTop = 0;
-              if (document.body) document.body.scrollTop = 0;
-            }
-          };
-          animId = requestAnimationFrame(scrollUpStep);
-        }
-      }, 200);
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      if (document.body) document.body.scrollTop = 0;
-      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-        window.__cambmLenis.scrollTo(0, { immediate: true });
-      }
+    const headerEl = document.getElementById("header");
+    if (headerEl) {
+      headerEl.classList.remove("scrolled");
     }
-
-    const recordPos = () => {
-      const y = window.scrollY || document.documentElement.scrollTop || 0;
-      try {
-        sessionStorage.setItem("cambm_detail_refresh_" + slug, y.toString());
-      } catch (e) { }
-    };
-
-    window.addEventListener("scroll", recordPos, { passive: true });
-    window.addEventListener("beforeunload", recordPos);
 
     try {
       const saved = localStorage.getItem("cambm_custom_plan");
@@ -117,10 +52,6 @@ export default function ProductDetail() {
     document.dispatchEvent(revealEvent);
 
     return () => {
-      if (timer) clearTimeout(timer);
-      if (animId) cancelAnimationFrame(animId);
-      window.removeEventListener("scroll", recordPos);
-      window.removeEventListener("beforeunload", recordPos);
       window.removeEventListener("cambm:cart-updated", handleCartUpdated);
     };
   }, [slug]);
@@ -165,7 +96,7 @@ export default function ProductDetail() {
             <a href="/#why-CAMBM" className="nav-link" data-i18n="nav.whyCambm">
               Why CAMBM
             </a>
-            <a href="/products" className="nav-link" data-i18n="nav.ourProducts">
+            <a href="/products" className="nav-link active" data-i18n="nav.ourProducts">
               Our Products
             </a>
             <a href="/our-pricing" className="nav-link" data-i18n="nav.ourPricing">
@@ -251,7 +182,7 @@ export default function ProductDetail() {
           >
             Why CAMBM
           </a>
-          <a href="/products" className="mobile-nav-link" data-i18n="nav.ourProducts">
+          <a href="/products" className="mobile-nav-link active" data-i18n="nav.ourProducts">
             Our Products
           </a>
           <a href="/our-pricing" className="mobile-nav-link" data-i18n="nav.ourPricing">

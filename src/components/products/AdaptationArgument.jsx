@@ -37,44 +37,56 @@ export default function AdaptationArgument({ copy }) {
       </div>
 
       <div className="cambt-diptych">
-        <section className="cambt-panel cambt-panel-generic">
-          <header className="cambt-panel-head">
-            <h3>{copy.genericTitle}</h3>
-            <p>{copy.genericNote}</p>
-          </header>
-          <ul className="cambt-fields-list">
-            {copy.generic.map((row) => (
-              <li className="cambt-field-item" data-verdict={row.verdict} key={row.field}>
-                <span className="cambt-field-name">{row.field}</span>
-                <span className="cambt-verdict-tag">{row.verdict}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="cambt-tally">
-            <span className="cambt-tally-figure danger">{unused}</span>
-            <span className="cambt-tally-label">{copy.unusedLabel}</span>
-          </p>
-        </section>
+        {/* Generic Panel */}
+        <div className="cambt-compare-card cambt-compare-generic">
+          <div className="cambt-compare-head">
+            <h3 className="cambt-compare-title">{copy.genericTitle}</h3>
+            <p className="cambt-compare-desc">{copy.genericNote}</p>
+          </div>
 
-        <section className="cambt-panel cambt-panel-fitted">
-          <header className="cambt-panel-head">
-            <h3>{copy.fittedTitle}</h3>
-            <p>{copy.fittedNote}</p>
-          </header>
-          <ul className="cambt-fields-list">
-            {copy.fitted.map((row) => (
-              <li className="cambt-field-item" data-verdict={row.verdict} key={row.field}>
-                <span className="cambt-field-name">{row.field}</span>
-                <span className="cambt-verdict-tag">{row.verdict}</span>
-              </li>
+          <div className="cambt-compare-table">
+            {copy.generic.map((row) => (
+              <div className="cambt-compare-row" data-verdict={row.verdict} key={row.field}>
+                <span className="cambt-row-name">{row.field}</span>
+                <span className={`cambt-row-badge ${row.verdict}`}>
+                  {row.verdict}
+                </span>
+              </div>
             ))}
-          </ul>
-          <p className="cambt-tally">
-            <span className="cambt-tally-figure success">0</span>
-            <span className="cambt-tally-label">{copy.unusedLabel}</span>
-          </p>
-        </section>
+          </div>
+
+          <div className="cambt-compare-footer">
+            <span className="cambt-footer-num danger">{unused}</span>
+            <span className="cambt-footer-label">{copy.unusedLabel}</span>
+          </div>
+        </div>
+
+        {/* Fitted Panel */}
+        <div className="cambt-compare-card cambt-compare-fitted">
+          <div className="cambt-compare-head">
+            <h3 className="cambt-compare-title">{copy.fittedTitle}</h3>
+            <p className="cambt-compare-desc">{copy.fittedNote}</p>
+          </div>
+
+          <div className="cambt-compare-table">
+            {copy.fitted.map((row) => (
+              <div className="cambt-compare-row" data-verdict={row.verdict} key={row.field}>
+                <span className="cambt-row-name">{row.field}</span>
+                <span className={`cambt-row-badge ${row.verdict}`}>
+                  {row.verdict}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="cambt-compare-footer">
+            <span className="cambt-footer-num success">0</span>
+            <span className="cambt-footer-label">{copy.unusedLabel}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
+

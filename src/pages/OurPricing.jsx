@@ -16,59 +16,11 @@ const getSavedLang = () => {
   return "en";
 };
 
-const COUNTRY_PHONE_OPTIONS = [
-  { code: "+94", country: "LK", name: "Sri Lanka", flag: "🇱🇰", minDigits: 9, maxDigits: 10, placeholder: "77 123 4567" },
-  { code: "+971", country: "AE", name: "UAE", flag: "🇦🇪", minDigits: 9, maxDigits: 9, placeholder: "50 123 4567" },
-  { code: "+44", country: "GB", name: "UK", flag: "🇬🇧", minDigits: 10, maxDigits: 11, placeholder: "7911 123456" },
-  { code: "+1", country: "US", name: "USA / CAN", flag: "🇺🇸", minDigits: 10, maxDigits: 10, placeholder: "555 123 4567" },
-  { code: "+91", country: "IN", name: "India", flag: "🇮🇳", minDigits: 10, maxDigits: 10, placeholder: "98765 43210" },
-  { code: "+61", country: "AU", name: "Australia", flag: "🇦🇺", minDigits: 9, maxDigits: 9, placeholder: "412 345 678" },
-  { code: "+65", country: "SG", name: "Singapore", flag: "🇸🇬", minDigits: 8, maxDigits: 8, placeholder: "8123 4567" },
-  { code: "+974", country: "QA", name: "Qatar", flag: "🇶🇦", minDigits: 8, maxDigits: 8, placeholder: "3312 3456" },
-  { code: "+966", country: "SA", name: "Saudi Arabia", flag: "🇸🇦", minDigits: 9, maxDigits: 9, placeholder: "50 123 4567" },
-  { code: "+60", country: "MY", name: "Malaysia", flag: "🇲🇾", minDigits: 9, maxDigits: 10, placeholder: "12 345 6789" },
-  { code: "+968", country: "OM", name: "Oman", flag: "🇴🇲", minDigits: 8, maxDigits: 8, placeholder: "9123 4567" },
-  { code: "+965", country: "KW", name: "Kuwait", flag: "🇰🇼", minDigits: 8, maxDigits: 8, placeholder: "9123 4567" },
-  { code: "+49", country: "DE", name: "Germany", flag: "🇩🇪", minDigits: 10, maxDigits: 11, placeholder: "151 23456789" },
-  { code: "+33", country: "FR", name: "France", flag: "🇫🇷", minDigits: 9, maxDigits: 9, placeholder: "6 12 34 56 78" },
-  { code: "+64", country: "NZ", name: "New Zealand", flag: "🇳🇿", minDigits: 8, maxDigits: 10, placeholder: "21 123 4567" },
-  { code: "+81", country: "JP", name: "Japan", flag: "🇯🇵", minDigits: 10, maxDigits: 10, placeholder: "90 1234 5678" },
-  { code: "+86", country: "CN", name: "China", flag: "🇨🇳", minDigits: 11, maxDigits: 11, placeholder: "138 0013 8000" },
-  { code: "+880", country: "BD", name: "Bangladesh", flag: "🇧🇩", minDigits: 10, maxDigits: 10, placeholder: "1712 345678" },
-  { code: "+92", country: "PK", name: "Pakistan", flag: "🇵🇰", minDigits: 10, maxDigits: 10, placeholder: "300 1234567" },
-];
-
 export default function OurPricing() {
   const [currentLang, setCurrentLang] = useState(getSavedLang);
   const [showCustomize, setShowCustomize] = useState(false);
   const [builderTab, setBuilderTab] = useState("build");
   const [selectedServices, setSelectedServices] = useState([]);
-  const [showContactModal, setShowContactModal] = useState(false);
-  const [showOptionalNotes, setShowOptionalNotes] = useState(false);
-  const [countryCode, setCountryCode] = useState("+94");
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    notes: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-
-  const activeCountryRule = useMemo(() => {
-    return COUNTRY_PHONE_OPTIONS.find((c) => c.code === countryCode) || COUNTRY_PHONE_OPTIONS[0];
-  }, [countryCode]);
-
-  const phoneDigits = useMemo(() => {
-    return formState.phone.replace(/\D/g, "");
-  }, [formState.phone]);
-
-  const isPhoneIncomplete = useMemo(() => {
-    if (!phoneDigits) return false;
-    return phoneDigits.length < activeCountryRule.minDigits || phoneDigits.length > activeCountryRule.maxDigits;
-  }, [phoneDigits, activeCountryRule]);
 
   const toggleService = (svc, category) => {
     const serviceKey = `${category}-${svc.num || svc.name}`;
@@ -91,149 +43,66 @@ export default function OurPricing() {
     if (e) e.preventDefault();
     setShowCustomize((prev) => {
       const nextState = !prev;
-      if (nextState) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (window.__cambmLenis && typeof window.__cambmLenis.resize === "function") {
+          window.__cambmLenis.resize();
+        }
+        if (nextState) {
           const el = document.getElementById("pricing-custom-builder");
           if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 120);
-      }
+        }
+      }, 100);
       return nextState;
     });
   };
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "phone") {
-      // Strictly allow only digits and cap at active country's maxDigits
-      const digitsOnly = value.replace(/\D/g, "").slice(0, activeCountryRule.maxDigits);
-      setFormState((prev) => ({ ...prev, phone: digitsOnly }));
-      return;
-    }
-    setFormState((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleOpenModal = () => {
-    setShowContactModal(true);
-    setIsSubmitted(false);
-    setSubmitError("");
-  };
-
-  const handleCloseModal = () => {
-    setShowContactModal(false);
-  };
-
-  // Lock background body scroll & pause Lenis when contact modal is open
   useEffect(() => {
-    if (showContactModal) {
-      if (window.__cambmLenis && typeof window.__cambmLenis.stop === "function") {
-        window.__cambmLenis.stop();
-      }
-
-      const originalBodyOverflow = document.body.style.overflow;
-      const originalHtmlOverflow = document.documentElement.style.overflow;
-      const originalPaddingRight = document.body.style.paddingRight;
-      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-      if (scrollBarWidth > 0) {
-        document.body.style.paddingRight = `${scrollBarWidth}px`;
-      }
-
-      const handleKeyDown = (e) => {
-        if (e.key === "Escape") {
-          setShowContactModal(false);
-        }
-      };
-      window.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        if (window.__cambmLenis && typeof window.__cambmLenis.start === "function") {
-          window.__cambmLenis.start();
-        }
-        document.body.style.overflow = originalBodyOverflow;
-        document.documentElement.style.overflow = originalHtmlOverflow;
-        document.body.style.paddingRight = originalPaddingRight;
-        window.removeEventListener("keydown", handleKeyDown);
-      };
+    if (window.__cambmLenis && typeof window.__cambmLenis.resize === "function") {
+      window.__cambmLenis.resize();
     }
-  }, [showContactModal]);
+  }, [showCustomize, builderTab, selectedServices]);
 
-  const handleSubmitCustomScope = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError("");
+  const handleConfirmCustomScope = (e) => {
+    if (e) e.preventDefault();
+    if (selectedServices.length === 0) return;
 
-    // Validate email format strictly (must contain domain like .com, .org, .lk, etc.)
-    const emailVal = formState.email.trim();
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(emailVal)) {
-      setSubmitError("Please enter a valid work email address (e.g. name@domain.com).");
-      setIsSubmitting(false);
-      return;
-    }
+    // List all selected services cleanly for additional notes in Cal.com
+    const servicesList = selectedServices
+      .map((s, idx) => `${idx + 1}. ${s.name} (${s.category.toUpperCase()})`)
+      .join("\n");
 
-    // Validate phone length if entered
-    if (phoneDigits && (phoneDigits.length < activeCountryRule.minDigits || phoneDigits.length > activeCountryRule.maxDigits)) {
-      setSubmitError(
-        `Invalid phone number: ${activeCountryRule.name} (${activeCountryRule.code}) requires ${
-          activeCountryRule.minDigits === activeCountryRule.maxDigits
-            ? `${activeCountryRule.minDigits} digits`
-            : `${activeCountryRule.minDigits}–${activeCountryRule.maxDigits} digits`
-        }.`
-      );
-      setIsSubmitting(false);
-      return;
-    }
+    const notesContent = `Selected Custom Scope (${selectedServices.length} services):\n${servicesList}`;
+    const pkg = "Custom Package";
 
-    try {
-      const fullPhone = phoneDigits ? `${activeCountryRule.code} ${phoneDigits}` : "";
-      const payload = {
-        name: formState.name,
-        email: formState.email,
-        phone: fullPhone,
-        company: formState.company,
-        notes: showOptionalNotes ? formState.notes : "",
-        services: selectedServices,
-      };
+    const calConfig = {
+      layout: "month_view",
+      "Select-a-package": pkg,
+      "Select a package": pkg,
+      "select-a-package": pkg,
+      "select_a_package": pkg,
+      package: pkg,
+      notes: notesContent,
+      "additional-notes": notesContent,
+      "additional_notes": notesContent,
+    };
 
-      const res = await fetch("/api/contacts/custom-scope", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+    if (window.Cal) {
+      window.Cal("modal", {
+        calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
+        config: calConfig,
       });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setIsSubmitted(true);
-        try {
-          localStorage.setItem(
-            "cambm_custom_scope_inquiry",
-            JSON.stringify({ ...payload, date: new Date().toISOString() })
-          );
-        } catch (err) { }
+    } else {
+      const calBtn = document.querySelector(".btn-primary.js-open-cal");
+      if (calBtn) {
+        calBtn.setAttribute("data-cal-config", JSON.stringify(calConfig));
+        calBtn.click();
       } else {
-        setSubmitError(data.error || "Failed to submit scope request. Please try again.");
-      }
-    } catch (err) {
-      console.error("Error submitting custom scope:", err);
-      // Fallback in case of local network issue: record locally
-      setIsSubmitted(true);
-      try {
-        localStorage.setItem(
-          "cambm_custom_scope_inquiry",
-          JSON.stringify({
-            contact: formState,
-            services: selectedServices,
-            date: new Date().toISOString(),
-          })
+        window.open(
+          `https://cal.com/cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}`,
+          "_blank",
+          "noopener,noreferrer"
         );
-      } catch (e) { }
-    } finally {
-      setIsSubmitting(false);
+      }
     }
   };
 
@@ -274,16 +143,37 @@ export default function OurPricing() {
     return I18N_SERVICES[currentLang] || I18N_SERVICES.en;
   }, [currentLang]);
 
-  const openCalModal = (note, e) => {
-    if (e) e.preventDefault();
+  const openCalModal = (packageName, e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const pkg = packageName || "";
+
+    const calConfig = {
+      layout: "month_view",
+      "Select-a-package": pkg,
+      "Select a package": pkg,
+      "select-a-package": pkg,
+      "select_a_package": pkg,
+      package: pkg,
+      notes: "", // Keep Additional notes empty so clients can type their own text
+    };
+
     if (window.Cal) {
       window.Cal("modal", {
-        calLink: "cambridge.marketing",
-        config: { layout: "month_view", notes: note || "Pre-built Package Inquiry" },
+        calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+        config: calConfig,
       });
     } else {
       const calBtn = document.querySelector(".btn-primary.js-open-cal");
-      if (calBtn) calBtn.click();
+      if (calBtn) {
+        calBtn.setAttribute("data-cal-config", JSON.stringify(calConfig));
+        calBtn.click();
+      } else {
+        window.open(
+          `https://cal.com/cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      }
     }
   };
 
@@ -445,18 +335,8 @@ export default function OurPricing() {
         </nav>
       </header>
 
-      {/* Main Content: Pre-built Packages Section */}
+      {/* Main Content: Packages Section */}
       <main className="pricing-page-main">
-        {/* ── Hero matching About/Portfolio with shaking bg ── */}
-        <section className="portfolio-hero pricing-page-hero" id="pricing-hero">
-          <div className="hero-bg"></div>
-          <div className="portfolio-hero-inner">
-            <h1 className="phero-heading phero-anim phero-anim-2">
-              Our Pre Built Packages
-            </h1>
-          </div>
-        </section>
-
         <section className="pricing-packages-page-section" id="prebuilt-packages">
           <div className="pricing-container">
             {/* Centered Heading */}
@@ -545,10 +425,25 @@ export default function OurPricing() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
 
-            {/* Customize Banner Card */}
+        {/* Section 2: Dedicated Customize Section */}
+        <section className="pricing-custom-section" id="custom-scope">
+          <div className="pricing-container">
+            {/* Customize Header Row (Clean, no card border/background) */}
             <div className="pricing-customize-banner">
-              <h2 className="pricing-customize-title">Customize</h2>
+              <h2 className="pricing-customize-title">
+                {currentLang === "es"
+                  ? "¿Deseas personalizar tu propio paquete?"
+                  : currentLang === "ar"
+                  ? "هل ترغب في تخصيص باقتك الخاصة؟"
+                  : currentLang === "si"
+                  ? "ඔබේම සේවාවන් සකසා ගැනීමට අවශ්‍යද?"
+                  : currentLang === "ta"
+                  ? "உங்கள் சொந்த சேவைகளை தனிப்பயனாக்க வேண்டுமா?"
+                  : "Want to customize your own package?"}
+              </h2>
               <button
                 type="button"
                 className="pricing-customize-btn"
@@ -683,10 +578,31 @@ export default function OurPricing() {
                   <div className="pricing-custom-summary">
                     <div className="pricing-custom-summary-top">
                       <div className="pricing-custom-summary-info">
-                        <span className="pricing-custom-summary-badge">
-                          {selectedServices.length}{" "}
-                          {selectedServices.length === 1 ? "Service" : "Services"} Selected
-                        </span>
+                        <div className="pricing-custom-summary-badge-row">
+                          <span className="pricing-custom-summary-badge">
+                            {selectedServices.length}{" "}
+                            {selectedServices.length === 1 ? "Service" : "Services"} Selected
+                          </span>
+                          <button
+                            type="button"
+                            className="pricing-custom-reset-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedServices([]);
+                            }}
+                            title="Reset all selected services"
+                          >
+                            {currentLang === "es"
+                              ? "Restablecer"
+                              : currentLang === "ar"
+                              ? "إعادة ضبط"
+                              : currentLang === "si"
+                              ? "යළි සකසන්න"
+                              : currentLang === "ta"
+                              ? "மீட்டமை"
+                              : "Reset"}
+                          </button>
+                        </div>
                         <h4 className="pricing-custom-summary-title">
                           Your Selected Custom Scope
                         </h4>
@@ -694,9 +610,17 @@ export default function OurPricing() {
                       <button
                         type="button"
                         className="pricing-custom-confirm-btn"
-                        onClick={handleOpenModal}
+                        onClick={handleConfirmCustomScope}
                       >
-                        Confirm Custom Scope <span>→</span>
+                        {currentLang === "es"
+                          ? "Confirmar"
+                          : currentLang === "ar"
+                          ? "تأكيد"
+                          : currentLang === "si"
+                          ? "තහවුරු කරන්න"
+                          : currentLang === "ta"
+                          ? "உறுதிப்படுத்துக"
+                          : "Confirm"} <span>→</span>
                       </button>
                     </div>
 
@@ -725,242 +649,6 @@ export default function OurPricing() {
           </div>
         </section>
       </main>
-
-      {/* ── Customer Contact Details & Summary Modal ── */}
-      {showContactModal && (
-        <div
-          className="pricing-modal-backdrop"
-          onClick={handleCloseModal}
-          data-lenis-prevent
-          data-lenis-prevent-wheel
-          data-lenis-prevent-touch
-        >
-          <div
-            className="pricing-modal-dialog"
-            onClick={(e) => e.stopPropagation()}
-            onWheel={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="pricingModalTitle"
-            data-lenis-prevent
-            data-lenis-prevent-wheel
-            data-lenis-prevent-touch
-          >
-            <button
-              type="button"
-              className="pricing-modal-close"
-              onClick={handleCloseModal}
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
-
-            {!isSubmitted ? (
-              <>
-                <div className="pricing-modal-header">
-                  <span className="pricing-modal-eyebrow">CUSTOM PACKAGE PROPOSAL</span>
-                  <h3 id="pricingModalTitle" className="pricing-modal-title">
-                    Review Scope & Contact Details
-                  </h3>
-                  <p className="pricing-modal-desc">
-                    Review your selected capabilities below and provide your contact information to receive your tailored proposal.
-                  </p>
-                </div>
-
-                {/* Selected Services Summary Box */}
-                <div className="pricing-modal-summary-box">
-                  <div className="pricing-modal-summary-box-head">
-                    <span className="summary-box-title">Selected Capabilities ({selectedServices.length})</span>
-                    <span className="summary-box-badge">
-                      {selectedServices.length} {selectedServices.length === 1 ? "Service" : "Services"}
-                    </span>
-                  </div>
-                  <div className="pricing-modal-services-list">
-                    {selectedServices.map((item) => (
-                      <div key={item.key} className="pricing-modal-service-row">
-                        <span className="service-row-name">{item.name}</span>
-                        <button
-                          type="button"
-                          className="service-row-del"
-                          onClick={() => toggleService(item, item.category)}
-                          title="Remove service"
-                        >
-                          &times;
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Customer Contact Details Form */}
-                <form className="pricing-modal-form" onSubmit={handleSubmitCustomScope}>
-                  <div className="pricing-modal-form-grid">
-                    <div className="pricing-form-group">
-                      <label htmlFor="modalName">Full Name *</label>
-                      <input
-                        id="modalName"
-                        type="text"
-                        name="name"
-                        required
-                        placeholder="e.g. John Doe"
-                        value={formState.name}
-                        onChange={handleFormChange}
-                      />
-                    </div>
-
-                    <div className="pricing-form-group">
-                      <label htmlFor="modalEmail">Work Email *</label>
-                      <input
-                        id="modalEmail"
-                        type="email"
-                        name="email"
-                        required
-                        placeholder="e.g. john@company.com"
-                        value={formState.email}
-                        onChange={handleFormChange}
-                      />
-                    </div>
-
-                    <div className="pricing-form-group">
-                      <label htmlFor="modalCompany">Company / Brand Name *</label>
-                      <input
-                        id="modalCompany"
-                        type="text"
-                        name="company"
-                        required
-                        placeholder="e.g. Acme Corp"
-                        value={formState.company}
-                        onChange={handleFormChange}
-                      />
-                    </div>
-
-                    <div className="pricing-form-group">
-                      <label htmlFor="modalPhone">Phone / WhatsApp Number</label>
-                      <div className={`pricing-phone-input-wrap ${isPhoneIncomplete ? "has-error" : ""}`}>
-                        <select
-                          className="pricing-phone-country-select"
-                          value={countryCode}
-                          onChange={(e) => {
-                            const newCode = e.target.value;
-                            setCountryCode(newCode);
-                            const newRule = COUNTRY_PHONE_OPTIONS.find((c) => c.code === newCode) || COUNTRY_PHONE_OPTIONS[0];
-                            setFormState((prev) => ({
-                              ...prev,
-                              phone: prev.phone.replace(/\D/g, "").slice(0, newRule.maxDigits),
-                            }));
-                          }}
-                          aria-label="Country Code"
-                        >
-                          {COUNTRY_PHONE_OPTIONS.map((c) => (
-                            <option key={c.code + c.country} value={c.code}>
-                              {c.flag} {c.code} ({c.name})
-                            </option>
-                          ))}
-                        </select>
-                        <input
-                          id="modalPhone"
-                          type="tel"
-                          name="phone"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          maxLength={activeCountryRule.maxDigits}
-                          placeholder={`e.g. ${activeCountryRule.placeholder}`}
-                          value={formState.phone}
-                          onChange={handleFormChange}
-                          className="pricing-phone-number-input"
-                        />
-                      </div>
-                      {isPhoneIncomplete && (
-                        <div className="pricing-phone-error-msg">
-                          <span className="pricing-phone-error-icon">⚠️</span>
-                          <span>
-                            {activeCountryRule.name} ({activeCountryRule.code}) requires{" "}
-                            <strong>
-                              {activeCountryRule.minDigits === activeCountryRule.maxDigits
-                                ? `${activeCountryRule.minDigits} digits`
-                                : `${activeCountryRule.minDigits} or ${activeCountryRule.maxDigits} digits`}
-                            </strong>{" "}
-                            (entered: {phoneDigits.length} {phoneDigits.length === 1 ? "digit" : "digits"}).
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Optional Notes Toggle & Input */}
-                  <div className="pricing-optional-toggle-wrap">
-                    <label className="pricing-optional-checkbox-label" htmlFor="toggleOptionalNotes">
-                      <input
-                        type="checkbox"
-                        id="toggleOptionalNotes"
-                        className="pricing-optional-checkbox"
-                        checked={showOptionalNotes}
-                        onChange={(e) => setShowOptionalNotes(e.target.checked)}
-                      />
-                      <span className="pricing-optional-checkbox-custom"></span>
-                      <span className="pricing-optional-label-text">
-                        Project Scope Notes / Requirements <span className="pricing-optional-tag">(Optional)</span>
-                      </span>
-                    </label>
-                  </div>
-
-                  {showOptionalNotes && (
-                    <div className="pricing-form-group pricing-notes-appear">
-                      <textarea
-                        id="modalNotes"
-                        name="notes"
-                        rows="3"
-                        placeholder="Any specific targets, tech stack preferences, or launch timelines..."
-                        value={formState.notes}
-                        onChange={handleFormChange}
-                        autoFocus
-                      ></textarea>
-                    </div>
-                  )}
-
-                  {submitError && (
-                    <div style={{ padding: "10px 14px", background: "rgba(239, 68, 68, 0.15)", border: "1px solid rgba(239, 68, 68, 0.4)", borderRadius: "8px", color: "#fca5a5", fontSize: "0.85rem", marginBottom: "1rem" }}>
-                      {submitError}
-                    </div>
-                  )}
-
-                  <div className="pricing-modal-actions">
-                    <button
-                      type="submit"
-                      className="pricing-modal-submit-btn"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Submitting Request..." : "Submit Custom Scope Request"}
-                    </button>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <div className="pricing-modal-success">
-                <div className="pricing-success-icon">
-                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#ff5a00" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </div>
-                <h3 className="pricing-success-title">Custom Scope Received!</h3>
-                <p className="pricing-success-desc">
-                  Thank you, <strong>{formState.name}</strong>. We have logged your request for <strong>{selectedServices.length} services</strong> on behalf of <strong>{formState.company}</strong>. Our solutions team will review your specifications and reach out to <strong>{formState.email}</strong> within 24 hours.
-                </p>
-                <div className="pricing-success-actions">
-                  <button
-                    type="button"
-                    className="pricing-modal-submit-btn"
-                    onClick={handleCloseModal}
-                  >
-                    Close Window
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Footer matching Home Page */}
       <footer className="footer" id="footer">

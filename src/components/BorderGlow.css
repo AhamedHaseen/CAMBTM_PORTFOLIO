@@ -1,0 +1,92 @@
+.border-glow-card {
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+  --edge-sensitivity: 25;
+  --color-sensitivity: calc(var(--edge-sensitivity) + 15);
+  --border-radius: 16px;
+  --glow-padding: 0px;
+  --cone-spread: 20;
+
+  position: relative;
+  border-radius: var(--border-radius);
+  isolation: isolate;
+  transform: translate3d(0, 0, 0.01px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  background: var(--card-bg, rgba(70, 70, 70, 0.58));
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="light"] .border-glow-card {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.border-glow-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .border-glow-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.border-glow-card--light {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.border-glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: opacity 0.25s ease-out;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.border-glow-card:not(:hover):not(.sweep-active)::before {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* subtle, crisp 1px colored gradient border on hover */
+.border-glow-card::before {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--card-bg, #2a2a2a) 0 100%) padding-box,
+    linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+    var(--gradient-one, radial-gradient(at 80% 55%, #ff5a00 0px, transparent 50%)) border-box,
+    var(--gradient-two, radial-gradient(at 69% 34%, #f1966a 0px, transparent 50%)) border-box,
+    var(--gradient-three, radial-gradient(at 8% 6%, #ff7b29 0px, transparent 50%)) border-box,
+    var(--gradient-four, radial-gradient(at 41% 38%, #ff5a00 0px, transparent 50%)) border-box,
+    var(--gradient-five, radial-gradient(at 86% 85%, #f1966a 0px, transparent 50%)) border-box,
+    var(--gradient-six, radial-gradient(at 82% 18%, #ff9f66 0px, transparent 50%)) border-box,
+    var(--gradient-seven, radial-gradient(at 51% 4%, #ff5a00 0px, transparent 50%)) border-box,
+    var(--gradient-base, linear-gradient(#ff5a00 0 100%)) border-box;
+
+  opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+
+  mask-image:
+    conic-gradient(
+      from var(--cursor-angle) at center,
+      black calc(var(--cone-spread) * 1%),
+      transparent calc((var(--cone-spread) + 15) * 1%),
+      transparent calc((100 - var(--cone-spread) - 15) * 1%),
+      black calc((100 - var(--cone-spread)) * 1%)
+    );
+}
+
+.border-glow-inner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}

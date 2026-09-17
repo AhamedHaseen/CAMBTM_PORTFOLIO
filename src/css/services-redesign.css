@@ -456,6 +456,16 @@
   line-height: 1.5;
 }
 
+.hosting-terms-outside {
+  text-align: center;
+  margin: 22px auto 0;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  font-family: var(--font-tight, "Inter Tight", sans-serif);
+}
+
 .hosting-table {
   width: 100%;
   border-collapse: collapse;
