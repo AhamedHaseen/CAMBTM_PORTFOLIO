@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import FooterOffices from "../components/FooterOffices";
 import FooterSocials from "../components/FooterSocials";
 import { I18N_SERVICES } from "../components/ServicesSection";
@@ -22,8 +22,101 @@ export default function OurPricing() {
   const [builderTab, setBuilderTab] = useState("build");
   const [selectedServices, setSelectedServices] = useState([]);
 
+  // Dynamic Services & Combos from Admin / API / LocalStorage
+  const [dynamicServices, setDynamicServices] = useState(() => {
+    try {
+      const cached = localStorage.getItem("cambm_services") || localStorage.getItem("cambm_admin_services");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) { }
+    return [];
+  });
+
+  const [dynamicCombos, setDynamicCombos] = useState(() => {
+    try {
+      const cached = localStorage.getItem("cambm_combos") || localStorage.getItem("cambm_admin_combos");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) { }
+    return [];
+  });
+
+  const loadDynamicData = useCallback(() => {
+    // 1. Load Services from API
+    fetch("/api/services")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const list = data?.services || data?.data;
+        if (data && data.success && Array.isArray(list) && list.length > 0) {
+          setDynamicServices(list);
+          try {
+            localStorage.setItem("cambm_services", JSON.stringify(list));
+            localStorage.setItem("cambm_admin_services", JSON.stringify(list));
+          } catch (e) { }
+        }
+      })
+      .catch(() => { });
+
+    // 2. Load Combos from API
+    fetch("/api/combos")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const list = data?.combos || data?.data;
+        if (data && data.success && Array.isArray(list) && list.length > 0) {
+          setDynamicCombos(list);
+          try {
+            localStorage.setItem("cambm_combos", JSON.stringify(list));
+            localStorage.setItem("cambm_admin_combos", JSON.stringify(list));
+          } catch (e) { }
+        }
+      })
+      .catch(() => { });
+  }, []);
+
+  useEffect(() => {
+    loadDynamicData();
+
+    const handleServicesUpdate = () => {
+      try {
+        const saved = localStorage.getItem("cambm_services") || localStorage.getItem("cambm_admin_services");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) setDynamicServices(parsed);
+        }
+      } catch (e) { }
+      loadDynamicData();
+    };
+
+    const handleCombosUpdate = () => {
+      try {
+        const saved = localStorage.getItem("cambm_combos") || localStorage.getItem("cambm_admin_combos");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) setDynamicCombos(parsed);
+        }
+      } catch (e) { }
+      loadDynamicData();
+    };
+
+    window.addEventListener("cambm_services_updated", handleServicesUpdate);
+    window.addEventListener("cambm_combos_updated", handleCombosUpdate);
+    window.addEventListener("storage", handleServicesUpdate);
+    window.addEventListener("storage", handleCombosUpdate);
+
+    return () => {
+      window.removeEventListener("cambm_services_updated", handleServicesUpdate);
+      window.removeEventListener("cambm_combos_updated", handleCombosUpdate);
+      window.removeEventListener("storage", handleServicesUpdate);
+      window.removeEventListener("storage", handleCombosUpdate);
+    };
+  }, [loadDynamicData]);
+
   const toggleService = (svc, category) => {
-    const serviceKey = `${category}-${svc.num || svc.name}`;
+    const serviceKey = `${category}-${svc.id || svc.num || svc.name}`;
     setSelectedServices((prev) => {
       const exists = prev.some((item) => item.key === serviceKey);
       if (exists) {
@@ -35,7 +128,7 @@ export default function OurPricing() {
   };
 
   const isServiceSelected = (svc, category) => {
-    const serviceKey = `${category}-${svc.num || svc.name}`;
+    const serviceKey = `${category}-${svc.id || svc.num || svc.name}`;
     return selectedServices.some((item) => item.key === serviceKey);
   };
 
@@ -216,7 +309,46 @@ export default function OurPricing() {
     }
   };
 
-  const cardsToDisplay = activeLocaleData.combos?.cards || [];
+  const cardsToDisplay = useMemo(() => {
+    if (dynamicCombos && dynamicCombos.length > 0) {
+      const activeCombos = dynamicCombos.filter(
+        (c) => c.status === "active" || c.status === undefined || c.is_active === true
+      );
+      if (activeCombos.length > 0) return activeCombos;
+    }
+    return activeLocaleData.combos?.cards || [];
+  }, [dynamicCombos, activeLocaleData]);
+
+  const categoryServices = useMemo(() => {
+    if (dynamicServices && dynamicServices.length > 0) {
+      const filtered = dynamicServices
+        .filter((s) => {
+          const cat = (s.category || "").toLowerCase();
+          const isActive = s.status === undefined || s.status === "active" || s.is_active === true;
+          return cat === builderTab.toLowerCase() && isActive;
+        })
+        .sort((a, b) => {
+          const orderA = Number(a.display_order || a.sort_order || 0);
+          const orderB = Number(b.display_order || b.sort_order || 0);
+          return orderA - orderB;
+        })
+        .map((s, idx) => ({
+          id: s.id || `${builderTab}-${idx}`,
+          num: s.num || String(s.display_order || s.sort_order || idx + 1).padStart(2, "0"),
+          name: s.name,
+          desc: s.description || s.desc || "",
+          category: builderTab,
+        }));
+
+      if (filtered.length > 0) return filtered;
+    }
+
+    return (activeLocaleData[builderTab]?.services || []).map((s, idx) => ({
+      ...s,
+      id: `${builderTab}-${s.num || idx}`,
+      category: builderTab,
+    }));
+  }, [dynamicServices, builderTab, activeLocaleData]);
 
   return (
     <div className="pricing-page-container">
@@ -530,7 +662,7 @@ export default function OurPricing() {
                     const tabLabel =
                       activeLocaleData.tabs?.[tabKey] || tabKey.toUpperCase();
                     const tabCount = selectedServices.filter(
-                      (s) => s.category === tabKey
+                      (s) => (s.category || "").toLowerCase() === tabKey.toLowerCase()
                     ).length;
 
                     return (
@@ -555,16 +687,15 @@ export default function OurPricing() {
 
                 {/* Services List for Active Tab */}
                 <div className="pricing-custom-grid">
-                  {(activeLocaleData[builderTab]?.services || []).map(
-                    (svc, idx) => {
-                      const isSelected = isServiceSelected(svc, builderTab);
+                  {categoryServices.map((svc, idx) => {
+                    const isSelected = isServiceSelected(svc, builderTab);
 
-                      return (
-                        <div
-                          key={svc.num || idx}
-                          className={`pricing-custom-item ${isSelected ? "is-selected" : ""}`}
-                          onClick={() => toggleService(svc, builderTab)}
-                        >
+                    return (
+                      <div
+                        key={svc.id || svc.num || idx}
+                        className={`pricing-custom-item ${isSelected ? "is-selected" : ""}`}
+                        onClick={() => toggleService(svc, builderTab)}
+                      >
                           <div className="pricing-custom-item-left">
                             <span className="pricing-custom-item-num">
                               {svc.num || String(idx + 1).padStart(2, "0")}
