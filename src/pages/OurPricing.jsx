@@ -261,6 +261,17 @@ export default function OurPricing() {
       window.initI18n();
     }
     document.dispatchEvent(new CustomEvent("cambm:revealed"));
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.height = "";
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+      if (window.__cambmLenis && typeof window.__cambmLenis.start === "function") {
+        window.__cambmLenis.start();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -381,10 +392,17 @@ export default function OurPricing() {
     };
 
     if (window.Cal) {
-      window.Cal("modal", {
-        calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
-        config: calConfig,
-      });
+      if (typeof window.Cal.ns === "object" && window.Cal.ns["strategy-call"]) {
+        window.Cal.ns["strategy-call"]("modal", {
+          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
+          config: calConfig,
+        });
+      } else {
+        window.Cal("modal", {
+          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
+          config: calConfig,
+        });
+      }
     } else {
       const calBtn = document.querySelector(".btn-primary.js-open-cal");
       if (calBtn) {
@@ -415,10 +433,17 @@ export default function OurPricing() {
     };
 
     if (window.Cal) {
-      window.Cal("modal", {
-        calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
-        config: calConfig,
-      });
+      if (typeof window.Cal.ns === "object" && window.Cal.ns["strategy-call"]) {
+        window.Cal.ns["strategy-call"]("modal", {
+          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          config: calConfig,
+        });
+      } else {
+        window.Cal("modal", {
+          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          config: calConfig,
+        });
+      }
     } else {
       const calBtn = document.querySelector(".btn-primary.js-open-cal");
       if (calBtn) {
