@@ -288,19 +288,9 @@ export default function Products() {
 
       {/* Main Products Content */}
       <main id="main-content">
-        {/* A1. Hero with Breadcrumb and SystemWall */}
+        {/* A1. Hero with SystemWall */}
         <section className="cambt-hero">
           <div className="cambt-hero-inner">
-            <nav aria-label="Breadcrumb" className="cambt-breadcrumb">
-              <ol>
-                <li>
-                  <Link to="/">{copy.breadcrumb.home}</Link>
-                </li>
-                <li className="cambt-breadcrumb-sep">/</li>
-                <li className="cambt-breadcrumb-current">{copy.breadcrumb.current}</li>
-              </ol>
-            </nav>
-
             <div className="cambt-hero-grid">
               <div className="cambt-hero-content">
                 <span className="cambt-label">{copy.hero.label}</span>
@@ -345,9 +335,22 @@ export default function Products() {
         {/* A4. The systems (SystemIndex) */}
         <section className="cambt-section cambt-section-white" id="catalogue">
           <div className="cambt-inner">
-            <div className="cambt-section-head">
+            <div className="cambt-section-head" style={{ marginBottom: "2.5rem" }}>
               <span className="cambt-label">{copy.index.label}</span>
               <h2>{copy.index.heading}</h2>
+              {copy.index.description && (
+                <p
+                  style={{
+                    maxWidth: "50rem",
+                    marginTop: "0.85rem",
+                    color: "var(--cambt-color-text-secondary)",
+                    fontSize: "1.05rem",
+                    lineHeight: "1.65",
+                  }}
+                >
+                  {copy.index.description}
+                </p>
+              )}
             </div>
             <SystemIndex industries={industries} labels={copy.index} systems={indexSystems} />
           </div>

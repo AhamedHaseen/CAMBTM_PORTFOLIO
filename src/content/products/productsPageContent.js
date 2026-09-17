@@ -57,8 +57,9 @@ export const productsIndexContent = {
     ],
   },
   index: {
-    label: "The systems",
-    heading: "What we can deploy",
+    label: "Live Reference Systems",
+    heading: "Example Systems Built for Real Operations",
+    description: "Every system we engineer is fully customized, re-engineered, and tailored to your exact business needs.",
     allLabel: "All",
     filterLabel: "Filter systems by industry",
     singularLabel: "system",

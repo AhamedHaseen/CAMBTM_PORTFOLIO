@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import SpotlightCard from "../SpotlightCard";
 
 const COLUMNS = 9;
 const ROWS = 6;
@@ -116,19 +115,15 @@ export default function FittedField({ copy }) {
         </div>
       </div>
 
-      {/* 4 Delivery Principles in the same line grid with interactive SpotlightCard */}
+      {/* 4 Delivery Principles without glowing spotlight */}
       <div className="cambt-fitted-cards-grid">
         {copy.points.map((pt, i) => (
-          <SpotlightCard
-            key={i}
-            spotlightColor="rgba(255, 90, 0, 0.18)"
-            className="cambt-fitted-spotlight-card"
-          >
+          <div key={i} className="cambt-fitted-card">
             <div className="cambt-fitted-card-header">
               <span className="cambt-fitted-card-num">0{i + 1}</span>
             </div>
             <p className="cambt-fitted-card-text">{pt}</p>
-          </SpotlightCard>
+          </div>
         ))}
       </div>
     </div>

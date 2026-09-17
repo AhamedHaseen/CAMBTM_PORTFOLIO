@@ -1,50 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import SystemMark from "./SystemMark";
 
 export default function SystemWall({ systems }) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
-
-    let visible = false;
-    const sync = () => {
-      element.style.setProperty("--wall-drift", visible && !document.hidden ? "9s" : "0s");
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry?.isIntersecting ?? false;
-        sync();
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(element);
-    document.addEventListener("visibilitychange", sync);
-
-    return () => {
-      observer.disconnect();
-      document.removeEventListener("visibilitychange", sync);
-    };
-  }, []);
-
   return (
-    <div className="cambt-desk" ref={ref}>
+    <div className="cambt-desk">
       <div className="cambt-machine">
         <div className="cambt-bezel">
           <div className="cambt-glass">
             <ul aria-label="Systems" className="cambt-wall-grid">
-              {systems.map((system, index) => (
-                <li
-                  className="cambt-wall-cell"
-                  key={system.slug}
-                  style={{
-                    "--cell-index": (index % 3) + Math.floor(index / 3),
-                  }}
-                >
+              {systems.map((system) => (
+                <li className="cambt-wall-cell" key={system.slug}>
                   <Link
                     aria-label={system.name}
                     className="cambt-wall-tile"

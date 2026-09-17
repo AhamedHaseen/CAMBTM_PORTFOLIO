@@ -1,274 +1,136 @@
 import React from "react";
 
-const VIEW_BOX = "0 0 160 120";
+const VIEW_BOX = "0 0 96 96";
 
-const line = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.25,
-  strokeLinecap: "square",
-};
-
-function tile(index, filled) {
-  return {
-    className: filled ? "cambt-mark-filled" : "cambt-mark-empty",
-    style: { "--fill-index": index },
-  };
-}
-
-function Rooms() {
-  const occupied = new Set([0, 1, 3, 6, 7, 10]);
+function HostelMark() {
   return (
     <>
-      {Array.from({ length: 12 }, (_, i) => {
-        const column = i % 6;
-        const row = Math.floor(i / 6);
-        return (
-          <rect
-            {...tile(column + row * 6, occupied.has(i))}
-            height={26}
-            key={i}
-            width={22}
-            x={12 + column * 23}
-            y={row === 0 ? 14 : 74}
-          />
-        );
-      })}
-      <path {...line} d="M12 58 H150" />
-      <path {...line} d="M12 66 H150" />
+      <rect className="s" x="10" y="14" width="76" height="68" rx="6" />
+      <rect className="f" x="20" y="28" width="26" height="9" rx="2.5" />
+      <rect className="m" x="50" y="28" width="26" height="9" rx="2.5" />
+      <rect className="m" x="20" y="45" width="26" height="9" rx="2.5" />
+      <rect className="m" x="50" y="45" width="26" height="9" rx="2.5" />
+      <rect className="m" x="20" y="62" width="26" height="9" rx="2.5" />
+      <rect className="f" x="50" y="62" width="26" height="9" rx="2.5" />
     </>
   );
 }
 
-function Timetable() {
-  const scheduled = new Set(["0-0", "1-0", "3-0", "0-1", "2-1", "4-1", "1-2", "2-2", "0-3", "4-3"]);
+function SchoolMark() {
   return (
     <>
-      <path {...line} d="M12 26 H150" />
-      {Array.from({ length: 5 }, (_, c) => (
-        <path {...line} d={`M${12 + c * 27.6} 14 V108`} key={`c${c}`} />
-      ))}
-      <path {...line} d="M150 14 V108" />
-      {Array.from({ length: 20 }, (_, i) => {
-        const c = i % 5;
-        const r = Math.floor(i / 5);
-        const isFilled = scheduled.has(`${c}-${r}`);
-        return (
-          <rect
-            {...tile(i, isFilled)}
-            height={16}
-            key={`${c}-${r}`}
-            width={21}
-            x={15 + c * 27.6}
-            y={31 + r * 19}
-          />
-        );
-      })}
+      <rect className="s" x="12" y="18" width="72" height="64" rx="6" />
+      <rect className="f" x="12" y="18" width="72" height="13" rx="6" />
+      <rect className="f" x="12" y="25" width="72" height="6" />
+      <rect className="m" x="21" y="40" width="16" height="11" rx="2" />
+      <rect className="m" x="40" y="40" width="16" height="11" rx="2" />
+      <rect className="f" x="59" y="40" width="16" height="11" rx="2" />
+      <rect className="m" x="21" y="57" width="16" height="11" rx="2" />
+      <rect className="f" x="40" y="57" width="16" height="11" rx="2" />
+      <rect className="m" x="59" y="57" width="16" height="11" rx="2" />
     </>
   );
 }
 
-function Card() {
+function CambcardMark() {
   return (
     <>
-      <rect {...line} height={104} rx={6} width={68} x={46} y={8} />
-      {/* Top Header Banner */}
-      <path {...tile(0, true)} d="M46 14 A6 6 0 0 1 52 8 H108 A6 6 0 0 1 114 14 V30 H46 Z" />
-      
-      {/* Profile Avatar Ring */}
-      <circle {...tile(1, true)} cx={80} cy={42} r={9} />
-      
-      {/* Contact Name & Title lines */}
-      <rect {...tile(2, false)} height={4} rx={2} width={36} x={62} y={56} />
-      <rect {...tile(3, false)} height={3} rx={1.5} width={24} x={68} y={64} />
-      
-      {/* Social / Action Pills */}
-      <rect {...tile(4, true)} height={6} rx={3} width={14} x={52} y={72} />
-      <rect {...tile(5, false)} height={6} rx={3} width={14} x={73} y={72} />
-      <rect {...tile(6, true)} height={6} rx={3} width={14} x={94} y={72} />
-
-      {/* Mini QR Code Matrix Box & Tiles */}
-      <rect {...line} height={24} rx={3} width={24} x={68} y={83} />
-      <rect {...tile(7, true)} height={5} width={5} x={71} y={86} />
-      <rect {...tile(8, false)} height={5} width={5} x={77.5} y={86} />
-      <rect {...tile(9, true)} height={5} width={5} x={84} y={86} />
-      <rect {...tile(10, false)} height={5} width={5} x={71} y={92.5} />
-      <rect {...tile(11, true)} height={5} width={5} x={77.5} y={92.5} />
-      <rect {...tile(12, true)} height={5} width={5} x={84} y={92.5} />
-      <rect {...tile(13, true)} height={5} width={5} x={71} y={99} />
-      <rect {...tile(14, false)} height={5} width={5} x={77.5} y={99} />
-      <rect {...tile(15, true)} height={5} width={5} x={84} y={99} />
+      <rect className="s" x="8" y="24" width="80" height="50" rx="7" />
+      <rect className="f" x="18" y="38" width="17" height="14" rx="3" />
+      <rect className="m" x="18" y="59" width="30" height="6" rx="3" />
+      <path className="fs" d="M60 39a11 11 0 0 1 0 18" />
+      <path className="fs" d="M68 33a20 20 0 0 1 0 30" opacity=".5" />
     </>
   );
 }
 
-function Portfolio() {
-  const towers = [
-    { x: 14, h: 56, units: 4, let: [0, 2] },
-    { x: 52, h: 84, units: 6, let: [0, 1, 3, 5] },
-    { x: 90, h: 44, units: 3, let: [1] },
-    { x: 128, h: 68, units: 5, let: [0, 2, 3] },
-  ];
+function PropertyMark() {
   return (
     <>
-      <path {...line} d="M8 110 H152" />
-      {towers.map((t, index) => (
-        <g key={t.x}>
-          <rect {...line} height={t.h} width={26} x={t.x} y={110 - t.h} />
-          {Array.from({ length: t.units }, (_, u) => (
-            <rect
-              {...tile(index + u, t.let.includes(u))}
-              height={7}
-              key={u}
-              width={16}
-              x={t.x + 5}
-              y={110 - t.h + 7 + u * ((t.h - 12) / t.units)}
-            />
-          ))}
-        </g>
-      ))}
+      <rect className="s" x="12" y="16" width="72" height="66" rx="5" />
+      <path className="s" d="M48 16v30M12 46h72M48 60h36" />
+      <rect className="f" x="19" y="23" width="22" height="16" rx="2" />
+      <rect className="m" x="19" y="53" width="22" height="22" rx="2" />
+      <rect className="m" x="55" y="23" width="22" height="16" rx="2" />
+      <rect className="f" x="55" y="66" width="22" height="9" rx="2" />
     </>
   );
 }
 
-function Weights() {
-  const plates = [
-    { offset: 0, height: 66, filled: true },
-    { offset: 11, height: 50, filled: true },
-    { offset: 21, height: 34, filled: false },
-  ];
+function GymMark() {
   return (
     <>
-      <path {...line} d="M14 60 H146" strokeWidth={3} />
-      <path {...line} d="M66 55 V65" />
-      <path {...line} d="M74 55 V65" />
-      <path {...line} d="M86 55 V65" />
-      <path {...line} d="M94 55 V65" />
-
-      {plates.map((plate, index) => (
-        <g key={plate.offset}>
-          <rect
-            {...tile(index, plate.filled)}
-            height={plate.height}
-            rx={2}
-            width={8}
-            x={26 + plate.offset}
-            y={60 - plate.height / 2}
-          />
-          <rect
-            {...tile(index, plate.filled)}
-            height={plate.height}
-            rx={2}
-            width={8}
-            x={126 - plate.offset}
-            y={60 - plate.height / 2}
-          />
-        </g>
-      ))}
-
-      <rect {...line} height={22} width={5} x={20} y={49} />
-      <rect {...line} height={22} width={5} x={135} y={49} />
+      <circle className="s" cx="48" cy="44" r="25" />
+      <path className="fs" d="M48 19a25 25 0 0 1 21 38" strokeWidth="5" />
+      <circle className="f" cx="48" cy="44" r="7" />
+      <rect className="m" x="24" y="76" width="48" height="7" rx="3.5" />
+      <rect className="f" x="24" y="76" width="18" height="7" rx="3.5" />
     </>
   );
 }
 
-function Bays() {
-  const taken = new Set([0, 2, 3, 6, 8, 9, 11]);
+function ParkingMark() {
   return (
     <>
-      <path {...line} d="M8 60 H152" strokeDasharray="6 6" />
-      {Array.from({ length: 12 }, (_, i) => {
-        const column = i % 6;
-        const row = Math.floor(i / 6);
-        return (
-          <rect
-            {...tile(column + row * 6, taken.has(i))}
-            height={34}
-            key={i}
-            width={20}
-            x={14 + column * 22.5}
-            y={row === 0 ? 18 : 68}
-          />
-        );
-      })}
+      <rect className="s" x="14" y="14" width="68" height="68" rx="14" />
+      <rect className="f" x="34" y="29" width="9" height="38" rx="3" />
+      <path className="fs" d="M43 29h11a11 11 0 0 1 0 22H43" strokeWidth="9" />
+      <rect className="m" x="56" y="60" width="14" height="7" rx="2" />
     </>
   );
 }
 
-function Route() {
-  const stops = [
-    [16, 84],
-    [78, 36],
-    [144, 84],
-  ];
+function ClientMark() {
   return (
     <>
-      <path {...line} d="M16 84 C48 84 44 36 78 36 C112 36 108 84 144 84" />
-      {stops.map(([cx, cy], index) => (
-        <circle {...tile(index * 2, true)} cx={cx} cy={cy} key={cx} r={6} />
-      ))}
-      {[
-        [47, 60],
-        [111, 60],
-      ].map(([cx, cy], index) => (
-        <circle {...tile(index * 2 + 1, false)} cx={cx} cy={cy} key={cx} r={4} />
-      ))}
-      <path {...line} d="M40 104 H120" />
-      {Array.from({ length: 5 }, (_, i) => (
-        <path {...line} d={`M${44 + i * 18} 100 V108`} key={i} />
-      ))}
+      <path className="s" d="M48 40V22M48 40 27 62M48 40l21 22" />
+      <circle className="f" cx="48" cy="18" r="10" />
+      <circle className="m" cx="25" cy="68" r="10" />
+      <circle className="m" cx="71" cy="68" r="10" />
+      <rect className="m" x="40" y="44" width="16" height="6" rx="3" />
     </>
   );
 }
 
-function Modules() {
+function TravelMark() {
   return (
     <>
-      {Array.from({ length: 5 }, (_, i) => (
-        <rect {...tile(i, i < 3)} height={14} key={i} width={104} x={28} y={12 + i * 20} />
-      ))}
-      <path {...line} d="M20 12 V106" />
-      <path d="M20 12 V72" fill="none" stroke="var(--cambt-color-brand-blue)" strokeWidth={3} />
+      <rect className="s" x="10" y="26" width="76" height="46" rx="6" />
+      <path className="s" d="M58 26v46" strokeDasharray="5 6" />
+      <rect className="f" x="62" y="34" width="18" height="6" rx="3" />
+      <rect className="f" x="62" y="46" width="12" height="6" rx="3" />
+      <rect className="m" x="18" y="36" width="30" height="7" rx="3.5" />
+      <rect className="m" x="18" y="49" width="20" height="7" rx="3.5" />
+      <circle className="m" cx="58" cy="26" r="5" />
+      <circle className="m" cx="58" cy="72" r="5" />
     </>
   );
 }
 
-function Pipeline() {
-  const stages = [
-    { y: 12, w: 132 },
-    { y: 36, w: 106 },
-    { y: 60, w: 78 },
-    { y: 84, w: 48 },
-  ];
+function LearningMark() {
   return (
     <>
-      {stages.map((s, i) => (
-        <rect
-          {...tile(i, i === stages.length - 1)}
-          height={16}
-          key={s.y}
-          width={s.w}
-          x={80 - s.w / 2}
-          y={s.y}
-        />
-      ))}
-      {stages.slice(0, -1).map((s, i) => (
-        <path {...line} d={`M80 ${s.y + 16} V${stages[i + 1].y}`} key={`l${s.y}`} />
-      ))}
+      <rect className="m" x="24" y="18" width="48" height="10" rx="4" opacity=".55" />
+      <rect className="m" x="18" y="30" width="60" height="10" rx="4" opacity=".8" />
+      <rect className="s" x="12" y="43" width="72" height="35" rx="6" />
+      <rect className="m" x="21" y="52" width="54" height="7" rx="3.5" />
+      <rect className="f" x="21" y="52" width="33" height="7" rx="3.5" />
+      <rect className="f" x="21" y="65" width="14" height="6" rx="3" />
+      <rect className="m" x="39" y="65" width="24" height="6" rx="3" />
     </>
   );
 }
 
 const MARKS = {
-  "hostel-management": Rooms,
-  "school-management": Timetable,
-  cambcard: Card,
-  "property-management": Portfolio,
-  "gym-management": Weights,
-  "parking-management": Bays,
-  "travel-booking": Route,
-  "learning-management": Modules,
-  "customer-relationship-management": Pipeline,
+  "hostel-management": HostelMark,
+  "school-management": SchoolMark,
+  cambcard: CambcardMark,
+  "property-management": PropertyMark,
+  "gym-management": GymMark,
+  "parking-management": ParkingMark,
+  "customer-relationship-management": ClientMark,
+  "travel-booking": TravelMark,
+  "learning-management": LearningMark,
 };
 
 export default function SystemMark({ slug }) {
