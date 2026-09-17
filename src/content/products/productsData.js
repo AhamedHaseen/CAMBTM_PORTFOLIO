@@ -494,12 +494,399 @@ export const allProductRecords = [
   },
 ];
 
+export const I18N_PRODUCTS_TRANSLATIONS = {
+  es: {
+    "hostel-management": {
+      name: "Sistema de gestión de hostales y habitaciones",
+      shortName: "Hostal",
+      positioning: "Habitaciones, huéspedes, facturas y reclamos para hostales o pequeños hoteles.",
+      lead: "Un sistema operativo para edificios alquilados por habitación. Facturación, gastos, suministros, reclamos y fechas de contrato centralizados en un solo lugar.",
+      category: "Gestión inmobiliaria",
+      suits: "Propietarios o administradores de hostales, residencias o pequeños hoteles.",
+      industries: ["Inmobiliaria", "Hostelería"],
+      solves: [
+        { title: "Ocupación visible de un vistazo", body: "Habitaciones, inquilinos y contratos en un solo registro unificado." },
+        { title: "Facturación automatizada", body: "Facturas generadas y enviadas por correo electrónico o SMS." },
+        { title: "Gestión de reclamos con evidencia", body: "Fotos y videos adjuntos al reporte de mantenimiento." },
+      ],
+    },
+    "school-management": {
+      name: "Sistema de gestión escolar",
+      shortName: "Escuela",
+      positioning: "Estudiantes, docentes, asistencia, exámenes y cuotas con aplicación para padres.",
+      lead: "Administración escolar integral en una sola plataforma: matrículas, horarios, calificaciones y avisos comunicados directamente a los padres.",
+      category: "Gestión educativa",
+      suits: "Colegios, academias e instituciones educativas.",
+      industries: ["Educación"],
+      solves: [
+        { title: "Un expediente por alumno", body: "Asistencia, notas y pagos en un solo perfil unificado." },
+        { title: "Cobro de cuotas organizado", body: "Control de mensualidades y pagos en tiempo real." },
+        { title: "Padres siempre informados", body: "Notificaciones directas a la app móvil de los padres." },
+      ],
+    },
+    cambcard: {
+      name: "CAMBCARD — Tarjeta de presentación digital",
+      shortName: "CAMBCARD",
+      positioning: "Tarjetas de presentación inteligentes con NFC y código QR para empresas y profesionales.",
+      lead: "Comparta su información de contacto, portafolio y redes sociales al instante con un solo toque NFC o escaneo QR.",
+      category: "Identidad digital",
+      suits: "Empresas, ejecutivos de ventas y profesionales independientes.",
+      industries: ["Servicios profesionales", "Tecnología"],
+    },
+    "property-management": {
+      name: "Sistema de gestión inmobiliaria",
+      shortName: "Inmobiliaria",
+      positioning: "Unidades, inquilinos, contratos de alquiler, cobro de rentas y mantenimiento.",
+      lead: "Plataforma completa para agencias y propietarios inmobiliarios: gestión de carteras, contratos y mantenimiento.",
+      category: "Operaciones inmobiliarias",
+      suits: "Agencias inmobiliarias y administradores de propiedades.",
+      industries: ["Inmobiliaria"],
+    },
+    "gym-management": {
+      name: "Sistema de gestión de gimnasios",
+      shortName: "Gimnasio",
+      positioning: "Membresías, control de acceso, reservas de clases y seguimiento de pagos.",
+      lead: "Administración integral de centros de fitness: membresías, torniquetes de acceso y control financiero.",
+      category: "Fitness y bienestar",
+      suits: "Gimnasios, estudios de yoga y centros deportivos.",
+      industries: ["Deportes y bienestar"],
+    },
+    "parking-management": {
+      name: "Sistema de gestión de aparcamientos",
+      shortName: "Aparcamiento",
+      positioning: "Control de plazas, tickets, tarifas por tiempo y barreras de acceso.",
+      lead: "Automatización de parkings comerciales con lectura de matrículas y pagos en caja.",
+      category: "Operaciones de aparcamiento",
+      suits: "Operadores de estacionamientos privados y comerciales.",
+      industries: ["Transporte y logística"],
+    },
+    "customer-relationship-management": {
+      name: "Sistema CRM para empresas",
+      shortName: "CRM",
+      positioning: "Gestión de prospectos, clientes, embudo de ventas y seguimiento comercial.",
+      lead: "Centralice todas las interacciones con sus clientes, cotizaciones y oportunidades de venta en un solo CRM.",
+      category: "Ventas y clientes",
+      suits: "Equipos comerciales y empresas de servicios B2B y B2C.",
+      industries: ["Ventas", "Servicios"],
+    },
+    "travel-booking": {
+      name: "Sistema de reservas de viajes y tours",
+      shortName: "Viajes",
+      positioning: "Paquetes turísticos, reservas online, pagos y gestión de itinerarios.",
+      lead: "Plataforma para agencias de viajes y operadores turísticos con disponibilidad en tiempo real.",
+      category: "Turismo y viajes",
+      suits: "Agencias de viajes, operadores de tours y guías turísticos.",
+      industries: ["Turismo", "Hostelería"],
+    },
+    "learning-management": {
+      name: "Sistema de gestión del aprendizaje (LMS)",
+      shortName: "Cursos Online",
+      positioning: "Cursos online, evaluaciones, emisión de certificados y seguimiento de alumnos.",
+      lead: "Cree, venda y distribuya cursos digitales con foros de discusión y certificaciones automáticas.",
+      category: "Educación online",
+      suits: "Academias, formadores y empresas con programas de capacitación.",
+      industries: ["Educación"],
+    },
+  },
+
+  ar: {
+    "hostel-management": {
+      name: "نظام إدارة النزل والغرف",
+      shortName: "النزل",
+      positioning: "إدارة الغرف والمستأجرين والفواتير وبلاغات الصيانة للنزل والفنادق الصغيرة.",
+      lead: "نظام تشغيلي متكامل للمباني المؤجرة بنظام الغرف؛ يجمع الفواتير والمصروفات والخدمات في سجل واحد.",
+      category: "إدارة العقارات",
+      suits: "أصحاب النزل والمجمعات السكنية والفنادق الصغيرة.",
+      industries: ["العقارات", "الضيافة"],
+      solves: [
+        { title: "قراءة حالة الإشغال بنظرة سريعة", body: "الغرف والمستأجرين وتواريخ العقود في سجل موحد." },
+        { title: "فواتير إلكترونية فورية", body: "إصدار وإرسال الفواتير عبر البريد الإلكتروني أو الرسائل القصيرة." },
+        { title: "بلاغات الصيانة بالصور والفيديو", body: "إرفاق الأدلة المصورة مع بلاغ الصيانة مباشرة." },
+      ],
+    },
+    "school-management": {
+      name: "نظام الإدارة المدرسية",
+      shortName: "المدارس",
+      positioning: "إدارة الطلاب والمعلمين والحضور والرسوم مع تطبيق مخصص لأولياء الأمور.",
+      lead: "منظومة مدرسية شاملة من القبول والتسجيل حتى تحصيل الرسوم والجداول الدراسية.",
+      category: "الإدارة التعليمية",
+      suits: "المدارس الخاصة والأكاديميات والمراكز التعليمية.",
+      industries: ["التعليم"],
+      solves: [
+        { title: "سجل موحد لكل طالب", body: "ربط الحضور والدرجات والرسوم في مكان واحد." },
+        { title: "تحصيل منظم للرسوم", body: "متابعة الأقساط والدفعات المسددة بدقة." },
+        { title: "تواصل مباشر مع أولياء الأمور", body: "تطبيق هاتف يتيح متابعة الأبناء دون الحاجة للاتصال بالمدرسة." },
+      ],
+    },
+    cambcard: {
+      name: "CAMBCARD — بطاقة الأعمال الذكية",
+      shortName: "CAMBCARD",
+      positioning: "بطاقات عمل رقمية ذكية بتقنية NFC ورمز QR للشركات والمهنيين.",
+      lead: "شارك بيانات اتصالك وحساباتك وملف أعمالك بلمسة واحدة باستخدام تقنية NFC.",
+      category: "الهوية الرقمية",
+      suits: "الشركات ورواد الأعمال وفرق المبيعات.",
+      industries: ["الخدمات المهنية", "التكنولوجيا"],
+    },
+    "property-management": {
+      name: "نظام إدارة الأملاك والعقارات",
+      shortName: "العقارات",
+      positioning: "إدارة الوحدات والمستأجرين وعقود الإيجار وتحصيل الإيجارات والصيانة.",
+      lead: "منصة متكاملة للمكاتب العقارية لإدارة العقارات والمحافظ الإيجارية.",
+      category: "العمليات العقارية",
+      suits: "المكاتب العقارية ومديرو الأملاك والمطورون.",
+      industries: ["العقارات"],
+    },
+    "gym-management": {
+      name: "نظام إدارة الصالات الرياضية",
+      shortName: "النوادي الرياضية",
+      positioning: "إدارة الاشتراكات والتحكم في الدخول وحصص التدريب والمدفوعات.",
+      lead: "حل شامل للنوادي الصحية واللياقة البدنية لتنظيم العضويات وبوابات الدخول الإلكترونية.",
+      category: "اللياقة والصحة",
+      suits: "الصالات الرياضية ونوادي اللياقة البدنية ومراكز التدريب.",
+      industries: ["الرياضة واللياقة"],
+    },
+    "parking-management": {
+      name: "نظام إدارة مواقف السيارات",
+      shortName: "المواقف",
+      positioning: "تنظيم المواقف والتذاكر وحساب الرسوم وبوابات الدخول الآلية.",
+      lead: "أتمتة المواقف التجارية مع التعرف على اللوحات ودفع الرسوم الذاتي.",
+      category: "إدارة المواقف",
+      suits: "مشغلو المواقف التجارية والمراكز والمجمعات.",
+      industries: ["النقل والخدمات اللوجستية"],
+    },
+    "customer-relationship-management": {
+      name: "نظام إدارة علاقات العملاء (CRM)",
+      shortName: "إدارة العملاء",
+      positioning: "متابعة العملاء المحتملين والصفقات وعمليات البيع وخدمة العملاء.",
+      lead: "نظم مسار مبيعاتك وحافظ على تواصل فعال مع جميع عملائك في منصة واحدة.",
+      category: "المبيعات والعملاء",
+      suits: "فرق المبيعات والشركات الخدمية والتجارية.",
+      industries: ["المبيعات", "الخدمات"],
+    },
+    "travel-booking": {
+      name: "نظام حجز الرحلات والسياحة",
+      shortName: "السياحة والسفر",
+      positioning: "حجز الباقات السياحية والرحلات والدفع الإلكتروني وجداول البرامج.",
+      lead: "منصة مخصصة لوكالات السفر ومنظمي الجولات السياحية مع توفر فوري.",
+      category: "السياحة والسفر",
+      suits: "وكالات السفر وشركات السياحة ومنظمو الرحلات.",
+      industries: ["السياحة", "الضيافة"],
+    },
+    "learning-management": {
+      name: "نظام إدارة التعلم الإلكتروني (LMS)",
+      shortName: "التعليم الإلكتروني",
+      positioning: "إنشاء وبيع الدورات التدريبية والاختبارات وإصدار الشهادات الإلكترونية.",
+      lead: "منصة تعليمية متكاملة لتقديم الدورات التدريبية ومتابعة تقدم المتدربين.",
+      category: "التعليم الإلكتروني",
+      suits: "الأكاديميات التدريبية والمدربون والشركات.",
+      industries: ["التعليم"],
+    },
+  },
+
+  si: {
+    "hostel-management": {
+      name: "නේවාසිකාගාර සහ කාමර කළමනාකරණ පද්ධතිය",
+      shortName: "නේවාසිකාගාර",
+      positioning: "නේවාසිකාගාර හෝ කුඩා හෝටල් සඳහා කාමර, නේවාසිකයින් සහ බිල්පත් කළමනාකරණය.",
+      lead: "කාමර කුලියට දෙන ගොඩනැගිලි සඳහා සම්පූර්ණ පද්ධතියක්; බිල්පත්, වියදම් සහ නඩත්තු ගැටළු එකම පද්ධතියකින් පාලනය වේ.",
+      category: "දේපළ මෙහෙයුම්",
+      suits: "නේවාසිකාගාර, බෝඩිං සහ කුඩා හෝටල් හිමිකරුවන් සඳහා.",
+      industries: ["දේපළ", "සත්කාරක සේවා"],
+    },
+    "school-management": {
+      name: "පාසල් කළමනාකරණ පද්ධතිය",
+      shortName: "පාසල්",
+      positioning: "සිසුන්, ගුරුවරුන්, පැමිණීම, විභාග සහ ගාස්තු සමඟ දෙමාපියන් සඳහා වන ඇප් එක.",
+      lead: "පාසලක සම්පූර්ණ පරිපාලන කටයුතු එකම පද්ධතියක් මඟින් කාර්යක්ෂමව පාලනය කෙරේ.",
+      category: "අධ්‍යාපන කළමනාකරණය",
+      suits: "පාසල්, උසස් අධ්‍යාපන ආයතන සහ උපකාරක පන්ති ආයතන සඳහා.",
+      industries: ["අධ්‍යාපනය"],
+    },
+    cambcard: {
+      name: "CAMBCARD — ඩිජිටල් ව්‍යාපාරික කාඩ්පත",
+      shortName: "CAMBCARD",
+      positioning: "NFC සහ QR තාක්ෂණය සහිත ස්මාර්ට් ඩිජිටල් ව්‍යාපාරික කාඩ්පත්.",
+      lead: "ස්මාර්ට් දුරකථනයකට ස්පර්ශ කිරීමෙන් ඔබගේ තොරතුරු ක්ෂණිකව හුවමාරු කරගන්න.",
+      category: "ඩිජිටල් අනන්‍යතාව",
+      suits: "ව්‍යාපාරිකයින්, විකුණුම් විධායකයින් සහ වෘත්තිකයින් සඳහා.",
+      industries: ["වෘත්තීය සේවා", "තාක්ෂණය"],
+    },
+    "property-management": {
+      name: "දේපළ වෙළඳාම් සහ කළමනාකරණ පද්ධතිය",
+      shortName: "දේපළ",
+      positioning: "නිවාස, කුලීකරුවන්, කුලී එකතු කිරීම සහ නඩත්තු කටයුතු පාලනය.",
+      lead: "දේපළ කළමනාකරණ ආයතන සඳහා වන පූර්ණ ස්වයංක්‍රීය විසඳුම.",
+      category: "දේපළ මෙහෙයුම්",
+      suits: "දේපළ වෙළඳාම් ආයතන සහ ඉඩම් හිමිකරුවන් සඳහා.",
+      industries: ["දේපළ"],
+    },
+    "gym-management": {
+      name: "ව්‍යායාම මධ්‍යස්ථාන (Gym) කළමනාකරණ පද්ධතිය",
+      shortName: "Gym",
+      positioning: "සාමාජිකත්ව, ප්‍රවේශ පාලනය, පන්ති වෙන්කිරීම් සහ ගෙවීම් වාර්තා.",
+      lead: "Gym සහ Fitness මධ්‍යස්ථාන සඳහා සම්පූර්ණ පරිපාලන පද්ධතිය.",
+      category: "ක්‍රීඩා සහ සුවතාව",
+      suits: "ව්‍යායාම මධ්‍යස්ථාන සහ ක්‍රීඩා සමාජ සඳහා.",
+      industries: ["ක්‍රීඩා සහ සුවතාව"],
+    },
+    "parking-management": {
+      name: "වාහන නැවතුම්පොළ කළමනාකරණ පද්ධතිය",
+      shortName: "Parking",
+      positioning: "නැවතුම් ඉඩකඩ, ප්‍රවේශපත්‍ර, ගාස්තු සහ ස්වයංක්‍රීය ගේට්ටු පාලනය.",
+      lead: "ස්වයංක්‍රීය වාහන නැවතුම් කළමනාකරණ විසඳුම.",
+      category: "නැවතුම් මෙහෙයුම්",
+      suits: "වාණිජ වාහන නැවතුම්පොළ ක්‍රියාකරුවන් සඳහා.",
+      industries: ["ප්‍රවාහන"],
+    },
+    "customer-relationship-management": {
+      name: "පාරිභෝගික සබඳතා කළමනාකරණ පද්ධතිය (CRM)",
+      shortName: "CRM",
+      positioning: "ගනුදෙනුකරුවන්, විකුණුම් අවස්ථා සහ පසු විපරම් එකම තැනකින්.",
+      lead: "ඔබගේ විකුණුම් කණ්ඩායමේ කාර්යක්ෂමතාව ඉහළ නංවන බලගතු CRM පද්ධතිය.",
+      category: "විකුණුම් සහ පාරිභෝගික සේවා",
+      suits: "විකුණුම් කණ්ඩායම් සහ ව්‍යාපාරික ආයතන සඳහා.",
+      industries: ["විකුණුම්", "සේවා"],
+    },
+    "travel-booking": {
+      name: "සංචාරක සහ හෝටල් වෙන්කිරීමේ පද්ධතිය",
+      shortName: "සංචාරක",
+      positioning: "සංචාරක පැකේජ, ඔන්ලයින් වෙන්කිරීම් සහ ක්ෂණික ගෙවීම් පද්ධති.",
+      lead: "සංචාරක නියෝජිතායතන සඳහා සජීවී වෙන්කිරීම් වේදිකාව.",
+      category: "සංචාරක සහ සත්කාරක",
+      suits: "සංචාරක ආයතන සහ සංචාරක මඟපෙන්වන්නන් සඳහා.",
+      industries: ["සංචාරක", "සත්කාරක සේවා"],
+    },
+    "learning-management": {
+      name: "ඔන්ලයින් පාඨමාලා සහ ඉගැන්වීම් පද්ධතිය (LMS)",
+      shortName: "LMS",
+      positioning: "ඔන්ලයින් පාඨමාලා, පැවරුම්, සහතිකපත් සහ සිසුන් අධීක්ෂණය.",
+      lead: "පාඨමාලා නිර්මාණය කර අලෙවි කිරීමට අවශ්‍ය සම්පූර්ණ අධ්‍යාපනික පද්ධතිය.",
+      category: "අධ්‍යාපනය",
+      suits: "උගන්වන ආයතන, විශ්වවිද්‍යාල සහ පුද්ගලික ගුරුවරුන් සඳහා.",
+      industries: ["අධ්‍යාපනය"],
+    },
+  },
+
+  ta: {
+    "hostel-management": {
+      name: "விடுதி மற்றும் அறை மேலாண்மை அமைப்பு",
+      shortName: "விடுதி",
+      positioning: "விடுதிகள் அல்லது சிறிய ஹோட்டல்களுக்கான அறைகள், வாடகைதாரர்கள் மற்றும் பில்லிங் மேலாண்மை.",
+      lead: "அறை வாரியாக வாடகைக்கு விடப்படும் கட்டிடங்களுக்கான முழுமையான இயங்குதள அமைப்பு.",
+      category: "சொத்து செயல்பாடுகள்",
+      suits: "விடுதி மற்றும் தங்கும் விடுதி உரிமையாளர்களுக்கு.",
+      industries: ["சொத்து", "விருந்தோம்பல்"],
+    },
+    "school-management": {
+      name: "பள்ளி மேலாண்மை அமைப்பு",
+      shortName: "பள்ளி",
+      positioning: "மாணவர்கள், ஆசிரியர்கள், வருகைப்பதிவு, தேர்வுகள் மற்றும் கட்டணங்களுடன் பெற்றோர் செயலி.",
+      lead: "பள்ளியின் ஒட்டுமொத்த நிர்வாகத்தையும் ஒரே அமைப்பில் எளிதாக நிர்வகிக்கலாம்.",
+      category: "கல்வி மேலாண்மை",
+      suits: "பள்ளிகள், கல்லூரிகள் மற்றும் கல்வி நிறுவனங்களுக்கு.",
+      industries: ["கல்வி"],
+    },
+    cambcard: {
+      name: "CAMBCARD — டிஜிட்டல் விசிட்டிங் கார்டு",
+      shortName: "CAMBCARD",
+      positioning: "NFC மற்றும் QR தொழில்நுட்பம் கொண்ட ஸ்மார்ட் டிஜிட்டல் பிசினஸ் கார்டுகள்.",
+      lead: "ஒரு முறை தொடுவதன் மூலம் உங்கள் தொடர்பு விவரங்களை உடனடியாகப் பகிருங்கள்.",
+      category: "டிஜிட்டல் அடையாளம்",
+      suits: "தொழில்முனைவோர், விற்பனைப் பிரதிநிதிகள் மற்றும் நிபுணர்களுக்கு.",
+      industries: ["தொழில்முறை சேவைகள்", "தொழில்நுட்பம்"],
+    },
+    "property-management": {
+      name: "ரியல் எஸ்டேட் மற்றும் சொத்து மேலாண்மை அமைப்பு",
+      shortName: "சொத்துக்கள்",
+      positioning: "அலகுகள், வாடகைதாரர்கள், குத்தகை ஒப்பந்தங்கள் மற்றும் வாடகை வசூல்.",
+      lead: "ரியல் எஸ்டேட் நிறுவனங்களுக்கான முழுமையான சொத்து மேலாண்மை தளம்.",
+      category: "சொத்து செயல்பாடுகள்",
+      suits: "ரியல் எஸ்டேட் முகவர்கள் மற்றும் சொத்து உரிமையாளர்களுக்கு.",
+      industries: ["சொத்து"],
+    },
+    "gym-management": {
+      name: "ஜிம் மற்றும் உடற்பயிற்சி நிலைய மேலாண்மை அமைப்பு",
+      shortName: "ஜிம்",
+      positioning: "உறுப்பினர் சேர்க்கை, அணுகல் கட்டுப்பாடு, வகுப்பு முன்பதிவு மற்றும் கட்டணங்கள்.",
+      lead: "உடற்பயிற்சி நிலையங்களுக்கான விரிவான நிர்வாக மென்பொருள்.",
+      category: "உடற்தகுதி மற்றும் ஆரோக்கியம்",
+      suits: "ஜிம் மற்றும் உடற்பயிற்சி மையங்களுக்கு.",
+      industries: ["விளையாட்டு மற்றும் ஆரோக்கியம்"],
+    },
+    "parking-management": {
+      name: "வாகன நிறுத்துமிட மேலாண்மை அமைப்பு",
+      shortName: "பார்க்கிங்",
+      positioning: "இட ஒதுக்கீடு, டோக்கன்கள், கட்டணக் கணக்கீடு மற்றும் தானியங்கி வாயில்கள்.",
+      lead: "வணிக வாகன நிறுத்துமிடங்களுக்கான தானியங்கி மேலாண்மை தீர்வு.",
+      category: "பார்க்கிங் செயல்பாடுகள்",
+      suits: "வணிக பார்க்கிங் ஆபரேட்டர்களுக்கு.",
+      industries: ["போக்குவரத்து"],
+    },
+    "customer-relationship-management": {
+      name: "வாடிக்கையாளர் தொடர்பு மேலாண்மை அமைப்பு (CRM)",
+      shortName: "CRM",
+      positioning: "முன்னணி வாய்ப்புகள், வாடிக்கையாளர்கள் மற்றும் விற்பனை கண்காணிப்பு.",
+      lead: "உங்கள் விற்பனைக் குழுவின் செயல்திறனை அதிகரிக்கும் நவீன CRM தளம்.",
+      category: "விற்பனை மற்றும் வாடிக்கையாளர் சேவை",
+      suits: "விற்பனைக் குழுக்கள் மற்றும் சேவை நிறுவனங்களுக்கு.",
+      industries: ["விற்பனை", "சேவைகள்"],
+    },
+    "travel-booking": {
+      name: "சுற்றுலா மற்றும் பயண முன்பதிவு அமைப்பு",
+      shortName: "சுற்றுலா",
+      positioning: "சுற்றுலா தொகுப்புகள், ஆன்லைன் முன்பதிவு மற்றும் பயணத்திட்ட மேலாண்மை.",
+      lead: "பயண முகவர்களுக்கான நேரடி முன்பதிவு தளம்.",
+      category: "சுற்றுலா மற்றும் விருந்தோம்பல்",
+      suits: "பயண முகவர்கள் மற்றும் சுற்றுலா வழிகாட்டிகளுக்கு.",
+      industries: ["சுற்றுலா", "விருந்தோம்பல்"],
+    },
+    "learning-management": {
+      name: "ஆன்லைன் கற்றல் மேலாண்மை அமைப்பு (LMS)",
+      shortName: "LMS",
+      positioning: "ஆன்லைன் படிப்புகள், தேர்வுகள், சான்றிதழ்கள் மற்றும் மாணவர் கண்காணிப்பு.",
+      lead: "படிப்புகளை உருவாக்கி விற்பனை செய்வதற்கான முழுமையான கற்றல் தளம்.",
+      category: "கல்வி",
+      suits: "பயிற்சி நிறுவனங்கள் மற்றும் தனிப்பட்ட பயிற்றுநர்களுக்கு.",
+      industries: ["கல்வி"],
+    },
+  },
+};
+
 export const products = allProductRecords.filter((p) => p.published);
 
-export function productIndustries() {
-  return [...new Set(products.flatMap((p) => p.industries))].sort();
+export function getProducts(lang = "en") {
+  if (!lang || lang === "en" || !I18N_PRODUCTS_TRANSLATIONS[lang]) {
+    return products;
+  }
+  const dict = I18N_PRODUCTS_TRANSLATIONS[lang];
+  return products.map((p) => {
+    const t = dict[p.slug];
+    if (!t) return p;
+    return {
+      ...p,
+      name: t.name || p.name,
+      shortName: t.shortName || p.shortName,
+      positioning: t.positioning || p.positioning,
+      lead: t.lead || p.lead,
+      category: t.category || p.category,
+      suits: t.suits || p.suits,
+      industries: t.industries || p.industries,
+      solves: t.solves && t.solves.length > 0 ? t.solves : p.solves,
+      modules: t.modules && t.modules.length > 0 ? t.modules : p.modules,
+      replaces: t.replaces && t.replaces.length > 0 ? t.replaces : p.replaces,
+      adapts: t.adapts && t.adapts.length > 0 ? t.adapts : p.adapts,
+      relatedServices: t.relatedServices && t.relatedServices.length > 0 ? t.relatedServices : p.relatedServices,
+    };
+  });
 }
 
-export function findProduct(slug) {
-  return products.find((p) => p.slug === slug);
+export function productIndustries(lang = "en") {
+  const list = getProducts(lang);
+  return [...new Set(list.flatMap((p) => p.industries))].sort();
 }
+
+export function findProduct(slug, lang = "en") {
+  const list = getProducts(lang);
+  return list.find((p) => p.slug === slug);
+}
+

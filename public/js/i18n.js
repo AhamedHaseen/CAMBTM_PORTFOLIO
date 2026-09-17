@@ -3960,11 +3960,13 @@
         .querySelectorAll(".locale-country-select")
         .forEach(function (sel) {
           populateCountrySelect(sel, country, true);
+          enhanceLocaleSelect(sel);
         });
       document
         .querySelectorAll(".locale-language-select")
         .forEach(function (sel) {
           populateLanguageSelect(sel, country, language);
+          enhanceLocaleSelect(sel);
         });
     }
 
@@ -4069,7 +4071,11 @@
     });
 
     function enhanceLocaleSelect(select) {
-      if (select._i18nEnhanced) return;
+      if (select._i18nEnhanced || (select.parentNode && select.parentNode.classList.contains("c-select"))) {
+        select._i18nEnhanced = true;
+        return;
+      }
+      if (!select.parentNode) return;
       select._i18nEnhanced = true;
 
       const wrap = document.createElement("div");

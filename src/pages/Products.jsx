@@ -6,14 +6,67 @@ import SystemWall from "../components/products/SystemWall";
 import AdaptationArgument from "../components/products/AdaptationArgument";
 import FittedField from "../components/products/FittedField";
 import SystemIndex from "../components/products/SystemIndex";
-import { products, productIndustries } from "../content/products/productsData";
+import { getProducts, productIndustries } from "../content/products/productsData";
 import { productScreens } from "../content/products/productScreensData";
-import { productsIndexContent } from "../content/products/productsPageContent";
+import { getProductsPageContent } from "../content/products/productsPageContent";
 import "../css/products.css";
+
+const getSavedLang = () => {
+  if (typeof window !== "undefined" && typeof window.cambmGetLanguage === "function") {
+    const l = window.cambmGetLanguage();
+    if (l) return l;
+  }
+  try {
+    const saved = localStorage.getItem("cambm_lang");
+    if (saved) return saved;
+  } catch (e) {}
+  if (typeof document !== "undefined" && document.documentElement && document.documentElement.lang) {
+    return document.documentElement.lang;
+  }
+  return "en";
+};
 
 export default function Products() {
   const [cartCount, setCartCount] = useState(0);
+  const [currentLang, setCurrentLang] = useState(() => getSavedLang());
   const location = useLocation();
+
+  useEffect(() => {
+    const handleLocaleChange = (e) => {
+      const nextLang = e?.detail?.language || getSavedLang();
+      setCurrentLang((prev) => (prev !== nextLang ? nextLang : prev));
+    };
+
+    window.addEventListener("cambm:localechange", handleLocaleChange);
+    document.addEventListener("cambm:localechange", handleLocaleChange);
+
+    const observer = new MutationObserver(() => {
+      const nextLang = document.documentElement.lang || getSavedLang();
+      setCurrentLang((prev) => (prev !== nextLang ? nextLang : prev));
+    });
+
+    if (document.documentElement) {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["lang"],
+      });
+    }
+
+    return () => {
+      window.removeEventListener("cambm:localechange", handleLocaleChange);
+      document.removeEventListener("cambm:localechange", handleLocaleChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
+      window.CAMBMTheme.initControls();
+    }
+    if (window.initI18n) {
+      window.initI18n();
+    }
+  }, [currentLang]);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -83,16 +136,19 @@ export default function Products() {
     };
   }, [location.hash, location.pathname, location.state]);
 
+  const copy = useMemo(() => getProductsPageContent(currentLang), [currentLang]);
+  const productList = useMemo(() => getProducts(currentLang), [currentLang]);
+
   const wallSystems = useMemo(() => {
-    return products.map((p) => ({
+    return productList.map((p) => ({
       slug: p.slug,
       name: p.name,
       label: p.shortName || p.name,
     }));
-  }, []);
+  }, [productList]);
 
   const indexSystems = useMemo(() => {
-    return products.map((p) => ({
+    return productList.map((p) => ({
       slug: p.slug,
       name: p.name,
       positioning: p.positioning,
@@ -100,10 +156,9 @@ export default function Products() {
       industries: p.industries,
       screenCount: (productScreens[p.slug] || []).length,
     }));
-  }, []);
+  }, [productList]);
 
-  const industries = useMemo(() => productIndustries(), []);
-  const copy = productsIndexContent;
+  const industries = useMemo(() => productIndustries(currentLang), [currentLang]);
 
   return (
     <div className="cambm-products-page">
@@ -295,7 +350,17 @@ export default function Products() {
               <div className="cambt-hero-content">
                 <span className="cambt-label">{copy.hero.label}</span>
                 <h1>
-                  Systems that <em>{copy.hero.emphasis}</em> the business
+                  {currentLang === "en" ? (
+                    <>
+                      Systems that <em>{copy.hero.emphasis}</em> the business
+                    </>
+                  ) : (
+                    copy.hero.title || (
+                      <>
+                        Systems that <em>{copy.hero.emphasis}</em> the business
+                      </>
+                    )
+                  )}
                 </h1>
                 <p className="cambt-hero-lead">{copy.hero.lead}</p>
                 <div className="cambt-hero-actions">
@@ -306,7 +371,7 @@ export default function Products() {
                     data-cal-namespace="strategy-call"
                     data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
                   >
-                    Book a strategy call <span>&rarr;</span>
+                    {copy.hero.primaryAction?.label || "Book a strategy call"} <span>&rarr;</span>
                   </button>
                 </div>
               </div>

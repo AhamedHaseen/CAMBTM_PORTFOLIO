@@ -5,6 +5,10 @@ import SystemMark from "./SystemMark";
 export default function SystemIndex({ industries, labels, systems }) {
   const [active, setActive] = useState(labels.allLabel);
 
+  React.useEffect(() => {
+    setActive(labels.allLabel);
+  }, [labels.allLabel]);
+
   const visible = useMemo(
     () =>
       active === labels.allLabel

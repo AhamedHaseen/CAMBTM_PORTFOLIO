@@ -111,7 +111,7 @@ const renderBrandCardsHTML = (items) => {
     const logoUrl = getMediaUrl(b.logo_url);
     const name = (b.company_name || '').replace(/"/g, '&quot;');
     return `<div class="brand-card">` +
-      `<img src="${logoUrl}" alt="${name}" loading="lazy" decoding="async" />` +
+      `<img src="${logoUrl}" alt="${name}" loading="eager" fetchpriority="high" decoding="async" />` +
       `</div>`;
   }).join('');
 };
@@ -134,7 +134,18 @@ export default function Welcome() {
     return DEFAULT_BENTO_COLUMNS;
   });
   const [bentoReady, setBentoReady] = useState(true);
-  const [brandsRows, setBrandsRows] = useState({ row1: DEFAULT_BRANDS_ROW1, row2: DEFAULT_BRANDS_ROW2 });
+  const [brandsRows, setBrandsRows] = useState(() => {
+    try {
+      const cached = localStorage.getItem('cambm_brands_rows');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && Array.isArray(parsed.row1) && Array.isArray(parsed.row2) && (parsed.row1.length > 0 || parsed.row2.length > 0)) {
+          return parsed;
+        }
+      }
+    } catch (e) { }
+    return { row1: DEFAULT_BRANDS_ROW1, row2: DEFAULT_BRANDS_ROW2 };
+  });
 
   useEffect(() => {
     // Fetch dynamic Hero Bento media from Supabase / API with cache-busting
@@ -168,10 +179,14 @@ export default function Welcome() {
         if (data.success && Array.isArray(data.brands)) {
           const published = data.brands.filter(b => b.status === 'published');
           const half = Math.ceil(published.length / 2);
-          setBrandsRows({
+          const freshRows = {
             row1: published.slice(0, half),
             row2: published.slice(half)
-          });
+          };
+          setBrandsRows(freshRows);
+          try {
+            localStorage.setItem('cambm_brands_rows', JSON.stringify(freshRows));
+          } catch (e) { }
           setTimeout(() => {
             window.dispatchEvent(new CustomEvent('cambm:brands-updated'));
           }, 60);

@@ -5,13 +5,67 @@ import FooterSocials from "../components/FooterSocials";
 import ScreenStack from "../components/products/ScreenStack";
 import { findProduct } from "../content/products/productsData";
 import { productScreens } from "../content/products/productScreensData";
-import { productsIndexContent } from "../content/products/productsPageContent";
+import { getProductsPageContent } from "../content/products/productsPageContent";
 import "../css/products.css";
+
+const getSavedLang = () => {
+  if (typeof window !== "undefined" && typeof window.cambmGetLanguage === "function") {
+    const l = window.cambmGetLanguage();
+    if (l) return l;
+  }
+  try {
+    const saved = localStorage.getItem("cambm_lang");
+    if (saved) return saved;
+  } catch (e) {}
+  if (typeof document !== "undefined" && document.documentElement && document.documentElement.lang) {
+    return document.documentElement.lang;
+  }
+  return "en";
+};
 
 export default function ProductDetail() {
   const { slug } = useParams();
-  const product = useMemo(() => findProduct(slug), [slug]);
+  const [currentLang, setCurrentLang] = useState(() => getSavedLang());
+  const product = useMemo(() => findProduct(slug, currentLang), [slug, currentLang]);
+  const pageContent = useMemo(() => getProductsPageContent(currentLang), [currentLang]);
   const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const handleLocaleChange = (e) => {
+      const nextLang = e?.detail?.language || getSavedLang();
+      setCurrentLang((prev) => (prev !== nextLang ? nextLang : prev));
+    };
+
+    window.addEventListener("cambm:localechange", handleLocaleChange);
+    document.addEventListener("cambm:localechange", handleLocaleChange);
+
+    const observer = new MutationObserver(() => {
+      const nextLang = document.documentElement.lang || getSavedLang();
+      setCurrentLang((prev) => (prev !== nextLang ? nextLang : prev));
+    });
+
+    if (document.documentElement) {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["lang"],
+      });
+    }
+
+    return () => {
+      window.removeEventListener("cambm:localechange", handleLocaleChange);
+      document.removeEventListener("cambm:localechange", handleLocaleChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
+      window.CAMBMTheme.initControls();
+    }
+    if (window.initI18n) {
+      window.initI18n();
+    }
+  }, [currentLang]);
 
   useEffect(() => {
     // Instantly reset scroll to absolute top so navigation and header are fixed properly
@@ -63,8 +117,7 @@ export default function ProductDetail() {
   const screens = productScreens[slug] || [];
   const full = product.depth === "full";
   const themed = product.screenKind === "theme";
-  const showContext = Boolean(product.suits) || product.industries.length > 0;
-  const pageContent = productsIndexContent;
+  const showContext = Boolean(product.suits) || (product.industries && product.industries.length > 0);
 
   return (
     <div className="cambm-products-page">
@@ -280,7 +333,7 @@ export default function ProductDetail() {
                     data-cal-namespace="strategy-call"
                     data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
                   >
-                    Book a strategy call <span>&rarr;</span>
+                    {pageContent.detail?.requestDemoLabel || "Book a strategy call"} <span>&rarr;</span>
                   </button>
                 </div>
               </div>
