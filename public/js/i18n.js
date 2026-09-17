@@ -1673,6 +1673,12 @@
   };
 
   Object.assign(TRANSLATIONS.en, {
+    "pricing.page.eyebrow": "Our Pricing",
+    "pricing.page.titleLine1": "Pricing",
+    "pricing.page.titleLine2": "For connected growth",
+    "pricing.page.sub": "Clear, fixed packages and custom scopes combining marketing, custom software, POS, ERP, and AI systems under one unified engagement",
+    "pricing.page.ctaPackages": "Explore Packages",
+    "pricing.page.ctaCustom": "Build Custom Scope",
     "packages.eyebrow": "Our Services",
     "packages.title": "Choose what your business <em class=\"highlight-needs\">needs</em>",
     "packages.combos.eyebrow": "Pre-built packages",
@@ -1876,6 +1882,12 @@
   });
 
   Object.assign(TRANSLATIONS.es, {
+    "pricing.page.eyebrow": "Nuestros Precios",
+    "pricing.page.titleLine1": "Precios",
+    "pricing.page.titleLine2": "Para un crecimiento conectado",
+    "pricing.page.sub": "Paquetes claros con alcance definido y planes personalizados que combinan marketing, software a medida, POS, ERP y sistemas de IA en un solo contrato",
+    "pricing.page.ctaPackages": "Explorar paquetes",
+    "pricing.page.ctaCustom": "Crear plan personalizado",
     "packages.eyebrow": "Nuestros Servicios",
     "packages.title": "Elige lo que tu empresa <em class=\"highlight-needs\">necesita</em>",
     "packages.combos.eyebrow": "Paquetes Combinados",
@@ -2089,6 +2101,12 @@
   });
 
   Object.assign(TRANSLATIONS.ar, {
+    "pricing.page.eyebrow": "أسعارنا",
+    "pricing.page.titleLine1": "الأسعار",
+    "pricing.page.titleLine2": "لنمو أعمال متكامل ومترابط",
+    "pricing.page.sub": "باقات واضحة ومحددة وخطط مخصصة تجمع بين التسويق والبرمجيات المخصصة ونقاط البيع وأنظمة ERP والذكاء الاصطناعي في تعاقد واحد موحد",
+    "pricing.page.ctaPackages": "استكشف الباقات",
+    "pricing.page.ctaCustom": "بناء خطة مخصصة",
     "packages.eyebrow": "خدماتنا",
     "packages.title": "اختر ما <em class=\"highlight-needs\">يحتاجه</em> عملك التجاري",
     "packages.combos.eyebrow": "باقات مدمجة",
@@ -2284,6 +2302,12 @@
   });
 
   Object.assign(TRANSLATIONS.si, {
+    "pricing.page.eyebrow": "අපගේ මිල ගණන්",
+    "pricing.page.titleLine1": "මිල ගණන්",
+    "pricing.page.titleLine2": "සම්බන්ධිත වර්ධනය සඳහා",
+    "pricing.page.sub": "අලෙවිකරණය, අභිරුචි මෘදුකාංග, POS, ERP සහ AI පද්ධති එක් ඒකාබද්ධ ගිවිසුමක් යටතට ගෙන එන පැහැදිලි පැකේජ සහ අභිරුචි සැලසුම්",
+    "pricing.page.ctaPackages": "පැකේජ ගවේෂණය කරන්න",
+    "pricing.page.ctaCustom": "අභිරුචි සැලැස්මක් සාදන්න",
     "packages.eyebrow": "අපගේ සේවාවන්",
     "packages.title": "ඔබේ ව්‍යාපාරයට <em class=\"highlight-needs\">අවශ්‍ය දේ</em> තෝරන්න",
     "packages.combos.eyebrow": "සංයුක්ත පැකේජ",
@@ -2490,6 +2514,12 @@
   });
 
   Object.assign(TRANSLATIONS.ta, {
+    "pricing.page.eyebrow": "எங்கள் கட்டணங்கள்",
+    "pricing.page.titleLine1": "கட்டணங்கள்",
+    "pricing.page.titleLine2": "இணைக்கப்பட்ட வணிக வளர்ச்சிக்காக",
+    "pricing.page.sub": "சந்தைப்படுத்தல், தனிப்பயன் மென்பொருள், POS, ERP மற்றும் AI அமைப்புகளை ஒரே ஒப்பந்தத்தின் கீழ் இணைக்கும் தெளிவான, நிலையான தொகுப்புகள்",
+    "pricing.page.ctaPackages": "தொகுப்புகளை ஆராயுங்கள்",
+    "pricing.page.ctaCustom": "தனிப்பயன் திட்டத்தை உருவாக்குங்கள்",
     "packages.eyebrow": "எங்கள் சேவைகள்",
     "packages.title": "உங்கள் வணிகத்திற்கு <em class=\"highlight-needs\">தேவையானதை</em> தேர்வு செய்யவும்",
     "packages.combos.eyebrow": "கூட்டு தொகுப்புகள்",

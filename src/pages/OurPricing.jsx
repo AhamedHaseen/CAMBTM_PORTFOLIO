@@ -88,24 +88,41 @@ export default function OurPricing() {
     if (e) e.preventDefault();
     if (selectedServices.length === 0) return;
 
-    // List all selected services cleanly for additional notes in Cal.com
-    const servicesList = selectedServices
-      .map((s, idx) => `${idx + 1}. ${s.name} (${s.category.toUpperCase()})`)
-      .join("\n");
+    // Filter selected services by category
+    const buildItems = selectedServices.filter((s) => s.category.toLowerCase() === "build");
+    const growItems = selectedServices.filter((s) => s.category.toLowerCase() === "grow");
+    const createItems = selectedServices.filter((s) => s.category.toLowerCase() === "create");
 
-    const notesContent = `Selected Custom Scope (${selectedServices.length} services):\n${servicesList}`;
-    const pkg = "Custom Package";
+    const formatCategory = (categoryTitle, items) => {
+      if (items.length > 0) {
+        return `${categoryTitle}\n${items.map((s) => `• ${s.name}`).join("\n")}`;
+      }
+      return `${categoryTitle}\n• No services selected`;
+    };
+
+    const notesContent = [
+      formatCategory("Build", buildItems),
+      formatCategory("Grow", growItems),
+      formatCategory("Create", createItems),
+      "Additional Notes:",
+    ].join("\n\n");
+
+    const pkg = "Custom";
 
     const calConfig = {
       layout: "month_view",
       "Select-a-package": pkg,
       "Select a package": pkg,
+      "Select a package*": pkg,
       "select-a-package": pkg,
       "select_a_package": pkg,
       package: pkg,
       notes: notesContent,
       "additional-notes": notesContent,
       "additional_notes": notesContent,
+      "Additional notes": notesContent,
+      "Additional Notes": notesContent,
+      "Additional Notes*": notesContent,
     };
 
     if (window.Cal) {
@@ -357,8 +374,41 @@ export default function OurPricing() {
         </nav>
       </header>
 
-      {/* Main Content: Packages Section */}
+      {/* Main Content: Hero + Packages */}
       <main className="pricing-page-main">
+        {/* 01 Pricing Hero Section */}
+        <section className="pricing-hero" id="pricing-hero">
+          <div className="hero-bg"></div>
+          <div className="pricing-hero-inner">
+            <span className="pricing-hero-eyebrow" data-i18n="pricing.page.eyebrow">
+              {activeLocaleData.heroEyebrow || "OUR PRICING"}
+            </span>
+            <h1 className="pricing-hero-title">
+              <span data-i18n="pricing.page.titleLine1">
+                {activeLocaleData.heroTitle1 || "Pricing"}
+              </span>{" "}
+              <span className="pricing-hero-accent" data-i18n="pricing.page.titleLine2">
+                {activeLocaleData.heroTitle2 || "For connected growth"}
+              </span>
+            </h1>
+            <div className="pricing-hero-actions">
+              <a href="#prebuilt-packages" className="btn btn-primary" data-i18n="pricing.page.ctaPackages">
+                {activeLocaleData.heroCtaPackages || "Explore Packages"}
+              </a>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleToggleCustomize}
+                data-i18n="pricing.page.ctaCustom"
+              >
+                {showCustomize
+                  ? activeLocaleData.heroHideCustom || "Hide Custom Scope"
+                  : activeLocaleData.heroCtaCustom || "Build Custom Scope"}
+              </button>
+            </div>
+          </div>
+        </section>
+
         <section className="pricing-packages-page-section" id="prebuilt-packages">
           <div className="pricing-container">
             {/* Centered Heading */}
