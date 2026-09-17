@@ -449,6 +449,52 @@ export default function Products() {
           </div>
         </div>
       </footer>
+
+      {/* First-visit country/language popup */}
+      <div className="locale-popup-backdrop" id="localePopupBackdrop">
+        <div
+          className="locale-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Select your region"
+        >
+          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
+            Choose your country &amp; language
+          </h3>
+          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
+            We'll tailor pricing and language to your region.
+          </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupCountry"
+            data-i18n="locale.countryLabel"
+          >
+            Country
+          </label>
+          <select className="locale-select" id="localePopupCountry"></select>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupLanguage"
+            data-i18n="locale.languageLabel"
+          >
+            Language
+          </label>
+          <select className="locale-select" id="localePopupLanguage"></select>
+          <button
+            type="button"
+            className="btn btn-primary locale-popup-confirm"
+            id="localePopupConfirm"
+            data-i18n="locale.confirm"
+          >
+            Continue
+          </button>
+          <p className="locale-popup-note" data-i18n="locale.changeNote">
+            You can change this anytime from the menu.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

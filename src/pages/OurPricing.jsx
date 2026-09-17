@@ -4,12 +4,94 @@ import FooterSocials from "../components/FooterSocials";
 import { I18N_SERVICES } from "../components/ServicesSection";
 import "../css/our-pricing.css";
 
+const I18N_PRICING_PAGE = {
+  en: {
+    heroTitle: "Pricing",
+    heroCta: "Explore Packages",
+    customizeQuestion: "Want to customize your own package?",
+    hideOptions: "Hide Options ↑",
+    customizeBtn: "Customize →",
+    scopeEyebrow: "CUSTOMIZE YOUR SCOPE",
+    scopeTitle: "Select the exact capabilities your business needs",
+    scopeDesc: "Click the + icon on the right side of any service to add it to your custom plan.",
+    scopeSummaryTitle: "Your Selected Custom Scope",
+    servicesSelectedSingular: "Service Selected",
+    servicesSelectedPlural: "Services Selected",
+    reset: "Reset",
+    confirm: "Confirm",
+  },
+  es: {
+    heroTitle: "Precios y Planes",
+    heroCta: "Explorar Paquetes",
+    customizeQuestion: "¿Deseas personalizar tu propio paquete?",
+    hideOptions: "Ocultar Opciones ↑",
+    customizeBtn: "Personalizar →",
+    scopeEyebrow: "PERSONALIZA TU ALCANCE",
+    scopeTitle: "Selecciona las capacidades exactas que tu empresa necesita",
+    scopeDesc: "Haz clic en el icono + a la derecha de cualquier servicio para añadirlo a tu plan personalizado.",
+    scopeSummaryTitle: "Tu Selección Personalizada",
+    servicesSelectedSingular: "Servicio Seleccionado",
+    servicesSelectedPlural: "Servicios Seleccionados",
+    reset: "Restablecer",
+    confirm: "Confirmar",
+  },
+  ar: {
+    heroTitle: "الأسعار والباقات",
+    heroCta: "استكشف الباقات",
+    customizeQuestion: "هل ترغب في تخصيص باقتك الخاصة؟",
+    hideOptions: "إخفاء الخيارات ↑",
+    customizeBtn: "تخصيص →",
+    scopeEyebrow: "تخصيص نطاق عملك",
+    scopeTitle: "حدد الإمكانيات والخدمات التي يحتاجها عملك التجاري بدقة",
+    scopeDesc: "انقر فوق علامة + على يمين أي خدمة لإضافتها إلى خطتك المخصصة.",
+    scopeSummaryTitle: "نطاق الخدمات المخصص الذي اخترته",
+    servicesSelectedSingular: "خدمة محددة",
+    servicesSelectedPlural: "خدمات محددة",
+    reset: "إعادة ضبط",
+    confirm: "تأكيد",
+  },
+  si: {
+    heroTitle: "මිල ගණන් සහ පැකේජ",
+    heroCta: "පැකේජ ගවේෂණය කරන්න",
+    customizeQuestion: "ඔබේම සේවාවන් සකසා ගැනීමට අවශ්‍යද?",
+    hideOptions: "විකල්ප සඟවන්න ↑",
+    customizeBtn: "අභිරුචිකරණය →",
+    scopeEyebrow: "ඔබේ අවශ්‍යතාවයට අනුව සකසන්න",
+    scopeTitle: "ඔබේ ව්‍යාපාරයට අවශ්‍ය නිශ්චිත සේවාවන් තෝරන්න",
+    scopeDesc: "ඔබගේ සැලැස්මට එක් කිරීමට ඕනෑම සේවාවක දකුණු පස ඇති + ලකුණ ක්ලික් කරන්න.",
+    scopeSummaryTitle: "ඔබ තෝරාගත් අභිරුචි සේවා එකතුව",
+    servicesSelectedSingular: "සේවාවක් තෝරාගෙන ඇත",
+    servicesSelectedPlural: "සේවාවන් තෝරාගෙන ඇත",
+    reset: "යළි සකසන්න",
+    confirm: "තහවුරු කරන්න",
+  },
+  ta: {
+    heroTitle: "விலை மற்றும் தொகுப்புகள்",
+    heroCta: "தொகுப்புகளை ஆராய்க",
+    customizeQuestion: "உங்கள் சொந்த சேவைகளை தனிப்பயனாக்க வேண்டுமா?",
+    hideOptions: "விருப்பங்களை மறைக்க ↑",
+    customizeBtn: "தனிப்பயனாக்க →",
+    scopeEyebrow: "உங்கள் திட்டத்தை தனிப்பயனாக்குங்கள்",
+    scopeTitle: "உங்கள் வணிகத்திற்குத் தேவையான சரியான சேவைகளைத் தேர்ந்தெடுக்கவும்",
+    scopeDesc: "உங்கள் தனிப்பயன் திட்டத்தில் சேர்க்க எந்தவொரு சேவையின் வலது பக்கத்திலும் உள்ள + குறியீட்டைக் கிளிக் செய்யவும்.",
+    scopeSummaryTitle: "நீங்கள் தேர்ந்தெடுத்த தனிப்பயன் சேவைகள்",
+    servicesSelectedSingular: "சேவை தேர்ந்தெடுக்கப்பட்டது",
+    servicesSelectedPlural: "சேவைகள் தேர்ந்தெடுக்கப்பட்டன",
+    reset: "மீட்டமை",
+    confirm: "உறுதிப்படுத்துக",
+  },
+};
+
 const getSavedLang = () => {
+  if (typeof window !== "undefined" && typeof window.cambmGetLanguage === "function") {
+    const l = window.cambmGetLanguage();
+    if (l && I18N_SERVICES[l]) return l;
+  }
   try {
     const saved = localStorage.getItem("cambm_lang");
     if (saved && I18N_SERVICES[saved]) return saved;
   } catch (e) { }
-  if (typeof document !== "undefined" && document.documentElement.lang) {
+  if (typeof document !== "undefined" && document.documentElement && document.documentElement.lang) {
     const docLang = document.documentElement.lang;
     if (I18N_SERVICES[docLang]) return docLang;
   }
@@ -17,7 +99,7 @@ const getSavedLang = () => {
 };
 
 export default function OurPricing() {
-  const [currentLang, setCurrentLang] = useState(getSavedLang);
+  const [currentLang, setCurrentLang] = useState(() => getSavedLang());
   const [showCustomize, setShowCustomize] = useState(false);
   const [builderTab, setBuilderTab] = useState("build");
   const [selectedServices, setSelectedServices] = useState([]);
@@ -115,6 +197,86 @@ export default function OurPricing() {
     };
   }, [loadDynamicData]);
 
+  // Sync language with global locale switcher & document observer
+  useEffect(() => {
+    const handleLocaleChange = (e) => {
+      const newLang = e?.detail?.language || getSavedLang();
+      if (I18N_SERVICES[newLang]) {
+        setCurrentLang((prev) => (prev !== newLang ? newLang : prev));
+      }
+    };
+
+    document.addEventListener("cambm:localechange", handleLocaleChange);
+    window.addEventListener("cambm:localechange", handleLocaleChange);
+    window.addEventListener("storage", handleLocaleChange);
+
+    const observer = new MutationObserver(() => {
+      const currentHtmlLang = document.documentElement.lang || getSavedLang();
+      if (currentHtmlLang && I18N_SERVICES[currentHtmlLang]) {
+        setCurrentLang((prev) => (prev !== currentHtmlLang ? currentHtmlLang : prev));
+      }
+    });
+
+    if (document.documentElement) {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["lang", "dir"],
+      });
+    }
+
+    return () => {
+      document.removeEventListener("cambm:localechange", handleLocaleChange);
+      window.removeEventListener("cambm:localechange", handleLocaleChange);
+      window.removeEventListener("storage", handleLocaleChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
+      window.CAMBMTheme.initControls();
+    }
+    if (window.initI18n) {
+      window.initI18n();
+    }
+  }, [currentLang]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+      window.__cambmLenis.scrollTo(0, { immediate: true });
+    }
+
+    const headerEl = document.getElementById("header");
+    if (headerEl) {
+      headerEl.classList.remove("scrolled");
+    }
+
+    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
+      window.CAMBMTheme.initControls();
+    }
+    if (window.initI18n) {
+      window.initI18n();
+    }
+    document.dispatchEvent(new CustomEvent("cambm:revealed"));
+  }, []);
+
+  useEffect(() => {
+    if (window.__cambmLenis && typeof window.__cambmLenis.resize === "function") {
+      window.__cambmLenis.resize();
+    }
+  }, [showCustomize, builderTab, selectedServices]);
+
+  const activeLocaleData = useMemo(() => {
+    return I18N_SERVICES[currentLang] || I18N_SERVICES.en;
+  }, [currentLang]);
+
+  const pricingPageContent = useMemo(() => {
+    return I18N_PRICING_PAGE[currentLang] || I18N_PRICING_PAGE.en;
+  }, [currentLang]);
+
   const toggleService = (svc, category) => {
     const serviceKey = `${category}-${svc.id || svc.num || svc.name}`;
     setSelectedServices((prev) => {
@@ -148,34 +310,6 @@ export default function OurPricing() {
       return nextState;
     });
   };
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    if (document.documentElement) document.documentElement.scrollTop = 0;
-    if (document.body) document.body.scrollTop = 0;
-    if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-      window.__cambmLenis.scrollTo(0, { immediate: true });
-    }
-
-    const headerEl = document.getElementById("header");
-    if (headerEl) {
-      headerEl.classList.remove("scrolled");
-    }
-
-    if (window.CAMBMTheme && window.CAMBMTheme.initControls) {
-      window.CAMBMTheme.initControls();
-    }
-    if (window.initI18n) {
-      window.initI18n();
-    }
-    document.dispatchEvent(new CustomEvent("cambm:revealed"));
-  }, []);
-
-  useEffect(() => {
-    if (window.__cambmLenis && typeof window.__cambmLenis.resize === "function") {
-      window.__cambmLenis.resize();
-    }
-  }, [showCustomize, builderTab, selectedServices]);
 
   const handleConfirmCustomScope = (e) => {
     if (e) e.preventDefault();
@@ -238,43 +372,6 @@ export default function OurPricing() {
     }
   };
 
-  // Sync language with global locale switcher & document observer
-  useEffect(() => {
-    const handleLocaleChange = (e) => {
-      const newLang = e?.detail?.language || getSavedLang();
-      if (I18N_SERVICES[newLang]) {
-        setCurrentLang(newLang);
-      }
-    };
-
-    document.addEventListener("cambm:localechange", handleLocaleChange);
-    window.addEventListener("cambm:localechange", handleLocaleChange);
-    window.addEventListener("storage", handleLocaleChange);
-
-    const observer = new MutationObserver(() => {
-      const currentHtmlLang = document.documentElement.lang;
-      if (currentHtmlLang && I18N_SERVICES[currentHtmlLang] && currentHtmlLang !== currentLang) {
-        setCurrentLang(currentHtmlLang);
-      }
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["lang", "dir"],
-    });
-
-    return () => {
-      document.removeEventListener("cambm:localechange", handleLocaleChange);
-      window.removeEventListener("cambm:localechange", handleLocaleChange);
-      window.removeEventListener("storage", handleLocaleChange);
-      observer.disconnect();
-    };
-  }, [currentLang]);
-
-  const activeLocaleData = useMemo(() => {
-    return I18N_SERVICES[currentLang] || I18N_SERVICES.en;
-  }, [currentLang]);
-
   const openCalModal = (packageName, e) => {
     if (e && e.preventDefault) e.preventDefault();
     const pkg = packageName || "";
@@ -286,7 +383,7 @@ export default function OurPricing() {
       "select-a-package": pkg,
       "select_a_package": pkg,
       package: pkg,
-      notes: "", // Keep Additional notes empty so clients can type their own text
+      notes: "",
     };
 
     if (window.Cal) {
@@ -310,17 +407,17 @@ export default function OurPricing() {
   };
 
   const cardsToDisplay = useMemo(() => {
-    if (dynamicCombos && dynamicCombos.length > 0) {
+    if (currentLang === "en" && dynamicCombos && dynamicCombos.length > 0) {
       const activeCombos = dynamicCombos.filter(
         (c) => c.status === "active" || c.status === undefined || c.is_active === true
       );
       if (activeCombos.length > 0) return activeCombos;
     }
     return activeLocaleData.combos?.cards || [];
-  }, [dynamicCombos, activeLocaleData]);
+  }, [dynamicCombos, activeLocaleData, currentLang]);
 
   const categoryServices = useMemo(() => {
-    if (dynamicServices && dynamicServices.length > 0) {
+    if (currentLang === "en" && dynamicServices && dynamicServices.length > 0) {
       const filtered = dynamicServices
         .filter((s) => {
           const cat = (s.category || "").toLowerCase();
@@ -348,7 +445,7 @@ export default function OurPricing() {
       id: `${builderTab}-${s.num || idx}`,
       category: builderTab,
     }));
-  }, [dynamicServices, builderTab, activeLocaleData]);
+  }, [dynamicServices, builderTab, activeLocaleData, currentLang]);
 
   return (
     <div className="pricing-page-container">
@@ -513,13 +610,13 @@ export default function OurPricing() {
           <div className="hero-bg"></div>
           <div className="pricing-hero-inner">
             <h1 className="pricing-hero-title">
-              <span data-i18n="pricing.page.titleLine1">
-                {activeLocaleData.heroTitle1 || "Pricing"}
+              <span>
+                {pricingPageContent.heroTitle}
               </span>
             </h1>
             <div className="pricing-hero-actions">
-              <a href="#prebuilt-packages" className="btn btn-primary" data-i18n="pricing.page.ctaPackages">
-                {activeLocaleData.heroCtaPackages || "Explore Packages"}
+              <a href="#prebuilt-packages" className="btn btn-primary">
+                {pricingPageContent.heroCta}
               </a>
             </div>
           </div>
@@ -529,17 +626,17 @@ export default function OurPricing() {
           <div className="pricing-container">
             {/* Centered Heading */}
             <div className="pricing-combos-header">
-              <span className="pricing-combos-eyebrow" data-i18n="packages.combos.eyebrow">
+              <span className="pricing-combos-eyebrow">
                 {activeLocaleData.combos?.eyebrow || "PRE-BUILT PACKAGES"}
               </span>
-              <h2 className="pricing-combos-title" data-i18n="packages.combos.title">
+              <h2 className="pricing-combos-title">
                 {activeLocaleData.combos?.title || "Connected services. One clear engagement."}
               </h2>
-              <p className="pricing-combos-desc" data-i18n="packages.combos.desc">
+              <p className="pricing-combos-desc">
                 {activeLocaleData.combos?.desc || "Pre-built packages combine content, marketing, and technology into one managed solution."}
               </p>
               {activeLocaleData.combos?.note && (
-                <p className="pricing-combos-note" data-i18n="packages.combos.note">
+                <p className="pricing-combos-note">
                   {activeLocaleData.combos.note}
                 </p>
               )}
@@ -555,7 +652,7 @@ export default function OurPricing() {
                   <h3 className="pricing-combo-card-title">{card.title}</h3>
                   <p className="pricing-combo-card-desc">{card.desc}</p>
                   <ul className="pricing-combo-items">
-                    {card.items.map((feat, idx) => {
+                    {(card.items || []).map((feat, idx) => {
                       const isSocial =
                         typeof feat === "string" &&
                         (feat.toLowerCase().includes("social media") ||
@@ -619,25 +716,17 @@ export default function OurPricing() {
         {/* Section 2: Dedicated Customize Section */}
         <section className="pricing-custom-section" id="custom-scope">
           <div className="pricing-container">
-            {/* Customize Header Row (Clean, no card border/background) */}
+            {/* Customize Header Row */}
             <div className="pricing-customize-banner">
               <h2 className="pricing-customize-title">
-                {currentLang === "es"
-                  ? "¿Deseas personalizar tu propio paquete?"
-                  : currentLang === "ar"
-                  ? "هل ترغب في تخصيص باقتك الخاصة؟"
-                  : currentLang === "si"
-                  ? "ඔබේම සේවාවන් සකසා ගැනීමට අවශ්‍යද?"
-                  : currentLang === "ta"
-                  ? "உங்கள் சொந்த சேவைகளை தனிப்பயனாக்க வேண்டுமா?"
-                  : "Want to customize your own package?"}
+                {pricingPageContent.customizeQuestion}
               </h2>
               <button
                 type="button"
                 className="pricing-customize-btn"
                 onClick={handleToggleCustomize}
               >
-                {showCustomize ? "Hide Options ↑" : "Customize →"}
+                {showCustomize ? pricingPageContent.hideOptions : pricingPageContent.customizeBtn}
               </button>
             </div>
 
@@ -646,13 +735,13 @@ export default function OurPricing() {
               <div className="pricing-custom-builder" id="pricing-custom-builder">
                 <div className="pricing-custom-builder-head">
                   <span className="pricing-combos-eyebrow" style={{ color: "#ff5a00" }}>
-                    CUSTOMIZE YOUR SCOPE
+                    {pricingPageContent.scopeEyebrow}
                   </span>
                   <h3 className="pricing-custom-builder-title">
-                    Select the exact capabilities your business needs
+                    {pricingPageContent.scopeTitle}
                   </h3>
                   <p className="pricing-custom-builder-desc">
-                    Click the <strong>+</strong> icon on the right side of any service to add it to your custom plan.
+                    {pricingPageContent.scopeDesc}
                   </p>
                 </div>
 
@@ -696,68 +785,67 @@ export default function OurPricing() {
                         className={`pricing-custom-item ${isSelected ? "is-selected" : ""}`}
                         onClick={() => toggleService(svc, builderTab)}
                       >
-                          <div className="pricing-custom-item-left">
-                            <span className="pricing-custom-item-num">
-                              {svc.num || String(idx + 1).padStart(2, "0")}
-                            </span>
-                            <div className="pricing-custom-item-text">
-                              <h4 className="pricing-custom-item-name">
-                                {svc.name}
-                              </h4>
-                              {svc.desc && (
-                                <p className="pricing-custom-item-desc">
-                                  {svc.desc}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Right Side: ONLY + Mark (No 'Add' text) */}
-                          <div className="pricing-custom-item-right">
-                            <button
-                              type="button"
-                              className={`pricing-custom-add-btn ${isSelected ? "is-selected" : ""}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleService(svc, builderTab);
-                              }}
-                              aria-label={isSelected ? `Remove ${svc.name}` : `Add ${svc.name}`}
-                              title={isSelected ? "Remove" : "Add"}
-                            >
-                              {isSelected ? (
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  width="16"
-                                  height="16"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2.8"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                              ) : (
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  width="16"
-                                  height="16"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                              )}
-                            </button>
+                        <div className="pricing-custom-item-left">
+                          <span className="pricing-custom-item-num">
+                            {svc.num || String(idx + 1).padStart(2, "0")}
+                          </span>
+                          <div className="pricing-custom-item-text">
+                            <h4 className="pricing-custom-item-name">
+                              {svc.name}
+                            </h4>
+                            {svc.desc && (
+                              <p className="pricing-custom-item-desc">
+                                {svc.desc}
+                              </p>
+                            )}
                           </div>
                         </div>
-                      );
-                    }
-                  )}
+
+                        {/* Right Side: + Mark */}
+                        <div className="pricing-custom-item-right">
+                          <button
+                            type="button"
+                            className={`pricing-custom-add-btn ${isSelected ? "is-selected" : ""}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleService(svc, builderTab);
+                            }}
+                            aria-label={isSelected ? `Remove ${svc.name}` : `Add ${svc.name}`}
+                            title={isSelected ? "Remove" : "Add"}
+                          >
+                            {isSelected ? (
+                              <svg
+                                viewBox="0 0 24 24"
+                                width="16"
+                                height="16"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                            ) : (
+                              <svg
+                                viewBox="0 0 24 24"
+                                width="16"
+                                height="16"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                              </svg>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Selected Services Summary & Confirm */}
@@ -768,7 +856,9 @@ export default function OurPricing() {
                         <div className="pricing-custom-summary-badge-row">
                           <span className="pricing-custom-summary-badge">
                             {selectedServices.length}{" "}
-                            {selectedServices.length === 1 ? "Service" : "Services"} Selected
+                            {selectedServices.length === 1
+                              ? pricingPageContent.servicesSelectedSingular
+                              : pricingPageContent.servicesSelectedPlural}
                           </span>
                           <button
                             type="button"
@@ -779,19 +869,11 @@ export default function OurPricing() {
                             }}
                             title="Reset all selected services"
                           >
-                            {currentLang === "es"
-                              ? "Restablecer"
-                              : currentLang === "ar"
-                              ? "إعادة ضبط"
-                              : currentLang === "si"
-                              ? "යළි සකසන්න"
-                              : currentLang === "ta"
-                              ? "மீட்டமை"
-                              : "Reset"}
+                            {pricingPageContent.reset}
                           </button>
                         </div>
                         <h4 className="pricing-custom-summary-title">
-                          Your Selected Custom Scope
+                          {pricingPageContent.scopeSummaryTitle}
                         </h4>
                       </div>
                       <button
@@ -799,15 +881,7 @@ export default function OurPricing() {
                         className="pricing-custom-confirm-btn"
                         onClick={handleConfirmCustomScope}
                       >
-                        {currentLang === "es"
-                          ? "Confirmar"
-                          : currentLang === "ar"
-                          ? "تأكيد"
-                          : currentLang === "si"
-                          ? "තහවුරු කරන්න"
-                          : currentLang === "ta"
-                          ? "உறுதிப்படுத்துக"
-                          : "Confirm"} <span>→</span>
+                        {pricingPageContent.confirm} <span>→</span>
                       </button>
                     </div>
 
@@ -864,6 +938,52 @@ export default function OurPricing() {
           </div>
         </div>
       </footer>
+
+      {/* First-visit country/language popup */}
+      <div className="locale-popup-backdrop" id="localePopupBackdrop">
+        <div
+          className="locale-popup"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Select your region"
+        >
+          <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
+            Choose your country &amp; language
+          </h3>
+          <p className="locale-popup-desc" data-i18n="locale.popupDesc">
+            We'll tailor pricing and language to your region.
+          </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupCountry"
+            data-i18n="locale.countryLabel"
+          >
+            Country
+          </label>
+          <select className="locale-select" id="localePopupCountry"></select>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupLanguage"
+            data-i18n="locale.languageLabel"
+          >
+            Language
+          </label>
+          <select className="locale-select" id="localePopupLanguage"></select>
+          <button
+            type="button"
+            className="btn btn-primary locale-popup-confirm"
+            id="localePopupConfirm"
+            data-i18n="locale.confirm"
+          >
+            Continue
+          </button>
+          <p className="locale-popup-note" data-i18n="locale.changeNote">
+            You can change this anytime from the menu.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -11,25 +11,25 @@
     LK: {
       name: "Sri Lanka",
       flag: "🇱🇰",
-      languages: ["en", "si", "ta", "ar", "es"],
+      languages: ["en", "si", "ta"],
       currency: { code: "LKR", symbol: "LKR " },
     },
     SA: {
       name: "Saudi Arabia",
       flag: "🇸🇦",
-      languages: ["en", "ar", "es", "si", "ta"],
+      languages: ["en", "ar"],
       currency: { code: "SAR", symbol: "SAR " },
     },
     IN: {
       name: "India",
       flag: "🇮🇳",
-      languages: ["en", "ta", "si", "ar", "es"],
+      languages: ["en", "ta"],
       currency: { code: "INR", symbol: "₹" },
     },
     EU: {
       name: "European Union",
       flag: "🇪🇺",
-      languages: ["en", "es", "ar", "si", "ta"],
+      languages: ["en", "es"],
       currency: { code: "EUR", symbol: "€" },
     },
   };
@@ -388,8 +388,8 @@
     "footer.office.lk.title": "Cambridge Marketing - Sri Lanka",
     "footer.office.lk.address":
       "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
-    "locale.popupTitle": "Choose your language",
-    "locale.popupDesc": "We’ll tailor the language to you.",
+    "locale.popupTitle": "Choose your country & language",
+    "locale.popupDesc": "We’ll tailor pricing and language to your region.",
     "locale.countryLabel": "Country",
     "locale.languageLabel": "Language",
     "locale.confirm": "Continue",
@@ -710,8 +710,8 @@
     "footer.office.lk.title": "Cambridge Marketing - Sri Lanka",
     "footer.office.lk.address":
       "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
-    "locale.popupTitle": "Elige tu idioma",
-    "locale.popupDesc": "Adaptaremos el idioma a ti.",
+    "locale.popupTitle": "Elige tu país e idioma",
+    "locale.popupDesc": "Adaptaremos los precios y el idioma a tu región.",
     "locale.countryLabel": "País",
     "locale.languageLabel": "Idioma",
     "locale.confirm": "Continuar",
@@ -1010,8 +1010,8 @@
     "footer.office.lk.title": "كامبريدج ماركتنج - سريلانكا",
     "footer.office.lk.address":
       "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
-    "locale.popupTitle": "اختر لغتك",
-    "locale.popupDesc": "سنخصص اللغة لك.",
+    "locale.popupTitle": "اختر دولتك ولغتك",
+    "locale.popupDesc": "سنخصص الأسعار واللغة لتناسب منطقتك.",
     "locale.countryLabel": "الدولة",
     "locale.languageLabel": "اللغة",
     "locale.confirm": "متابعة",
@@ -1322,8 +1322,8 @@
     "footer.office.lk.title": "Cambridge Marketing - ශ්‍රී ලංකාව",
     "footer.office.lk.address":
       "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
-    "locale.popupTitle": "ඔබේ භාෂාව තෝරන්න",
-    "locale.popupDesc": "ඔබට ගැළපෙන භාෂාව අපි සකසන්නෙමු.",
+    "locale.popupTitle": "ඔබේ රට සහ භාෂාව තෝරන්න",
+    "locale.popupDesc": "අපි ඔබේ කලාපයට ගැලපෙන පරිදි මිල ගණන් සහ භාෂාව සකස් කරන්නෙමු.",
     "locale.countryLabel": "රට",
     "locale.languageLabel": "භාෂාව",
     "locale.confirm": "ඉදිරියට යන්න",
@@ -1645,8 +1645,8 @@
     "footer.office.lk.title": "Cambridge Marketing - இலங்கை",
     "footer.office.lk.address":
       "328/3 Temple Road, Kaduwela Road, Battaramulla, Colombo, Sri Lanka 10120",
-    "locale.popupTitle": "உங்கள் மொழியை தேர்ந்தெடுக்கவும்",
-    "locale.popupDesc": "உங்களுக்கு ஏற்ற மொழியை நாங்கள் அமைப்போம்.",
+    "locale.popupTitle": "உங்கள் நாடு மற்றும் மொழியைத் தேர்ந்தெடுக்கவும்",
+    "locale.popupDesc": "உங்கள் பிராந்தியத்திற்கு ஏற்ப விலை மற்றும் மொழியை அமைப்போம்.",
     "locale.countryLabel": "நாடு",
     "locale.languageLabel": "மொழி",
     "locale.confirm": "தொடரவும்",
@@ -3918,30 +3918,32 @@
 
   // ---- Populate the <select> elements ----
   // `compact` (nav-bar picker only, not the first-visit popup) shows
-  // "LK/LKR" style code pairs instead of "🇱🇰 Sri Lanka" - the popup keeps
-  // full flag+name since that's the one place a first-time visitor actually
-  // needs to recognize their country/region, not just a quick glance.
+  // "LK/LKR" style code pairs instead of "LK Sri Lanka".
   function populateCountrySelect(selectEl, selectedCountry, compact) {
+    if (!selectEl) return;
     let html = "";
     for (const code in COUNTRIES) {
       const label = compact
         ? code + "/" + COUNTRIES[code].currency.code
-        : COUNTRIES[code].flag + " " + COUNTRIES[code].name;
+        : code + " " + COUNTRIES[code].name;
       html += '<option value="' + code + '">' + label + "</option>";
     }
     selectEl.innerHTML = html;
-    selectEl.value = selectedCountry;
+    selectEl.value = selectedCountry || DEFAULT_COUNTRY;
   }
 
   function populateLanguageSelect(selectEl, countryCode, selectedLanguage) {
-    const langs = COUNTRIES[countryCode].languages;
+    if (!selectEl) return;
+    const countryObj = COUNTRIES[countryCode] || COUNTRIES[DEFAULT_COUNTRY];
+    const langs = countryObj ? countryObj.languages : ["en"];
     let html = "";
     for (let i = 0; i < langs.length; i++) {
+      const langCode = langs[i];
       html +=
         '<option value="' +
-        langs[i] +
+        langCode +
         '">' +
-        LANGUAGE_NAMES[langs[i]] +
+        (LANGUAGE_NAMES[langCode] || langCode) +
         "</option>";
     }
     selectEl.innerHTML = html;
@@ -3950,10 +3952,10 @@
   }
 
   function init() {
-    const countrySelects = document.querySelectorAll(".locale-country-select");
-    const languageSelects = document.querySelectorAll(
-      ".locale-language-select",
-    );
+    const popupBackdrop = document.getElementById("localePopupBackdrop");
+    const popupCountrySelect = document.getElementById("localePopupCountry");
+    const popupLanguageSelect = document.getElementById("localePopupLanguage");
+    const popupConfirm = document.getElementById("localePopupConfirm");
 
     function syncSelects(country, language) {
       document
@@ -3968,6 +3970,12 @@
           populateLanguageSelect(sel, country, language);
           enhanceLocaleSelect(sel);
         });
+      if (popupCountrySelect) {
+        populateCountrySelect(popupCountrySelect, country, false);
+      }
+      if (popupLanguageSelect) {
+        populateLanguageSelect(popupLanguageSelect, country, language);
+      }
     }
 
     function setLocale(country, language, persist) {
@@ -3982,10 +3990,14 @@
     }
 
     window.cambmSetLanguage = function (lang) {
-      setLocale(currentCountry, lang, true);
+      const countryObj = COUNTRIES[currentCountry] || COUNTRIES[DEFAULT_COUNTRY];
+      const validLang = countryObj.languages.indexOf(lang) !== -1 ? lang : countryObj.languages[0];
+      setLocale(currentCountry, validLang, true);
     };
     window.cambmSetLocale = function (country, lang) {
-      setLocale(country, lang, true);
+      const countryObj = COUNTRIES[country] || COUNTRIES[DEFAULT_COUNTRY];
+      const validLang = countryObj.languages.indexOf(lang) !== -1 ? lang : countryObj.languages[0];
+      setLocale(country, validLang, true);
     };
 
     document.querySelectorAll(".locale-country-select").forEach(function (sel) {
@@ -3993,7 +4005,8 @@
       sel._i18nInit = true;
       sel.addEventListener("change", function () {
         const country = sel.value;
-        const langs = COUNTRIES[country].languages;
+        const countryObj = COUNTRIES[country] || COUNTRIES[DEFAULT_COUNTRY];
+        const langs = countryObj.languages;
         const lang =
           langs.indexOf(currentLanguage) !== -1 ? currentLanguage : langs[0];
         setLocale(country, lang, true);
@@ -4010,15 +4023,27 @@
       });
 
     // ---- First-visit locale popup (mandatory until a choice is saved) ----
-    const popupBackdrop = document.getElementById("localePopupBackdrop");
-    const popupLanguageSelect = document.getElementById("localePopupLanguage");
-    const popupConfirm = document.getElementById("localePopupConfirm");
+    if (popupCountrySelect) {
+      populateCountrySelect(popupCountrySelect, currentCountry, false);
+      popupCountrySelect.addEventListener("change", function () {
+        const country = popupCountrySelect.value;
+        const countryObj = COUNTRIES[country] || COUNTRIES[DEFAULT_COUNTRY];
+        const langs = countryObj.languages;
+        const curLang = popupLanguageSelect ? popupLanguageSelect.value : currentLanguage;
+        const newLang = langs.indexOf(curLang) !== -1 ? curLang : langs[0];
+        if (popupLanguageSelect) {
+          populateLanguageSelect(popupLanguageSelect, country, newLang);
+        }
+        applyTranslations(newLang);
+      });
+    }
 
     if (popupLanguageSelect) {
+      const activeCountry = popupCountrySelect ? popupCountrySelect.value : currentCountry;
       populateLanguageSelect(
         popupLanguageSelect,
-        DEFAULT_COUNTRY,
-        DEFAULT_LANGUAGE,
+        activeCountry,
+        currentLanguage,
       );
 
       popupLanguageSelect.addEventListener("change", function () {
@@ -4028,12 +4053,16 @@
 
     if (popupConfirm) {
       popupConfirm.addEventListener("click", function () {
+        const chosenCountry = popupCountrySelect ? popupCountrySelect.value : DEFAULT_COUNTRY;
+        const chosenLang = popupLanguageSelect ? popupLanguageSelect.value : DEFAULT_LANGUAGE;
         setLocale(
-          DEFAULT_COUNTRY,
-          popupLanguageSelect ? popupLanguageSelect.value : DEFAULT_LANGUAGE,
+          chosenCountry,
+          chosenLang,
           true,
         );
-        popupBackdrop.classList.remove("open");
+        if (popupBackdrop) {
+          popupBackdrop.classList.remove("open");
+        }
         document.body.style.overflow = "";
       });
     }

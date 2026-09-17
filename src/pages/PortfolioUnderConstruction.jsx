@@ -269,11 +269,20 @@ export default function PortfolioUnderConstruction({ page = "portfolio" }) {
           aria-label="Select your region"
         >
           <h3 className="locale-popup-title" data-i18n="locale.popupTitle">
-            Choose your language
+            Choose your country &amp; language
           </h3>
           <p className="locale-popup-desc" data-i18n="locale.popupDesc">
-            We'll tailor the language to you.
+            We'll tailor pricing and language to your region.
           </p>
+
+          <label
+            className="locale-field-label"
+            htmlFor="localePopupCountry"
+            data-i18n="locale.countryLabel"
+          >
+            Country
+          </label>
+          <select className="locale-select" id="localePopupCountry"></select>
 
           <label
             className="locale-field-label"
