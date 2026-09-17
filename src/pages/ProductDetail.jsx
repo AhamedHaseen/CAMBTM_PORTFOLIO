@@ -4,7 +4,7 @@ import FooterOffices from "../components/FooterOffices";
 import FooterSocials from "../components/FooterSocials";
 import ScreenStack from "../components/products/ScreenStack";
 import { findProduct } from "../content/products/productsData";
-import { productScreens } from "../content/products/productScreensData";
+import { productScreens, getProductScreens } from "../content/products/productScreensData";
 import { getProductsPageContent } from "../content/products/productsPageContent";
 import "../css/products.css";
 
@@ -114,7 +114,10 @@ export default function ProductDetail() {
     return <Navigate to="/products" replace />;
   }
 
-  const screens = productScreens[slug] || [];
+  const screens = useMemo(
+    () => (typeof getProductScreens === "function" ? getProductScreens(slug, currentLang) : productScreens[slug]) || [],
+    [slug, currentLang]
+  );
   const full = product.depth === "full";
   const themed = product.screenKind === "theme";
   const showContext = Boolean(product.suits) || (product.industries && product.industries.length > 0);
