@@ -281,6 +281,41 @@ export default function OurPricing() {
     }
   }, [showCustomize, builderTab, selectedServices]);
 
+  const getServiceName = useCallback((item, lang = currentLang) => {
+    if (!item) return "";
+    const localeData = I18N_SERVICES[lang] || I18N_SERVICES.en;
+    const cat = (item.category || "").toLowerCase();
+    const catServices = localeData[cat]?.services || [];
+    const found = catServices.find((s) => s.num === item.num || s.id === item.id || s.key === item.key);
+    if (found && found.name) return found.name;
+    return item.name || "";
+  }, [currentLang]);
+
+  const CANONICAL_PACKAGES = {
+    video: "Videography Package",
+    web: "Website Package",
+    pos: "POS Package",
+    custom: "Custom",
+  };
+
+  const getCanonicalPackageName = (cardOrId) => {
+    if (!cardOrId) return "Custom";
+    if (typeof cardOrId === "object") {
+      if (cardOrId.id && CANONICAL_PACKAGES[cardOrId.id]) return CANONICAL_PACKAGES[cardOrId.id];
+      const t = (cardOrId.title || "").toLowerCase();
+      if (t.includes("video") || t.includes("வீடியோ") || t.includes("වීඩියෝ") || t.includes("فيديو")) return "Videography Package";
+      if (t.includes("web") || t.includes("வலைத்தள") || t.includes("වෙබ්") || t.includes("sitio") || t.includes("موقع")) return "Website Package";
+      if (t.includes("pos") || t.includes("பாயிண்ட்")) return "POS Package";
+      return cardOrId.title || "Custom";
+    }
+    const idStr = String(cardOrId).toLowerCase();
+    if (CANONICAL_PACKAGES[idStr]) return CANONICAL_PACKAGES[idStr];
+    if (idStr.includes("video") || idStr.includes("வீடியோ") || idStr.includes("වීඩියෝ") || idStr.includes("فيديو")) return "Videography Package";
+    if (idStr.includes("web") || idStr.includes("வலைத்தள") || idStr.includes("වෙබ්") || idStr.includes("sitio") || idStr.includes("موقع")) return "Website Package";
+    if (idStr.includes("pos")) return "POS Package";
+    return cardOrId;
+  };
+
   const activeLocaleData = useMemo(() => {
     return I18N_SERVICES[currentLang] || I18N_SERVICES.en;
   }, [currentLang]);
@@ -301,11 +336,11 @@ export default function OurPricing() {
     const serviceKey = getServiceKey(svc, cat);
     setSelectedServices((prev) => {
       const exists = prev.some(
-        (item) => item.key === serviceKey || (item.name === svc.name && item.category === cat)
+        (item) => item.key === serviceKey || (item.num === svc.num && item.category === cat)
       );
       if (exists) {
         return prev.filter(
-          (item) => item.key !== serviceKey && !(item.name === svc.name && item.category === cat)
+          (item) => item.key !== serviceKey && !(item.num === svc.num && item.category === cat)
         );
       } else {
         return [
@@ -326,7 +361,7 @@ export default function OurPricing() {
     const cat = category || svc.category || builderTab;
     const serviceKey = getServiceKey(svc, cat);
     return selectedServices.some(
-      (item) => item.key === serviceKey || (item.name === svc.name && item.category === cat)
+      (item) => item.key === serviceKey || (item.num === svc.num && item.category === cat)
     );
   };
 
@@ -360,17 +395,21 @@ export default function OurPricing() {
     const growItems = selectedServices.filter((s) => s.category.toLowerCase() === "grow");
     const createItems = selectedServices.filter((s) => s.category.toLowerCase() === "create");
 
+    const buildLabel = activeLocaleData.tabs?.build || "Build";
+    const growLabel = activeLocaleData.tabs?.grow || "Grow";
+    const createLabel = activeLocaleData.tabs?.create || "Create";
+
     const formatCategory = (categoryTitle, items) => {
       if (items.length > 0) {
-        return `${categoryTitle}\n${items.map((s) => `• ${s.name}`).join("\n")}`;
+        return `${categoryTitle}\n${items.map((s) => `• ${getServiceName(s, currentLang)}`).join("\n")}`;
       }
       return `${categoryTitle}\n• No services selected`;
     };
 
     const notesContent = [
-      formatCategory("Build", buildItems),
-      formatCategory("Grow", growItems),
-      formatCategory("Create", createItems),
+      formatCategory(buildLabel, buildItems),
+      formatCategory(growLabel, growItems),
+      formatCategory(createLabel, createItems),
       "Additional Notes:",
     ].join("\n\n");
 
@@ -392,15 +431,23 @@ export default function OurPricing() {
       "Additional Notes*": notesContent,
     };
 
+    const calParams = new URLSearchParams({
+      "Select-a-package": pkg,
+      "select-a-package": pkg,
+      package: pkg,
+      notes: notesContent,
+      "additional-notes": notesContent,
+    }).toString();
+
     if (window.Cal) {
       if (typeof window.Cal.ns === "object" && window.Cal.ns["strategy-call"]) {
         window.Cal.ns["strategy-call"]("modal", {
-          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
+          calLink: `cambridge.marketing?${calParams}`,
           config: calConfig,
         });
       } else {
         window.Cal("modal", {
-          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}&additional-notes=${encodeURIComponent(notesContent)}`,
+          calLink: `cambridge.marketing?${calParams}`,
           config: calConfig,
         });
       }
@@ -411,7 +458,7 @@ export default function OurPricing() {
         calBtn.click();
       } else {
         window.open(
-          `https://cal.com/cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=${encodeURIComponent(notesContent)}`,
+          `https://cal.com/cambridge.marketing?${calParams}`,
           "_blank",
           "noopener,noreferrer"
         );
@@ -419,29 +466,42 @@ export default function OurPricing() {
     }
   };
 
-  const openCalModal = (packageName, e) => {
+  const openCalModal = (cardOrName, e) => {
     if (e && e.preventDefault) e.preventDefault();
-    const pkg = packageName || "";
+    const pkg = getCanonicalPackageName(cardOrName);
+    const notesContent = "";
 
     const calConfig = {
       layout: "month_view",
       "Select-a-package": pkg,
       "Select a package": pkg,
+      "Select a package*": pkg,
       "select-a-package": pkg,
       "select_a_package": pkg,
       package: pkg,
       notes: "",
+      "additional-notes": "",
+      "additional_notes": "",
+      "Additional notes": "",
+      "Additional Notes": "",
+      "Additional Notes*": "",
     };
+
+    const calParams = new URLSearchParams({
+      "Select-a-package": pkg,
+      "select-a-package": pkg,
+      package: pkg,
+    }).toString();
 
     if (window.Cal) {
       if (typeof window.Cal.ns === "object" && window.Cal.ns["strategy-call"]) {
         window.Cal.ns["strategy-call"]("modal", {
-          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          calLink: `cambridge.marketing?${calParams}`,
           config: calConfig,
         });
       } else {
         window.Cal("modal", {
-          calLink: `cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          calLink: `cambridge.marketing?${calParams}`,
           config: calConfig,
         });
       }
@@ -452,7 +512,7 @@ export default function OurPricing() {
         calBtn.click();
       } else {
         window.open(
-          `https://cal.com/cambridge.marketing?Select-a-package=${encodeURIComponent(pkg)}&select-a-package=${encodeURIComponent(pkg)}&package=${encodeURIComponent(pkg)}&notes=`,
+          `https://cal.com/cambridge.marketing?${calParams}`,
           "_blank",
           "noopener,noreferrer"
         );
@@ -585,7 +645,7 @@ export default function OurPricing() {
                     <button
                       type="button"
                       className="pricing-combo-discuss-btn"
-                      onClick={(e) => openCalModal(card.title, e)}
+                      onClick={(e) => openCalModal(card, e)}
                     >
                       {activeLocaleData.combos?.discussBtn || "Discuss"} <span>→</span>
                     </button>
@@ -758,23 +818,26 @@ export default function OurPricing() {
                     </div>
 
                     <div className="pricing-custom-summary-chips">
-                      {selectedServices.map((item) => (
-                        <span key={item.key} className="pricing-custom-chip">
-                          <span className="chip-name">{item.name}</span>
-                          <button
-                            type="button"
-                            className="chip-del"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              removeService(item.key);
-                            }}
-                            aria-label={`Remove ${item.name}`}
-                            title={`Remove ${item.name}`}
-                          >
-                            ×
-                          </button>
-                        </span>
-                      ))}
+                      {selectedServices.map((item) => {
+                        const displayName = getServiceName(item, currentLang);
+                        return (
+                          <span key={item.key} className="pricing-custom-chip">
+                            <span className="chip-name">{displayName}</span>
+                            <button
+                              type="button"
+                              className="chip-del"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeService(item.key);
+                              }}
+                              aria-label={`Remove ${displayName}`}
+                              title={`Remove ${displayName}`}
+                            >
+                              ×
+                            </button>
+                          </span>
+                        );
+                      })}
 
                       {/* Reset Button placed right next to selected services in the same line */}
                       <button

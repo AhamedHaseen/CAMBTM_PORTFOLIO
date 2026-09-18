@@ -685,27 +685,77 @@ const getSavedLang = () => {
   return "en";
 };
 
-const openCalModal = (packageName = "", e = null) => {
+const CANONICAL_PACKAGES = {
+  video: "Videography Package",
+  web: "Website Package",
+  pos: "POS Package",
+  custom: "Custom",
+};
+
+const getCanonicalPackageName = (cardOrId) => {
+  if (!cardOrId) return "";
+  if (typeof cardOrId === "object") {
+    if (cardOrId.id && CANONICAL_PACKAGES[cardOrId.id]) return CANONICAL_PACKAGES[cardOrId.id];
+    const t = (cardOrId.title || "").toLowerCase();
+    if (t.includes("video") || t.includes("வீடியோ") || t.includes("වීඩියෝ") || t.includes("فيديو")) return "Videography Package";
+    if (t.includes("web") || t.includes("வலைத்தள") || t.includes("වෙබ්") || t.includes("sitio") || t.includes("موقع")) return "Website Package";
+    if (t.includes("pos") || t.includes("பாயிண்ட்")) return "POS Package";
+    return cardOrId.title || "";
+  }
+  const idStr = String(cardOrId).toLowerCase();
+  if (CANONICAL_PACKAGES[idStr]) return CANONICAL_PACKAGES[idStr];
+  if (idStr.includes("video") || idStr.includes("வீடியோ") || idStr.includes("වීඩියෝ") || idStr.includes("فيديو")) return "Videography Package";
+  if (idStr.includes("web") || idStr.includes("வலைத்தள") || idStr.includes("වෙබ්") || idStr.includes("sitio") || idStr.includes("موقع")) return "Website Package";
+  if (idStr.includes("pos")) return "POS Package";
+  return cardOrId;
+};
+
+const openCalModal = (packageNameOrCard = "", e = null) => {
   if (e && e.preventDefault) {
     e.preventDefault();
   }
 
+  const pkg = getCanonicalPackageName(packageNameOrCard);
+
   if (typeof window !== "undefined") {
+    const lang = getSavedLang();
+    const calLocale = ["en", "es", "ar"].includes(lang) ? lang : "en";
+    const config = {
+      layout: "month_view",
+      language: calLocale,
+      locale: calLocale,
+      "Select-a-package": pkg,
+      "Select a package": pkg,
+      "Select a package*": pkg,
+      "select-a-package": pkg,
+      "select_a_package": pkg,
+      package: pkg,
+      notes: "",
+      "additional-notes": "",
+      "additional_notes": "",
+      "Additional notes": "",
+      "Additional Notes": "",
+      "Additional Notes*": "",
+    };
+
+    const calParams = new URLSearchParams({
+      "Select-a-package": pkg,
+      "select-a-package": pkg,
+      package: pkg,
+    }).toString();
+
     // 1. Check if Cal API is initialized on window
     if (typeof window.Cal === "function") {
       try {
-        const lang = getSavedLang();
-        const calLocale = ["en", "es", "ar"].includes(lang) ? lang : "en";
-        const config = {
-          layout: "month_view",
-          language: calLocale,
-          locale: calLocale,
-        };
-        if (packageName) {
-          config["notes"] = `Inquiry regarding: ${packageName}`;
+        if (typeof window.Cal.ns === "object" && window.Cal.ns["strategy-call"]) {
+          window.Cal.ns["strategy-call"]("modal", {
+            calLink: `cambridge.marketing?${calParams}`,
+            config: config,
+          });
+          return;
         }
         window.Cal("openModal", {
-          calLink: "cambridge.marketing",
+          calLink: `cambridge.marketing?${calParams}`,
           config: config,
         });
         return;
@@ -717,12 +767,13 @@ const openCalModal = (packageName = "", e = null) => {
     // 2. Trigger header Cal button if present in DOM
     const headerCalBtn = document.querySelector(".header .js-open-cal");
     if (headerCalBtn) {
+      headerCalBtn.setAttribute("data-cal-config", JSON.stringify(config));
       headerCalBtn.click();
       return;
     }
 
     // 3. Fallback direct booking link in new tab
-    window.open("https://cal.com/cambridge.marketing", "_blank", "noopener,noreferrer");
+    window.open(`https://cal.com/cambridge.marketing?${calParams}`, "_blank", "noopener,noreferrer");
   }
 };
 

@@ -308,7 +308,18 @@ export default function CustomPlan() {
       layout: "month_view",
       language: calLocale,
       locale: calLocale,
+      "Select-a-package": "Custom",
+      "Select a package": "Custom",
+      "Select a package*": "Custom",
+      "select-a-package": "Custom",
+      "select_a_package": "Custom",
+      package: "Custom",
       notes: summaryText,
+      "additional-notes": summaryText,
+      "additional_notes": summaryText,
+      "Additional notes": summaryText,
+      "Additional Notes": summaryText,
+      "Additional Notes*": summaryText,
     });
   }, [calLocale, summaryText]);
 
