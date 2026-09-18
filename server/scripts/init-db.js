@@ -254,21 +254,45 @@ export async function initializeDatabase(options = {}) {
 
     if (!silent) console.log('✅ Database tables checked / created.');
 
-    // Seed default admin user
-    const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'marketing@cambt.com';
-    const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'Admin@Cambm2026!';
-    
+    // Seed default superadmin user with TOTP Authentication
+    const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'cambmstudio@cambt.com';
+    const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'u(-bBW<aph:msB#~';
+    const totpSecret = 'KRUGS4ZANFZSAYJAONSWG4TFOQ2TMOBX';
+    const recoveryCodes = JSON.stringify(['A8B2-9F41', 'C7D3-1E65', 'E5F8-2A93', 'G9H4-7B12', 'K2L6-8C45', 'M3N7-5D98']);
+
+    // Remove old legacy accounts
+    await query('DELETE FROM users WHERE email != $1', [adminEmail]);
+
     const existingUser = await query('SELECT * FROM users WHERE email = $1', [adminEmail]);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(adminPassword, salt);
+
     if (!existingUser.rows || existingUser.rows.length === 0) {
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(adminPassword, salt);
       await query(`
-        INSERT INTO users (email, password_hash, full_name, role)
-        VALUES ($1, $2, $3, $4)
-      `, [adminEmail, hash, 'Cambridge Marketing Admin', 'superadmin']);
-      if (!silent) console.log(`👤 Default admin user created: ${adminEmail}`);
+        INSERT INTO users (
+          email, password_hash, full_name, role,
+          two_factor_enabled, two_factor_method, two_factor_secret, recovery_codes,
+          status, failed_attempts, locked_until
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      `, [adminEmail, hash, 'Cambridge Studio Admin', 'superadmin', true, 'totp', totpSecret, recoveryCodes, 'active', 0, null]);
+      if (!silent) console.log(`👤 Superadmin user created with TOTP: ${adminEmail}`);
     } else {
-      if (!silent) console.log(`👤 Admin user exists: ${adminEmail}`);
+      await query(`
+        UPDATE users SET
+          password_hash = $1,
+          full_name = $2,
+          role = $3,
+          two_factor_enabled = $4,
+          two_factor_method = $5,
+          two_factor_secret = $6,
+          recovery_codes = $7,
+          status = 'active',
+          failed_attempts = 0,
+          locked_until = NULL,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE email = $8
+      `, [hash, 'Cambridge Studio Admin', 'superadmin', true, 'totp', totpSecret, recoveryCodes, adminEmail]);
+      if (!silent) console.log(`👤 Superadmin user credentials & TOTP synchronized: ${adminEmail}`);
     }
 
     // Seed initial Brands

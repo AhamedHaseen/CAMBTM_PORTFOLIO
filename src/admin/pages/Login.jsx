@@ -212,7 +212,7 @@ export default function Login() {
                   autoComplete="off"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="name@example.com"
+                  placeholder="Enter your email address"
                   style={{
                     width: '100%',
                     padding: '11px 12px 11px 36px',
@@ -479,7 +479,7 @@ export default function Login() {
                 <input
                   type="email"
                   required
-                  placeholder="admin@cambm.com"
+                  placeholder="Enter your email address"
                   value={forgotEmail}
                   onChange={e => setForgotEmail(e.target.value)}
                   className="adm-input"

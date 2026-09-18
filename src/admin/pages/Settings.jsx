@@ -90,7 +90,7 @@ export default function Settings() {
       if (data && data.system) {
         setSystemInfo(data.system);
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const fetchSmtpSettings = async () => {
@@ -110,7 +110,7 @@ export default function Settings() {
           twoFactorMethod: data.smtp.twoFactorMethod || 'email'
         }));
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleProfileSubmit = async (e) => {
