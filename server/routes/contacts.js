@@ -253,7 +253,7 @@ router.post('/custom-scope', async (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '127.0.0.1';
     const userAgent = req.headers['user-agent'] || 'Unknown';
 
-    // Dispatch email notification via SMTP / nodemailer
+    // Dispatch email notification
     const emailResult = await sendCustomScopeInquiryEmail({
       name: name.trim(),
       email: email.trim(),

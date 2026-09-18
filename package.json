@@ -26,7 +26,6 @@
     "lucide-react": "^1.41.0",
     "motion": "^13.2.0",
     "multer": "^2.3.0",
-    "nodemailer": "^10.0.0",
     "pg": "^8.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

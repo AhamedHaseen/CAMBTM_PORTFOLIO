@@ -52,7 +52,6 @@ An enterprise-grade, high-performance web platform for **Cambridge Marketing (PV
 - **Database Support:** [SQLite3](https://github.com/TryGhost/node-sqlite3) (`^6.0.1`) & [PostgreSQL](https://node-postgres.com/) (`pg` `^8.23.0`) with [Supabase](https://supabase.com/) (`@supabase/supabase-js` `^2.115.0`)
 - **Authentication & Security:** JWT (`jsonwebtoken` `^9.0.3`), `bcryptjs` (`^3.0.3`), `cookie-parser`, `helmet` (`^8.3.0`), `cors`, and `express-rate-limit`
 - **Media Uploads:** `multer` (`^2.3.0`)
-- **Email Dispatch:** `nodemailer` (`^10.0.0`)
 - **Process Orchestration:** `concurrently` (`^10.0.5`)
 
 ---
