@@ -9,7 +9,6 @@ import React, { useEffect } from "react";
 import Welcome from "./pages/Welcome";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
-import OurProjects from "./pages/OurProjects";
 import CustomPlan from "./pages/CustomPlan";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
