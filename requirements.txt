@@ -1,0 +1,45 @@
+# ==========================================================
+# Cambridge Marketing (CAMBM) Platform - Dependencies & Libraries
+# ==========================================================
+
+# --- Core Framework & Web Runtime ---
+react==19.2.8
+react-dom==19.2.8
+react-router-dom==7.18.3
+express==5.2.1
+vite==8.2.2
+
+# --- Database & Storage ---
+@supabase/supabase-js==2.115.0
+pg==8.23.0
+sqlite3==6.0.1
+
+# --- Authentication & Security ---
+jsonwebtoken==9.0.3
+bcryptjs==3.0.3
+helmet==8.3.0
+express-rate-limit==8.7.0
+
+# --- Email & Communication ---
+nodemailer==10.0.0
+
+# --- Server Utilities & Middleware ---
+cors==2.8.6
+cookie-parser==1.4.7
+dotenv==17.4.2
+multer==2.3.0
+
+# --- UI, Icons & Animations ---
+lucide-react==1.41.0
+motion==13.2.0
+
+# --- Client-Side Vendor Libraries (public/js) ---
+lenis==1.1.20 (Kinetic Smooth Scroll)
+cal-embed==latest (Cal.com Booking Widget)
+
+# --- Development & Build Tools ---
+concurrently==10.0.5
+oxlint==1.79.0
+@vitejs/plugin-react==6.1.0
+@types/react==19.2.18
+@types/react-dom==19.2.4

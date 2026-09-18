@@ -458,7 +458,7 @@ export default function Login() {
               <div>
                 <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
                   <p style={{ fontSize: '13px', color: '#34d399', margin: 0, lineHeight: '1.5' }}>
-                    <strong>✓ Alert Dispatched:</strong> A security notification with your account details has been sent to the administrator (<strong>ahamedhaseen2003@gmail.com</strong>). The administrator will verify and issue your new credentials.
+                    <strong>✓ Alert Dispatched:</strong> A security notification with your account details has been sent to the administrator. The administrator will verify and issue your new credentials.
                   </p>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

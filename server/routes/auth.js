@@ -653,7 +653,7 @@ router.post('/forgot-password', async (req, res) => {
         description: `Password reset requested for user: ${user.email} (${user.full_name}, Role: ${user.role || 'Staff'}) from IP: ${ip}`
       });
 
-      // Automatically dispatch rich notification to main admin (ahamedhaseen2003@gmail.com)
+      // Automatically dispatch rich notification to admin
       await sendForgotPasswordNotification({
         user,
         ip,
@@ -665,7 +665,7 @@ router.post('/forgot-password', async (req, res) => {
 
     return res.json({
       success: true,
-      message: 'Password reset request has been logged and sent to your administrator (ahamedhaseen2003@gmail.com).'
+      message: 'Password reset request has been logged and sent to your administrator.'
     });
   } catch (err) {
     console.error('Forgot password error:', err);

@@ -167,60 +167,12 @@ export async function testSmtpConnection(testConfig, targetEmail) {
 }
 
 /**
- * Send email via Resend API (https://resend.com)
- */
-export async function sendViaResend({ to, subject, html, text, replyTo = null, from = null }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey || !apiKey.trim()) {
-    throw new Error('RESEND_API_KEY is not defined in environment.');
-  }
-
-  const fromAddress = from || process.env.RESEND_FROM || 'Cambridge Marketing <onboarding@resend.dev>';
-  const recipients = Array.isArray(to) ? to : [to];
-
-  const payload = {
-    from: fromAddress,
-    to: recipients,
-    subject,
-    html,
-    text,
-    reply_to: replyTo || undefined
-  };
-
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey.trim()}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
-
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || `Resend Error: ${res.status}`);
-  }
-
-  console.log(`✉️ [Resend API] Email delivered to ${recipients.join(', ')} (ID: ${data.id})`);
-  return { success: true, provider: 'resend', id: data.id };
-}
-
-/**
- * Core send helper: Uses Resend API first, Active SMTP second, console mock third.
+ * Core send helper: Uses Active SMTP (Hostinger / configured SMTP) first, console mock fallback second.
  */
 export async function sendEmail({ to, subject, html, text, replyTo = null, from = null }) {
   const recipient = Array.isArray(to) ? to : [to];
 
-  // 1. Try Resend API first if configured
-  if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.trim()) {
-    try {
-      return await sendViaResend({ to: recipient, subject, html, text, replyTo, from });
-    } catch (err) {
-      console.error('⚠️ Resend dispatch failed, attempting fallback:', err.message);
-    }
-  }
-
-  // 2. Try Active SMTP Transporter second (Hostinger / configured SMTP)
+  // 1. Try Active SMTP Transporter (Hostinger / configured SMTP)
   if (cachedTransporter || (activeSmtpConfig.host && activeSmtpConfig.user && activeSmtpConfig.pass)) {
     try {
       const transporter = cachedTransporter || createTransporterFromConfig(activeSmtpConfig);
@@ -371,7 +323,11 @@ If you did not initiate this login, please contact your administrator.
  * Send automatic notification to Admin when any user requests a Password Reset
  */
 export async function sendForgotPasswordNotification({ user, ip, userAgent, timestamp, origin }) {
-  const adminEmail = process.env.ADMIN_NOTIFY_EMAIL || 'ahamedhaseen2003@gmail.com';
+  const adminEmail = process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL;
+  if (!adminEmail) {
+    console.log('ℹ️ [Mailer] No ADMIN_NOTIFY_EMAIL or ADMIN_EMAIL configured, skipping admin notification.');
+    return { success: false, skipped: true };
+  }
   const siteUrl = origin || process.env.SITE_URL || 'http://localhost:5173';
   const usersManagementUrl = `${siteUrl}/studio/users`;
 
@@ -575,10 +531,14 @@ ${newPassword ? `New Temporary Password: ${newPassword}\nLogin: ${loginUrl}` : '
 }
 
 /**
- * Send Custom Package Scope Inquiry to company email (ahamedhaseen2003@gmail.com)
+ * Send Custom Package Scope Inquiry to company email
  */
 export async function sendCustomScopeInquiryEmail({ name, email, phone, company, notes, services = [], ip, userAgent }) {
-  const targetEmail = process.env.ADMIN_EMAIL || 'ahamedhaseen2003@gmail.com';
+  const targetEmail = process.env.ADMIN_EMAIL || process.env.ADMIN_NOTIFY_EMAIL;
+  if (!targetEmail) {
+    console.log('ℹ️ [Mailer] No ADMIN_EMAIL configured, skipping inquiry email dispatch.');
+    return { success: false, skipped: true };
+  }
   
   // Clean, concise timestamp
   const now = new Date();
@@ -886,7 +846,6 @@ Delivered to: ${targetEmail}
 
 export default {
   sendEmail,
-  sendViaResend,
   sendTwoFactorOtpEmail,
   sendForgotPasswordNotification,
   sendPasswordResetAlert,

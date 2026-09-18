@@ -535,9 +535,8 @@ export default function UsersManager() {
               </p>
 
               <div style={{ background: 'rgba(99, 102, 241, 0.08)', border: '1px solid rgba(99, 102, 241, 0.2)', borderRadius: '10px', padding: '12px 14px', marginBottom: '18px', fontSize: '12px', color: 'var(--adm-text-muted)', lineHeight: '1.5' }}>
-                <div style={{ fontWeight: '600', color: '#818cf8', marginBottom: '4px' }}>📧 Dispatch Destinations:</div>
-                <div>&bull; <strong>User Email:</strong> <span style={{ color: '#fff' }}>{userToReset.email}</span></div>
-                <div>&bull; <strong>Admin Inbox:</strong> <span style={{ color: '#fff' }}>ahamedhaseen2003@gmail.com</span></div>
+                <div style={{ fontWeight: '600', color: '#818cf8', marginBottom: '4px' }}>📧 Dispatch Destination:</div>
+                <div>&bull; <strong>Recipient:</strong> <span style={{ color: '#fff' }}>{userToReset.email}</span></div>
               </div>
 
               <div className="adm-form-group">
