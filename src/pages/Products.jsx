@@ -226,16 +226,7 @@ export default function Products() {
               <span className="cambt-label">{copy.index.label}</span>
               <h2>{copy.index.heading}</h2>
               {copy.index.description && (
-                <p
-                  style={{
-                    maxWidth: "50rem",
-                    marginTop: "0.85rem",
-                    color: "#484848",
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "18px",
-                    lineHeight: "1.65",
-                  }}
-                >
+                <p className="cambt-index-desc">
                   {copy.index.description}
                 </p>
               )}

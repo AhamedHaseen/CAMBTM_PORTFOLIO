@@ -226,11 +226,15 @@
 .cambt-hero-lead {
   max-width: 36rem;
   margin: 0 0 2rem;
-  color: #484848;
+  color: #9a9a9a;
   font-family: 'Inter', sans-serif !important;
   font-size: 18px;
   line-height: 1.65;
   font-weight: 400;
+}
+
+[data-theme="light"] .cambt-hero-lead {
+  color: #484848;
 }
 
 .cambt-hero-actions {
@@ -325,12 +329,16 @@
 .cambt-label {
   display: block;
   margin: 0 0 1rem;
-  color: #484848;
+  color: #9a9a9a;
   font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
   font-size: var(--cambt-font-size-xs);
   font-weight: 700;
   letter-spacing: var(--cambt-tracking-label);
   text-transform: uppercase;
+}
+
+[data-theme="light"] .cambt-label {
+  color: #484848;
 }
 
 /* General Section Band Styles */
@@ -383,11 +391,29 @@
 
 .cambt-section-head p {
   margin: 1.25rem 0 0;
-  color: #484848;
+  color: #9a9a9a;
   font-family: 'Inter', sans-serif !important;
   font-size: 18px;
   line-height: 1.65;
   font-weight: 400;
+}
+
+[data-theme="light"] .cambt-section-head p {
+  color: #484848;
+}
+
+.cambt-index-desc {
+  max-width: 50rem;
+  margin-top: 0.85rem;
+  color: #9a9a9a;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+[data-theme="light"] .cambt-index-desc {
+  color: #484848;
 }
 
 /* --- System Wall 3D Monitor (Landscape Frame with Centered Vertical Cards) --- */
