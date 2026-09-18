@@ -165,41 +165,35 @@ export default function Products() {
     <div className="cambm-products-page">
       {/* Main Products Content */}
       <main id="main-content">
-        {/* A1. Hero with SystemWall */}
-        <section className="cambt-hero">
+        {/* A1. Hero (Centered) */}
+        <section className="cambt-hero cambt-hero-centered-section">
           <div className="cambt-hero-inner">
-            <div className="cambt-hero-grid">
-              <div className="cambt-hero-content">
-                <span className="cambt-label">{copy.hero.label}</span>
-                <h1>
-                  {currentLang === "en" ? (
+            <div className="cambt-hero-content-centered">
+              <span className="cambt-label">{copy.hero.label}</span>
+              <h1>
+                {currentLang === "en" ? (
+                  <>
+                    Systems that <em>{copy.hero.emphasis}</em> the business
+                  </>
+                ) : (
+                  copy.hero.title || (
                     <>
                       Systems that <em>{copy.hero.emphasis}</em> the business
                     </>
-                  ) : (
-                    copy.hero.title || (
-                      <>
-                        Systems that <em>{copy.hero.emphasis}</em> the business
-                      </>
-                    )
-                  )}
-                </h1>
-                <p className="cambt-hero-lead">{copy.hero.lead}</p>
-                <div className="cambt-hero-actions">
-                  <button
-                    type="button"
-                    className="cambt-btn-hero-discuss js-open-cal"
-                    data-cal-link="cambridge.marketing"
-                    data-cal-namespace="strategy-call"
-                    data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
-                  >
-                    {copy.hero.primaryAction?.label || "Book a strategy call"} <span>&rarr;</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="cambt-hero-visual">
-                <SystemWall systems={wallSystems} />
+                  )
+                )}
+              </h1>
+              <p className="cambt-hero-lead">{copy.hero.lead}</p>
+              <div className="cambt-hero-actions">
+                <button
+                  type="button"
+                  className="cambt-btn-hero-discuss js-open-cal"
+                  data-cal-link="cambridge.marketing"
+                  data-cal-namespace="strategy-call"
+                  data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+                >
+                  {copy.hero.primaryAction?.label || "Book a strategy call"} <span>&rarr;</span>
+                </button>
               </div>
             </div>
           </div>
@@ -222,7 +216,7 @@ export default function Products() {
         {/* A4. The systems (SystemIndex) */}
         <section className="cambt-section cambt-section-white" id="catalogue">
           <div className="cambt-inner">
-            <div className="cambt-section-head" style={{ marginBottom: "2.5rem" }}>
+            <div className="cambt-section-head cambt-catalogue-head" style={{ marginBottom: "2.5rem" }}>
               <span className="cambt-label">{copy.index.label}</span>
               <h2>{copy.index.heading}</h2>
               {copy.index.description && (

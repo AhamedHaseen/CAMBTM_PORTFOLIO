@@ -108,11 +108,13 @@ export default function FittedField({ copy }) {
           </div>
         </div>
 
+        {/*
         <div aria-hidden="true" className="cambt-fitted-grid" ref={ref}>
           {Array.from({ length: CELLS }, (_, index) => (
             <span className="cambt-fitted-line" key={index} />
           ))}
         </div>
+        */}
       </div>
 
       {/* 4 Delivery Principles without glowing spotlight */}

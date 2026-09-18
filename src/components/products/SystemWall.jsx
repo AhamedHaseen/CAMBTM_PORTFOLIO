@@ -5,6 +5,7 @@ import SystemMark from "./SystemMark";
 export default function SystemWall({ systems }) {
   return (
     <div className="cambt-desk">
+      {/*
       <div className="cambt-machine">
         <div className="cambt-bezel">
           <div className="cambt-glass">
@@ -18,7 +19,7 @@ export default function SystemWall({ systems }) {
                     onClick={() => {
                       try {
                         sessionStorage.setItem("cambm_last_product_slug", system.slug);
-                      } catch (e) {}
+                      } catch (e) { }
                     }}
                   >
                     <span className="cambt-wall-plate">
@@ -35,6 +36,7 @@ export default function SystemWall({ systems }) {
         <div aria-hidden="true" className="cambt-neck" />
         <div aria-hidden="true" className="cambt-foot" />
       </div>
+      */}
     </div>
   );
 }
