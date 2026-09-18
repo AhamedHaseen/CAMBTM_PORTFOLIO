@@ -896,11 +896,19 @@
   border-radius: var(--cambt-radius-md);
   background: var(--cambt-color-bg-surface);
   height: 100%;
-  transition: border-color 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .cambt-fitted-card:hover {
   border-color: var(--cambt-color-border-strong);
+  transform: scale(1.03) translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25), 0 0 14px rgba(255, 90, 0, 0.12);
+}
+
+[data-theme="light"] .cambt-fitted-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 0 14px rgba(255, 90, 0, 0.1);
 }
 
 .cambt-fitted-card-header {
