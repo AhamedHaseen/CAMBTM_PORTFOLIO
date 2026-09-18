@@ -332,6 +332,43 @@
   transform: translateX(4px);
 }
 
+.cambt-btn-hero-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: var(--font-tight, 'Inter Tight', 'Inter', sans-serif) !important;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--cambt-color-text-secondary);
+  border: 1px solid var(--cambt-color-border-strong);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.cambt-btn-hero-back:hover {
+  border-color: var(--cambt-color-brand-blue);
+  color: var(--cambt-color-brand-blue);
+  background: var(--cambt-color-bg-surface);
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .cambt-btn-hero-back {
+  color: #484848;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .cambt-btn-hero-back:hover {
+  color: var(--cambt-color-brand-blue);
+  border-color: var(--cambt-color-brand-blue);
+  background: #ffffff;
+}
+
 .cambt-btn-primary {
   display: inline-flex;
   align-items: center;
@@ -1321,72 +1358,21 @@
   width: 100%;
 }
 
-/* Floating Left & Right Arrow Mark Buttons */
-.cambt-slider-nav-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1px solid var(--cambt-color-border-strong);
-  background: var(--cambt-color-bg-surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--cambt-color-text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cambt-slider-nav-left {
-  left: -20px;
-}
-
-.cambt-slider-nav-right {
-  right: -20px;
-}
-
-@media (max-width: 48rem) {
-  .cambt-slider-nav-arrow {
-    width: 40px;
-    height: 40px;
-  }
-
-  .cambt-slider-nav-left {
-    left: 4px;
-  }
-
-  .cambt-slider-nav-right {
-    right: 4px;
-  }
-}
-
-.cambt-slider-nav-arrow:hover {
-  background: var(--cambt-color-brand-blue, #FF5A00);
-  border-color: var(--cambt-color-brand-blue, #FF5A00);
-  color: #ffffff;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 10px 30px rgba(255, 90, 0, 0.35);
-}
-
-.cambt-slider-nav-arrow:active {
-  transform: translateY(-50%) scale(0.96);
-}
-
 .cambt-portrait-gallery {
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-padding-inline: 1.5rem;
   width: 100%;
-  padding: 1.5rem 0.5rem 2rem;
+  padding: 1.5rem 0 2rem;
   scrollbar-width: thin;
   scrollbar-color: var(--cambt-color-border-subtle) transparent;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cambt-portrait-gallery:active {
+  cursor: grabbing;
 }
 
 .cambt-portrait-gallery::-webkit-scrollbar {
@@ -1400,15 +1386,16 @@
 
 .cambt-portrait-rail {
   display: flex;
-  gap: clamp(1.25rem, 2.8vw, 2rem);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
   margin: 0;
-  padding: 0 15% 0 15%;
+  padding: 0 1.5rem;
   list-style: none;
 }
 
 @media (max-width: 48rem) {
   .cambt-portrait-rail {
-    padding: 0 8% 0 8%;
+    padding: 0 1rem;
+    gap: 1rem;
   }
 }
 

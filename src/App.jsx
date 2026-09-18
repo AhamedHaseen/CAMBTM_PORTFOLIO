@@ -32,20 +32,21 @@ function ScrollHandler() {
     if (hash) {
       const targetId = hash.replace(/^#/, "");
       const timer = setTimeout(() => {
+        const cleanSlug = targetId.replace(/^product-/, "");
         const el =
           document.getElementById(targetId) ||
-          document.getElementById(`product-${targetId}`) ||
-          document.querySelector(`[data-slug="${targetId}"]`);
+          document.getElementById(`product-${cleanSlug}`) ||
+          document.querySelector(`[data-slug="${cleanSlug}"]`);
         if (el) {
           if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-            window.__cambmLenis.scrollTo(el, { offset: -80, duration: 0.8 });
+            window.__cambmLenis.scrollTo(el, { offset: -90, duration: 0.8 });
           } else {
-            const top = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 80;
+            const top = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 90;
             window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
           }
         }
         triggerReveals();
-      }, 80);
+      }, 100);
       return () => clearTimeout(timer);
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });

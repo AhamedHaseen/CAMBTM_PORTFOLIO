@@ -5,33 +5,152 @@ export default function ScreenStack({ captionPrefix, galleryLabel, screens }) {
   const stacked = screens.filter((screen) => screen.format !== "portrait");
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const railRef = useRef(null);
+  const galleryRef = useRef(null);
+  const directionRef = useRef(1); // 1 = right, -1 = left
+  const autoScrollTimer = useRef(null);
 
   const prevSlide = () => {
+    directionRef.current = -1;
     setActiveIndex((prev) => (prev > 0 ? prev - 1 : portraits.length - 1));
   };
 
   const nextSlide = () => {
+    directionRef.current = 1;
     setActiveIndex((prev) => (prev < portraits.length - 1 ? prev + 1 : 0));
   };
 
   const goToSlide = (index) => {
+    directionRef.current = index >= activeIndex ? 1 : -1;
     setActiveIndex(index);
   };
 
-  // Scroll active slide into view smoothly
+  // Smoothly center the active slide in the slider track
   useEffect(() => {
-    if (railRef.current && portraits.length > 0) {
+    if (galleryRef.current && railRef.current && portraits.length > 0) {
       const slides = railRef.current.children;
-      if (slides && slides[activeIndex]) {
-        slides[activeIndex].scrollIntoView({
+      const targetSlide = slides[activeIndex];
+      if (targetSlide) {
+        const gallery = galleryRef.current;
+        const targetLeft =
+          targetSlide.offsetLeft - (gallery.clientWidth - targetSlide.clientWidth) / 2;
+        gallery.scrollTo({
+          left: Math.max(0, targetLeft),
           behavior: "smooth",
-          block: "nearest",
-          inline: "center",
         });
       }
     }
   }, [activeIndex, portraits.length]);
+
+  // Automatic horizontal scrolling back and forth (left and right)
+  useEffect(() => {
+    if (portraits.length <= 1 || isPaused) return;
+
+    autoScrollTimer.current = setInterval(() => {
+      setActiveIndex((prev) => {
+        let next = prev + directionRef.current;
+        if (next >= portraits.length) {
+          directionRef.current = -1;
+          next = portraits.length - 2 >= 0 ? portraits.length - 2 : 0;
+        } else if (next < 0) {
+          directionRef.current = 1;
+          next = 1 < portraits.length ? 1 : 0;
+        }
+        return next;
+      });
+    }, 3200);
+
+    return () => {
+      if (autoScrollTimer.current) clearInterval(autoScrollTimer.current);
+    };
+  }, [portraits.length, isPaused]);
+
+  // Mouse wheel horizontal scroll & Drag-to-scroll handler
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeftStart = 0;
+    let scrollTimeout = null;
+
+    const syncActiveIndex = () => {
+      if (railRef.current && portraits.length > 0) {
+        const slides = Array.from(railRef.current.children);
+        const galleryCenter = gallery.scrollLeft + gallery.clientWidth / 2;
+        let closestIdx = 0;
+        let minDiff = Infinity;
+        slides.forEach((s, idx) => {
+          const sCenter = s.offsetLeft + s.clientWidth / 2;
+          const diff = Math.abs(sCenter - galleryCenter);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = idx;
+          }
+        });
+        setActiveIndex(closestIdx);
+      }
+    };
+
+    const onWheel = (e) => {
+      const delta = e.deltaY || e.deltaX;
+      if (delta !== 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        gallery.scrollLeft += delta * 1.4;
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          syncActiveIndex();
+        }, 50);
+      }
+    };
+
+    const onMouseDown = (e) => {
+      isDown = true;
+      startX = e.pageX - gallery.offsetLeft;
+      scrollLeftStart = gallery.scrollLeft;
+      setIsPaused(true);
+    };
+
+    const onMouseLeave = () => {
+      isDown = false;
+      setIsPaused(false);
+    };
+
+    const onMouseUp = () => {
+      if (isDown) {
+        isDown = false;
+        syncActiveIndex();
+      }
+      setIsPaused(false);
+    };
+
+    const onMouseMove = (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - gallery.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      gallery.scrollLeft = scrollLeftStart - walk;
+    };
+
+    gallery.addEventListener("wheel", onWheel, { passive: false });
+    gallery.addEventListener("mousedown", onMouseDown);
+    gallery.addEventListener("mouseleave", onMouseLeave);
+    gallery.addEventListener("mouseup", onMouseUp);
+    gallery.addEventListener("mousemove", onMouseMove);
+
+    return () => {
+      gallery.removeEventListener("wheel", onWheel);
+      gallery.removeEventListener("mousedown", onMouseDown);
+      gallery.removeEventListener("mouseleave", onMouseLeave);
+      gallery.removeEventListener("mouseup", onMouseUp);
+      gallery.removeEventListener("mousemove", onMouseMove);
+      clearTimeout(scrollTimeout);
+    };
+  }, [portraits.length]);
 
   return (
     <div className="cambt-screen-stack">
@@ -62,25 +181,21 @@ export default function ScreenStack({ captionPrefix, galleryLabel, screens }) {
       ))}
 
       {portraits.length > 0 && (
-        <div className="cambt-portrait-slider-container" aria-label={galleryLabel}>
-          {/* Slider Stage with Left and Right Floating Navigation Arrows */}
+        <div
+          className="cambt-portrait-slider-container"
+          aria-label={galleryLabel}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
+          {/* Slider Stage (Arrow marks removed) */}
           <div className="cambt-slider-stage">
-            {/* Left side arrow mark button */}
-            <button
-              type="button"
-              className="cambt-slider-nav-arrow cambt-slider-nav-left"
-              onClick={prevSlide}
-              aria-label="Slide left (Previous card)"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-
             {/* Slider Track / Rail */}
             <div
               className="cambt-portrait-gallery"
               data-lenis-prevent
+              ref={galleryRef}
               role="region"
               tabIndex={0}
             >
@@ -110,18 +225,6 @@ export default function ScreenStack({ captionPrefix, galleryLabel, screens }) {
                 ))}
               </ol>
             </div>
-
-            {/* Right side arrow mark button */}
-            <button
-              type="button"
-              className="cambt-slider-nav-arrow cambt-slider-nav-right"
-              onClick={nextSlide}
-              aria-label="Slide right (Next card)"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
           </div>
 
           {/* Bottom pagination & info bar */}

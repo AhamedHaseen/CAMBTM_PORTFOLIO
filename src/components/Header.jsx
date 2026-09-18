@@ -59,6 +59,15 @@ export default function Header() {
               to="/products"
               className={`nav-link ${isProducts ? "active" : ""}`}
               data-i18n="nav.ourProducts"
+              onClick={() => {
+                if (pathname === "/products" || pathname === "/products.html") {
+                  if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+                    window.__cambmLenis.scrollTo(0, { immediate: false, duration: 0.8 });
+                  } else {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }
+              }}
             >
               Our Products
             </NavLink>
@@ -160,6 +169,15 @@ export default function Header() {
             to="/products"
             className={`mobile-nav-link ${isProducts ? "active" : ""}`}
             data-i18n="nav.ourProducts"
+            onClick={() => {
+              if (pathname === "/products" || pathname === "/products.html") {
+                if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+                  window.__cambmLenis.scrollTo(0, { immediate: false, duration: 0.8 });
+                } else {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }
+            }}
           >
             Our Products
           </NavLink>

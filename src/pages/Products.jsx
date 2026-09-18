@@ -74,7 +74,36 @@ export default function Products() {
       window.history.scrollRestoration = "manual";
     }
 
-    const targetSlug = location.hash ? location.hash.replace("#", "") : "";
+    const isReload =
+      (typeof performance !== "undefined" &&
+        performance.getEntriesByType &&
+        performance.getEntriesByType("navigation")[0]?.type === "reload") ||
+      (typeof performance !== "undefined" && performance.navigation?.type === 1);
+
+    if (isReload) {
+      try {
+        sessionStorage.removeItem("cambm_return_product");
+      } catch (e) {}
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+      if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
+        window.__cambmLenis.scrollTo(0, { immediate: true });
+      }
+      return;
+    }
+
+    let returnProduct = null;
+    try {
+      returnProduct = sessionStorage.getItem("cambm_return_product");
+      if (returnProduct) {
+        sessionStorage.removeItem("cambm_return_product");
+      }
+    } catch (e) {}
+
+    const targetSlug = location.hash
+      ? location.hash.replace("#", "")
+      : (returnProduct ? `product-${returnProduct}` : "");
 
     if (targetSlug) {
       const scrollToTarget = () => {
@@ -83,17 +112,26 @@ export default function Products() {
           document.getElementById(targetSlug) ||
           document.getElementById(`product-${cleanSlug}`) ||
           document.getElementById(cleanSlug) ||
-          document.getElementById("catalogue") ||
-          document.getElementById("what-we-can-deploy") ||
-          document.getElementById("index");
+          document.querySelector(`[data-slug="${cleanSlug}"]`);
 
         if (el) {
           if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-            window.__cambmLenis.scrollTo(el, { offset: -90, duration: 1.2 });
+            window.__cambmLenis.scrollTo(el, { offset: -90, duration: 0.9 });
           } else {
-            const y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+            const y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 90;
             window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
           }
+
+          // Focus highlight on returned product card
+          el.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease";
+          el.style.transform = "translateY(-4px)";
+          el.style.boxShadow = "0 8px 30px rgba(255, 90, 0, 0.25)";
+          el.style.borderColor = "var(--cambt-color-brand-blue)";
+          setTimeout(() => {
+            el.style.transform = "";
+            el.style.boxShadow = "";
+            el.style.borderColor = "";
+          }, 1800);
         }
       };
 

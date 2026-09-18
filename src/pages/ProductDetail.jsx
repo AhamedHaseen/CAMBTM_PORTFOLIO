@@ -111,6 +111,14 @@ export default function ProductDetail() {
     };
   }, [slug]);
 
+  useEffect(() => {
+    if (slug) {
+      try {
+        sessionStorage.setItem("cambm_return_product", slug);
+      } catch (e) {}
+    }
+  }, [slug]);
+
   if (!product) {
     return <Navigate to="/products" replace />;
   }
@@ -127,40 +135,22 @@ export default function ProductDetail() {
     <div className="cambm-products-page">
       {/* Main Detail Content */}
       <main id="main-content">
-        {/* B1. Hero */}
-        <section className="cambt-hero">
+        {/* B1. Hero (Centered) */}
+        <section className="cambt-hero cambt-hero-centered-section">
           <div className="cambt-hero-inner">
-            <nav aria-label="Breadcrumb" className="cambt-breadcrumb">
-              <ol>
-                <li>
-                  <Link to="/">{pageContent.detail.breadcrumbHome}</Link>
-                </li>
-                <li className="cambt-breadcrumb-sep">/</li>
-                <li>
-                  <Link to={`/products#product-${slug}`}>{pageContent.detail.breadcrumbIndex}</Link>
-                </li>
-                <li className="cambt-breadcrumb-sep">/</li>
-                <li className="cambt-breadcrumb-current">{product.name}</li>
-              </ol>
-            </nav>
-
-            <div className="cambt-hero-grid">
-              <div className="cambt-hero-content">
-                <h1>{product.name}</h1>
-              </div>
-              <div>
-                <p className="cambt-hero-lead">{product.lead || product.positioning}</p>
-                <div className="cambt-hero-actions">
-                  <button
-                    type="button"
-                    className="cambt-btn-hero-discuss js-open-cal"
-                    data-cal-link="cambridge.marketing"
-                    data-cal-namespace="strategy-call"
-                    data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
-                  >
-                    {pageContent.detail?.requestDemoLabel || "Book a strategy call"} <span>&rarr;</span>
-                  </button>
-                </div>
+            <div className="cambt-hero-content-centered">
+              <h1>{product.name}</h1>
+              <p className="cambt-hero-lead">{product.lead || product.positioning}</p>
+              <div className="cambt-hero-actions">
+                <button
+                  type="button"
+                  className="cambt-btn-hero-discuss js-open-cal"
+                  data-cal-link="cambridge.marketing"
+                  data-cal-namespace="strategy-call"
+                  data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+                >
+                  {pageContent.detail?.requestDemoLabel || "Book a strategy call"} <span>&rarr;</span>
+                </button>
               </div>
             </div>
           </div>
