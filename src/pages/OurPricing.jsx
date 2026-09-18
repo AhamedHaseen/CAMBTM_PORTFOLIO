@@ -572,17 +572,20 @@ export default function OurPricing() {
               <span className="pricing-combos-eyebrow">
                 {activeLocaleData.combos?.eyebrow || "PRE-BUILT PACKAGES"}
               </span>
-              <h2 className="pricing-combos-title">
-                {activeLocaleData.combos?.title || "Connected services. One clear engagement."}
-              </h2>
+              <h2
+                className="pricing-combos-title"
+                dangerouslySetInnerHTML={{
+                  __html: activeLocaleData.combos?.title || "Integrated Services, One <em>Solution</em>",
+                }}
+              />
               <p className="pricing-combos-desc">
-                {activeLocaleData.combos?.desc || "Pre-built packages combine content, marketing, and technology into one managed solution."}
+                {activeLocaleData.combos?.desc || "Pre-built packages combine content, marketing, and technology into one flexible solution."}
               </p>
-              {activeLocaleData.combos?.note && (
+              {activeLocaleData.combos?.note ? (
                 <p className="pricing-combos-note">
                   {activeLocaleData.combos.note}
                 </p>
-              )}
+              ) : null}
             </div>
 
             {/* 3 Package Cards Grid */}

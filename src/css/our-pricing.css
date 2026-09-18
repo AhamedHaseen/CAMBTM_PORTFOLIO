@@ -192,6 +192,14 @@
   color: var(--ink) !important;
 }
 
+.pricing-combos-title em,
+[data-theme="dark"] .pricing-combos-title em {
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: #ff5a00 !important;
+}
+
 html.modal-open-scroll-lock,
 body.modal-open-scroll-lock {
   overflow: hidden !important;

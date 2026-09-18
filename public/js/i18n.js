@@ -103,6 +103,7 @@
     "testimonials.title": true,
     "cta.title": true,
     "packages.title": true,
+    "packages.combos.title": true,
   };
 
   const TRANSLATIONS = { en: {}, ar: {}, si: {}, ta: {}, es: {} };
@@ -1682,9 +1683,9 @@
     "packages.eyebrow": "Our Services",
     "packages.title": "Choose what your business <em class=\"highlight-needs\">needs</em>",
     "packages.combos.eyebrow": "Pre-built packages",
-    "packages.combos.title": "Connected services. One clear engagement.",
-    "packages.combos.desc": "Pre-built packages combine content, marketing, and technology into one managed solution.",
-    "packages.combos.note": "Package scope can be adapted after a short requirements discussion.",
+    "packages.combos.title": "Integrated Services, One <em>Solution</em>",
+    "packages.combos.desc": "Pre-built packages combine content, marketing, and technology into one flexible solution.",
+    "packages.combos.note": "",
     "packages.summary":
       "BUILD the infrastructure. GROW the business. CREATE what the audience sees.",
     "packages.tabsAriaLabel": "Package categories",
@@ -1891,9 +1892,9 @@
     "packages.eyebrow": "Nuestros Servicios",
     "packages.title": "Elige lo que tu empresa <em class=\"highlight-needs\">necesita</em>",
     "packages.combos.eyebrow": "Paquetes Combinados",
-    "packages.combos.title": "Servicios conectados. Una sola contratación clara.",
-    "packages.combos.desc": "Para empresas que necesitan varias capacidades trabajando juntas, nuestros paquetes combinan contenido, marketing y tecnología en una sola gestión.",
-    "packages.combos.note": "El alcance del paquete se adapta tras una breve conversación sobre tus requerimientos.",
+    "packages.combos.title": "Servicios Integrados, Una <em>Solución</em>",
+    "packages.combos.desc": "Los paquetes prediseñados combinan contenido, marketing y tecnología en una solución flexible.",
+    "packages.combos.note": "",
     "packages.summary":
       "CONSTRUYE la infraestructura. HAZ CRECER el negocio. CREA lo que ve la audiencia.",
     "packages.tabsAriaLabel": "Categorías de paquetes",
@@ -2110,9 +2111,9 @@
     "packages.eyebrow": "خدماتنا",
     "packages.title": "اختر ما <em class=\"highlight-needs\">يحتاجه</em> عملك التجاري",
     "packages.combos.eyebrow": "باقات مدمجة",
-    "packages.combos.title": "خدمات مترابطة. تعاقد واضح ومحدد.",
-    "packages.combos.desc": "للشركات التي تحتاج قدرات متعددة تعمل معاً بتناغم، تجمع باقاتنا بين المحتوى والتسويق والتكنولوجيا في إدارة واحدة متكاملة.",
-    "packages.combos.note": "يتم تحديد نطاق الباقة بعد جلسة مناقشة سريعة لمتطلبات عملك.",
+    "packages.combos.title": "خدمات متكاملة، <em>حل</em> واحد",
+    "packages.combos.desc": "تجمع الباقات الجاهزة بين المحتوى والتسويق والتكنولوجيا في حل واحد مرن.",
+    "packages.combos.note": "",
     "packages.summary":
       "ابنِ البنية التحتية. نمِّ أعمالك. ابتكر ما يراه جمهورك.",
     "packages.tabsAriaLabel": "فئات الباقات",
@@ -2311,9 +2312,9 @@
     "packages.eyebrow": "අපගේ සේවාවන්",
     "packages.title": "ඔබේ ව්‍යාපාරයට <em class=\"highlight-needs\">අවශ්‍ය දේ</em> තෝරන්න",
     "packages.combos.eyebrow": "සංයුක්ත පැකේජ",
-    "packages.combos.title": "සම්බන්ධිත සේවාවන්. එක් පැහැදිලි ගිවිසුමක්.",
-    "packages.combos.desc": "එකට ක්‍රියා කරන හැකියාවන් කිහිපයක් අවශ්‍ය ව්‍යාපාර සඳහා, අපගේ සංයුක්ත පැකේජ අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණයකට ඒකාබද්ධ කරයි.",
-    "packages.combos.note": "කෙටි අවශ්‍යතා සාකච්ඡාවකින් පසු පැකේජයේ විෂය පථය වෙනස් කළ හැක.",
+    "packages.combos.title": "ඒකාබද්ධ සේවාවන්, එක් <em>විසඳුමක්</em>",
+    "packages.combos.desc": "සූදානම් කළ පැකේජ මඟින් අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් නම්‍යශීලී විසඳුමකට ඒකාබද්ධ කරයි.",
+    "packages.combos.note": "",
     "packages.summary":
       "යටිතල පහසුකම් ගොඩනඟන්න. ව්‍යාපාරය වර්ධනය කරන්න. ප්‍රේක්ෂකයා දකින දේ නිර්මාණය කරන්න.",
     "packages.tabsAriaLabel": "පැකේජ කාණ්ඩ",
@@ -2523,9 +2524,9 @@
     "packages.eyebrow": "எங்கள் சேவைகள்",
     "packages.title": "உங்கள் வணிகத்திற்கு <em class=\"highlight-needs\">தேவையானதை</em> தேர்வு செய்யவும்",
     "packages.combos.eyebrow": "கூட்டு தொகுப்புகள்",
-    "packages.combos.title": "இணைக்கப்பட்ட சேவைகள். ஒரு தெளிவான ஒப்பந்தம்.",
-    "packages.combos.desc": "பல திறன்கள் ஒன்றாகச் செயல்பட வேண்டிய வணிகங்களுக்கு, எங்கள் கூட்டு தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒற்றை நிர்வாகத்தில் இணைக்கின்றன.",
-    "packages.combos.note": "குறுகிய தேவைகள் குறித்த கலந்துரையாடலுக்குப் பிறகு தொகுப்பின் அளவை மாற்றியமைக்கலாம்.",
+    "packages.combos.title": "ஒருங்கிணைந்த சேவைகள், ஒரே <em>தீர்வு</em>",
+    "packages.combos.desc": "முன்பே உருவாக்கப்பட்ட தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒரே நெகிழ்வான தீர்வாக இணைக்கின்றன.",
+    "packages.combos.note": "",
     "packages.summary":
       "கட்டமைப்பை உருவாக்குங்கள். வணிகத்தை வளருங்கள். பார்வையாளர்கள் காண்பதை உருவாக்குங்கள்.",
     "packages.tabsAriaLabel": "தொகுப்பு வகைகள்",

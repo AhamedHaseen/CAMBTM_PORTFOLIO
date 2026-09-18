@@ -83,9 +83,8 @@ export const I18N_SERVICES = {
     },
     combos: {
       eyebrow: "Pre-built packages",
-      title: "Connected services. One clear engagement.",
-      desc: "Pre-built packages combine content, marketing, and technology into one managed solution.",
-      note: "Package scope can be adapted after a short requirements discussion.",
+      title: "Integrated Services, One <em>Solution</em>",
+      desc: "Pre-built packages combine content, marketing, and technology into one flexible solution.",
       discussBtn: "Discuss",
       cards: [
         {
@@ -215,9 +214,8 @@ export const I18N_SERVICES = {
     },
     combos: {
       eyebrow: "Paquetes Combinados",
-      title: "Servicios conectados. Una sola contratación clara.",
-      desc: "Los paquetes combinados combinan contenido, marketing y tecnología en una única solución gestionada.",
-      note: "El alcance del paquete se adapta tras una breve conversación sobre tus requerimientos.",
+      title: "Servicios Integrados, Una <em>Solución</em>",
+      desc: "Los paquetes prediseñados combinan contenido, marketing y tecnología en una solución flexible.",
       discussBtn: "Consultar",
       cards: [
         {
@@ -347,9 +345,8 @@ export const I18N_SERVICES = {
     },
     combos: {
       eyebrow: "باقات مدمجة",
-      title: "خدمات مترابطة. تعاقد واضح ومحدد.",
-      desc: "تجمع الباقات المدمجة بين المحتوى والتسويق والتكنولوجيا في حل متكامل مُدار.",
-      note: "يتم تحديد نطاق الباقة بعد جلسة مناقشة سريعة لمتطلبات عملك.",
+      title: "خدمات متكاملة، <em>حل</em> واحد",
+      desc: "تجمع الباقات الجاهزة بين المحتوى والتسويق والتكنولوجيا في حل واحد مرن.",
       discussBtn: "ناقش",
       cards: [
         {
@@ -479,9 +476,8 @@ export const I18N_SERVICES = {
     },
     combos: {
       eyebrow: "සංයුක්ත පැකේජ",
-      title: "සම්බන්ධිත සේවාවන්. එක් පැහැදිලි ගිවිසුමක්.",
-      desc: "සංයුක්ත පැකේජ මඟින් අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් කළමනාකරණය කළ විසඳුමකට ඒකාබද්ධ කරයි.",
-      note: "කෙටි අවශ්‍යතා සාකච්ඡාවකින් පසු පැකේජයේ විෂය පථය වෙනස් කළ හැක.",
+      title: "ඒකාබද්ධ සේවාවන්, එක් <em>විසඳුමක්</em>",
+      desc: "සූදානම් කළ පැකේජ මඟින් අන්තර්ගතය, අලෙවිකරණය සහ තාක්ෂණය එක් නම්‍යශීලී විසඳුමකට ඒකාබද්ධ කරයි.",
       discussBtn: "සාකච්ඡා කරන්න",
       cards: [
         {
@@ -611,9 +607,8 @@ export const I18N_SERVICES = {
     },
     combos: {
       eyebrow: "கூட்டு தொகுப்புகள்",
-      title: "இணைக்கப்பட்ட சேவைகள். ஒரு தெளிவான ஒப்பந்தம்.",
-      desc: "காம்போ தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒரே நிர்வகிக்கப்பட்ட தீர்வாக இணைக்கின்றன.",
-      note: "குறுகிய தேவைகள் குறித்த கலந்துரையாடலுக்குப் பிறகு தொகுப்பின் அளவை மாற்றியமைக்கலாம்.",
+      title: "ஒருங்கிணைந்த சேவைகள், ஒரே <em>தீர்வு</em>",
+      desc: "முன்பே உருவாக்கப்பட்ட தொகுப்புகள் உள்ளடக்கம், சந்தைப்படுத்தல் மற்றும் தொழில்நுட்பத்தை ஒரே நெகிழ்வான தீர்வாக இணைக்கின்றன.",
       discussBtn: "கலந்துரையாட",
       cards: [
         {
