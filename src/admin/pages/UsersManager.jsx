@@ -18,7 +18,7 @@ import {
   RefreshCw,
   Clock
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useToast } from '../components/Toast';
 import { formatLocalDateTime } from '../utils/date';
 import { apiRequest } from '../utils/api';

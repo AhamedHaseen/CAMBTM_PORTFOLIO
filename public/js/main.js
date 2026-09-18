@@ -496,19 +496,28 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
+  { threshold: 0.05, rootMargin: "0px 0px 80px 0px" },
 );
 
 function observeNewRevealElements() {
-  document
-    .querySelectorAll(
-      ".scroll-reveal:not(.revealed), .scroll-reveal-left:not(.revealed), .scroll-reveal-right:not(.revealed), .scroll-reveal-scale:not(.revealed)",
-    )
-    .forEach((el) => revealObserver.observe(el));
+  const elements = document.querySelectorAll(
+    ".scroll-reveal:not(.revealed), .scroll-reveal-left:not(.revealed), .scroll-reveal-right:not(.revealed), .scroll-reveal-scale:not(.revealed)",
+  );
+  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  elements.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= vh + 100) {
+      el.classList.add("revealed");
+    } else {
+      revealObserver.observe(el);
+    }
+  });
 }
 window.observeNewRevealElements = observeNewRevealElements;
 window.addEventListener("cambm:revealed", observeNewRevealElements);
+document.addEventListener("cambm:revealed", observeNewRevealElements);
 window.addEventListener("cambm:observe-reveal", observeNewRevealElements);
+document.addEventListener("cambm:observe-reveal", observeNewRevealElements);
 
 observeNewRevealElements();
 
@@ -1034,9 +1043,6 @@ window.addEventListener("cambm:bento-updated", () => {
   initLoopSliders();
 });
 window.addEventListener("cambm:brands-updated", () => {
-  initLoopSliders();
-});
-window.addEventListener("cambm:revealed", () => {
   initLoopSliders();
 });
 

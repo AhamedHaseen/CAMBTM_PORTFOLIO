@@ -21,7 +21,7 @@ import {
   Package,
   MapPin
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useToast } from './Toast';
 import { apiRequest } from '../utils/api';
 

@@ -70,7 +70,7 @@ export default function MotionPageLoader({ customAssets = [] }) {
         if (parsed?.row1) extraLogos.push(...parsed.row1.map(b => b.logo_url));
         if (parsed?.row2) extraLogos.push(...parsed.row2.map(b => b.logo_url));
       }
-    } catch (e) {}
+    } catch (e) { }
 
     const allUrls = [...new Set([...ALL_DEFAULT_BRAND_LOGOS, ...extraLogos, ...customAssets])].filter(Boolean);
 
@@ -84,7 +84,7 @@ export default function MotionPageLoader({ customAssets = [] }) {
           const handleComplete = () => {
             loadedCount++;
             if (typeof img.decode === "function") {
-              img.decode().catch(() => {}).then(() => resolve());
+              img.decode().catch(() => { }).then(() => resolve());
             } else {
               resolve();
             }
@@ -132,7 +132,7 @@ export default function MotionPageLoader({ customAssets = [] }) {
             if (window.initLoopSliders) {
               window.initLoopSliders();
             }
-          } catch (e) {}
+          } catch (e) { }
         }, 850);
       }, HOLD_TIME);
     };

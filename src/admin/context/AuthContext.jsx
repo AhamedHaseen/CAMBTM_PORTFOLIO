@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { apiRequest, parseResponseJson } from '../utils/api';
-
-const AuthContext = createContext(null);
+import { AuthContext } from './useAuth';
 
 const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes strict session timeout
 
@@ -10,8 +9,17 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const lastActivityRef = useRef(Date.now());
 
-  // Check current session on initial load
+  // Check current session on initial load (only if token exists or on admin routes)
   const checkAuth = async () => {
+    const token = localStorage.getItem('cambm_token');
+    const isAdminPath = window.location.pathname.startsWith('/admin') || window.location.pathname.startsWith('/studio');
+
+    if (!token && !isAdminPath) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await apiRequest('/api/auth/me');
       const data = await parseResponseJson(res);
@@ -135,10 +143,3 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-}

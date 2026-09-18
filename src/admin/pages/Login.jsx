@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Lock, Mail, Shield, ArrowRight, KeyRound, ArrowLeft } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useToast } from '../components/Toast';
 import { apiRequest, parseResponseJson } from '../utils/api';
 

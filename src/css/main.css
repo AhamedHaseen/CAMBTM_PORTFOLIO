@@ -2196,15 +2196,7 @@ html.lenis body {
 }
 
 .cta-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 50%,
-      rgba(255, 90, 0, 0.1) 0%,
-      transparent 60%),
-    radial-gradient(ellipse at 20% 80%,
-      rgba(241, 150, 106, 0.08) 0%,
-      transparent 50%);
+  display: none;
 }
 
 .cta-inner {
@@ -4056,36 +4048,7 @@ html.bento-preloading .hero {
 }
 
 /* ===== PORTFOLIO — LUXURY ATLAS ===== */
-@view-transition {
-  navigation: auto;
-}
 
-.header {
-  view-transition-name: site-header;
-}
-
-.logo {
-  view-transition-name: site-logo;
-}
-
-main {
-  view-transition-name: site-content;
-}
-
-::view-transition-old(site-content) {
-  animation: cambm-page-out 0.28s cubic-bezier(0.4, 0, 1, 1) both;
-}
-
-::view-transition-new(site-content) {
-  animation: cambm-page-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-::view-transition-old(site-header),
-::view-transition-new(site-header),
-::view-transition-old(site-logo),
-::view-transition-new(site-logo) {
-  animation-duration: 0.35s;
-}
 
 @keyframes cambm-page-out {
   to {

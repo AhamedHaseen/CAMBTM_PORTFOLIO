@@ -14,12 +14,20 @@ import CustomPlan from "./pages/CustomPlan";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import OurPricing from "./pages/OurPricing";
+import Header from "./components/Header";
 
 function ScrollHandler() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) return;
+
+    const triggerReveals = () => {
+      if (window.observeNewRevealElements) {
+        window.observeNewRevealElements();
+      }
+      if (window.initI18n) window.initI18n();
+    };
 
     if (hash) {
       const targetId = hash.replace(/^#/, "");
@@ -30,13 +38,14 @@ function ScrollHandler() {
           document.querySelector(`[data-slug="${targetId}"]`);
         if (el) {
           if (window.__cambmLenis && typeof window.__cambmLenis.scrollTo === "function") {
-            window.__cambmLenis.scrollTo(el, { offset: -80, duration: 1.2 });
+            window.__cambmLenis.scrollTo(el, { offset: -80, duration: 0.8 });
           } else {
             const top = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 80;
             window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
           }
         }
-      }, 120);
+        triggerReveals();
+      }, 80);
       return () => clearTimeout(timer);
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -50,6 +59,10 @@ function ScrollHandler() {
       if (headerEl) {
         headerEl.classList.remove("scrolled");
       }
+
+      triggerReveals();
+      const t1 = setTimeout(triggerReveals, 100);
+      return () => clearTimeout(t1);
     }
   }, [pathname, hash]);
 
@@ -132,6 +145,7 @@ function App() {
       <ToastProvider>
         <Router>
           <ScrollHandler />
+          <Header />
           <Routes>
             {/* Public Website Routes */}
             <Route path="/" element={<Welcome />} />
@@ -314,3 +328,4 @@ function App() {
 }
 
 export default App;
+

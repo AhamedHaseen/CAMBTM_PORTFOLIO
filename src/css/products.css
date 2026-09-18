@@ -226,9 +226,9 @@
 .cambt-hero-lead {
   max-width: 36rem;
   margin: 0 0 2rem;
-  color: var(--cambt-color-text-lead);
-  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
-  font-size: var(--cambt-type-lead);
+  color: #484848;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px;
   line-height: 1.65;
   font-weight: 400;
 }
@@ -325,7 +325,7 @@
 .cambt-label {
   display: block;
   margin: 0 0 1rem;
-  color: var(--cambt-color-brand-electric);
+  color: #484848;
   font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
   font-size: var(--cambt-font-size-xs);
   font-weight: 700;
@@ -383,9 +383,9 @@
 
 .cambt-section-head p {
   margin: 1.25rem 0 0;
-  color: var(--cambt-color-text-body);
-  font-family: var(--font-tight, 'Inter Tight', sans-serif) !important;
-  font-size: var(--cambt-font-size-lg);
+  color: #484848;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px;
   line-height: 1.65;
   font-weight: 400;
 }
@@ -573,41 +573,13 @@
 .cambt-wall-tile:hover .cambt-mark-svg .m,
 .cambt-product-card:hover .cambt-mark-svg .m {
   animation: cambt-empty-box-wave 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: calc(var(--fill-index, 0) * 0.1s);
 }
 
 [data-theme="light"] .cambt-wall-tile:hover .cambt-mark-svg .m,
 [data-theme="light"] .cambt-product-card:hover .cambt-mark-svg .m {
   animation: cambt-empty-box-wave-light 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(1),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(1) {
-  animation-delay: 0s;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(2),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(2) {
-  animation-delay: 0.22s;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(3),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(3) {
-  animation-delay: 0.44s;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(4),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(4) {
-  animation-delay: 0.66s;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(5),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(5) {
-  animation-delay: 0.88s;
-}
-
-.cambt-wall-tile:hover .cambt-mark-svg .m:nth-of-type(6),
-.cambt-product-card:hover .cambt-mark-svg .m:nth-of-type(6) {
-  animation-delay: 1.1s;
+  animation-delay: calc(var(--fill-index, 0) * 0.1s);
 }
 
 .cambt-wall-tile:hover .cambt-mark-svg .s,
@@ -652,39 +624,37 @@
 }
 
 /* Mark Classes */
-.cambt-mark-svg .f {
+.cambt-mark-svg .f,
+.cambt-mark-svg .cambt-mark-filled {
   fill: var(--cambt-color-brand-blue, #ff5a00);
   transition: fill 0.25s ease, filter 0.25s ease;
 }
 
-.cambt-mark-svg .m {
+.cambt-mark-svg .m,
+.cambt-mark-svg .cambt-mark-empty {
   fill: var(--cambt-color-border-strong, #4a515a);
   transition: fill 0.25s ease;
 }
 
-[data-theme="light"] .cambt-mark-svg .m {
+[data-theme="light"] .cambt-mark-svg .m,
+[data-theme="light"] .cambt-mark-svg .cambt-mark-empty {
   fill: #c4c9cf;
 }
 
 .cambt-mark-svg .s {
   fill: none;
-  stroke: var(--cambt-color-border-strong, #4a515a);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: square;
   transition: stroke 0.25s ease;
 }
 
-[data-theme="light"] .cambt-mark-svg .s {
-  stroke: #c4c9cf;
-}
-
-.cambt-mark-svg .fs {
+.cambt-mark-svg .fs,
+.cambt-mark-svg .cambt-mark-accent-stroke {
   fill: none;
   stroke: var(--cambt-color-brand-blue, #ff5a00);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-width: 1.25;
+  stroke-linecap: square;
   transition: stroke 0.25s ease;
 }
 

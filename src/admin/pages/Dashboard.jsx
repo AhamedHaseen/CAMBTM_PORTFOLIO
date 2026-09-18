@@ -26,7 +26,7 @@ import {
   Layers,
   X
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { apiRequest } from '../utils/api';
 import { formatLocalDateOnly, formatLocalTimeOnly } from '../utils/date';
 import { useToast } from '../components/Toast';

@@ -23,7 +23,7 @@ import {
   Check,
   Zap
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useToast } from '../components/Toast';
 import { apiRequest, parseResponseJson } from '../utils/api';
 
