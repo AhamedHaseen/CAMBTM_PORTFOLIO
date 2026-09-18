@@ -12,8 +12,8 @@ export default function Header() {
     }
   }, []);
 
-  // Don't render public header on admin/studio routes
-  if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) {
+  // Don't render public header on studio routes
+  if (pathname.startsWith("/studio")) {
     return null;
   }
 

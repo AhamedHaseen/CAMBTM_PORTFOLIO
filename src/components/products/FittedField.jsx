@@ -88,7 +88,7 @@ export default function FittedField({ copy }) {
 
   return (
     <div className="cambt-customisation-section">
-      <div className="cambt-fitted-field-wrap">
+      <div className="cambt-customisation-layout">
         <div className="cambt-fitted-info">
           <span className="cambt-label">{copy.label}</span>
           <div className="cambt-section-head" style={{ marginBottom: 0 }}>
@@ -108,25 +108,17 @@ export default function FittedField({ copy }) {
           </div>
         </div>
 
-        {/*
-        <div aria-hidden="true" className="cambt-fitted-grid" ref={ref}>
-          {Array.from({ length: CELLS }, (_, index) => (
-            <span className="cambt-fitted-line" key={index} />
+        {/* 4 Delivery Principles in 2x2 Grid (first two above, next two below) */}
+        <div className="cambt-fitted-cards-grid">
+          {copy.points.map((pt, i) => (
+            <div key={i} className="cambt-fitted-card">
+              <div className="cambt-fitted-card-header">
+                <span className="cambt-fitted-card-num">0{i + 1}</span>
+              </div>
+              <p className="cambt-fitted-card-text">{pt}</p>
+            </div>
           ))}
         </div>
-        */}
-      </div>
-
-      {/* 4 Delivery Principles without glowing spotlight */}
-      <div className="cambt-fitted-cards-grid">
-        {copy.points.map((pt, i) => (
-          <div key={i} className="cambt-fitted-card">
-            <div className="cambt-fitted-card-header">
-              <span className="cambt-fitted-card-num">0{i + 1}</span>
-            </div>
-            <p className="cambt-fitted-card-text">{pt}</p>
-          </div>
-        ))}
       </div>
     </div>
   );

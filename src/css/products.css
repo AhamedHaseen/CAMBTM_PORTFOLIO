@@ -247,6 +247,7 @@
 /* Centered Hero on Products Page */
 .cambt-hero-centered-section {
   text-align: center;
+  padding: clamp(5.5rem, 8vw, 7.5rem) 0 clamp(6rem, 9vw, 8.5rem);
 }
 
 .cambt-hero-centered-section .cambt-hero-inner {
@@ -254,12 +255,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 56rem;
+  max-width: 68rem;
   margin: 0 auto;
 }
 
 .cambt-hero-content-centered {
-  max-width: 48rem;
+  max-width: 60rem;
   margin: 0 auto;
   text-align: center;
   display: flex;
@@ -277,16 +278,32 @@
 
 .cambt-hero-content-centered h1 {
   text-align: center;
-  margin: 0 auto 1.5rem;
-  max-width: 42rem;
+  margin: 0 auto 1.75rem;
+  max-width: 100%;
   width: 100%;
+}
+
+.cambt-products-hero-title {
+  font-size: clamp(3.2rem, 5.8vw, 4.8rem) !important;
+  white-space: nowrap;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+@media (max-width: 820px) {
+  .cambt-products-hero-title {
+    white-space: normal;
+    font-size: clamp(2.4rem, 7.5vw, 3.6rem) !important;
+  }
 }
 
 .cambt-hero-content-centered .cambt-hero-lead {
   text-align: center;
-  margin: 0 auto 2.25rem;
-  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+  max-width: 46rem;
   width: 100%;
+  font-size: 18px;
+  line-height: 1.7;
 }
 
 .cambt-hero-content-centered .cambt-hero-actions {
@@ -955,59 +972,66 @@
 
 /* --- Fitted Field (Customisation Section) --- */
 .cambt-customisation-section {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  width: 100%;
 }
 
-.cambt-fitted-field-wrap {
-  display: block;
+.cambt-customisation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
   width: 100%;
-  text-align: center;
 }
 
 .cambt-fitted-info {
-  max-width: 52rem;
-  margin: 0 auto;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  max-width: 34rem;
 }
 
 .cambt-fitted-info .cambt-label {
-  text-align: center;
-  margin: 0 auto 1rem;
+  text-align: left;
+  margin: 0 0 1rem;
 }
 
 .cambt-fitted-info .cambt-section-head {
-  max-width: 52rem;
-  margin: 0 auto;
-  text-align: center;
+  text-align: left;
+  margin: 0;
+  max-width: 100%;
 }
 
 .cambt-fitted-info .cambt-section-head h2 {
-  text-align: center;
-  margin: 0 auto;
+  text-align: left;
+  margin: 0;
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  line-height: 1.15;
 }
 
 .cambt-fitted-info .cambt-section-head p {
-  text-align: center;
-  margin: 1.25rem auto 0;
-  max-width: 46rem;
+  text-align: left;
+  margin: 1.25rem 0 0;
+  line-height: 1.65;
+  color: var(--cambt-color-text-secondary);
 }
 
-/* 4 Delivery Principle Boxes in the same line grid */
+/* 4 Delivery Principle Boxes in 2x2 grid (first two above, next two below) */
 .cambt-fitted-cards-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 1.5vw, 1.35rem);
   width: 100%;
 }
 
-@media (max-width: 64rem) {
-  .cambt-fitted-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 60rem) {
+  .cambt-customisation-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .cambt-fitted-info {
+    max-width: 100%;
   }
 }
 
@@ -1759,4 +1783,116 @@
 .cambt-btn-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Custom Scope / Something Else Banner --- */
+.cambt-custom-extra-section {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  border-top: 1px solid var(--cambt-color-border-subtle);
+}
+
+.cambt-product-extra {
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.75rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+  gap: 2rem;
+  border: 1px solid rgba(255, 90, 0, 0.35);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(255, 90, 0, 0.12), transparent 60%),
+    var(--cambt-color-bg-surface);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+@media (min-width: 52rem) {
+  .cambt-product-extra {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+}
+
+[data-theme="light"] .cambt-product-extra {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(255, 90, 0, 0.08), transparent 60%),
+    #ffffff;
+  border-color: rgba(255, 90, 0, 0.28);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.04);
+}
+
+.cambt-product-extra .package-extra-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+  max-width: 48rem;
+  margin: 0;
+}
+
+.cambt-product-extra .package-tier {
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ff5a00 !important;
+  margin: 0 0 0.5rem 0;
+  text-align: start;
+}
+
+.cambt-product-extra .package-extra-intro h4 {
+  color: var(--cambt-color-text-primary);
+  font-family: var(--font-serif, "Instrument Serif", serif) !important;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 400 !important;
+  line-height: 1.12;
+  margin: 0 0 0.75rem 0;
+  text-align: start;
+  max-width: 44rem;
+}
+
+.cambt-product-extra .package-extra-intro > p:not(.package-tier) {
+  margin: 0;
+  color: var(--cambt-color-text-secondary);
+  font-family: var(--font-tight, 'Inter Tight', sans-serif);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 44rem;
+  text-align: start;
+}
+
+.cambt-product-extra .package-extra-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cambt-product-extra .package-extra-select {
+  margin: 0;
+  white-space: nowrap;
+  background-color: #ff5a00;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.9rem 2.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.cambt-product-extra .package-extra-select:hover {
+  background-color: #e04f00;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 90, 0, 0.35);
 }

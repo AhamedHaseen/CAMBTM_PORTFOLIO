@@ -35,7 +35,7 @@ export const productsIndexContent = {
       { text: ", not the " },
       { text: "business to the system", tone: "counter" },
     ] as const,
-    body: "Most software asks a business to work the way it was built. That is fine until the fit is wrong, and then it is a daily tax paid by the people at the counter. A till written for a restaurant, put into a shop that sells by weight, is the clearest version of it.",
+    body: "Software often forces businesses to adapt. When the fit is wrong, it creates a daily burden for the people using it.",
     genericTitle: "A system built for someone else",
     genericNote: "A restaurant till, running a grocery shop.",
     fittedTitle: "A system built for you",

@@ -282,7 +282,15 @@ Scheduling is powered by [Cal.com](https://cal.com/cambridge.marketing).
 - **Multilingual Support:** Synced changes across `src/pages/OurPricing.jsx`, `src/components/ServicesSection.jsx`, and `public/js/i18n.js`.
 
 ### Products Page Refinements
-- **Centered Layout Elements:** Centered "How they are delivered" and "Live Reference Systems" header blocks and the `cambt-index-filters` navigation bar.
+- **Hero Enhancements:**
+  - Removed the top `"Our systems"` label.
+  - Maintained full, generous section height (`padding: clamp(5.5rem, 8vw, 7.5rem) 0 clamp(6rem, 9vw, 8.5rem)`).
+  - Main title `"Systems that fit the business"` formatted on a **single line** with bold serif styling.
+  - Lead paragraph formatted cleanly across **two balanced lines**.
+- **Centered Layout Elements:** Centered "Live Reference Systems" header blocks and the `cambt-index-filters` navigation bar.
+- **"How they are delivered" Split Layout:** Re-engineered the section into an elegant 2-column layout: Left column features the label, heading, and description, while the Right column presents the 4 delivery principle boxes in a balanced 2x2 grid (two cards above, two cards below).
+- **"Something else" (Custom Scope) Card Banner:** Designed a dedicated horizontal split card banner (Left side: orange accent badge, serif heading, and concise 400+ project custom development copy; Right side: `"Discuss"` action button) positioned right above the main CTA section across all 5 languages (`en`, `es`, `ar`, `si`, `ta`).
+- **Diptych Adaptation Copy:** Updated the adaptation explanation to *"Software often forces businesses to adapt. When the fit is wrong, it creates a daily burden for the people using it."* across all 5 languages.
 - **Breadcrumb & Detail Header Cleanup:** Removed redundant breadcrumbs and top action buttons on product detail pages for a clean, distraction-free hero experience.
 - **Smart Scroll Restoration:** 
   - Direct navigation / refresh on `/products` smoothly resets to the top of the page.

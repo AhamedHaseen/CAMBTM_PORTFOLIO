@@ -32,7 +32,7 @@ export default function Login() {
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSent, setForgotSent] = useState(false);
 
-  const from = (location.state?.from?.pathname && !['/studio', '/STUDIO', '/studio/login', '/STUDIO/login', '/admin', '/admin/login'].includes(location.state.from.pathname))
+  const from = (location.state?.from?.pathname && !['/studio', '/STUDIO', '/studio/login', '/STUDIO/login'].includes(location.state.from.pathname))
     ? location.state.from.pathname
     : '/studio/dashboard';
 

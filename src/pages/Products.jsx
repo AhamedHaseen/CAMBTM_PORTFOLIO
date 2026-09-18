@@ -20,7 +20,7 @@ const getSavedLang = () => {
   try {
     const saved = localStorage.getItem("cambm_lang");
     if (saved) return saved;
-  } catch (e) {}
+  } catch (e) { }
   if (typeof document !== "undefined" && document.documentElement && document.documentElement.lang) {
     return document.documentElement.lang;
   }
@@ -83,7 +83,7 @@ export default function Products() {
     if (isReload) {
       try {
         sessionStorage.removeItem("cambm_return_product");
-      } catch (e) {}
+      } catch (e) { }
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       if (document.documentElement) document.documentElement.scrollTop = 0;
       if (document.body) document.body.scrollTop = 0;
@@ -99,7 +99,7 @@ export default function Products() {
       if (returnProduct) {
         sessionStorage.removeItem("cambm_return_product");
       }
-    } catch (e) {}
+    } catch (e) { }
 
     const targetSlug = location.hash
       ? location.hash.replace("#", "")
@@ -207,8 +207,7 @@ export default function Products() {
         <section className="cambt-hero cambt-hero-centered-section">
           <div className="cambt-hero-inner">
             <div className="cambt-hero-content-centered">
-              <span className="cambt-label">{copy.hero.label}</span>
-              <h1>
+              <h1 className="cambt-products-hero-title">
                 {currentLang === "en" ? (
                   <>
                     Systems that <em>{copy.hero.emphasis}</em> the business
@@ -264,6 +263,37 @@ export default function Products() {
               )}
             </div>
             <SystemIndex industries={industries} labels={copy.index} systems={indexSystems} />
+          </div>
+        </section>
+
+        {/* A5. Something else (Custom Scope Banner) */}
+        <section className="cambt-section cambt-section-white cambt-custom-extra-section">
+          <div className="cambt-inner">
+            <article className="package-extra cambt-product-extra">
+              <div className="package-extra-intro">
+                <p className="package-tier">
+                  {copy.customScope?.eyebrow || "Something else"}
+                </p>
+                <h4>
+                  {copy.customScope?.heading || "Need something that isn't on this list?"}
+                </h4>
+                <p>
+                  {copy.customScope?.desc ||
+                    "These are just a few selected systems from 400+ projects we’ve delivered. If your business needs something different, that’s custom software and app development and that’s what we do next."}
+                </p>
+              </div>
+              <div className="package-extra-action">
+                <button
+                  type="button"
+                  className="btn btn-primary package-extra-select js-open-cal"
+                  data-cal-link="cambridge.marketing"
+                  data-cal-namespace="strategy-call"
+                  data-cal-config='{"layout":"month_view","language":"en","locale":"en"}'
+                >
+                  {copy.customScope?.button || "Discuss"} <span>&rarr;</span>
+                </button>
+              </div>
+            </article>
           </div>
         </section>
 

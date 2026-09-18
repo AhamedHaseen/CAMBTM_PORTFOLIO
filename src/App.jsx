@@ -20,7 +20,7 @@ function ScrollHandler() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) return;
+    if (pathname.startsWith("/studio")) return;
 
     const triggerReveals = () => {
       if (window.observeNewRevealElements) {
@@ -95,8 +95,8 @@ import ContactManager from "./admin/pages/ContactManager";
 
 function App() {
   useEffect(() => {
-    // Only load public vanilla scripts if not on admin or studio paths
-    if (window.location.pathname.startsWith("/admin") || window.location.pathname.startsWith("/studio")) return;
+    // Only load public vanilla scripts if not on studio paths
+    if (window.location.pathname.startsWith("/studio")) return;
 
     if (document.getElementById("cambm-main-script")) return;
 
@@ -122,7 +122,7 @@ function App() {
   useEffect(() => {
     // Lightweight video attribute configuration without full-document MutationObserver thrashing
     const setupVideos = () => {
-      if (window.location.pathname.startsWith("/admin") || window.location.pathname.startsWith("/studio")) return;
+      if (window.location.pathname.startsWith("/studio")) return;
       const videos = document.querySelectorAll("video.bento-video, .hero-video, .ambient-video");
       videos.forEach((video) => {
         if (!video.muted) video.muted = true;
@@ -212,19 +212,14 @@ function App() {
               element={<Navigate to="/packages" replace />}
             />
 
-            {/* Admin / Studio Authentication */}
-            <Route path="/admin/login" element={<Login />} />
+            {/* Studio Authentication */}
             <Route path="/studio/login" element={<Login />} />
-            <Route
-              path="/admin"
-              element={<Navigate to="/studio/dashboard" replace />}
-            />
             <Route
               path="/studio"
               element={<Navigate to="/studio/dashboard" replace />}
             />
 
-            {/* Protected Studio & Admin Dashboard Routes */}
+            {/* Protected Studio Dashboard Routes */}
             <Route
               path="/studio/*"
               element={
@@ -324,15 +319,6 @@ function App() {
               />
             </Route>
 
-            {/* Redirect legacy /admin/* to /studio/* */}
-            <Route path="/admin/dashboard" element={<Navigate to="/studio/dashboard" replace />} />
-            <Route path="/admin/services" element={<Navigate to="/studio/services" replace />} />
-            <Route path="/admin/portfolio" element={<Navigate to="/studio/portfolio" replace />} />
-            <Route path="/admin/hero-bento" element={<Navigate to="/studio/hero-bento" replace />} />
-            <Route path="/admin/brands" element={<Navigate to="/studio/brands" replace />} />
-            <Route path="/admin/media" element={<Navigate to="/studio/media" replace />} />
-            <Route path="/admin/settings" element={<Navigate to="/studio/settings" replace />} />
-            <Route path="/admin/*" element={<Navigate to="/studio/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
