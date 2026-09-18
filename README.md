@@ -21,6 +21,7 @@ An enterprise-grade, high-performance web platform for **Cambridge Marketing (PV
 7. [Installation & Getting Started](#installation--getting-started)
 8. [Available Scripts](#available-scripts)
 9. [Developer Conventions & Best Practices](#developer-conventions--best-practices)
+10. [Recent Updates & Changelog](#10-recent-updates--changelog)
 
 ---
 
@@ -269,6 +270,27 @@ Scheduling is powered by [Cal.com](https://cal.com/cambridge.marketing).
    - Always route package names through `getCanonicalPackageName` to ensure Cal.com dropdowns pre-select accurately regardless of the visitor's selected language.
 5. **No Framework Lock-in for Shared Scripts:**
    - Header, footer, theme toggles, and locale selection are written to work consistently across both static pages and React dynamic routes.
+
+---
+
+## 10. Recent Updates & Changelog
+
+### Packages & Pricing Updates
+- **Headline & Branding Accent:** Updated the pre-built packages section title to **"Integrated Services, One *Solution*"** across all 5 languages. Styled the word ***Solution*** (and corresponding localized terms) in serif italic with the `#ff5a00` brand accent color.
+- **Unified Package Description:** Refined the sub-headline to *"Pre-built packages combine content, marketing, and technology into one flexible solution."* across `en`, `es`, `ar`, `si`, and `ta`.
+- **Streamlined Layout:** Cleaned up secondary package scope notes to provide a cleaner card presentation.
+- **Multilingual Support:** Synced changes across `src/pages/OurPricing.jsx`, `src/components/ServicesSection.jsx`, and `public/js/i18n.js`.
+
+### Products Page Refinements
+- **Centered Layout Elements:** Centered "How they are delivered" and "Live Reference Systems" header blocks and the `cambt-index-filters` navigation bar.
+- **Breadcrumb & Detail Header Cleanup:** Removed redundant breadcrumbs and top action buttons on product detail pages for a clean, distraction-free hero experience.
+- **Smart Scroll Restoration:** 
+  - Direct navigation / refresh on `/products` smoothly resets to the top of the page.
+  - Returning from an individual product detail page (e.g. `/products/hostel-management`) restores the user's exact prior scroll position.
+
+### Product Showcase (CAMBCARD vCard)
+- **Horizontal Mouse Scroll:** Enabled intuitive horizontal mouse-wheel scrolling across the showcase slider.
+- **Clean Interface:** Removed slider arrow navigation controls for a sleek, modern touch/drag/wheel experience.
 
 ---
 
