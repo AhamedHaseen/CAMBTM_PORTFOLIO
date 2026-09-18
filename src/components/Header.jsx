@@ -19,7 +19,7 @@ export default function Header() {
 
   const isHome = pathname === "/" || pathname === "/welcome.html";
   const isProducts = pathname.startsWith("/products");
-  const isPricing = pathname === "/our-pricing" || pathname === "/pricing";
+  const isPricing = pathname === "/packages" || pathname === "/packages.html" || pathname === "/our-pricing" || pathname === "/pricing";
   const isAbout = pathname === "/about";
 
   return (
@@ -63,7 +63,7 @@ export default function Header() {
               Our Products
             </NavLink>
             <NavLink
-              to="/our-pricing"
+              to="/packages"
               className={`nav-link ${isPricing ? "active" : ""}`}
               data-i18n="nav.ourPricing"
             >
@@ -164,7 +164,7 @@ export default function Header() {
             Our Products
           </NavLink>
           <NavLink
-            to="/our-pricing"
+            to="/packages"
             className={`mobile-nav-link ${isPricing ? "active" : ""}`}
             data-i18n="nav.ourPricing"
           >

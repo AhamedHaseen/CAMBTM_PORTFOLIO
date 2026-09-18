@@ -160,6 +160,12 @@ function App() {
               path="/portfolio.html"
               element={<Navigate to="/portfolio" replace />}
             />
+            <Route path="/products" element={<Products />} />
+            <Route
+              path="/products.html"
+              element={<Navigate to="/products" replace />}
+            />
+            <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/our-projects" element={<Navigate to="/products" replace />} />
             <Route
               path="/our-projects.html"
@@ -170,6 +176,11 @@ function App() {
               path="/projects.html"
               element={<Navigate to="/products" replace />}
             />
+            <Route path="/custom-plan" element={<CustomPlan />} />
+            <Route
+              path="/custom-plan.html"
+              element={<Navigate to="/custom-plan" replace />}
+            />
             <Route
               path="/portfolio-under-construction.html"
               element={<Navigate to="/portfolio" replace />}
@@ -178,25 +189,26 @@ function App() {
               path="/portfolio-under-construction"
               element={<Navigate to="/portfolio" replace />}
             />
-            <Route path="/packages" element={<Navigate to="/#packages" replace />} />
-            <Route path="/services" element={<Navigate to="/#packages" replace />} />
-            <Route path="/custom-plan" element={<CustomPlan />} />
-            <Route path="/cart" element={<CustomPlan />} />
-            <Route path="/plan-summary" element={<CustomPlan />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:slug" element={<ProductDetail />} />
-            <Route path="/our-pricing" element={<OurPricing />} />
+            <Route path="/packages" element={<OurPricing />} />
+            <Route
+              path="/packages.html"
+              element={<Navigate to="/packages" replace />}
+            />
+            <Route
+              path="/our-pricing"
+              element={<Navigate to="/packages" replace />}
+            />
             <Route
               path="/our-pricing.html"
-              element={<Navigate to="/our-pricing" replace />}
+              element={<Navigate to="/packages" replace />}
             />
             <Route
               path="/pricing"
-              element={<Navigate to="/our-pricing" replace />}
+              element={<Navigate to="/packages" replace />}
             />
             <Route
               path="/pricing.html"
-              element={<Navigate to="/our-pricing" replace />}
+              element={<Navigate to="/packages" replace />}
             />
 
             {/* Admin / Studio Authentication */}
@@ -320,6 +332,7 @@ function App() {
             <Route path="/admin/media" element={<Navigate to="/studio/media" replace />} />
             <Route path="/admin/settings" element={<Navigate to="/studio/settings" replace />} />
             <Route path="/admin/*" element={<Navigate to="/studio/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
       </ToastProvider>
